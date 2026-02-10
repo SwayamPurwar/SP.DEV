@@ -42,15 +42,23 @@ if (preloader) {
     // If user has visited before (and didn't reload manually), skip animation
     if (sessionStorage.getItem("visited") === "true" && !isReload) {
         gsap.set(".preloader-container", { display: "none" });
-        // Set Hero elements to visible state immediately
+        
+        // Set elements to visible state immediately
         gsap.set(".hero-text", { y: 0, opacity: 1 });
         gsap.set(".hero-sub", { opacity: 1, y: 0 });
         if(document.querySelector(".cv-wrapper")) gsap.set(".cv-wrapper", { opacity: 1 });
+        
+        // --- FIX: Ensure Nav is visible for returning users ---
+        gsap.set("nav", { y: 0, opacity: 1 }); 
+        
         document.body.style.overflow = "";
     } else {
         // FIRST VISIT ANIMATION
         sessionStorage.setItem("visited", "true");
         document.body.style.overflow = "hidden";
+
+        // --- FIX: Hide Nav initially so it doesn't overlap loader ---
+        gsap.set("nav", { y: -50, opacity: 0 });
 
         const tl = gsap.timeline();
 
@@ -83,8 +91,7 @@ if (preloader) {
             }
         });
 
-        // 4. Hero Section Entrance (Synchronized with curtain slide)
-        // We start this slightly before the curtain finishes (.preloader-container animation)
+        // 4. Hero Section Entrance
         tl.from(".hero-text", { 
             y: 100, 
             opacity: 0, 
@@ -108,47 +115,39 @@ if (preloader) {
                 ease: "power3.out" 
             }, "-=0.8");
         }
+
+        // --- FIX: Reveal Nav smoothly after loader finishes ---
+        tl.to("nav", { 
+            y: 0, 
+            opacity: 1, 
+            duration: 1, 
+            ease: "power3.out" 
+        }, "-=1.0"); // Overlaps slightly with hero animation
     }
 }
 
-// 4. PAGE TRANSITIONS (THE NEW FEATURE)
-// Intercept all internal links to play an "Exit" animation
+// 4. PAGE TRANSITIONS
 document.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', e => {
         const href = link.getAttribute('href');
-        
-        // Only run for internal links that aren't anchors (#) or downloads
         if (href && !href.startsWith('#') && !href.startsWith('mailto:') && !link.hasAttribute('download') && link.target !== '_blank') {
             e.preventDefault();
-            
-            // Create transition curtain if it doesn't exist
             let curtain = document.querySelector('.page-transition-curtain');
             if (!curtain) {
                 curtain = document.createElement('div');
                 curtain.classList.add('page-transition-curtain');
                 curtain.style.cssText = `
-                    position: fixed;
-                    top: 0;
-                    left: 0;
-                    width: 100%;
-                    height: 100%;
-                    background: #000;
-                    z-index: 10000;
-                    transform: scaleY(0);
-                    transform-origin: bottom;
-                    pointer-events: none;
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                    background: #000; z-index: 10000;
+                    transform: scaleY(0); transform-origin: bottom; pointer-events: none;
                 `;
                 document.body.appendChild(curtain);
             }
-
-            // Animate Curtain UP
             gsap.to(curtain, {
                 scaleY: 1,
                 duration: 0.8,
                 ease: "power4.inOut",
-                onComplete: () => {
-                    window.location.href = href;
-                }
+                onComplete: () => { window.location.href = href; }
             });
         }
     });
@@ -212,7 +211,7 @@ const magnets = document.querySelectorAll(".nav-item, .submit-btn, .btn, .social
 magnets.forEach((magnet) => {
     magnet.addEventListener("mousemove", (e) => {
         const bounding = magnet.getBoundingClientRect();
-        const strength = 30; // Reduced strength for better usability
+        const strength = 30; 
         const newX = (e.clientX - bounding.left) / magnet.offsetWidth - 0.5;
         const newY = (e.clientY - bounding.top) / magnet.offsetHeight - 0.5;
 
@@ -244,7 +243,6 @@ if (menuToggle) {
         }
     });
     
-    // Close menu when a link is clicked
     mobileLinks.forEach(link => {
         link.addEventListener("click", () => {
             gsap.to(mobileMenu, { y: "-100%", autoAlpha: 0, duration: 0.6 });
@@ -253,49 +251,3 @@ if (menuToggle) {
         });
     });
 }
-
-/* --- ROBUST MOBILE MENU LOGIC --- */
-document.addEventListener("DOMContentLoaded", () => {
-    const menuToggle = document.querySelector(".menu-toggle");
-    const mobileMenu = document.querySelector(".mobile-menu");
-    const mobileLinks = document.querySelectorAll(".mobile-link");
-    
-    // 1. Toggle Menu Open/Close
-    if (menuToggle && mobileMenu) {
-        menuToggle.addEventListener("click", (e) => {
-            e.stopPropagation(); // Prevent immediate closing
-            menuToggle.classList.toggle("active");
-            mobileMenu.classList.toggle("active");
-            
-            // Optional: Lock body scroll when menu is open
-            if (mobileMenu.classList.contains("active")) {
-                document.body.style.overflow = "hidden";
-            } else {
-                document.body.style.overflow = "";
-            }
-        });
-    }
-
-    // 2. Close Menu When a Link is Clicked
-    mobileLinks.forEach(link => {
-        link.addEventListener("click", () => {
-            console.log("Link clicked: closing menu"); // Debug check
-            menuToggle.classList.remove("active");
-            mobileMenu.classList.remove("active");
-            document.body.style.overflow = ""; // Restore scrolling
-        });
-    });
-
-    // 3. Close Menu When Clicking Outside (Optional safety)
-    document.addEventListener("click", (e) => {
-        if (isMenuOpen() && !mobileMenu.contains(e.target) && !menuToggle.contains(e.target)) {
-            menuToggle.classList.remove("active");
-            mobileMenu.classList.remove("active");
-            document.body.style.overflow = "";
-        }
-    });
-
-    function isMenuOpen() {
-        return mobileMenu && mobileMenu.classList.contains("active");
-    }
-});
