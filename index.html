@@ -398,6 +398,32 @@
           },
         );
       });
-    </script>
+
+
+      
+    
+  const form = document.getElementById("portfolio-form");
+  
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault(); // Stop standard submission
+    const submitBtn = form.querySelector(".submit-btn");
+    submitBtn.innerText = "SENDING...";
+
+    const formData = new FormData(form);
+    
+    // Add your Formspark URL here
+    await fetch("https://submit-form.com/vPN4ntpxv", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify(Object.fromEntries(formData)),
+    });
+
+    // Manually redirect to success page
+    window.location.href = "success.html"; 
+  });
+</script>
   </body>
 </html>
