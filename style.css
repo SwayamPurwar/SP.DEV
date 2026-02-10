@@ -408,7 +408,8 @@ nav.scrolled {
 }
 
 /* --- SELECTED WORKS --- */
-#work { padding: 10vh 10vw; }
+#work { padding: 10vh 10vw; 
+ perspective: 1000px; }
 
 .section-header {
     font-size: 0.9rem;
@@ -433,6 +434,10 @@ nav.scrolled {
     width: 100%;
     text-decoration: none;
     color: inherit;
+
+    transform-style: preserve-3d; /* Allows 3D rotation */
+    /* Smooth reset when mouse leaves */
+    transition: transform 0.1s linear; 
 }
 
 .project {
@@ -441,8 +446,14 @@ nav.scrolled {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: all 0.3s ease;
+    /* transition: all 0.3s ease; */
     width: 100%; /* Ensure content fills the anchor */
+     position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.1s;
+    background: rgba(20, 20, 20, 0.4); /* Glassy background */
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    overflow: hidden; /* Contains the glare */
 }
 
 .project:hover {
@@ -874,4 +885,147 @@ main, nav, footer {
     background: #bfa5d8; /* Purple background */
     color: #000;         /* Black text */
     text-shadow: none;
+}
+
+/* --- CRT MONITOR OVERLAY --- */
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 9998; /* Below Preloader (9999) but above content */
+    pointer-events: none;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%, 
+        rgba(0, 0, 0, 0.1) 50%
+    );
+    background-size: 100% 4px; /* Creates the scanlines */
+    opacity: 0.6;
+}
+
+
+/* --- START PROMPT --- */
+.start-prompt {
+    font-family: "Fira Code", monospace;
+    font-size: 1rem;
+    color: var(--accent); /* Purple */
+    margin-top: 2rem;
+    letter-spacing: 2px;
+    cursor: pointer;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+
+/* --- GOD MODE TERMINAL --- */
+#cmd-terminal {
+    position: fixed;
+    top: -100%; /* Hidden by default */
+    left: 0;
+    width: 100%;
+    height: 50vh; /* Takes up half the screen */
+    background: rgba(10, 10, 10, 0.95);
+    border-bottom: 2px solid var(--accent);
+    z-index: 100000;
+    font-family: 'Fira Code', monospace;
+    padding: 2rem;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    backdrop-filter: blur(10px);
+    transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+}
+
+#cmd-terminal.active {
+    top: 0; /* Slide down */
+}
+
+.cmd-header {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    font-size: 0.8rem;
+    opacity: 0.5;
+}
+
+.cmd-output {
+    flex-grow: 1;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    color: #ccc;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    white-space: pre-wrap; /* Preserve formatting */
+}
+
+.cmd-input-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cmd-prompt {
+    color: var(--accent);
+    font-weight: bold;
+}
+
+#cmd-input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-family: 'Fira Code', monospace;
+    font-size: 1rem;
+    flex-grow: 1;
+    outline: none;
+    caret-color: var(--accent);
+}
+
+
+
+/* --- HOLOGRAPHIC 3D CARDS --- */
+
+/* The Container needs perspective */
+
+
+
+
+
+/* The Glare Effect (Light Beam) */
+.project::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
+        rgba(255, 255, 255, 0.1) 0%, 
+        rgba(255, 255, 255, 0) 60%
+    );
+    opacity: 0; /* Hidden by default */
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 2; /* On top of background but behind text */
+    mix-blend-mode: overlay; /* Blends like light */
+}
+
+/* Hover State */
+.project-link:hover .project::before {
+    opacity: 1; /* Show glare */
+}
+
+/* Make text float "above" the card (Parallax) */
+.project h2, .project-meta {
+    transform: translateZ(20px); /* Pushes text 20px towards the user */
+    position: relative;
+    z-index: 5;
 }

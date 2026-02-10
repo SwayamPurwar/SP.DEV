@@ -531,3 +531,291 @@ window.addEventListener("blur", () => {
 window.addEventListener("focus", () => {
     document.title = originalTitle;
 }); 
+
+
+
+
+// --- CONSOLE SIGNATURE ---
+console.log(
+    "%c  S W A Y A M . D E V  ", 
+    "color: #050505; background: #bfa5d8; font-size: 20px; font-weight: bold; padding: 10px; border-radius: 5px;"
+);
+console.log(
+    "%c System Online. Welcome to the source code. \n Looking for bugs? Good luck. ", 
+    "color: #bfa5d8; font-family: monospace; font-size: 14px;"
+);
+// --- SYNTHESIZED AUDIO SYSTEM ---
+// Paste this at the VERY BOTTOM of script.js
+const AudioContext = window.AudioContext || window.webkitAudioContext;
+
+class SystemSound {
+    constructor() {
+        this.ctx = new AudioContext();
+        this.masterGain = this.ctx.createGain();
+        this.masterGain.gain.value = 0.05; // Low volume (5%)
+        this.masterGain.connect(this.ctx.destination);
+        this.enabled = false;
+    }
+
+    enable() {
+        if (!this.enabled) {
+            this.ctx.resume().then(() => {
+                this.enabled = true;
+            });
+        }
+    }
+
+    // Add this inside your SystemSound class
+    playBoot() {
+        if (!this.enabled) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+
+        // A "Power Up" sweep sound
+        osc.type = "sawtooth";
+        osc.frequency.setValueAtTime(50, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(600, this.ctx.currentTime + 1.5);
+        
+        gain.gain.setValueAtTime(0.5, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 1.5);
+
+        osc.start();
+        osc.stop(this.ctx.currentTime + 1.5);
+    }
+
+    playHover() {
+        if (!this.enabled) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+
+        // High-pitch "Blip" (Sine wave)
+        osc.type = "sine";
+        osc.frequency.setValueAtTime(600, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(300, this.ctx.currentTime + 0.1);
+        
+        gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
+
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.1);
+    }
+
+    playClick() {
+        if (!this.enabled) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.masterGain);
+
+        // Low-pitch "Thud" (Square wave)
+        osc.type = "square";
+        osc.frequency.setValueAtTime(150, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(40, this.ctx.currentTime + 0.1);
+        
+        gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.1);
+
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.15);
+    }
+}
+
+// INITIALIZE SYSTEM
+const sfx = new SystemSound();
+
+// 1. Unlock Audio on first interaction (Browser Requirement)
+window.addEventListener("click", () => sfx.enable(), { once: true });
+window.addEventListener("keydown", () => sfx.enable(), { once: true });
+
+// 2. Attach to all interactive elements on ANY page
+// We use 'mouseover' on document to catch elements even if they are loaded later
+document.addEventListener("mouseover", (e) => {
+    if (e.target.closest("a, button, .project, .nav-item, .tech-pill, .cv-btn")) {
+        sfx.playHover();
+    }
+});
+
+document.addEventListener("mousedown", (e) => {
+    if (e.target.closest("a, button, .project, .nav-item, .tech-pill, .cv-btn")) {
+        sfx.playClick();
+    }
+});
+
+// =========================================
+// 8. GOD MODE TERMINAL (The "Quake" Console)
+// =========================================
+const terminal = document.getElementById("cmd-terminal");
+const cmdInput = document.getElementById("cmd-input");
+const cmdOutput = document.getElementById("cmd-output");
+let isTerminalOpen = false;
+
+// Toggle Terminal with Tilde Key (`) or (~)
+window.addEventListener("keydown", (e) => {
+    if (e.key === "`" || e.key === "~") {
+        e.preventDefault(); // Stop typing the character
+        toggleTerminal();
+    }
+});
+
+function toggleTerminal() {
+    isTerminalOpen = !isTerminalOpen;
+    if (isTerminalOpen) {
+        terminal.classList.add("active");
+        cmdInput.value = "";
+        cmdInput.focus();
+        sfx.playClick(); // Mechanical sound
+    } else {
+        terminal.classList.remove("active");
+        cmdInput.blur();
+    }
+}
+
+// Process Commands
+cmdInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+        const command = cmdInput.value.toLowerCase().trim();
+        if (command) {
+            printOutput(`user@swayam:~$ ${command}`);
+            executeCommand(command);
+            cmdInput.value = "";
+            // Scroll to bottom
+            cmdOutput.scrollTop = cmdOutput.scrollHeight;
+        }
+    }
+});
+
+function printOutput(text, isHTML = false) {
+    const line = document.createElement("div");
+    if(isHTML) line.innerHTML = text;
+    else line.textContent = text;
+    cmdOutput.appendChild(line);
+}
+
+function executeCommand(cmd) {
+    // Split command into args (e.g., "color red" -> ["color", "red"])
+    const parts = cmd.split(" ");
+    const action = parts[0];
+    const arg = parts[1];
+
+    switch (action) {
+        case "help":
+            printOutput(`
+  AVAILABLE COMMANDS:
+  -------------------
+  help            - Show this list
+  clear           - Clear terminal
+  goto [page]     - Navigate (home, about, work)
+  color [hex]     - Hack site colors (e.g., color #00ff00)
+  matrix          - Toggle Matrix Rain
+  socials         - List social links
+  whoami          - Reveal user identity
+            `);
+            break;
+
+        case "clear":
+            cmdOutput.innerHTML = "";
+            break;
+
+        case "goto":
+            if (arg === "home") window.location.href = "index.html";
+            else if (arg === "about") window.location.href = "about.html";
+            else if (arg === "work") window.location.href = "#work";
+            else printOutput("Error: Page not found. Try 'home', 'about', or 'work'.");
+            break;
+
+        case "socials":
+            printOutput("GitHub | LinkedIn | Instagram | Twitter");
+            window.open("https://github.com/SwayamPurwar", "_blank");
+            break;
+
+        case "whoami":
+            printOutput("Guest User [IP: UNKNOWN]. Access Level: Visitor.");
+            break;
+
+        case "matrix":
+            // Trigger our existing matrix function
+            if (typeof toggleMatrix === "function") {
+                // We need to access the toggleMatrix function from your existing code
+                // NOTE: Ensure your existing matrix code exposes 'toggleMatrix' or simply re-trigger it here:
+                const event = new KeyboardEvent('keydown', {'key': 'm'});
+                // This is a hacky way to trigger the existing listener, better to expose the function
+                printOutput("Initializing Matrix Protocol...");
+                // Simulate typing 'matrix' code
+                window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'm'}));
+                setTimeout(() => window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'a'})), 50);
+                setTimeout(() => window.dispatchEvent(new KeyboardEvent('keydown', {'key': 't'})), 100);
+                setTimeout(() => window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'r'})), 150);
+                setTimeout(() => window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'i'})), 200);
+                setTimeout(() => window.dispatchEvent(new KeyboardEvent('keydown', {'key': 'x'})), 250);
+            }
+            break;
+
+        case "color":
+            if (arg) {
+                document.documentElement.style.setProperty('--accent', arg);
+                // Also update the glow color
+                const glow = document.getElementById("ambient-glow");
+                if(glow) glow.style.background = `radial-gradient(circle, ${arg}40 0%, rgba(0, 0, 0, 0) 70%)`;
+                
+                printOutput(`SUCCESS: System accent changed to ${arg}`);
+                sfx.playBoot(); // Play powerup sound
+            } else {
+                printOutput("Error: Please specify a color. (e.g., 'color red' or 'color #00ff00')");
+            }
+            break;
+
+        default:
+            printOutput(`Command not found: '${cmd}'. Type 'help' for options.`);
+    }
+}
+
+
+// =========================================
+// 9. HOLOGRAPHIC TILT EFFECT (3D Cards)
+// =========================================
+const tiltCards = document.querySelectorAll(".project-link");
+
+if (tiltCards.length > 0) {
+    tiltCards.forEach(card => {
+        card.addEventListener("mousemove", (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Calculate center
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+            
+            // Calculate Tilt (Max 15 degrees)
+            const rotateX = ((y - centerY) / centerY) * -10; // Negative to tilt correctly
+            const rotateY = ((x - centerX) / centerX) * 10;
+
+            // Apply 3D Rotation to the inner Article
+            const inner = card.querySelector(".project");
+            gsap.to(inner, {
+                transform: `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`,
+                duration: 0.1,
+                ease: "power1.out"
+            });
+
+            // Update CSS Variable for Glare Position
+            inner.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+            inner.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+        });
+
+        // Reset on Mouse Leave
+        card.addEventListener("mouseleave", () => {
+            const inner = card.querySelector(".project");
+            gsap.to(inner, {
+                transform: `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`,
+                duration: 0.5,
+                ease: "elastic.out(1, 0.5)" // Bouncy reset
+            });
+        });
+    });
+}

@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Swayam | Creative Developer</title>
+    <link rel="manifest" href="manifest.json">
+
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Swayam Dev">
+<link rel="apple-touch-icon" href="assets/images/favicon.webp">
     <meta
       name="description"
       content="BCA Student at LNCT University building high-end digital experiences with Python & React."
@@ -110,10 +116,12 @@
   </head>
 
   <body>
+    <div class="crt-overlay"></div>
     <canvas id="matrix-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; opacity: 0; mix-blend-mode: screen;"></canvas>
     <div id="ambient-glow"></div>
     <div class="preloader-container">
       <div class="loader-content">
+        <div class="start-prompt" style="opacity: 0;">[ PRESS ANY KEY TO INITIALIZE ]</div>
         <div class="counter-wrap">
           <span class="counter">0</span>
           <span class="percent">%</span>
@@ -357,6 +365,19 @@
         </div>
       </div>
     </footer>
+    <div id="cmd-terminal">
+    <div class="cmd-header">
+        <span>SWAYAM.OS [VERSION 1.0]</span>
+        <span>ADMIN ACCESS: GRANTED</span>
+    </div>
+    <div class="cmd-output" id="cmd-output">
+        Type 'help' for a list of commands...
+    </div>
+    <div class="cmd-input-line">
+        <span class="cmd-prompt">user@swayam:~$</span>
+        <input type="text" id="cmd-input" autocomplete="off" spellcheck="false">
+    </div>
+</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
