@@ -1112,10 +1112,122 @@ main, nav, footer {
     }
 }
 
+/* --- BLACKOUT PROTOCOL (Easter Egg) --- */
+#blackout-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    z-index: 99999; /* Above everything */
+    pointer-events: auto; /* Block clicks on underlying elements */
+    cursor: none; /* Hide standard cursor */
+    
+    /* The Flashlight Effect */
+    /* We use a radial gradient mask: Transparent in middle, opaque elsewhere */
+    mask-image: radial-gradient(
+        circle 150px at var(--x, 50%) var(--y, 50%),
+        transparent 0%,
+        black 100%
+    );
+    -webkit-mask-image: radial-gradient(
+        circle 150px at var(--x, 50%) var(--y, 50%),
+        transparent 0%,
+        black 100%
+    );
+    
+    /* Start hidden */
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease;
+}
+
+#blackout-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* The Hidden Breaker Switch */
+#breaker-switch {
+    position: fixed;
+    width: 60px;
+    height: 100px;
+    background: #333;
+    border: 2px solid #555;
+    border-radius: 4px;
+    z-index: 100000; /* Above the blackout */
+    cursor: pointer;
+    display: none; /* Hidden until blackout */
+    
+    /* Industrial hazard look */
+    background-image: repeating-linear-gradient(
+        45deg,
+        #333,
+        #333 10px,
+        #444 10px,
+        #444 20px
+    );
+    box-shadow: 0 0 15px #ff3b30; /* Red glow to help spot it slightly */
+}
+
+#breaker-switch::after {
+    content: "RESET";
+    color: white;
+    font-family: 'Fira Code', monospace;
+    font-size: 10px;
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+#breaker-switch .lever {
+    width: 40px;
+    height: 40px;
+    background: #ff3b30;
+    margin: 10px auto;
+    border-radius: 2px;
+    box-shadow: 0 5px 0 #9e1c1c;
+    transition: 0.2s;
+}
+
+#breaker-switch:active .lever {
+    transform: translateY(5px);
+    box-shadow: 0 0 0 #9e1c1c;
+}
 
 
 
+/* BOSS MODE OVERLAY */
+#boss-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #1e1e1e; /* VS Code Dark */
+    z-index: 999999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Consolas', monospace;
+    color: #569cd6;
+}
 
+#boss-screen.active {
+    display: flex;
+}
+
+.fake-code {
+    text-align: left;
+    background: #1e1e1e;
+    padding: 2rem;
+    width: 90%;
+    height: 90%;
+    overflow: hidden;
+    opacity: 0.7;
+}
 
 
 

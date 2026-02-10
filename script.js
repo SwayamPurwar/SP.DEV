@@ -696,6 +696,7 @@ function executeCommand(cmd) {
     const arg = parts[1];
 
     switch (action) {
+        
         case "help":
             printOutput(`
   AVAILABLE COMMANDS:
@@ -707,6 +708,7 @@ function executeCommand(cmd) {
   matrix          - Toggle Matrix Rain
   socials         - List social links
   whoami          - Reveal user identity
+  blackout/shutdown - Initiate system power cut (fun)
             `);
             break;
 
@@ -761,6 +763,13 @@ function executeCommand(cmd) {
             } else {
                 printOutput("Error: Please specify a color. (e.g., 'color red' or 'color #00ff00')");
             }
+            break;
+            case "blackout":
+            case "shutdown":
+            printOutput("INITIATING SYSTEM POWER CUT...", true);
+            setTimeout(() => {
+                 window.toggleBlackout();
+            }, 800);
             break;
 
         default:
@@ -845,3 +854,110 @@ if (tiltCards.length > 0) {
     });
 }
 // --- END OF FILE (Extra brace removed) ---
+
+
+// =========================================
+// 10. BLACKOUT PROTOCOL (Flashlight Easter Egg)
+// =========================================
+
+// 1. Inject Elements
+const blackoutDiv = document.createElement("div");
+blackoutDiv.id = "blackout-overlay";
+document.body.appendChild(blackoutDiv);
+
+const breaker = document.createElement("div");
+breaker.id = "breaker-switch";
+breaker.innerHTML = '<div class="lever"></div>';
+document.body.appendChild(breaker);
+
+// 2. Flashlight Tracking
+document.addEventListener("mousemove", (e) => {
+    if (blackoutDiv.classList.contains("active")) {
+        const x = e.clientX;
+        const y = e.clientY;
+        blackoutDiv.style.setProperty("--x", x + "px");
+        blackoutDiv.style.setProperty("--y", y + "px");
+    }
+});
+
+// 3. Toggle Logic
+window.toggleBlackout = function() {
+    const isActive = blackoutDiv.classList.contains("active");
+
+    if (!isActive) {
+        // TURN OFF LIGHTS
+        if(sfx) sfx.playClick(); // Use existing sound system
+        
+        blackoutDiv.classList.add("active");
+        
+        // Randomly position the breaker switch
+        const randX = Math.random() * (window.innerWidth - 100);
+        const randY = Math.random() * (window.innerHeight - 150);
+        breaker.style.left = randX + "px";
+        breaker.style.top = randY + "px";
+        breaker.style.display = "block";
+
+        console.log("%c SYSTEM FAILURE DETECTED ", "background: red; color: white; padding: 5px;");
+    } else {
+        // RESTORE POWER
+        if(sfx) sfx.playBoot(); // Play boot sound
+        
+        blackoutDiv.classList.remove("active");
+        breaker.style.display = "none";
+        console.log("%c SYSTEM POWER RESTORED ", "background: green; color: white; padding: 5px;");
+    }
+};
+
+// 4. Breaker Click Event
+breaker.addEventListener("click", () => {
+    window.toggleBlackout();
+});
+
+// =========================================
+// 12. BOSS MODE (Panic Button)
+// =========================================
+
+// Inject the fake screen
+const bossScreen = document.createElement("div");
+bossScreen.id = "boss-screen";
+bossScreen.innerHTML = `
+    <div class="fake-code">
+        <span style="color: #c586c0">import</span> React <span style="color: #c586c0">from</span> <span style="color: #ce9178">'react'</span>;<br><br>
+        <span style="color: #569cd6">const</span> <span style="color: #dcdcaa">App</span> = () => {<br>
+        &nbsp;&nbsp;<span style="color: #4ec9b0">console</span>.<span style="color: #dcdcaa">log</span>(<span style="color: #ce9178">"Project Deadline: ASAP"</span>);<br>
+        &nbsp;&nbsp;<span style="color: #c586c0">return</span> (<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span style="color: #569cd6">div</span> className=<span style="color: #ce9178">"container"</span>&gt;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span style="color: #569cd6">h1</span>&gt;Compiling Production Build...&lt;/<span style="color: #569cd6">h1</span>&gt;<br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span style="color: #569cd6">div</span>&gt;<br>
+        &nbsp;&nbsp;);<br>
+        }<br><br>
+        <span style="color: #6a9955">// Press ESC twice to return to portfolio</span>
+    </div>
+`;
+document.body.appendChild(bossScreen);
+
+let escCount = 0;
+let escTimer;
+
+window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        escCount++;
+        
+        // Reset count if too slow
+        clearTimeout(escTimer);
+        escTimer = setTimeout(() => { escCount = 0; }, 500);
+
+        if (escCount === 2) {
+            const screen = document.getElementById("boss-screen");
+            if (screen.style.display === "flex") {
+                screen.style.display = "none"; // Hide
+            } else {
+                screen.style.display = "flex"; // Show
+                document.title = "index.js - Visual Studio Code"; // Fake Title
+            }
+            escCount = 0;
+        }
+    }
+});
+
+
