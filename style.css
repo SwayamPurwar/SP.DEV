@@ -1090,3 +1090,24 @@ main, nav, footer {
         transition: color 0.3s ease;
     }
 }
+
+
+/* --- GOD MODE MOBILE CONTROLS --- */
+#cmd-close-mobile {
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    font-weight: bold;
+    opacity: 0.7;
+}
+
+/* Ensure the input doesn't zoom on mobile */
+#cmd-input {
+    font-size: 16px !important; 
+}
+
+/* On mobile, make the terminal header bigger for touching */
+@media (max-width: 768px) {
+    .cmd-header {
+        padding: 1rem;
+    }
+}

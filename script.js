@@ -776,7 +776,43 @@ function executeCommand(cmd) {
     }
 }
 
+// --- MOBILE GOD MODE TRIGGERS ---
 
+// 1. SECRET: Triple Tap Logo to Open
+const logoTrigger = document.querySelector('.logo');
+let tapCount = 0;
+let tapTimer;
+
+if (logoTrigger) {
+    logoTrigger.addEventListener('click', (e) => {
+        // Count taps
+        tapCount++;
+        
+        // Reset count if too much time passes (500ms)
+        clearTimeout(tapTimer);
+        tapTimer = setTimeout(() => {
+            tapCount = 0;
+        }, 500);
+
+        // If 3 taps detected
+        if (tapCount === 3) {
+            e.preventDefault(); // Stop page reload
+            toggleTerminal();
+            tapCount = 0; // Reset
+            
+            // Optional: Mobile Vibration Feedback
+            if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
+        }
+    });
+}
+
+// 2. Close Button Logic
+const closeCmdBtn = document.getElementById("cmd-close-mobile");
+if (closeCmdBtn) {
+    closeCmdBtn.addEventListener("click", () => {
+        toggleTerminal(); // Close it
+    });
+}
 // =========================================
 // 9. HOLOGRAPHIC TILT EFFECT (3D Cards)
 // =========================================
