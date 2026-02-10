@@ -392,3 +392,17 @@ window.addEventListener('keydown', (e) => {
 window.addEventListener('mousemove', () => {
     document.body.classList.remove('user-is-tabbing');
 });
+
+// --- AMBIENT GLOW FOLLOWER ---
+const glow = document.getElementById("ambient-glow");
+
+if (glow) {
+    // We use a slower duration (1.5) for a "floating" feel
+    const glowX = gsap.quickTo(glow, "x", { duration: 1.5, ease: "power3.out" });
+    const glowY = gsap.quickTo(glow, "y", { duration: 1.5, ease: "power3.out" });
+
+    window.addEventListener("mousemove", (e) => {
+        glowX(e.clientX);
+        glowY(e.clientY);
+    });
+}

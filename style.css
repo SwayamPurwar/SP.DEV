@@ -811,3 +811,27 @@ a:focus-visible {
 body.user-is-tabbing #cursor {
     opacity: 0;
 }
+
+/* --- AMBIENT SPOTLIGHT --- */
+#ambient-glow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 600px;  /* Size of the light */
+    height: 600px;
+    background: radial-gradient(circle, rgba(138, 43, 226, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
+    /* You can change the color above ^ (currently purple) */
+    
+    border-radius: 50%;
+    pointer-events: none; /* Let clicks pass through */
+    z-index: 1; /* Behind content (content is usually z-index 10+) */
+    transform: translate(-50%, -50%); /* Centers the div on coordinates */
+    mix-blend-mode: screen; /* Blends nicely with the dark background */
+    will-change: transform; /* Performance optimization */
+}
+
+/* Ensure content stays on top of the light */
+main, nav, footer {
+    position: relative;
+    z-index: 10;
+}
