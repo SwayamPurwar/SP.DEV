@@ -1231,5 +1231,63 @@ main, nav, footer {
 
 
 
+/* --- REALITY SHIFTS (Themes) --- */
+
+/* 1. BLUEPRINT MODE */
+body.theme-blueprint {
+    background-color: #0d2b45;
+    background-image: 
+        linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    color: #bce7fd;
+    font-family: 'Courier New', monospace !important;
+}
+body.theme-blueprint h1, 
+body.theme-blueprint h2, 
+body.theme-blueprint a {
+    color: #fff !important;
+    text-shadow: none !important;
+    font-family: 'Courier New', monospace !important;
+    text-transform: uppercase;
+}
+body.theme-blueprint .project, 
+body.theme-blueprint .glass-card {
+    background: transparent;
+    border: 2px solid #bce7fd;
+    border-radius: 0;
+    backdrop-filter: none;
+}
+
+/* 2. PAPER MODE (Sketchy) */
+body.theme-paper {
+    background-color: #f4e4bc;
+    color: #2b2b2b;
+    font-family: 'Garamond', serif !important;
+}
+body.theme-paper h1, 
+body.theme-paper h2 {
+    color: #1a1a1a !important;
+    font-family: 'Georgia', serif !important;
+    letter-spacing: -1px;
+}
+body.theme-paper .grid-bg, 
+body.theme-paper #ambient-glow { display: none; } /* Hide tech effects */
+body.theme-paper .project, 
+body.theme-paper .glass-card {
+    background: #fff;
+    border: 2px solid #2b2b2b;
+    border-radius: 4px;
+    box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+    color: #000;
+}
 
 
+
+/* --- TERMINAL BLINK EFFECT --- */
+.blink {
+    animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+    50% { opacity: 0; }
+}

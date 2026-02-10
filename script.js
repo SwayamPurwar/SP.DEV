@@ -670,16 +670,29 @@ function toggleTerminal() {
 }
 
 // Process Commands
+let isAiMode = false;
+
 cmdInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
-        const command = cmdInput.value.toLowerCase().trim();
-        if (command) {
-            printOutput(`user@swayam:~$ ${command}`);
-            executeCommand(command);
-            cmdInput.value = "";
-            // Scroll to bottom
-            cmdOutput.scrollTop = cmdOutput.scrollHeight;
+        const input = cmdInput.value.trim();
+        if (!input) return;
+
+        if (isAiMode) {
+            // Route to AI Handler
+            printOutput(`<span style="color: #fff">You:</span> ${input}`, true);
+            processAiQuery(input);
+        } else {
+            // Standard Command Handler
+            printOutput(`user@swayam:~$ ${input}`);
+            executeCommand(input.toLowerCase());
         }
+        
+        cmdInput.value = "";
+        cmdInput.focus();
+        // Keep scrolled to bottom
+        setTimeout(() => {
+            cmdOutput.scrollTop = cmdOutput.scrollHeight;
+        }, 50);
     }
 });
 
@@ -709,6 +722,8 @@ function executeCommand(cmd) {
   socials         - List social links
   whoami          - Reveal user identity
   blackout/shutdown - Initiate system power cut (fun)
+  gravity         - [DANGER] Disable anti-gravity
+  theme [name]    - Switch reality (blueprint, paper)
             `);
             break;
 
@@ -772,6 +787,36 @@ function executeCommand(cmd) {
             }, 800);
             break;
 
+            case "gravity":
+            printOutput("WARNING: ARTIFICIAL GRAVITY GENERATORS FAILING...", true);
+            setTimeout(() => {
+                printOutput("CRITICAL ERROR: STRUCTURE UNSTABLE.");
+                initGravity();
+            }, 1000);
+            break;
+
+        case "theme":
+            if (arg === "blueprint") {
+                document.body.className = "theme-blueprint";
+                printOutput("System reloaded: BLUEPRINT ARCHITECTURE.");
+            } else if (arg === "paper") {
+                document.body.className = "theme-paper";
+                printOutput("System reloaded: ANALOG MODE.");
+            } else if (arg === "reset" || arg === "default") {
+                document.body.className = "";
+                printOutput("System restored to factory settings.");
+            } else {
+                printOutput("Themes available: blueprint, paper, reset");
+            }
+            break;
+            case "ai":
+        case "chat":
+            isAiMode = true;
+            printOutput("------------------------------------------------");
+            printOutput("S.A.M. (System Automated Module) v1.0 ONLINE.");
+            printOutput("Connected. Talk to me naturally. Type 'exit' to quit.");
+            printOutput("------------------------------------------------");
+            break;
         default:
             printOutput(`Command not found: '${cmd}'. Type 'help' for options.`);
     }
@@ -959,5 +1004,182 @@ window.addEventListener("keydown", (e) => {
         }
     }
 });
+// =========================================
+// 13. GRAVITY SIMULATION (The "Crumble" Effect)
+// =========================================
+let gravityInterval;
+const gravityElements = [];
 
+function initGravity() {
+    if (gravityInterval) return; // Already running
 
+    const elements = document.querySelectorAll('p, h1, h2, h3, span, img, .btn, .nav-item, .project-card');
+    
+    elements.forEach(el => {
+        // Store original state to reset later if needed
+        const rect = el.getBoundingClientRect();
+        
+        // We need to set them to fixed/absolute to move them freely
+        // This is a "destructive" action for the layout
+        el.dataset.origStyle = el.style.cssText;
+        el.style.position = 'fixed';
+        el.style.left = rect.left + 'px';
+        el.style.top = rect.top + 'px';
+        el.style.width = rect.width + 'px';
+        el.style.margin = '0';
+        el.style.transition = 'none'; // Disable CSS transitions for physics
+        
+        // Random horizontal push + Physics props
+        gravityElements.push({
+            element: el,
+            vx: (Math.random() - 0.5) * 4, // Random horizontal velocity
+            vy: 0,                         // Start stationary vertical
+            bounciness: Math.random() * 0.5 + 0.3 // Random bounce factor
+        });
+    });
+
+    // Physics Loop
+    gravityInterval = setInterval(() => {
+        gravityElements.forEach(obj => {
+            // Apply Gravity
+            obj.vy += 0.5; 
+            
+            // Get current pos
+            let top = parseFloat(obj.element.style.top);
+            let left = parseFloat(obj.element.style.left);
+            
+            // Move
+            top += obj.vy;
+            left += obj.vx;
+            
+            // Floor Collision (Window Bottom)
+            if (top + obj.element.offsetHeight > window.innerHeight) {
+                top = window.innerHeight - obj.element.offsetHeight;
+                obj.vy *= -obj.bounciness; // Bounce
+                obj.vx *= 0.95; // Friction
+                
+                // Stop small jitters
+                if (Math.abs(obj.vy) < 1) obj.vy = 0;
+            }
+
+            // Wall Collision
+            if (left < 0 || left + obj.element.offsetWidth > window.innerWidth) {
+                obj.vx *= -1; // Bounce off walls
+                if(left < 0) left = 0;
+                else left = window.innerWidth - obj.element.offsetWidth;
+            }
+
+            // Apply
+            obj.element.style.top = top + 'px';
+            obj.element.style.left = left + 'px';
+            
+            // Fun rotation based on velocity
+            obj.element.style.transform = `rotate(${obj.vx * 2}deg)`;
+        });
+    }, 16); // ~60fps
+
+    console.log("%c GRAVITY ENABLED. GOODBYE LAYOUT. ", "background: red; color: white; font-size: 14px;");
+}
+
+// =========================================
+// 14. S.A.M. ARTIFICIAL INTELLIGENCE LOGIC
+// =========================================
+function processAiQuery(input) {
+    const text = input.toLowerCase();
+    let response = "";
+    let delay = 600; // Simulated thinking time
+    let action = null;
+
+    // --- LOGIC BRAIN ---
+    
+    // 1. GREETINGS
+    if (text.includes("hello") || text.includes("hi ") || text.trim() === "hi") {
+        response = "Greetings. I am S.A.M., the system guardian. How can I assist?";
+    }
+    
+    // 2. IDENTITY
+    else if (text.includes("who are you") || text.includes("what are you")) {
+        response = "I am a simulated intelligence running on Swayam's portfolio. I control the interface logic.";
+    }
+    else if (text.includes("who is swayam")) {
+        response = "Swayam is a Creative Developer based in India. He specializes in React, MongoDB, and breaking the laws of physics on the web.";
+    }
+    
+    // 3. COMMAND TRIGGERS (NATURAL LANGUAGE)
+    else if (text.includes("destroy") || text.includes("collapse") || text.includes("fall")) {
+        response = "Initiating structural collapse sequence...";
+        action = () => initGravity(); // Triggers your Gravity function
+    }
+    else if (text.includes("dark") || text.includes("light") || text.includes("blackout")) {
+        response = "Toggling lighting systems...";
+        action = () => window.toggleBlackout(); // Triggers your Flashlight function
+    }
+    else if (text.includes("matrix") || text.includes("hack")) {
+        response = "Injecting code into the mainframe...";
+        action = () => {
+             if(window.toggleMatrix) window.toggleMatrix(true);
+        };
+    }
+    else if (text.includes("blueprint")) {
+        response = "Switching to architectural view.";
+        action = () => document.body.className = "theme-blueprint";
+    }
+    
+    // 4. NAVIGATION
+    else if (text.includes("project") || text.includes("work")) {
+        response = "Navigating to project sector.";
+        action = () => window.location.href = "#work";
+    }
+    else if (text.includes("contact") || text.includes("email")) {
+        response = "Opening communication channels.";
+        action = () => window.location.href = "#contact";
+    }
+
+    // 5. EXIT
+    else if (text === "exit" || text === "quit" || text === "bye") {
+        response = "Terminating session. Returning to standard terminal.";
+        isAiMode = false;
+    }
+
+    // 6. FALLBACK (UNKNOWN)
+    else {
+        const fallbacks = [
+            "Processing... I do not understand that query.",
+            "My database is limited. Ask about Swayam, or try 'destroy site'.",
+            "Syntax Error. Please rephrase.",
+            "I am programmed to code, not to chat about the weather."
+        ];
+        response = fallbacks[Math.floor(Math.random() * fallbacks.length)];
+    }
+
+    // --- SIMULATE TYPING EFFECT ---
+    // Create a loading line first
+    const loadingId = "ai-loading-" + Date.now();
+    printOutput(`<span id="${loadingId}" style="color: #0f0">S.A.M. ></span> Thinking...`, true);
+
+    setTimeout(() => {
+        // Remove "Thinking..." and replace with actual response
+        const loader = document.getElementById(loadingId);
+        if(loader) loader.parentElement.remove(); // Remove the thinking line
+        
+        // Type out the response character by character
+        const line = document.createElement("div");
+        line.innerHTML = `<span style="color: #0f0">S.A.M. ></span> `;
+        cmdOutput.appendChild(line);
+
+        let i = 0;
+        const typeInterval = setInterval(() => {
+            line.innerHTML += response.charAt(i);
+            cmdOutput.scrollTop = cmdOutput.scrollHeight;
+            i++;
+            if (i >= response.length) {
+                clearInterval(typeInterval);
+                // Execute any attached action after talking
+                if (action) {
+                    setTimeout(action, 500);
+                }
+            }
+        }, 30); // Typing speed
+
+    }, delay);
+}
