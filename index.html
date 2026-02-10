@@ -110,6 +110,7 @@
   </head>
 
   <body>
+    <canvas id="matrix-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; opacity: 0; mix-blend-mode: screen;"></canvas>
     <div id="ambient-glow"></div>
     <div class="preloader-container">
       <div class="loader-content">
@@ -163,9 +164,9 @@
             >DEVELOPER</span
           >
         </div>
-        <p class="hero-sub">
-          Based in Bhopal, India &bull; Available for Freelance
-        </p>
+       <p class="hero-sub">
+  Based in Bhopal, India &bull; <span id="live-clock">--:--:-- IST</span> &bull; Available for Freelance
+</p>
 
         <div class="cv-wrapper">
           <a

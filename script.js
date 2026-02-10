@@ -100,12 +100,12 @@ if (preloader) {
             ease: "power4.out" 
         }, "-=0.8");
 
-        tl.from(".hero-sub", { 
-            y: 30, 
-            opacity: 0, 
-            duration: 1, 
-            ease: "power3.out" 
-        }, "-=0.6");
+ // NEW FIXED CODE
+tl.fromTo(".hero-sub", 
+    { y: 30, opacity: 0 },      // Start State
+    { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, // End State
+    "-=0.6"
+);
 
         if(document.querySelector(".cv-wrapper")) {
             tl.from(".cv-wrapper", { 
@@ -404,5 +404,117 @@ if (glow) {
     window.addEventListener("mousemove", (e) => {
         glowX(e.clientX);
         glowY(e.clientY);
+    });
+}
+
+// --- LIVE LOCAL TIME (IST) ---
+function updateLiveClock() {
+    const clockElement = document.getElementById("live-clock");
+    if (clockElement) {
+        // specific time for India (Asia/Kolkata)
+        const now = new Date();
+        const timeString = now.toLocaleTimeString("en-US", {
+            timeZone: "Asia/Kolkata",
+            hour12: false, // Use 24-hour format (looks more "dev")
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit"
+        });
+        
+        clockElement.textContent = timeString + " IST";
+    }
+}
+
+// Update immediately, then every second
+updateLiveClock();
+setInterval(updateLiveClock, 1000);
+// --- EASTER EGG: MATRIX RAIN ---
+const secretCode = "matrix";
+let inputSequence = "";
+const canvas = document.getElementById("matrix-canvas");
+const ctx = canvas ? canvas.getContext("2d") : null;
+
+if (canvas && ctx) {
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    canvas.width = width;
+    canvas.height = height;
+
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*";
+    const fontSize = 16;
+    const columns = Math.floor(width / fontSize);
+    const drops = new Array(columns).fill(1); // Y-coordinate of drops
+    let matrixInterval;
+    let isActive = false;
+
+    // Resize safely
+    window.addEventListener("resize", () => {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+    });
+
+    function drawMatrix() {
+        // Semi-transparent black to create trail effect
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = "#0F0"; // Green Text
+        ctx.font = `${fontSize}px 'Fira Code'`;
+
+        for (let i = 0; i < drops.length; i++) {
+            const text = characters.charAt(Math.floor(Math.random() * characters.length));
+            ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+            // Reset drop to top randomly
+            if (drops[i] * fontSize > height && Math.random() > 0.975) {
+                drops[i] = 0;
+            }
+            drops[i]++;
+        }
+    }
+
+    function toggleMatrix(enable) {
+        if (enable) {
+            isActive = true;
+            // Fade In
+            gsap.to(canvas, { opacity: 1, duration: 1 });
+            // Start Loop
+            matrixInterval = setInterval(drawMatrix, 33);
+            
+            // Optional: Change Site Colors to Hacker Green temporarily
+            document.documentElement.style.setProperty('--accent', '#0F0');
+        } else {
+            isActive = false;
+            // Fade Out
+            gsap.to(canvas, { opacity: 0, duration: 1, onComplete: () => {
+                clearInterval(matrixInterval);
+                ctx.clearRect(0, 0, width, height); // Clean up
+            }});
+            // Reset Colors
+            document.documentElement.style.setProperty('--accent', '#bfa5d8');
+        }
+    }
+
+    // LISTENER
+    window.addEventListener("keydown", (e) => {
+        // Add key to sequence
+        inputSequence += e.key.toLowerCase();
+        
+        // Trim sequence to match code length
+        if (inputSequence.length > secretCode.length) {
+            inputSequence = inputSequence.slice(-secretCode.length);
+        }
+
+        // CHECK CODE
+        if (inputSequence === secretCode) {
+            if (!isActive) {
+                toggleMatrix(true);
+                console.log("%c SYSTEM BREACH DETECTED ", "background: #000; color: #0f0; font-size: 20px");
+            } else {
+                toggleMatrix(false); // Type it again to turn off
+            }
+        }
     });
 }

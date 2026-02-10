@@ -835,3 +835,10 @@ main, nav, footer {
     position: relative;
     z-index: 10;
 }
+/* --- LIVE CLOCK --- */
+#live-clock {
+    font-family: 'Fira Code', monospace; /* Keeps width consistent */
+    font-variant-numeric: tabular-nums;  /* Forces numbers to line up */
+    color: #bfa5d8; /* Your accent purple (optional, or keep white) */
+    font-weight: 500;
+}
