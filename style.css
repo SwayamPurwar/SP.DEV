@@ -1061,3 +1061,32 @@ main, nav, footer {
         transform: none !important; /* Removes layering traps */
     }
 }
+
+
+
+
+
+
+/* --- FIX: CLEANER / SUBTLE MOBILE PROJECTS --- */
+@media (max-width: 768px) {
+    .project {
+        /* Remove the "Box" look */
+        border: none !important;
+        
+        /* Add a simple, faint separator line at the bottom */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+        
+        /* Remove the harsh glow and background flash */
+        background: transparent !important;
+        box-shadow: none !important;
+        
+        /* Reset padding to look like a list, not a card */
+        padding: 2rem 0 !important;
+        border-radius: 0 !important;
+    }
+
+    /* Optional: Ensure the text still highlights nicely */
+    .project h2 {
+        transition: color 0.3s ease;
+    }
+}
