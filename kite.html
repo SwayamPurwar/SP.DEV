@@ -1,134 +1,194 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kite Trading | Coming Soon</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&family=Fira+Code:wght@400&display=swap"
-      rel="stylesheet"
-    />
+    <title>Kite Trading | System Initializing...</title>
+    <meta name="description" content="A high-frequency trading platform clone currently in development, featuring WebSockets and real-time data visualization.">
 
     <link rel="icon" type="image/webp" href="favicon.webp" />
     <link rel="stylesheet" href="style.css" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet"/>
+
     <style>
+      /* --- PAGE SPECIFIC STYLES --- */
       :root {
         --brand-blue: #3772ff;
         --brand-orange: #ff5722;
-        --surface-dark: #050505;
+        --brand-green: #00d1b2;
       }
 
       body {
-        background-color: var(--surface-dark);
-        color: white;
+        background-color: var(--bg-color);
         overflow-x: hidden;
       }
 
-      /* --- SMART NAV --- */
-      nav {
-        background: transparent !important;
-        backdrop-filter: none !important;
-        transition: all 0.4s ease;
+      /* 1. TECH GRID BACKGROUND */
+      .grid-bg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(rgba(55, 114, 255, 0.05) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(55, 114, 255, 0.05) 1px, transparent 1px);
+        background-size: 40px 40px;
+        z-index: -2;
+        pointer-events: none;
       }
-      nav.scrolled {
-        background: rgba(10, 10, 10, 0.8) !important;
-        backdrop-filter: blur(15px) !important;
-        -webkit-backdrop-filter: blur(15px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+      /* 2. DATA ORB */
+      .orb {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60vw;
+        height: 60vw;
+        background: radial-gradient(circle, rgba(55, 114, 255, 0.1) 0%, rgba(0,0,0,0) 70%);
+        filter: blur(80px);
+        z-index: -1;
+        pointer-events: none;
+        animation: pulse 4s infinite alternate ease-in-out;
       }
-      
+
+      @keyframes pulse {
+          0% { opacity: 0.3; transform: translate(-50%, -50%) scale(0.9); }
+          100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1.1); }
+      }
+
+      /* Mobile Navigation Overrides */
       @media (max-width: 768px) {
-          nav, nav.scrolled {
-            padding: 1.5rem 6vw !important;
-            mix-blend-mode: normal !important;
-          }
-          .nav-links { display: flex !important; gap: 1rem; }
-          .nav-item {
-            color: #fff !important;
-            font-size: 0.85rem;
-          }
-          nav { background: transparent; }
-          nav.scrolled { background: rgba(10, 10, 10, 0.85) !important; }
+        .nav-links { display: flex !important; gap: 1rem; }
+        .nav-item { font-size: 0.8rem; }
+        nav, nav.scrolled { padding: 1.5rem 2rem !important; }
       }
 
       /* --- HERO SECTION --- */
       .cs-hero {
-        position: relative;
-        padding: 20vh 8vw 10vh;
+        padding: 180px 10vw 10vh; /* Fixed Padding */
         min-height: 85vh;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-      }
-
-      /* Progress Bar Animation */
-      .progress-bar {
-        width: 200px;
-        height: 4px;
-        background: #222;
-        margin-bottom: 2rem;
-        border-radius: 4px;
-        overflow: hidden;
-      }
-      .progress-fill {
-        width: 65%; /* Change this to update progress */
-        height: 100%;
-        background: var(--brand-blue);
-        box-shadow: 0 0 10px var(--brand-blue);
-      }
-
-      .status-tag {
-        font-family: 'Fira Code', monospace;
-        color: var(--brand-orange);
-        font-size: 0.9rem;
-        margin-bottom: 1rem;
         display: block;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
       }
 
+      /* GLITCH TITLE */
       .cs-title {
         font-size: clamp(3rem, 10vw, 8rem);
         line-height: 0.95;
         font-family: "Syne", sans-serif;
-        margin-bottom: 2rem;
-        color: transparent;
-        -webkit-text-stroke: 1px white;
-        opacity: 0.8;
+        font-weight: 800;
+        margin-bottom: 3rem;
+        color: white;
+        position: relative;
+        width: fit-content;
       }
+      
+      .cs-title::after {
+          content: "KITE TRADING";
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: var(--bg-color);
+          color: var(--brand-blue);
+          mix-blend-mode: overlay;
+          opacity: 0;
+          animation: glitch 3s infinite;
+      }
+
+      @keyframes glitch {
+          0% { clip-path: inset(50% 0 30% 0); transform: translate(-2px, 2px); opacity: 0.5; }
+          5% { clip-path: inset(10% 0 60% 0); transform: translate(2px, -2px); opacity: 0.5; }
+          10% { clip-path: inset(80% 0 5% 0); transform: translate(2px, 2px); opacity: 0.5; }
+          15% { opacity: 0; }
+          100% { opacity: 0; }
+      }
+
+      /* TERMINAL BOX */
+      .terminal-box {
+        background: rgba(10, 10, 10, 0.8);
+        border: 1px solid #333;
+        border-radius: 8px;
+        padding: 1.5rem;
+        font-family: 'Fira Code', monospace;
+        font-size: 0.9rem;
+        color: #ccc;
+        max-width: 600px;
+        margin-bottom: 3rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        backdrop-filter: blur(10px);
+        opacity: 0; /* Hidden initially, animated by script */
+      }
+
+      .terminal-header {
+          display: flex;
+          gap: 6px;
+          margin-bottom: 1rem;
+          opacity: 0.5;
+      }
+      .dot { width: 10px; height: 10px; border-radius: 50%; background: #555; }
+      .dot.red { background: #ff5f56; }
+      .dot.yellow { background: #ffbd2e; }
+      .dot.green { background: #27c93f; }
+
+      .cmd-line {
+          display: block;
+          margin-bottom: 0.5rem;
+          opacity: 0; 
+      }
+      
+      .cursor-blink {
+          display: inline-block;
+          width: 8px;
+          height: 15px;
+          background: var(--brand-blue);
+          animation: blink 1s infinite;
+          vertical-align: middle;
+      }
+      @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+      .text-green { color: var(--brand-green); }
+      .text-blue { color: var(--brand-blue); }
+      .text-orange { color: var(--brand-orange); }
 
       .cs-intro {
         font-size: clamp(1rem, 2vw, 1.25rem);
         max-width: 600px;
-        color: #ccc;
+        color: #888;
         line-height: 1.6;
       }
 
       /* --- TECH STACK GRID --- */
       .tech-preview {
-        padding: 10vh 8vw;
+        padding: 10vh 10vw;
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 4rem;
       }
 
       .tech-card {
-        background: #0f0f0f;
-        padding: 2rem;
-        border: 1px solid #222;
+        background: rgba(255,255,255,0.02);
+        padding: 2.5rem;
+        border: 1px solid rgba(255,255,255,0.08);
         border-radius: 12px;
+        transition: 0.3s;
+      }
+      
+      .tech-card:hover {
+          border-color: var(--brand-blue);
+          background: rgba(55, 114, 255, 0.05);
       }
 
       .tech-card h3 {
         color: #fff;
         font-size: 1.2rem;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 10px;
+        margin-bottom: 1.5rem;
+        font-family: 'Syne', sans-serif;
       }
 
       .tech-list {
@@ -138,68 +198,94 @@
       }
 
       .tech-pill {
-        font-size: 0.8rem;
-        padding: 6px 12px;
-        background: rgba(255,255,255,0.05);
+        font-size: 0.85rem;
+        padding: 8px 16px;
+        background: rgba(255,255,255,0.03);
         border: 1px solid rgba(255,255,255,0.1);
         border-radius: 50px;
-        color: #888;
+        color: #aaa;
+        cursor: default;
+        transition: 0.3s;
+      }
+      
+      .tech-pill:hover {
+          color: white;
+          border-color: #fff;
+      }
+
+      @media (max-width: 1024px) {
+          .cs-hero { padding: 160px 8vw 5vh; }
       }
 
       @media (max-width: 768px) {
-        .tech-preview { grid-template-columns: 1fr; gap: 2rem; }
+        .cs-hero { padding: 140px 6vw 5vh; }
+        .tech-preview { padding: 5vh 6vw; grid-template-columns: 1fr; gap: 2rem; }
+        .cs-title { font-size: 14vw; }
       }
     </style>
   </head>
   <body>
-    <div id="cursor"></div>
+    <div id="cursor" aria-hidden="true"></div>
+    
+    <div class="grid-bg"></div>
+    <div class="orb"></div>
 
     <nav>
-      <a href="index.html" class="logo mouse-hover">SWAYAM.DEV</a>
+      <a href="index.html" class="logo mouse-hover">SP.DEV</a>
       <div class="nav-links">
         <a href="index.html" class="nav-item mouse-hover">Back to Home</a>
       </div>
     </nav>
 
-    <section class="cs-hero">
-      <div class="reveal-text">
-        <span class="status-tag">&lt; SYSTEM_STATUS: BUILDING /&gt;</span>
-        
-        <div class="progress-bar">
-            <div class="progress-fill"></div>
-        </div>
-
-        <h1 class="cs-title">
-          KITE<br /><span style="color: white; -webkit-text-stroke: 0">TRADING</span>
-        </h1>
-        
-        <p class="cs-intro">
-          A high-frequency trading platform clone engineered for speed. 
-          Currently implementing WebSocket pipelines for real-time stock data 
-          and order execution.
-        </p>
-      </div>
-    </section>
-
-    <section class="tech-preview reveal-text">
-        <div class="tech-card">
-            <h3>Backend Architecture</h3>
-            <div class="tech-list">
-                <span class="tech-pill">Node.js</span>
-                <span class="tech-pill">WebSockets (Socket.io)</span>
-                <span class="tech-pill">MongoDB</span>
+    <main>
+        <section class="cs-hero">
+            <div class="terminal-box">
+                <div class="terminal-header">
+                    <div class="dot red"></div>
+                    <div class="dot yellow"></div>
+                    <div class="dot green"></div>
+                </div>
+                <div class="terminal-body">
+                    <span class="cmd-line">><span class="text-blue"> git clone</span> kite-trading-engine</span>
+                    <span class="cmd-line">><span class="text-orange"> npm install</span> socket.io-client</span>
+                    <span class="cmd-line">> Establishing WebSocket Handshake... <span class="text-green">[OK]</span></span>
+                    <span class="cmd-line">> Fetching NIFTY 50 Live Data... <span class="text-green">[200 OK]</span></span>
+                    <span class="cmd-line">> System Status: <span class="text-blue">BUILDING...</span><span class="cursor-blink"></span></span>
+                </div>
             </div>
-        </div>
-        <div class="tech-card">
-            <h3>Frontend Experience</h3>
-            <div class="tech-list">
-                <span class="tech-pill">React</span>
-                <span class="tech-pill">Lightweight Charts</span>
-                <span class="tech-pill">TailwindCSS</span>
-                <span class="tech-pill">Framer Motion</span>
+    
+            <h1 class="cs-title">
+              KITE<br /><span style="color: transparent; -webkit-text-stroke: 1px white;">TRADING</span>
+            </h1>
+            
+            <p class="cs-intro">
+              A high-frequency trading platform clone engineered for speed. 
+              Currently implementing WebSocket pipelines for real-time stock data 
+              and sub-millisecond order execution.
+            </p>
+        </section>
+    
+        <section class="tech-preview">
+            <div class="tech-card">
+                <h3>Backend Architecture</h3>
+                <div class="tech-list">
+                    <span class="tech-pill mouse-hover">Node.js</span>
+                    <span class="tech-pill mouse-hover">WebSockets (Socket.io)</span>
+                    <span class="tech-pill mouse-hover">MongoDB Timeseries</span>
+                    <span class="tech-pill mouse-hover">Redis</span>
+                </div>
             </div>
-        </div>
-    </section>
+            <div class="tech-card">
+                <h3>Frontend Experience</h3>
+                <div class="tech-list">
+                    <span class="tech-pill mouse-hover">React 19</span>
+                    <span class="tech-pill mouse-hover">Lightweight Charts</span>
+                    <span class="tech-pill mouse-hover">TailwindCSS</span>
+                    <span class="tech-pill mouse-hover">Framer Motion</span>
+                </div>
+            </div>
+        </section>
+    </main>
 
     <footer id="contact">
       <div class="footer-split">
@@ -216,69 +302,44 @@
       </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
+    <script src="script.js" defer></script>
 
     <script>
-      // 1. Disable Right Click
-      document.addEventListener("contextmenu", (e) => e.preventDefault());
-      
-      // 2. Nav Logic
-      const nav = document.querySelector('nav');
-      if(nav) {
-          window.addEventListener('scroll', () => {
-              if (window.scrollY > 50) nav.classList.add('scrolled');
-              else nav.classList.remove('scrolled');
+      document.addEventListener("DOMContentLoaded", () => {
+          const tl = gsap.timeline();
+
+          // 1. Reveal Terminal Box first
+          tl.to(".terminal-box", {
+              opacity: 1,
+              y: 0,
+              duration: 0.8,
+              ease: "power3.out"
           });
-      }
 
-      // 3. Custom Cursor
-      const cursor = document.getElementById("cursor");
-      const xTo = gsap.quickTo(cursor, "x", {duration: 0.1, ease: "power3.out"});
-      const yTo = gsap.quickTo(cursor, "y", {duration: 0.1, ease: "power3.out"});
-
-      if (window.matchMedia("(pointer: fine)").matches) {
-          document.addEventListener("mousemove", (e) => {
-            xTo(e.clientX);
-            yTo(e.clientY);
+          // 2. Type out lines
+          tl.to(".cmd-line", {
+              opacity: 1,
+              stagger: 0.6,
+              duration: 0,
+              ease: "none"
           });
-          document.querySelectorAll(".mouse-hover").forEach((el) => {
-            el.addEventListener("mouseenter", () => cursor.classList.add("hovered"));
-            el.addEventListener("mouseleave", () => cursor.classList.remove("hovered"));
-          });
-      }
 
-      // 4. Reveal Animations
-      gsap.registerPlugin(ScrollTrigger);
-      
-      gsap.from(".progress-bar", {width: 0, duration: 1.5, ease: "power4.out", delay: 0.2});
-      
-      gsap.from(".cs-title", {
-        y: 50, opacity: 0, duration: 1, ease: "power3.out", delay: 0.5
-      });
-      
-      gsap.from(".cs-intro", {
-        y: 20, opacity: 0, duration: 1, ease: "power3.out", delay: 0.7
-      });
+          // 3. Reveal Title (Wait for typing to finish partially)
+          tl.from(".cs-title", {
+            y: 50, opacity: 0, duration: 1, ease: "power3.out"
+          }, "-=1.5"); 
 
-      gsap.from(".tech-card", {
-        scrollTrigger: { trigger: ".tech-preview", start: "top 80%" },
-        y: 30, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power3.out"
-      });
-      
-      // 5. Magnetic Buttons
-      const magnets = document.querySelectorAll(".nav-item, .tech-pill");
-      magnets.forEach((magnet) => {
-        magnet.addEventListener("mousemove", (e) => {
-          const bounding = magnet.getBoundingClientRect();
-          const strength = 20;
-          const newX = (e.clientX - bounding.left) / magnet.offsetWidth - 0.5;
-          const newY = (e.clientY - bounding.top) / magnet.offsetHeight - 0.5;
-          gsap.to(magnet, { duration: 1, x: newX * strength, y: newY * strength, ease: "power4.out" });
-        });
-        magnet.addEventListener("mouseleave", () => {
-          gsap.to(magnet, { duration: 1, x: 0, y: 0, ease: "elastic.out(1, 0.3)" });
-        });
+          // 4. Reveal Intro
+          tl.from(".cs-intro", {
+            y: 20, opacity: 0, duration: 1, ease: "power3.out"
+          }, "-=0.8");
+    
+          // 5. Reveal Cards
+          tl.from(".tech-card", {
+            y: 30, opacity: 0, duration: 0.8, stagger: 0.2, ease: "power3.out"
+          }, "-=0.6");
       });
     </script>
   </body>
