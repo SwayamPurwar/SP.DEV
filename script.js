@@ -414,7 +414,7 @@ function updateLiveClock() {
         const now = new Date();
         const timeString = now.toLocaleTimeString("en-US", {
             timeZone: "Asia/Kolkata",
-            hour12: false, // Use 24-hour format (looks more "dev")
+            hour12: true, 
             hour: "2-digit",
             minute: "2-digit",
             second: "2-digit"
