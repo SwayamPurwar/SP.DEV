@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Kite Trading Architecture | Engineering Deep Dive</title>
+    <meta name="description" content="A comprehensive engineering case study on building a high-frequency trading engine using Node.js, Redis, and WebSockets.">
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="icon" type="image/webp" href="./assets/images/favicon.webp" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;800&family=Syne:wght@700;800&display=swap" rel="stylesheet" />
+
+    <style>
+      /* --- GLOBAL OVERRIDES --- */
+      body {
+        background-color: var(--bg-color);
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        -webkit-font-smoothing: antialiased;
+      }
+      
+      /* --- BACKGROUNDS --- */
+      .grid-bg {
+        position: fixed; inset: 0;
+        background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                          linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        background-size: 40px 40px; z-index: -2; pointer-events: none;
+      }
+      .orb {
+        position: fixed; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.15;
+      }
+      .orb-1 { top: -10%; left: -10%; width: 60vw; height: 60vw; background: #00E396; }
+      .orb-2 { bottom: -10%; right: -10%; width: 50vw; height: 50vw; background: #008FFB; }
+
+      /* --- HERO SECTION --- */
+      .cs-hero {
+        padding: 160px 5vw 60px;
+        max-width: 1400px; margin: 0 auto;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+      }
+      
+      .breadcrumbs {
+        font-family: 'Fira Code', monospace; color: #666; font-size: 0.75rem; margin-bottom: 1rem;
+        display: flex; gap: 8px; align-items: center;
+      }
+      .active-crumb { color: #00E396; }
+
+      .cs-title {
+        font-size: clamp(2.5rem, 6vw, 5rem);
+        line-height: 1.1; font-family: "Syne", sans-serif; font-weight: 800; color: white;
+        margin-bottom: 2rem; letter-spacing: -0.02em;
+      }
+      .gradient-text {
+        background: linear-gradient(90deg, #00E396, #008FFB);
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      }
+
+      .cs-intro {
+        font-size: clamp(1rem, 3vw, 1.25rem); color: #aaa; max-width: 800px; line-height: 1.6; margin-bottom: 2.5rem;
+      }
+
+      .hero-meta-grid {
+        display: flex; gap: 2rem; flex-wrap: wrap;
+      }
+      .meta-box h5 { font-size: 0.65rem; color: #666; text-transform: uppercase; margin-bottom: 4px; }
+      .meta-box p { color: white; font-weight: 600; font-size: 0.9rem; }
+
+      /* --- LAYOUT GRID --- */
+      .case-layout {
+        display: grid; grid-template-columns: 250px 1fr; gap: 4rem;
+        max-width: 1400px; margin: 0 auto; padding: 60px 5vw;
+        position: relative;
+      }
+
+      /* Sticky Sidebar */
+      .toc-sidebar {
+        position: sticky; top: 100px; height: fit-content;
+        border-left: 1px solid rgba(255,255,255,0.1); padding-left: 1.5rem;
+      }
+      .toc-link {
+        display: block; color: #888; text-decoration: none; font-size: 0.85rem; margin-bottom: 0.8rem;
+        transition: 0.2s; position: relative;
+      }
+      .toc-link.active { color: #00E396; font-weight: 500; }
+
+      /* Main Content Area */
+      .content-area { width: 100%; max-width: 850px; }
+
+      .chapter { margin-bottom: 6rem; scroll-margin-top: 100px; }
+      .chapter h2 { font-size: clamp(1.5rem, 5vw, 2rem); color: white; margin-bottom: 1.2rem; font-family: 'Syne'; display: flex; align-items: center; gap: 0.8rem; }
+      .chapter h2 span { color: #00E396; opacity: 0.5; font-family: 'Fira Code'; font-size: 0.9rem; }
+      
+      .chapter p { color: #b0b0b0; line-height: 1.7; margin-bottom: 1.2rem; font-size: 1rem; }
+
+      /* --- VISUAL COMPONENTS --- */
+      .code-window {
+        background: #0d0d0d; border-radius: 8px; border: 1px solid #333; overflow: hidden;
+        margin: 1.5rem 0; font-family: 'Fira Code', monospace; font-size: 0.8rem;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+      }
+      .cw-header { background: #1a1a1a; padding: 8px 12px; display: flex; border-bottom: 1px solid #333; }
+      .cw-dots { display: flex; gap: 5px; }
+      .cd { width: 8px; height: 8px; border-radius: 50%; background: #333; }
+      .cw-body { padding: 1.2rem; color: #ccc; line-height: 1.5; overflow-x: auto; white-space: pre; }
+      
+      .arch-diagram {
+        display: flex; gap: 15px; align-items: center; justify-content: center;
+        background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05);
+        padding: 2rem; border-radius: 12px; margin: 1.5rem 0; flex-wrap: wrap;
+      }
+      .arch-node {
+        background: #111; border: 1px solid #333; padding: 1rem; border-radius: 8px;
+        text-align: center; min-width: 120px; flex: 1; max-width: 160px;
+      }
+      .arch-arrow { color: #444; font-size: 1rem; }
+
+      .metrics-grid {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;
+      }
+      .metric-card {
+        background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 8px;
+      }
+      .metric-val { font-size: 1.8rem; font-weight: 700; color: white; margin: 4px 0; }
+      .metric-label { font-size: 0.7rem; color: #666; text-transform: uppercase; }
+
+      /* --- LIVE TERMINAL --- */
+      .live-terminal {
+        width: 100%; height: clamp(400px, 60vh, 500px); background: #050505; border: 1px solid #333; border-radius: 12px;
+        position: relative; overflow: hidden; display: flex; flex-direction: column; margin-top: 1rem;
+      }
+      .lt-header { height: 36px; background: #111; border-bottom: 1px solid #222; display: flex; align-items: center; padding: 0 1rem; color: #666; font-size: 0.7rem; }
+      .lt-body { flex: 1; display: grid; grid-template-columns: 1fr 200px; }
+      .lt-chart { border-right: 1px solid #222; position: relative; height: 100%; }
+      .lt-order { background: #0a0a0a; padding: 1rem; font-family: 'Fira Code'; font-size: 0.7rem; overflow-y: hidden; }
+      
+      .eo-row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid #1a1a1a; }
+      .bid { color: #00E396; } .ask { color: #FF4560; }
+
+      /* --- FOOTER REFINEMENT --- */
+      footer {
+        min-height: 40vh;
+        padding: 6rem 5vw;
+        background-color: #f0f0f0;
+        color: #0a0a0a;
+        margin-top: 4rem;
+      }
+
+      .footer-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .footer-split {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 6rem;
+      }
+
+      .footer-title {
+        font-size: clamp(2rem, 5vw, 4rem);
+        line-height: 1;
+        font-family: 'Syne', sans-serif;
+        font-weight: 800;
+        margin-bottom: 2rem;
+      }
+
+      .footer-bottom {
+        margin-top: 6rem;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 0.85rem;
+        color: #666;
+      }
+
+      /* --- RESPONSIVE MEDIA QUERIES --- */
+      @media (max-width: 1024px) {
+        .case-layout { grid-template-columns: 1fr; gap: 2rem; }
+        .toc-sidebar { display: none; }
+        .cs-hero { padding: 120px 5vw 40px; }
+        .footer-split { grid-template-columns: 1fr; gap: 3rem; }
+      }
+
+      @media (max-width: 768px) {
+        /* FIX: Ensure back button is visible on mobile */
+        .nav-links {
+          display: flex !important;
+          opacity: 1 !important;
+          visibility: visible !important;
+        }
+
+        .cs-title {
+          font-size: clamp(1.5rem, 7vw, 2.5rem); 
+          margin-bottom: 1.5rem;
+        }
+        
+        .arch-diagram { flex-direction: column; padding: 1.5rem; }
+        .arch-arrow { transform: rotate(90deg); padding: 5px; }
+        .arch-node { max-width: 100%; width: 100%; }
+        .lt-body { grid-template-columns: 1fr; }
+        .lt-order { display: none; }
+        .metrics-grid { grid-template-columns: 1fr; }
+
+        footer { padding: 4rem 1.5rem; }
+        .footer-bottom { flex-direction: column-reverse; gap: 2rem; text-align: center; }
+      }
+
+      @media (max-width: 480px) {
+        .cs-hero { padding-top: 100px; }
+        .hero-meta-grid { gap: 1rem; }
+        .meta-box { flex: 1 1 40%; }
+      }
+      
+    </style>
+  </head>
+  <body>
+     <div id="ambient-glow"></div>
+    <div id="cursor" aria-hidden="true"></div>
+    <div class="grid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+
+    <nav>
+      <a href="index.html" class="logo mouse-hover">SP.DEV</a>
+      <div class="nav-links mobile-back-btn">
+        <a href="kite.html" class="nav-item mouse-hover">Back to Project</a>
+      </div>
+    </nav>
+
+    <header class="cs-hero">
+      <div class="breadcrumbs">
+        <span>WORK</span> <span style="color:#333;">/</span> <span class="active-crumb">KITE ARCHITECTURE</span>
+      </div>
+      <h1 class="cs-title">ENGINEERING <br /><span class="gradient-text">HIGH FREQUENCY</span></h1>
+      <p class="cs-intro">
+        Optimizing a Node.js trading engine to handle 10,000+ concurrent WebSocket connections with sub-50ms latency using Redis Pub/Sub and Binary Packets.
+      </p>
+      
+      <div class="hero-meta-grid">
+        <div class="meta-box"><h5>Role</h5><p>Backend Architect</p></div>
+        <div class="meta-box"><h5>Stack</h5><p>Node, Redis, React</p></div>
+        <div class="meta-box"><h5>Performance</h5><p>50ms Latency</p></div>
+        <div class="meta-box"><h5>Timeline</h5><p>6 Weeks</p></div>
+      </div>
+    </header>
+
+    <div class="case-layout">
+      <aside class="toc-sidebar">
+        <div style="font-size:0.65rem; color:#666; text-transform:uppercase; margin-bottom:1rem; letter-spacing:1px;">Contents</div>
+        <a href="#challenge" class="toc-link active">01 The Challenge</a>
+        <a href="#architecture" class="toc-link">02 Architecture</a>
+        <a href="#optimization" class="toc-link">03 Optimization</a>
+        <a href="#result" class="toc-link">04 Final Result</a>
+      </aside>
+
+      <div class="content-area">
+        <section id="challenge" class="chapter animate-on-scroll">
+          <h2><span>01</span> The Challenge</h2>
+          <p>
+            Building a standard CRUD app is straightforward. Building a trading platform is an exercise in managing chaos. The primary challenge was the <strong>C10k Problem</strong>—handling ten thousand concurrent connections where each client needs unique, real-time updates.
+          </p>
+          <p>
+            JS is single-threaded. If the engine spends 100ms calculating order matches, it blocks 10,000 clients from receiving price updates. <strong>Latency kills liquidity.</strong>
+          </p>
+        </section>
+
+        <section id="architecture" class="chapter animate-on-scroll">
+          <h2><span>02</span> The Architecture</h2>
+          <p>
+            To solve blocking issues, I decoupled the system into three services: <strong>Market Feeder</strong>, <strong>Order Matcher</strong>, and <strong>Socket Gateway</strong>.
+          </p>
+          
+          <div class="arch-diagram">
+            <div class="arch-node"><span style="font-size:1.2rem;">📉</span><div class="arch-label">NSE FEED</div></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node" style="border-color:#00E396"><span style="font-size:1.2rem;">⚡</span><div class="arch-label">REDIS PUB/SUB</div></div>
+            <div class="arch-arrow">→</div>
+            <div class="arch-node"><span style="font-size:1.2rem;">🔄</span><div class="arch-label">SOCKETS</div></div>
+          </div>
+
+          <p>
+            Redis acts as the central nervous system. The Feeder pushes raw tick data into channels. Multiple Socket Workers subscribe and forward data to interested clients, allowing horizontal scaling.
+          </p>
+        </section>
+
+        <section id="optimization" class="chapter animate-on-scroll">
+          <h2><span>03</span> Optimization</h2>
+          <p>
+            Standard JSON parsing is slow. Sending JSON objects consumes massive bandwidth. I switched to <strong>Binary Packets (ArrayBuffers)</strong>, reducing payload size by 82%.
+          </p>
+          
+          <div class="code-window">
+            <div class="cw-header"><div class="cw-dots"><div class="cd"></div><div class="cd"></div><div class="cd"></div></div></div>
+            <div class="cw-body">
+// Binary Encoding for 4x smaller payload
+const encodeTick = (id, price) => {
+  const buf = Buffer.alloc(8);
+  buf.writeUInt32LE(id, 0); 
+  buf.writeFloatLE(price, 4);
+  return buf;
+};</div>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-card"><div class="metric-label">JSON Payload</div><div class="metric-val">~45B</div></div>
+            <div class="metric-card"><div class="metric-label">Binary Payload</div><div class="metric-val" style="color:#00E396">8B</div></div>
+          </div>
+        </section>
+
+        <section id="result" class="chapter animate-on-scroll">
+          <h2><span>04</span> Final Result</h2>
+          <p>
+            The final engine runs the dashboard below. It features a custom <strong>Canvas Rendering Engine</strong> that draws candlesticks directly to the GPU for 60fps performance.
+          </p>
+          
+          <div class="live-terminal">
+             <div class="lt-header"><span>kite-production-build_v3.bin</span></div>
+             <div class="lt-body">
+                <div class="lt-chart"><canvas id="result-canvas"></canvas></div>
+                <div class="lt-order" id="result-ob"></div>
+             </div>
+          </div>
+        </section>
+      </div>
+    </div>
+
+     <footer id="contact">
+      <div class="footer-split">
+        <div class="footer-left">
+          <h2 class="footer-title">NEXT<br />PROJECT</h2>
+          <p style="color: #888; margin-bottom: 2rem">Check out the Instagram.</p>
+          <a href="instagram.html" class="mouse-hover" style="text-decoration: underline">View Instagram</a>
+        </div>
+      <div class="footer-right">
+    <p style="color: #666">&copy; <span id="year"></span> Swayam.</p>
+</div>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="script.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+          gsap.registerPlugin(ScrollTrigger);
+
+          // Standard scroll reveals
+          document.querySelectorAll(".animate-on-scroll").forEach(el => {
+              gsap.from(el, {
+                  scrollTrigger: { trigger: el, start: "top 90%" },
+                  y: 30, opacity: 0, duration: 1, ease: "power3.out"
+              });
+          });
+
+          // TOC Scrollspy
+          const sections = document.querySelectorAll('.chapter');
+          const navLinks = document.querySelectorAll('.toc-link');
+
+          window.addEventListener('scroll', () => {
+              let current = '';
+              sections.forEach(section => {
+                  const sectionTop = section.offsetTop;
+                  if (pageYOffset >= sectionTop - 150) {
+                      current = section.getAttribute('id');
+                  }
+              });
+
+              navLinks.forEach(link => {
+                  link.classList.remove('active');
+                  if (link.getAttribute('href').includes(current)) {
+                      link.classList.add('active');
+                  }
+              });
+          });
+
+          // Canvas Engine
+          const canvas = document.getElementById('result-canvas');
+          const ctx = canvas.getContext('2d');
+          let cw, ch, candles = [];
+
+          function resize() {
+             cw = canvas.width = canvas.parentElement.clientWidth;
+             ch = canvas.height = canvas.parentElement.clientHeight;
+             candles = [];
+             let p = 150;
+             for(let i=0; i<40; i++) {
+                 let o = p, c = p + (Math.random()-0.5)*10;
+                 candles.push({ o, c, h: Math.max(o,c)+4, l: Math.min(o,c)-4 });
+                 p = c;
+             }
+          }
+          window.addEventListener('resize', resize);
+          resize();
+
+          function draw() {
+             ctx.clearRect(0,0,cw,ch);
+             const min = Math.min(...candles.map(c=>c.l)), max = Math.max(...candles.map(c=>c.h));
+             const range = max - min, w = (cw / candles.length) * 0.6;
+             candles.forEach((c, i) => {
+                 const x = i * (cw/candles.length) + 10;
+                 const isG = c.c >= c.o;
+                 ctx.fillStyle = isG ? '#00E396' : '#FF4560';
+                 const yH = ch - ((c.h-min)/range)*(ch-40) - 20, yL = ch - ((c.l-min)/range)*(ch-40) - 20;
+                 const yO = ch - ((c.o-min)/range)*(ch-40) - 20, yC = ch - ((c.c-min)/range)*(ch-40) - 20;
+                 ctx.fillRect(x + w/2, yH, 1, yL-yH);
+                 ctx.fillRect(x, Math.min(yO, yC), w, Math.max(Math.abs(yO-yC), 1));
+             });
+             requestAnimationFrame(draw);
+          }
+          draw();
+          setInterval(() => {
+              let l = candles[candles.length-1];
+              l.c += (Math.random()-0.5)*4; l.h = Math.max(l.h, l.c); l.l = Math.min(l.l, l.c);
+          }, 100);
+
+          const ob = document.getElementById('result-ob');
+          setInterval(() => {
+             let h = `<div style="display:flex;justify-content:space-between;margin-bottom:8px;color:#444;font-size:0.6rem;"><span>PRICE</span><span>QTY</span></div>`;
+             for(let i=0; i<10; i++) {
+                 let p = (150 + (5-i)*0.2).toFixed(2), v = Math.floor(Math.random()*500);
+                 h += `<div class="eo-row"><span class="${i<5?'ask':'bid'}">${p}</span><span>${v}</span></div>`;
+             }
+             ob.innerHTML = h;
+          }, 600);
+      });
+    </script>
+  </body>
+</html>
