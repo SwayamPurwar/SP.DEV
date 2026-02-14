@@ -1292,3 +1292,11 @@ body.theme-paper .glass-card {
 @keyframes blinker {
     50% { opacity: 0; }
 }
+
+/* Only hide default cursor if JS is confirmed running */
+.js-loaded * {
+    cursor: none;
+}
+
+
+

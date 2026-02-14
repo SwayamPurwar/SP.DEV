@@ -5,21 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Swayam | Creative Developer</title>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="manifest.json" />
 
-
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Swayam Dev">
-<link rel="apple-touch-icon" href="assets/images/ui/favicon.webp">
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="Swayam Dev" />
+    <link rel="apple-touch-icon" href="assets/images/ui/favicon.webp" />
     <meta
       name="description"
       content="BCA Student at LNCT University building high-end digital experiences with Python & React."
     />
     <meta property="og:type" content="website" />
-    <meta
-      property="og:url"
-      content="https://swayampurwar.vercel.app/"
-    />
+    <meta property="og:url" content="https://swayampurwar.vercel.app/" />
     <meta property="og:title" content="Swayam | Creative Developer" />
     <meta
       property="og:description"
@@ -27,14 +26,11 @@
     />
     <meta
       property="og:image"
-      content="https://swayampurwar/assets/images/profile/swayampurwar.webp"
+      content="https://swayampurwar.vercel.app/assets/images/profile/swayampurwar.webp"
     />
 
     <meta property="twitter:card" content="summary_large_image" />
-    <meta
-      property="twitter:url"
-      content="https://swayampurwar.vercel.app/"
-    />
+    <meta property="twitter:url" content="https://swayampurwar.vercel.app/" />
     <meta property="twitter:title" content="Swayam | Creative Developer" />
     <meta
       property="twitter:description"
@@ -42,7 +38,7 @@
     />
     <meta
       property="twitter:image"
-      content="https://swayampurwar/assets/images/profile/swayampurwar.webp"
+      content="https://swayampurwar.vercel.app/assets/images/profile/swayampurwar.webp"
     />
 
     <link rel="stylesheet" href="./assets/css/style.css" />
@@ -54,6 +50,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syne:wght@400;700;800&family=Fira+Code:wght@400;500&display=swap"
       rel="stylesheet"
     />
+    <script>document.documentElement.classList.add('js-loaded');</script>
 
     <style>
       /* --- CRITICAL FAIL-SAFE CSS --- */
@@ -117,11 +114,26 @@
 
   <body>
     <div class="crt-overlay"></div>
-    <canvas id="matrix-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; opacity: 0; mix-blend-mode: screen;"></canvas>
+    <canvas
+      id="matrix-canvas"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 99999;
+        pointer-events: none;
+        opacity: 0;
+        mix-blend-mode: screen;
+      "
+    ></canvas>
     <div id="ambient-glow"></div>
     <div class="preloader-container">
       <div class="loader-content">
-        <div class="start-prompt" style="opacity: 0;">[ PRESS ANY KEY TO INITIALIZE ]</div>
+        <div class="start-prompt" style="opacity: 0">
+          [ PRESS ANY KEY TO INITIALIZE ]
+        </div>
         <div class="counter-wrap">
           <span class="counter">0</span>
           <span class="percent">%</span>
@@ -150,7 +162,6 @@
     </nav>
 
     <div class="mobile-menu">
-      
       <a href="#work" class="mobile-link">Work</a>
       <a href="about.html" class="mobile-link">About</a>
       <a href="#contact" class="mobile-link">Contact</a>
@@ -173,22 +184,32 @@
             >DEVELOPER</span
           >
         </div>
-       <p class="hero-sub">
-  Based in Bhopal, India &bull; <span id="live-clock">--:--:-- IST</span> &bull; Available for Freelance
-</p>
+        <p class="hero-sub">
+          Based in Bhopal, India &bull;
+          <span id="live-clock">--:--:-- IST</span> &bull; Available for
+          Freelance
+        </p>
 
         <div class="cv-wrapper">
           <a
             href="cv.html"
-           target="_blank"
-    rel="noopener noreferrer"
+            target="_blank"
+            rel="noopener noreferrer"
             class="cv-btn mouse-hover"
           >
             <span>VIEW CV</span>
-            <svg class="cv-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-  <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-  <circle cx="12" cy="12" r="3" />
-</svg>
+            <svg
+              class="cv-icon"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+              <circle cx="12" cy="12" r="3" />
+            </svg>
           </a>
         </div>
       </section>
@@ -199,7 +220,11 @@
           <span>SELECTED WORKS</span><span>(2025-2026)</span>
         </div>
 
-        <a href="work/apple-music.html" class="project-link" data-img="./assets/images/project/apple-music-preview.webp">
+        <a
+          href="work/apple-music.html"
+          class="project-link"
+          data-img="./assets/images/project/apple-music-preview.webp"
+        >
           <article class="project mouse-hover">
             <h2>APPLE MUSIC APP</h2>
             <div class="project-meta">
@@ -209,7 +234,11 @@
           </article>
         </a>
 
-        <a href="work/instagram.html" class="project-link" data-img="./assets/images/project/instagram-preview.webp">
+        <a
+          href="work/instagram.html"
+          class="project-link"
+          data-img="./assets/images/project/instagram-preview.webp"
+        >
           <article class="project mouse-hover">
             <h2>INSTAGRAM APP</h2>
             <div class="project-meta">
@@ -219,12 +248,22 @@
           </article>
         </a>
 
-
-        <div class="section-header" style="margin-top: 8rem; border-top: 0px solid #333; padding-top: 1rem;">
+        <div
+          class="section-header"
+          style="
+            margin-top: 8rem;
+            border-top: 0px solid #333;
+            padding-top: 1rem;
+          "
+        >
           <span>CURRENTLY DEVELOPING</span><span>(WIP)</span>
         </div>
 
-         <a href="work/kite.html" class="project-link" data-img="./assets/images/project/kite-preview.webp">
+        <a
+          href="work/kite.html"
+          class="project-link"
+          data-img="./assets/images/project/kite-preview.webp"
+        >
           <article class="project mouse-hover">
             <h2>KITE TRADING APP</h2>
             <div class="project-meta">
@@ -238,7 +277,11 @@
           <span>UPCOMING</span><span>(IN LABS)</span>
         </div>
 
-        <a href="work/ai-saas.html" class="project-link" data-img="./assets/images/project/ai-sass-preview.webp">
+        <a
+          href="work/ai-saas.html"
+          class="project-link"
+          data-img="./assets/images/project/ai-sass-preview.webp"
+        >
           <article class="project mouse-hover">
             <h2>AI SaaS Tool</h2>
             <div class="project-meta">
@@ -302,7 +345,7 @@
             method="POST"
             id="portfolio-form"
           >
-          <input type="hidden" name="_next" value="/success.html" />
+            <input type="hidden" name="_next" value="/success.html" />
             <div class="form-group">
               <label for="name">Name</label>
               <input
@@ -340,7 +383,7 @@
       </div>
 
       <div class="footer-bottom">
-       <span>&copy; <span id="year"></span> Swayam.</span>
+        <span>&copy; <span id="year"></span> Swayam.</span>
         <div class="socials">
           <a
             href="https://www.instagram.com/swayam_purwar"
@@ -367,88 +410,101 @@
       </div>
     </footer>
     <div id="cmd-terminal">
-    <div class="cmd-header">
+      <div class="cmd-header">
         <span>SWAYAM.OS [VERSION 1.0]</span>
         <span>ADMIN ACCESS: GRANTED</span>
-        <button id="cmd-close-mobile" style="background:none; border:none; color:inherit; font-family:inherit; cursor:pointer;">[X]</button>
-    </div>
-    <div class="cmd-output" id="cmd-output">
+        <button
+          id="cmd-close-mobile"
+          style="
+            background: none;
+            border: none;
+            color: inherit;
+            font-family: inherit;
+            cursor: pointer;
+          "
+        >
+          [X]
+        </button>
+      </div>
+      <div class="cmd-output" id="cmd-output">
         Type 'help' for a list of commands...
-    </div>
-    <div class="cmd-input-line">
+      </div>
+      <div class="cmd-input-line">
         <span class="cmd-prompt">user@swayam:~$</span>
-        <input type="text" id="cmd-input" autocomplete="off" spellcheck="false">
+        <input
+          type="text"
+          id="cmd-input"
+          autocomplete="off"
+          spellcheck="false"
+        />
+      </div>
     </div>
-</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
 
-    <script src="./assets/js/main.js" defer></script>
+    <script type="module" src="./assets/js/main.js" defer></script>
 
     <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        // 1. Manually ensure Hero Text is visible after 3.5 seconds (max loader time)
-        setTimeout(() => {
-          const heroTexts = document.querySelectorAll(".hero-text");
-          heroTexts.forEach((el) => {
-            el.style.opacity = "1";
-            el.style.transform = "translate(0,0)";
-          });
+  document.addEventListener("DOMContentLoaded", () => {
+    // Fallback if GSAP preloader gets stuck
+    setTimeout(() => {
+      const heroTexts = document.querySelectorAll(".hero-text");
+      heroTexts.forEach((el) => {
+        el.style.opacity = "1";
+        el.style.transform = "translate(0,0)";
+      });
+      const preloader = document.querySelector(".preloader-container");
+      if (preloader) {
+        gsap.to(preloader, {
+          yPercent: -100,
+          duration: 1,
+          ease: "power2.inOut",
+          onComplete: () => (preloader.style.display = "none"),
+        });
+      }
+    }, 3500);
 
-          // Force hide preloader if it gets stuck
-          const preloader = document.querySelector(".preloader-container");
-          if (preloader) {
-            gsap.to(preloader, {
-              yPercent: -100,
-              duration: 1,
-              ease: "power2.inOut",
-              onComplete: () => (preloader.style.display = "none"),
-            });
-          }
-        }, 3500);
+    gsap.fromTo(
+      ".hero-text",
+      { y: 100, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "power4.out", delay: 3 }
+    );
+  });
 
-        // 2. Animate Hero Text (From Hidden)
-        // This runs if GSAP loads correctly
-        gsap.fromTo(
-          ".hero-text",
-          { y: 100, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1.2,
-            stagger: 0.1,
-            ease: "power4.out",
-            delay: 3,
-          },
-        );
+  // --- UPDATED FORM HANDLING ---
+  const form = document.getElementById("portfolio-form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const submitBtn = form.querySelector(".submit-btn");
+    const originalText = submitBtn.innerText;
+    
+    submitBtn.innerText = "SENDING...";
+    submitBtn.disabled = true; 
+
+    try {
+      const formData = new FormData(form);
+      const response = await fetch("https://submit-form.com/vPN4ntpxv", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(Object.fromEntries(formData)),
       });
 
-
-      
-    
-  const form = document.getElementById("portfolio-form");
-  
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault(); // Stop standard submission
-    const submitBtn = form.querySelector(".submit-btn");
-    submitBtn.innerText = "SENDING...";
-
-    const formData = new FormData(form);
-    
-    // Add your Formspark URL here
-    await fetch("https://submit-form.com/vPN4ntpxv", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify(Object.fromEntries(formData)),
-    });
-
-    // Manually redirect to success page
-    window.location.href = "success.html"; 
+      if (response.ok) {
+        window.location.href = "success.html";
+      } else {
+        throw new Error('Submission failed');
+      }
+    } catch (error) {
+      alert("Failed to send message. Please check your connection or email me directly.");
+      submitBtn.innerText = originalText;
+      submitBtn.disabled = false;
+    }
   });
 </script>
   </body>
