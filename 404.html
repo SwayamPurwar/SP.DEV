@@ -1,7 +1,3 @@
----
-permalink: 404.html
-layout: false
----
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,48 +5,160 @@ layout: false
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>404 // SYSTEM FAILURE</title>
     
-    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
     
     <style>
     /* --- 1. NUCLEAR CURSOR FIX (The Magic Line) --- */
-    *, html, body, a, button, .manual-btn { cursor: none !important; }
+    /* This forces the arrow to be hidden on EVERY element */
+    *, html, body, a, button, .manual-btn {
+        cursor: none !important;
+    }
 
     /* --- 2. 404 PAGE STYLES --- */
-    :root { --bg: #050505; --accent: #bfa5d8; --error: #ff3333; }
-    body { background-color: var(--bg); color: var(--accent); font-family: 'Fira Code', monospace; height: 100vh; margin: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; }
-    #cursor { display: block !important; z-index: 99999 !important; }
-    .crt-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%); background-size: 100% 2px; z-index: 10; pointer-events: none; }
-    .vignette { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%); z-index: 11; pointer-events: none; }
-    .content-wrapper { z-index: 20; position: relative; padding: 2rem; background: rgba(0, 0, 0, 0.5); border: 1px solid rgba(255, 51, 51, 0.2); backdrop-filter: blur(4px); }
-    .glitch { font-family: 'Syne', sans-serif; font-size: clamp(3rem, 10vw, 8rem); font-weight: 800; color: white; margin: 0; text-shadow: 2px 2px 0px var(--error); position: relative; animation: shake 3s infinite; }
-    .sub-glitch { font-size: 1.2rem; color: var(--error); letter-spacing: 0.5rem; margin-top: 1rem; font-weight: 700; }
-    .terminal-container { margin-top: 2rem; text-align: left; font-size: 0.9rem; color: #888; width: 300px; height: 100px; overflow: hidden; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 1rem; display: flex; flex-direction: column; justify-content: flex-end; }
+    :root {
+        --bg: #050505;
+        --accent: #bfa5d8;
+        --error: #ff3333;
+    }
+
+    body {
+        background-color: var(--bg);
+        color: var(--accent);
+        font-family: 'Fira Code', monospace;
+        height: 100vh;
+        margin: 0;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        position: relative;
+    }
+
+    /* Ensure custom cursor is visible & on top */
+    #cursor {
+        display: block !important; /* Force show */
+        z-index: 99999 !important; /* Force on top */
+    }
+
+    /* CRT & Visuals */
+    .crt-overlay {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+        background-size: 100% 2px;
+        z-index: 10;
+        pointer-events: none;
+    }
+
+    .vignette {
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: radial-gradient(circle, rgba(0,0,0,0) 60%, rgba(0,0,0,0.8) 100%);
+        z-index: 11;
+        pointer-events: none;
+    }
+
+    .content-wrapper {
+        z-index: 20; 
+        position: relative;
+        padding: 2rem;
+        background: rgba(0, 0, 0, 0.5);
+        border: 1px solid rgba(255, 51, 51, 0.2);
+        backdrop-filter: blur(4px);
+    }
+
+    .glitch {
+        font-family: 'Syne', sans-serif;
+        font-size: clamp(3rem, 10vw, 8rem);
+        font-weight: 800;
+        color: white;
+        margin: 0;
+        text-shadow: 2px 2px 0px var(--error);
+        position: relative;
+        animation: shake 3s infinite;
+    }
+
+    .sub-glitch {
+        font-size: 1.2rem;
+        color: var(--error);
+        letter-spacing: 0.5rem;
+        margin-top: 1rem;
+        font-weight: 700;
+    }
+
+    .terminal-container {
+        margin-top: 2rem;
+        text-align: left;
+        font-size: 0.9rem;
+        color: #888;
+        width: 300px;
+        height: 100px;
+        overflow: hidden;
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 1rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+
     .log-line { margin: 2px 0; opacity: 0; animation: fadeIn 0.1s forwards; }
     .log-success { color: var(--accent); }
     .log-error { color: var(--error); }
-    .progress-bar { width: 300px; height: 4px; background: rgba(255,255,255,0.1); margin-top: 1rem; }
-    .progress-fill { height: 100%; background: var(--error); width: 0%; box-shadow: 0 0 10px var(--error); }
-    .manual-btn { display: inline-block; margin-top: 2rem; padding: 1rem 2rem; border: 1px solid rgba(255,255,255,0.2); color: white; text-decoration: none; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 2px; transition: 0.3s; }
+
+    .progress-bar {
+        width: 300px;
+        height: 4px;
+        background: rgba(255,255,255,0.1);
+        margin-top: 1rem;
+    }
+    .progress-fill {
+        height: 100%;
+        background: var(--error);
+        width: 0%;
+        box-shadow: 0 0 10px var(--error);
+    }
+
+    .manual-btn {
+        display: inline-block;
+        margin-top: 2rem;
+        padding: 1rem 2rem;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: white;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 2px;
+        transition: 0.3s;
+    }
     .manual-btn:hover { background: white; color: black; }
+
     @keyframes shake { 0%, 100% { transform: translate(0,0); } 5% { transform: translate(-1px, -1px); } 10% { transform: translate(1px, 1px); } }
     @keyframes fadeIn { to { opacity: 1; } }
     </style>
 </head>
 <body>
+
     <div class="crt-overlay"></div>
     <div class="vignette"></div>
 
     <div class="content-wrapper">
         <h1 class="glitch" data-text="SYSTEM FAILURE">SYSTEM FAILURE</h1>
         <div class="sub-glitch">ERROR 404 // DATA_CORRUPTED</div>
+
         <div class="terminal-container" id="console"></div>
-        <div class="progress-bar"><div class="progress-fill" id="progress"></div></div>
-        <a href="/" class="manual-btn">[ MANUAL_OVERRIDE ]</a>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress"></div>
+        </div>
+
+        <a href="index.html" class="manual-btn">[ MANUAL_OVERRIDE ]</a>
     </div>
 
     <div id="cursor"></div>
-    <div id="ambient-glow"></div>
+     <div id="ambient-glow"></div>
 
     <script>
         const consoleEl = document.getElementById('console');
@@ -77,11 +185,12 @@ layout: false
             progressEl.style.width = "100%";
         }, 500);
 
-        setTimeout(() => { window.location.href = "/"; }, 5500);
+        setTimeout(() => { window.location.href = "index.html"; }, 5500);
     </script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script type="module" src="/assets/js/main.js"></script> 
+    <script type="module" src="./assets/js/main.js"></script> 
+
 </body>
 </html>
