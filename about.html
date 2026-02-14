@@ -6,8 +6,8 @@
     <title>About Swayam | Creative Developer</title>
     <meta name="description" content="Learn about Swayam, a creative developer specializing in React and MongoDB, bridging the gap between design and logic.">
 
-    <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/webp" href="favicon.webp" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="icon" type="image/webp" href="./assets/images/ui/favicon.webp" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
@@ -201,19 +201,18 @@
         .bio-card { transform: none; }
       }
 
-      @media (max-width: 768px) {
-        .a-hero { padding: 140px 6vw 5vh; }
+      
+      /* --- MOBILE VISIBILITY FIX (Add to about.html style) --- */
+
+@media (max-width: 768px) {
+  /* Force Title Visibility */
+    .a-hero { padding: 140px 6vw 5vh; }
         .bio-section { padding: 0 6vw 10vh; }
         .bio-text p { font-size: 1.1rem; }
         .nav-links { display: flex !important; gap: 1rem; }
         .nav-item { font-size: 0.8rem; }
         nav, nav.scrolled { padding: 1.5rem 2rem !important; }
         .info-grid { grid-template-columns: 1fr; gap: 2rem; }
-      }
-      /* --- MOBILE VISIBILITY FIX (Add to about.html style) --- */
-
-@media (max-width: 768px) {
-  /* Force Title Visibility */
   .a-title {
     font-size: 3rem !important; /* Smaller, readable size */
     color: #ffffff !important;  /* Solid White */
@@ -269,7 +268,7 @@
       <section class="bio-section">
         <div class="bio-img-wrapper">
           <div class="bio-card">
-              <img src="./assets/images/swayam-purwar.webp" 
+              <img src="./assets/images/profile/swayam-purwar.webp" 
                    width="600" 
                    height="800" 
                    loading="lazy"
@@ -346,7 +345,7 @@
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js" defer></script>
-    <script src="script.js" defer></script>
+    <script src="./assets/js/main.js" defer></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {

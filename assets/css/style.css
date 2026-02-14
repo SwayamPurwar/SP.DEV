@@ -871,8 +871,9 @@ main, nav, footer {
     background: #050505; /* Background matches body */
 }
 
+/* --- FIX: Improved Scrollbar Contrast --- */
 ::-webkit-scrollbar-thumb {
-    background: #333; /* Dark Grey handle */
+    background: #666; /* Visible grey */
     border-radius: 4px;
     border: 2px solid #050505; /* Creates padding effect */
 }
