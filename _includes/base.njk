@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{{ title | default("Swayam | Creative Developer") }}</title>
+    <link rel="manifest" href="/manifest.json" />
+
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Swayam Dev" />
+    <link rel="apple-touch-icon" href="/assets/images/ui/favicon.webp" />
+    <meta name="description" content="BCA Student at LNCT University building high-end digital experiences with Python & React." />
+    
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="icon" type="image/webp" href="/assets/images/ui/favicon.webp" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syne:wght@400;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet" />
+    <script>document.documentElement.classList.add('js-loaded');</script>
+  </head>
+
+  <body>
+    <div class="crt-overlay"></div>
+    <canvas id="matrix-canvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 99999; pointer-events: none; opacity: 0; mix-blend-mode: screen;"></canvas>
+    <div id="ambient-glow"></div>
+    <div id="cursor" aria-hidden="true"></div>
+
+    <nav id="main-nav">
+      <a href="/" class="logo mouse-hover">SP.DEV</a>
+      <div class="nav-links" role="navigation">
+        <a href="/#work" class="nav-item mouse-hover">Work</a>
+        <a href="/about/" class="nav-item mouse-hover">About</a>
+        <a href="/#contact" class="nav-item mouse-hover">Contact</a>
+      </div>
+      <button class="menu-toggle mouse-hover" aria-label="Open Mobile Menu">
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </button>
+    </nav>
+
+    <div class="mobile-menu">
+      <a href="/#work" class="mobile-link">Work</a>
+      <a href="/about/" class="mobile-link">About</a>
+      <a href="/#contact" class="mobile-link">Contact</a>
+    </div>
+
+    <main>
+      {{ content | safe }}
+    </main>
+
+    <footer id="contact">
+      <div class="footer-split">
+        <div class="footer-left">
+          <h2 class="footer-title">LET'S WORK<br />TOGETHER</h2>
+          <p>Have a project in mind? Drop me a line.</p>
+          <a href="mailto:swayampurwar111104@gmail.com" class="mouse-hover contact-email">hello@swayam.dev</a>
+        </div>
+        <div class="footer-right">
+          <form action="https://submit-form.com/vPN4ntpxv" method="POST" id="portfolio-form">
+            <input type="hidden" name="_next" value="/success/" />
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required placeholder="Your Name" />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required placeholder="Your Email" />
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" required placeholder="Tell me about your project"></textarea>
+            </div>
+            <button type="submit" class="submit-btn mouse-hover">SEND MESSAGE</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; <span id="year"></span> Swayam.</span>
+        <div class="socials">
+          <a href="https://www.instagram.com/swayam_purwar" target="_blank" rel="noopener" class="mouse-hover">Instagram</a>
+          <a href="https://www.linkedin.com/in/swayam-purwar" target="_blank" rel="noopener" class="mouse-hover">LinkedIn</a>
+          <a href="https://github.com/SwayamPurwar" target="_blank" rel="noopener" class="mouse-hover">GitHub</a>
+        </div>
+      </div>
+    </footer>
+
+    <div id="cmd-terminal">
+      <div class="cmd-header">
+        <span>SWAYAM.OS [VERSION 1.0]</span>
+        <span>ADMIN ACCESS: GRANTED</span>
+        <button id="cmd-close-mobile" style="background: none; border: none; color: inherit; font-family: inherit; cursor: pointer;">[X]</button>
+      </div>
+      <div class="cmd-output" id="cmd-output">Type 'help' for a list of commands...</div>
+      <div class="cmd-input-line">
+        <span class="cmd-prompt">user@swayam:~$</span>
+        <input type="text" id="cmd-input" autocomplete="off" spellcheck="false" />
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <script type="module" src="/assets/js/main.js"></script>
+
+    <script>
+      const form = document.getElementById("portfolio-form");
+      if (form) {
+        form.addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const submitBtn = form.querySelector(".submit-btn");
+          const originalText = submitBtn.innerText;
+          
+          submitBtn.innerText = "SENDING...";
+          submitBtn.disabled = true; 
+
+          try {
+            const formData = new FormData(form);
+            const response = await fetch("https://submit-form.com/vPN4ntpxv", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", Accept: "application/json" },
+              body: JSON.stringify(Object.fromEntries(formData)),
+            });
+
+            if (response.ok) {
+              window.location.href = "/success/"; 
+            } else {
+              throw new Error('Submission failed');
+            }
+          } catch (error) {
+            alert("Failed to send message. Please check your connection.");
+            submitBtn.innerText = originalText;
+            submitBtn.disabled = false;
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
