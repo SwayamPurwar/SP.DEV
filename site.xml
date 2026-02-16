@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://swayampurwar.vercel.app/</loc>
+    <lastmod>2026-02-16</lastmod>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://swayampurwar.vercel.app/about.html</loc>
+    <lastmod>2026-02-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://swayampurwar.vercel.app/cv.html</loc>
+    <lastmod>2026-02-16</lastmod>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://swayampurwar.vercel.app/work/kite.html</loc>
+    <lastmod>2026-02-16</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swayampurwar.vercel.app/work/instagram.html</loc>
+    <lastmod>2026-02-16</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swayampurwar.vercel.app/work/apple-music.html</loc>
+    <lastmod>2026-02-16</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://swayampurwar.vercel.app/work/ai-saas.html</loc>
+    <lastmod>2026-02-16</lastmod>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://swayampurwar.vercel.app/work/kite-casestudy.html</loc>
+    <lastmod>2026-02-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swayampurwar.vercel.app/work/instagram-casestudy.html</loc>
+    <lastmod>2026-02-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://swayampurwar.vercel.app/work/apple-music-casestudy.html</loc>
+    <lastmod>2026-02-16</lastmod>
+    <priority>0.6</priority>
+  </url>
+</urlset>
