@@ -8,12 +8,12 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "assets/images/ui/favicon-new.png",
+      "src": "assets/images/ui/favicon.webp",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/images/ui/favicon-new.png",
+      "src": "assets/images/ui/favicon.webp",
       "sizes": "512x512",
       "type": "image/png"
     }
