@@ -968,6 +968,7 @@ main, nav, footer {
     font-size: 0.9rem;
     line-height: 1.6;
     white-space: pre-wrap; /* Preserve formatting */
+    
 }
 
 .cmd-input-line {
@@ -1302,3 +1303,28 @@ body.theme-paper .glass-card {
 
 
 
+/* --- FIX: Terminal Mouse Interaction --- */
+/* Restore the system cursor so users can see what they are clicking */
+#cmd-terminal, 
+#cmd-terminal * {
+    cursor: auto !important; 
+}
+
+/* Give text inputs the "I-beam" cursor for better UX */
+#cmd-input, 
+.cmd-output {
+    cursor: text !important;
+}
+
+
+/* Optional: Make the scrollbar slightly wider for easier clicking */
+#cmd-output::-webkit-scrollbar {
+    width: 10px;
+}
+#cmd-output::-webkit-scrollbar-thumb {
+    background: #444; 
+    border: 1px solid #111;
+}
+#cmd-output::-webkit-scrollbar-thumb:hover {
+    background: var(--accent); /* Light up when grabbing */
+}
