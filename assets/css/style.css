@@ -11,13 +11,19 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    cursor: none; /* Custom cursor global */
+    cursor: none;
+    /* Custom cursor global */
 }
 
 /* Fallback for touch devices */
 @media (hover: none) and (pointer: coarse) {
-    * { cursor: auto !important; }
-    #cursor { display: none !important; }
+    * {
+        cursor: auto !important;
+    }
+
+    #cursor {
+        display: none !important;
+    }
 }
 
 body {
@@ -39,7 +45,7 @@ body::before {
     width: 100%;
     height: 100%;
     pointer-events: none;
-    z-index: 9000; 
+    z-index: 9000;
     opacity: 0.04;
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
@@ -74,25 +80,27 @@ body::before {
     left: 0;
     width: 100%;
     height: 100vh;
-    background-color: #050505; /* Deep Black */
+    background-color: #050505;
+    /* Deep Black */
     z-index: 999999;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-      transition: opacity 0.5s ease, visibility 0.5s;
-      pointer-events: all; 
+    transition: opacity 0.5s ease, visibility 0.5s;
+    pointer-events: all;
     touch-action: none;
-     -webkit-user-select: none;
+    -webkit-user-select: none;
     user-select: none;
-   
+
 }
 
 
 .preloader-container.hidden {
     opacity: 0;
     visibility: hidden;
-    pointer-events: none; /* Crucial: allows clicks to pass through to the terminal */
+    pointer-events: none;
+    /* Crucial: allows clicks to pass through to the terminal */
 }
 
 /* FIXED: Center Loader on Screen */
@@ -100,28 +108,33 @@ body::before {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%); /* Dead Center */
+    transform: translate(-50%, -50%);
+    /* Dead Center */
     z-index: 10000;
     color: #fff;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; /* Center text horizontally */
+    align-items: center;
+    /* Center text horizontally */
     mix-blend-mode: difference;
     width: 100%;
 }
 
 .counter-wrap {
     display: flex;
-    align-items: center; /* FIX: Vertically Center % relative to Number */
+    align-items: center;
+    /* FIX: Vertically Center % relative to Number */
     justify-content: center;
     line-height: 1;
-    gap: 10px; /* Space between number and % */
+    gap: 10px;
+    /* Space between number and % */
 }
 
 .counter {
     font-family: var(--font-display);
-    font-size: 15vw; /* Slightly larger for center impact */
+    font-size: 15vw;
+    /* Slightly larger for center impact */
     font-weight: 800;
     color: #f0f0f0;
     letter-spacing: -0.05em;
@@ -136,7 +149,8 @@ body::before {
     font-weight: 700;
     color: #444;
     margin: 0;
-    transform: translateY(10%); /* Optical adjustment for perfect center */
+    transform: translateY(10%);
+    /* Optical adjustment for perfect center */
 }
 
 .loader-text {
@@ -159,10 +173,27 @@ body::before {
     padding: 30px;
     letter-spacing: 1px;
 }
-.top-left { top: 0; left: 0; }
-.top-right { top: 0; right: 0; }
-.bottom-left { bottom: 0; left: 0; }
-.bottom-right { bottom: 0; right: 0; }
+
+.top-left {
+    top: 0;
+    left: 0;
+}
+
+.top-right {
+    top: 0;
+    right: 0;
+}
+
+.bottom-left {
+    bottom: 0;
+    left: 0;
+}
+
+.bottom-right {
+    bottom: 0;
+    right: 0;
+}
+
 .blind {
     flex: 1;
     background-color: #000;
@@ -194,7 +225,7 @@ a {
     font-family: var(--font-main);
     font-size: 0.9rem;
     color: white;
-  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     background: transparent;
     cursor: none;
 }
@@ -218,17 +249,17 @@ nav {
     z-index: 200000;
     transform: translateZ(0);
     transition: all 0.4s ease;
-    mix-blend-mode: difference; 
+    mix-blend-mode: difference;
     padding-left: max(4rem, env(safe-area-inset-left));
     padding-right: max(4rem, env(safe-area-inset-right));
 }
 
 nav.scrolled {
-    background: rgba(0, 0, 0, 0.2); 
+    background: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     mix-blend-mode: normal;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.02); 
+    border-bottom: 1px solid rgba(255, 255, 255, 0.02);
     padding: 1.5rem 4rem;
 }
 
@@ -236,7 +267,8 @@ nav.scrolled {
     font-weight: 800;
     letter-spacing: -1px;
     font-size: 1.5rem;
-    color: #ffffff; /* <--- Add this line */
+    color: #ffffff;
+    /* <--- Add this line */
     text-decoration: none;
 }
 
@@ -294,16 +326,24 @@ nav.scrolled {
     transform-origin: center;
 }
 
-.menu-toggle:hover .bar:nth-child(1) { width: 36px; }
-.menu-toggle:hover .bar:nth-child(2) { width: 32px; }
+.menu-toggle:hover .bar:nth-child(1) {
+    width: 36px;
+}
 
-.menu-toggle.active { align-items: center; }
+.menu-toggle:hover .bar:nth-child(2) {
+    width: 32px;
+}
+
+.menu-toggle.active {
+    align-items: center;
+}
 
 .menu-toggle.active .bar:nth-child(1) {
     transform: translateY(5px) rotate(45deg);
     width: 32px;
     background-color: white;
 }
+
 .menu-toggle.active .bar:nth-child(2) {
     transform: translateY(-5px) rotate(-45deg);
     width: 32px;
@@ -387,7 +427,7 @@ nav.scrolled {
     font-size: clamp(3.5rem, 12vw, 11rem);
     line-height: 0.9;
     text-transform: uppercase;
-    letter-spacing: -0.04em; 
+    letter-spacing: -0.04em;
     color: #ffffff;
     background: none;
     filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.15));
@@ -411,7 +451,9 @@ nav.scrolled {
     will-change: transform;
 }
 
-.hero-line { overflow: hidden; }
+.hero-line {
+    overflow: hidden;
+}
 
 .hero-sub {
     margin-top: 3rem;
@@ -424,8 +466,10 @@ nav.scrolled {
 }
 
 /* --- SELECTED WORKS --- */
-#work { padding: 10vh 10vw; 
- perspective: 1000px; }
+#work {
+    padding: 10vh 10vw;
+    perspective: 1000px;
+}
 
 .section-header {
     font-size: 0.9rem;
@@ -446,14 +490,16 @@ nav.scrolled {
 
 /* --- FIX: Project Link Wrapper --- */
 .project-link {
-    display: block; /* Ensures anchor takes full width */
+    display: block;
+    /* Ensures anchor takes full width */
     width: 100%;
     text-decoration: none;
     color: inherit;
 
-    transform-style: preserve-3d; /* Allows 3D rotation */
+    transform-style: preserve-3d;
+    /* Allows 3D rotation */
     /* Smooth reset when mouse leaves */
-    transition: transform 0.1s linear; 
+    transition: transform 0.1s linear;
 }
 
 .project {
@@ -463,13 +509,16 @@ nav.scrolled {
     justify-content: space-between;
     align-items: center;
     /* transition: all 0.3s ease; */
-    width: 100%; /* Ensure content fills the anchor */
-     position: relative;
+    width: 100%;
+    /* Ensure content fills the anchor */
+    position: relative;
     transform-style: preserve-3d;
     transition: transform 0.1s;
-    background: rgba(20, 20, 20, 0.4); /* Glassy background */
+    background: rgba(20, 20, 20, 0.4);
+    /* Glassy background */
     border: 1px solid rgba(255, 255, 255, 0.05);
-    overflow: hidden; /* Contains the glare */
+    overflow: hidden;
+    /* Contains the glare */
 }
 
 .project:hover {
@@ -483,7 +532,8 @@ nav.scrolled {
     transition: color 0.3s, transform 0.3s;
 }
 
-.project:hover h2 {
+.project:hover h2,
+.project.is-active h2 {
     color: #fff;
     transform: translateX(10px);
 }
@@ -505,7 +555,7 @@ nav.scrolled {
 .about-img {
     position: relative;
     width: 100%;
-    aspect-ratio: 3 / 4; 
+    aspect-ratio: 3 / 4;
     border-radius: 24px;
     overflow: hidden;
     transform: translateZ(0);
@@ -527,7 +577,7 @@ nav.scrolled {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 30%; 
+    object-position: center 30%;
     display: block;
     border-radius: 24px;
 }
@@ -576,8 +626,13 @@ nav.scrolled {
 }
 
 @keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 /* --- FOOTER --- */
@@ -603,7 +658,10 @@ footer {
     gap: 4rem;
 }
 
-.form-group { margin-bottom: 2rem; }
+.form-group {
+    margin-bottom: 2rem;
+}
+
 .form-group label {
     display: block;
     font-size: 0.8rem;
@@ -625,7 +683,9 @@ input, textarea {
     transition: 0.3s;
 }
 
-input:focus, textarea:focus { border-bottom-color: var(--accent); }
+input:focus, textarea:focus {
+    border-bottom-color: var(--accent);
+}
 
 .submit-btn {
     background: #0a0a0a;
@@ -650,92 +710,107 @@ input:focus, textarea:focus { border-bottom-color: var(--accent); }
 
 /* --- CV BUTTON --- */
 .cv-wrapper {
-  margin-top: 4rem;
-  opacity: 1;
-  perspective: 1000px;
+    margin-top: 4rem;
+    opacity: 1;
+    perspective: 1000px;
 }
 
 .cv-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 36px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 100px;
-  color: white;
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  text-decoration: none;
-  overflow: hidden;
-  transition: background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
-  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
-  backdrop-filter: blur(10px);
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 36px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 100px;
+    color: white;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    overflow: hidden;
+    transition: background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
+    transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
+    backdrop-filter: blur(10px);
 }
 
 .cv-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: white;
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-  z-index: -1;
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: -1;
 }
 
 .cv-btn span {
-  position: relative;
-  z-index: 2;
-  transition: color 0.3s ease;
+    position: relative;
+    z-index: 2;
+    transition: color 0.3s ease;
 }
 
 .cv-icon {
-  width: 18px;
-  height: 18px;
-  position: relative;
-  z-index: 2;
-  transition: all 0.3s ease;
+    width: 18px;
+    height: 18px;
+    position: relative;
+    z-index: 2;
+    transition: all 0.3s ease;
 }
 
 .cv-btn:hover {
-  border-color: white;
-  color: black;
-  box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
-  transform: translateY(-2px);
+    border-color: white;
+    color: black;
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
+    transform: translateY(-2px);
 }
 
-.cv-btn:hover::before { transform: scaleX(1); }
-.cv-btn:hover span { color: black; }
-.cv-btn:hover .cv-icon {
-  stroke: black;
-  transform: translateY(3px);
+.cv-btn:hover::before {
+    transform: scaleX(1);
 }
-.cv-btn:active { transform: translateY(0) scale(0.98); }
+
+.cv-btn:hover span {
+    color: black;
+}
+
+.cv-btn:hover .cv-icon {
+    stroke: black;
+    transform: translateY(3px);
+}
+
+.cv-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
 /* --- CONSOLIDATED MOBILE / RESPONSIVE QUERIES --- */
 @media (max-width: 768px) {
     nav, nav.scrolled {
         padding: 1.5rem 2rem;
-        mix-blend-mode: normal; 
+        mix-blend-mode: normal;
         padding-left: max(2rem, env(safe-area-inset-left));
         padding-right: max(2rem, env(safe-area-inset-right));
     }
 
     nav.scrolled {
-        background: rgba(5, 5, 5, 0.85); 
+        background: rgba(5, 5, 5, 0.85);
         backdrop-filter: blur(25px);
         -webkit-backdrop-filter: blur(25px);
     }
 
-    .nav-links { display: none; }
-    .menu-toggle { display: flex; }
+    .nav-links {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
 
     /* LOADER ALIGNMENT FIX */
     .loader-content {
@@ -750,19 +825,29 @@ input:focus, textarea:focus { border-bottom-color: var(--accent); }
     }
 
     .counter-wrap {
-        align-items: baseline; 
+        align-items: baseline;
         gap: 0.5rem;
     }
-    
-    .counter { font-size: 18vw; }
-    .percent { font-size: 4vw; margin-top: 0; opacity: 0.7; }
+
+    .counter {
+        font-size: 18vw;
+    }
+
+    .percent {
+        font-size: 4vw;
+        margin-top: 0;
+        opacity: 0.7;
+    }
 
     /* Layout Adjustments */
-    #work, #about { padding: 10vh 6vw; }
-    
+    #work, #about {
+        padding: 10vh 6vw;
+    }
+
     .project {
         flex-direction: column;
-        align-items: flex-start; /* Aligns container to left */
+        align-items: flex-start;
+        /* Aligns container to left */
         gap: 0.5rem;
         padding: 2rem 0;
     }
@@ -775,21 +860,38 @@ input:focus, textarea:focus { border-bottom-color: var(--accent); }
         color: #888;
     }
 
-    .project:hover { padding: 2rem 1rem; }
-    .project h2 { font-size: 8vw; }
-
-    #about { grid-template-columns: 1fr; gap: 3rem; }
-    
-    .about-img { 
-        max-width: 100%; 
-        aspect-ratio: 4 / 5;
-        margin: 0 auto 2rem auto; 
+    .project:hover {
+        padding: 2rem 1rem;
     }
 
-    footer { padding: 2rem 1rem; min-height: 60vh; }
-    .footer-split { grid-template-columns: 1fr; gap: 3rem; }
-    
-    .section-header.upcoming { margin-top: 6rem; }
+    .project h2 {
+        font-size: 8vw;
+    }
+
+    #about {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .about-img {
+        max-width: 100%;
+        aspect-ratio: 4 / 5;
+        margin: 0 auto 2rem auto;
+    }
+
+    footer {
+        padding: 2rem 1rem;
+        min-height: 60vh;
+    }
+
+    .footer-split {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .section-header.upcoming {
+        margin-top: 6rem;
+    }
 }
 
 /* --- PROJECT PREVIEW HOVER --- */
@@ -798,12 +900,14 @@ input:focus, textarea:focus { border-bottom-color: var(--accent); }
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0.8);
-    width: 400px; /* Adjust size as needed */
+    width: 400px;
+    /* Adjust size as needed */
     height: 300px;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    z-index: 11; /* Behind the text (which is usually z-index 10) */
+    z-index: 11;
+    /* Behind the text (which is usually z-index 10) */
     pointer-events: none;
     opacity: 0;
     border-radius: 12px;
@@ -815,12 +919,15 @@ input:focus, textarea:focus { border-bottom-color: var(--accent); }
 .project {
     position: relative;
     z-index: 10;
-    background: transparent; /* Ensure we can see through it */
+    background: transparent;
+    /* Ensure we can see through it */
 }
 
 /* Clean up mobile view */
 @media (max-width: 768px) {
-    .project-preview-img { display: none !important; }
+    .project-preview-img {
+        display: none !important;
+    }
 }
 
 
@@ -828,9 +935,11 @@ input:focus, textarea:focus { border-bottom-color: var(--accent); }
 /* --- ACCESSIBILITY FAIL-SAFE --- */
 /* This ensures keyboard users can see where they are */
 *:focus-visible {
-    outline: 2px solid var(--accent); /* Uses your purple accent color */
+    outline: 2px solid var(--accent);
+    /* Uses your purple accent color */
     outline-offset: 4px;
-    cursor: auto !important; /* Temporarily brings back the normal cursor */
+    cursor: auto !important;
+    /* Temporarily brings back the normal cursor */
 }
 
 /* Optional: Make links glow when focused via keyboard */
@@ -849,17 +958,23 @@ body.user-is-tabbing #cursor {
     position: fixed;
     top: 0;
     left: 0;
-    width: 600px;  /* Size of the light */
+    width: 600px;
+    /* Size of the light */
     height: 600px;
     background: radial-gradient(circle, rgba(138, 43, 226, 0.15) 0%, rgba(0, 0, 0, 0) 70%);
     /* You can change the color above ^ (currently purple) */
-    
+
     border-radius: 50%;
-    pointer-events: none; /* Let clicks pass through */
-    z-index: 1; /* Behind content (content is usually z-index 10+) */
-    transform: translate(-50%, -50%); /* Centers the div on coordinates */
-    mix-blend-mode: screen; /* Blends nicely with the dark background */
-    will-change: transform; /* Performance optimization */
+    pointer-events: none;
+    /* Let clicks pass through */
+    z-index: 1;
+    /* Behind content (content is usually z-index 10+) */
+    transform: translate(-50%, -50%);
+    /* Centers the div on coordinates */
+    mix-blend-mode: screen;
+    /* Blends nicely with the dark background */
+    will-change: transform;
+    /* Performance optimization */
 }
 
 /* Ensure content stays on top of the light */
@@ -867,11 +982,15 @@ main, nav, footer {
     position: relative;
     z-index: 10;
 }
+
 /* --- LIVE CLOCK --- */
 #live-clock {
-    font-family: 'Fira Code', monospace; /* Keeps width consistent */
-    font-variant-numeric: tabular-nums;  /* Forces numbers to line up */
-    color: #bfa5d8; /* Your accent purple (optional, or keep white) */
+    font-family: 'Fira Code', monospace;
+    /* Keeps width consistent */
+    font-variant-numeric: tabular-nums;
+    /* Forces numbers to line up */
+    color: #bfa5d8;
+    /* Your accent purple (optional, or keep white) */
     font-weight: 500;
 }
 
@@ -879,29 +998,37 @@ main, nav, footer {
 
 /* 1. Custom Scrollbar (Webkit browsers like Chrome/Safari) */
 ::-webkit-scrollbar {
-    width: 8px; /* Width of vertical scrollbar */
-    height: 8px; /* Height of horizontal scrollbar */
+    width: 8px;
+    /* Width of vertical scrollbar */
+    height: 8px;
+    /* Height of horizontal scrollbar */
 }
 
 ::-webkit-scrollbar-track {
-    background: #050505; /* Background matches body */
+    background: #050505;
+    /* Background matches body */
 }
 
 /* --- FIX: Improved Scrollbar Contrast --- */
 ::-webkit-scrollbar-thumb {
-    background: #666; /* Visible grey */
+    background: #666;
+    /* Visible grey */
     border-radius: 4px;
-    border: 2px solid #050505; /* Creates padding effect */
+    border: 2px solid #050505;
+    /* Creates padding effect */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: #bfa5d8; /* Turns purple on hover */
+    background: #bfa5d8;
+    /* Turns purple on hover */
 }
 
 /* 2. Custom Text Selection */
 ::selection {
-    background: #bfa5d8; /* Purple background */
-    color: #000;         /* Black text */
+    background: #bfa5d8;
+    /* Purple background */
+    color: #000;
+    /* Black text */
     text-shadow: none;
 }
 
@@ -912,13 +1039,13 @@ main, nav, footer {
     left: 0;
     width: 100vw;
     height: 100vh;
-    z-index: 9998; /* Below Preloader (9999) but above content */
+    z-index: 9998;
+    /* Below Preloader (9999) but above content */
     pointer-events: none;
-    background: linear-gradient(
-        rgba(18, 16, 16, 0) 50%, 
-        rgba(0, 0, 0, 0.1) 50%
-    );
-    background-size: 100% 4px; /* Creates the scanlines */
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%,
+            rgba(0, 0, 0, 0.1) 50%);
+    background-size: 100% 4px;
+    /* Creates the scanlines */
     opacity: 0.6;
 }
 
@@ -927,7 +1054,8 @@ main, nav, footer {
 .start-prompt {
     font-family: "Fira Code", monospace;
     font-size: 1rem;
-    color: var(--accent); /* Purple */
+    color: var(--accent);
+    /* Purple */
     margin-top: 2rem;
     letter-spacing: 2px;
     cursor: pointer;
@@ -935,18 +1063,25 @@ main, nav, footer {
 }
 
 @keyframes blink {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.3; }
+    0%, 100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
 }
 
 
 /* --- GOD MODE TERMINAL --- */
 #cmd-terminal {
     position: fixed;
-    top: -100%; /* Hidden by default */
+    top: -100%;
+    /* Hidden by default */
     left: 0;
     width: 100%;
-    height: 50vh; /* Takes up half the screen */
+    height: 50vh;
+    /* Takes up half the screen */
     background: rgba(10, 10, 10, 0.95);
     border-bottom: 2px solid var(--accent);
     z-index: 100000;
@@ -957,11 +1092,12 @@ main, nav, footer {
     flex-direction: column;
     backdrop-filter: blur(10px);
     transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    box-shadow: 0 10px 50px rgba(0,0,0,0.5);
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.5);
 }
 
 #cmd-terminal.active {
-    top: 0; /* Slide down */
+    top: 0;
+    /* Slide down */
 }
 
 .cmd-header {
@@ -981,8 +1117,9 @@ main, nav, footer {
     color: #ccc;
     font-size: 0.9rem;
     line-height: 1.6;
-    white-space: pre-wrap; /* Preserve formatting */
-    
+    white-space: pre-wrap;
+    /* Preserve formatting */
+
 }
 
 .cmd-input-line {
@@ -1025,29 +1162,33 @@ main, nav, footer {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(
-        circle at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-        rgba(255, 255, 255, 0.1) 0%, 
-        rgba(255, 255, 255, 0) 60%
-    );
-    opacity: 0; /* Hidden by default */
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(255, 255, 255, 0.1) 0%,
+            rgba(255, 255, 255, 0) 60%);
+    opacity: 0;
+    /* Hidden by default */
     transition: opacity 0.3s;
     pointer-events: none;
-    z-index: 2; /* On top of background but behind text */
-    mix-blend-mode: overlay; /* Blends like light */
+    z-index: 2;
+    /* On top of background but behind text */
+    mix-blend-mode: overlay;
+    /* Blends like light */
 }
 
 /* Hover State */
 .project-link:hover .project::before {
-    opacity: 1; /* Show glare */
+    opacity: 1;
+    /* Show glare */
 }
 
 /* Make text float "above" the card (Parallax) */
 .project h2, .project-meta {
-    transform: translateZ(20px); /* Pushes text 20px towards the user */
+    transform: translateZ(20px);
+    /* Pushes text 20px towards the user */
     position: relative;
     z-index: 5;
 }
+
 /* --- FINAL FIX: MOBILE MENU & BUTTON VISIBILITY --- */
 
 /* 1. DESKTOP: Force hidden */
@@ -1057,11 +1198,12 @@ main, nav, footer {
 
 /* 2. MOBILE: Show button and force "X" visibility */
 @media (max-width: 768px) {
-    
+
     /* Make the button visible ONLY on mobile */
     .menu-toggle {
         display: flex !important;
-        z-index: 20001 !important; /* Sit on top of everything */
+        z-index: 20001 !important;
+        /* Sit on top of everything */
         position: relative;
     }
 
@@ -1075,8 +1217,10 @@ main, nav, footer {
     /* Bring the Nav container above the black menu overlay */
     nav {
         z-index: 200000 !important;
-        mix-blend-mode: normal !important; /* Fixes "disappearing" issue */
-        transform: none !important; /* Removes layering traps */
+        mix-blend-mode: normal !important;
+        /* Fixes "disappearing" issue */
+        transform: none !important;
+        /* Removes layering traps */
     }
 }
 
@@ -1090,17 +1234,24 @@ main, nav, footer {
     .project {
         /* Remove the "Box" look */
         border: none !important;
-        
+
         /* Add a simple, faint separator line at the bottom */
         border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
-        
+
         /* Remove the harsh glow and background flash */
         background: transparent !important;
         box-shadow: none !important;
-        
+
         /* Reset padding to look like a list, not a card */
         padding: 2rem 0 !important;
         border-radius: 0 !important;
+        /* ADD THIS LINE for smooth transitions */
+        transition: padding 0.3s ease, background 0.3s ease !important;
+    }
+
+    .project.is-active {
+        padding: 2rem 1rem !important;
+        background: rgba(255, 255, 255, 0.04) !important;
     }
 
     /* Optional: Ensure the text still highlights nicely */
@@ -1120,7 +1271,7 @@ main, nav, footer {
 
 /* Ensure the input doesn't zoom on mobile */
 #cmd-input {
-    font-size: 16px !important; 
+    font-size: 16px !important;
 }
 
 /* On mobile, make the terminal header bigger for touching */
@@ -1138,23 +1289,22 @@ main, nav, footer {
     width: 100vw;
     height: 100vh;
     background: black;
-    z-index: 99999; /* Above everything */
-    pointer-events: auto; /* Block clicks on underlying elements */
-    cursor: none; /* Hide standard cursor */
-    
+    z-index: 99999;
+    /* Above everything */
+    pointer-events: auto;
+    /* Block clicks on underlying elements */
+    cursor: none;
+    /* Hide standard cursor */
+
     /* The Flashlight Effect */
     /* We use a radial gradient mask: Transparent in middle, opaque elsewhere */
-    mask-image: radial-gradient(
-        circle 150px at var(--x, 50%) var(--y, 50%),
-        transparent 0%,
-        black 100%
-    );
-    -webkit-mask-image: radial-gradient(
-        circle 150px at var(--x, 50%) var(--y, 50%),
-        transparent 0%,
-        black 100%
-    );
-    
+    mask-image: radial-gradient(circle 150px at var(--x, 50%) var(--y, 50%),
+            transparent 0%,
+            black 100%);
+    -webkit-mask-image: radial-gradient(circle 150px at var(--x, 50%) var(--y, 50%),
+            transparent 0%,
+            black 100%);
+
     /* Start hidden */
     opacity: 0;
     pointer-events: none;
@@ -1174,19 +1324,20 @@ main, nav, footer {
     background: #333;
     border: 2px solid #555;
     border-radius: 4px;
-    z-index: 100000; /* Above the blackout */
+    z-index: 100000;
+    /* Above the blackout */
     cursor: pointer;
-    display: none; /* Hidden until blackout */
-    
+    display: none;
+    /* Hidden until blackout */
+
     /* Industrial hazard look */
-    background-image: repeating-linear-gradient(
-        45deg,
-        #333,
-        #333 10px,
-        #444 10px,
-        #444 20px
-    );
-    box-shadow: 0 0 15px #ff3b30; /* Red glow to help spot it slightly */
+    background-image: repeating-linear-gradient(45deg,
+            #333,
+            #333 10px,
+            #444 10px,
+            #444 20px);
+    box-shadow: 0 0 15px #ff3b30;
+    /* Red glow to help spot it slightly */
 }
 
 #breaker-switch::after {
@@ -1224,7 +1375,8 @@ main, nav, footer {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: #1e1e1e; /* VS Code Dark */
+    background: #1e1e1e;
+    /* VS Code Dark */
     z-index: 999999;
     display: none;
     align-items: center;
@@ -1254,22 +1406,24 @@ main, nav, footer {
 /* 1. BLUEPRINT MODE */
 body.theme-blueprint {
     background-color: #0d2b45;
-    background-image: 
-        linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px);
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, transparent 1px);
     background-size: 20px 20px;
     color: #bce7fd;
     font-family: 'Courier New', monospace !important;
 }
-body.theme-blueprint h1, 
-body.theme-blueprint h2, 
+
+body.theme-blueprint h1,
+body.theme-blueprint h2,
 body.theme-blueprint a {
     color: #fff !important;
     text-shadow: none !important;
     font-family: 'Courier New', monospace !important;
     text-transform: uppercase;
 }
-body.theme-blueprint .project, 
+
+body.theme-blueprint .project,
 body.theme-blueprint .glass-card {
     background: transparent;
     border: 2px solid #bce7fd;
@@ -1283,20 +1437,26 @@ body.theme-paper {
     color: #2b2b2b;
     font-family: 'Garamond', serif !important;
 }
-body.theme-paper h1, 
+
+body.theme-paper h1,
 body.theme-paper h2 {
     color: #1a1a1a !important;
     font-family: 'Georgia', serif !important;
     letter-spacing: -1px;
 }
-body.theme-paper .grid-bg, 
-body.theme-paper #ambient-glow { display: none; } /* Hide tech effects */
-body.theme-paper .project, 
+
+body.theme-paper .grid-bg,
+body.theme-paper #ambient-glow {
+    display: none;
+}
+
+/* Hide tech effects */
+body.theme-paper .project,
 body.theme-paper .glass-card {
     background: #fff;
     border: 2px solid #2b2b2b;
     border-radius: 4px;
-    box-shadow: 5px 5px 0px rgba(0,0,0,0.2);
+    box-shadow: 5px 5px 0px rgba(0, 0, 0, 0.2);
     color: #000;
 }
 
@@ -1306,8 +1466,11 @@ body.theme-paper .glass-card {
 .blink {
     animation: blinker 1s linear infinite;
 }
+
 @keyframes blinker {
-    50% { opacity: 0; }
+    50% {
+        opacity: 0;
+    }
 }
 
 /* Only hide default cursor if JS is confirmed running */
@@ -1319,13 +1482,13 @@ body.theme-paper .glass-card {
 
 /* --- FIX: Terminal Mouse Interaction --- */
 /* Restore the system cursor so users can see what they are clicking */
-#cmd-terminal, 
+#cmd-terminal,
 #cmd-terminal * {
-    cursor: auto !important; 
+    cursor: auto !important;
 }
 
 /* Give text inputs the "I-beam" cursor for better UX */
-#cmd-input, 
+#cmd-input,
 .cmd-output {
     cursor: text !important;
 }
@@ -1335,12 +1498,13 @@ body.theme-paper .glass-card {
 #cmd-output::-webkit-scrollbar {
     width: 10px;
 }
+
 #cmd-output::-webkit-scrollbar-thumb {
-    background: #444; 
+    background: #444;
     border: 1px solid #111;
 }
+
 #cmd-output::-webkit-scrollbar-thumb:hover {
-    background: var(--accent); /* Light up when grabbing */
+    background: var(--accent);
+    /* Light up when grabbing */
 }
-
-

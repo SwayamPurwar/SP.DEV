@@ -231,4 +231,21 @@ export function initAnimations() {
             });
         });
     }
+
+
+    // --- MOBILE PROJECT SCROLL HIGHLIGHT ---
+    let mm = gsap.matchMedia();
+
+    mm.add("(max-width: 768px)", () => {
+        document.querySelectorAll(".project").forEach((proj) => {
+            ScrollTrigger.create({
+                trigger: proj,
+                // Triggers when the top of the project hits 70% down the screen
+                start: "top 70%", 
+                // Ends when the bottom of the project hits 30% down the screen
+                end: "bottom 30%", 
+                toggleClass: "is-active",
+            });
+        });
+    });
 }
