@@ -202,7 +202,7 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    z-index: 10000;
+    z-index: 200000;
     transform: translateZ(0);
     transition: all 0.4s ease;
     mix-blend-mode: difference; 
@@ -223,6 +223,8 @@ nav.scrolled {
     font-weight: 800;
     letter-spacing: -1px;
     font-size: 1.5rem;
+    color: #ffffff; /* <--- Add this line */
+    text-decoration: none;
 }
 
 .nav-links {
@@ -1057,7 +1059,7 @@ main, nav, footer {
 
     /* Bring the Nav container above the black menu overlay */
     nav {
-        z-index: 20000 !important;
+        z-index: 200000 !important;
         mix-blend-mode: normal !important; /* Fixes "disappearing" issue */
         transform: none !important; /* Removes layering traps */
     }
