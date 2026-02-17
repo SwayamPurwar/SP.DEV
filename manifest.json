@@ -1,7 +1,8 @@
 {
-  "name": "Swayam Purwar",
-  "short_name": "Swayam",
-  "start_url": "./index.html",
+  "name": "Swayam Purwar | Creative Developer",
+  "short_name": "SP.DEV",
+  "description": "Portfolio of Swayam Purwar, a Creative Developer specializing in React, Python, and high-end digital experiences.",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#050505",
   "theme_color": "#050505",
@@ -10,12 +11,14 @@
     {
       "src": "assets/images/ui/favicon.webp",
       "sizes": "192x192",
-      "type": "image/webp"
+      "type": "image/webp",
+      "purpose": "any maskable"
     },
     {
       "src": "assets/images/ui/favicon.webp",
       "sizes": "512x512",
       "type": "image/webp"
     }
-  ]
+  ],
+  "categories": ["education", "developer", "portfolio"]
 }

@@ -5,18 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <title>Swayam Purwar | Creative Developer & UI/UX Designer</title>
-    <link rel="manifest" href="manifest.json" />
-
     <meta
-      name="apple-mobile-web-app-status-bar-style"
-      content="black-translucent"
+      name="title"
+      content="Swayam Purwar | Creative Developer & UI/UX Designer"
     />
-    <meta name="apple-mobile-web-app-title" content="Swayam Dev" />
-  
     <meta
       name="description"
-      content="Portfolio of Swayam Purwar, a Creative Developer and BCA student at LNCT University specializing in React, and high-end digital experiences."
+      content="Portfolio of Swayam Purwar, a Creative Developer and BCA student at LNCT University specializing in React, Python, and high-end digital experiences."
     />
+    <meta
+      name="keywords"
+      content="Swayam Purwar, Creative Developer, UI/UX Designer, React Developer, Python, GSAP, Bhopal Developer, Portfolio"
+    />
+    <meta name="author" content="Swayam Purwar" />
+    <meta name="theme-color" content="#050505" />
+    <link rel="canonical" href="https://swayampurwar.vercel.app/" />
+
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://swayampurwar.vercel.app/" />
     <meta property="og:title" content="Swayam Purwar | Creative Developer" />
@@ -31,7 +35,10 @@
 
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://swayampurwar.vercel.app/" />
-    <meta property="twitter:title" content="Swayam Purwar | Creative Developer" />
+    <meta
+      property="twitter:title"
+      content="Swayam Purwar | Creative Developer"
+    />
     <meta
       property="twitter:description"
       content="BCA Student building high-end digital experiences with Python & React."
@@ -41,7 +48,6 @@
       content="https://swayampurwar.vercel.app/assets/images/profile/swayampurwar.webp"
     />
 
-    <link rel="stylesheet" href="./assets/css/style.css" />
     <link
       rel="icon"
       type="image/webp"
@@ -55,36 +61,39 @@
       sizes="192x192"
     />
     <link rel="apple-touch-icon" href="assets/images/ui/favicon.webp" />
+    <link rel="manifest" href="manifest.json" />
 
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="SP.DEV" />
+
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Syne:wght@400;700;800&family=Fira+Code:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <link rel="canonical" href="https://swayampurwar.vercel.app/" />
+
     <script>
       document.documentElement.classList.add("js-loaded");
     </script>
 
     <style>
       /* --- CRITICAL FAIL-SAFE CSS --- */
-      /* These styles ensure content is visible even if JS fails */
-
       body {
         background-color: #050505;
         overflow-x: hidden;
       }
-
-      /* Force visibility on hero text */
       .hero-text {
-        opacity: 1 !important; /* Override any external hiding */
+        opacity: 1 !important;
         transform: none !important;
         display: inline-block;
-        color: white; /* Ensure text isn't black-on-black */
+        color: white;
       }
-
-      /* Fix for "SWAYAM PURWAR" missing */
       .hero-name {
         font-size: clamp(3rem, 11vw, 10rem);
         line-height: 0.9;
@@ -92,16 +101,12 @@
         margin: 0;
         text-transform: uppercase;
         font-family: "Syne", sans-serif;
-        color: #f0f0f0; /* Explicit white color */
+        color: #f0f0f0;
       }
-
-      /* Fix for "DEVELOPER" outline */
       .outline-text {
         -webkit-text-stroke: 1px white;
         color: transparent !important;
       }
-
-      /* Ensure hero container is visible */
       #hero {
         position: relative;
         z-index: 10;
@@ -111,15 +116,12 @@
         justify-content: center;
         padding: 0 10vw;
       }
-
       .hero-line {
         overflow: hidden;
         display: block;
       }
-
-      /* Mobile Menu Fix */
       .mobile-menu {
-        pointer-events: none; /* Let clicks pass through when hidden */
+        pointer-events: none;
       }
       .mobile-menu.active {
         pointer-events: all;
@@ -139,10 +141,15 @@
           "https://www.instagram.com/swayam_purwar"
         ],
         "jobTitle": "Creative Developer",
-        "worksFor": {
-          "@type": "Organization",
-          "name": "Freelance"
-        },
+        "knowsAbout": [
+          "React",
+          "Python",
+          "UI/UX Design",
+          "GSAP",
+          "Three.js",
+          "Node.js"
+        ],
+        "worksFor": { "@type": "Organization", "name": "Freelance" },
         "alumniOf": {
           "@type": "CollegeOrUniversity",
           "name": "LNCT University"
@@ -150,7 +157,6 @@
       }
     </script>
 
-    <!-- Google tag (gtag.js) -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"
@@ -161,7 +167,6 @@
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-QLM3SVXXJT");
     </script>
   </head>
@@ -183,14 +188,14 @@
       "
     ></canvas>
     <div id="ambient-glow"></div>
-    <div class="preloader-container">
+
+    <div class="preloader-container" role="status" aria-label="Loading assets">
       <div class="loader-content">
         <div class="start-prompt" style="opacity: 0">
           [ PRESS ANY KEY TO INITIALIZE ]
         </div>
         <div class="counter-wrap">
-          <span class="counter">0</span>
-          <span class="percent">%</span>
+          <span class="counter">0</span><span class="percent">%</span>
         </div>
         <div class="loader-text">INITIALIZING SYSTEM</div>
       </div>
@@ -203,19 +208,23 @@
     <div id="cursor" aria-hidden="true"></div>
 
     <nav id="main-nav">
-      <a href="#" class="logo mouse-hover">SP.DEV</a>
+      <a href="#" class="logo mouse-hover" aria-label="Home">SP.DEV</a>
       <div class="nav-links" role="navigation">
         <a href="#work" class="nav-item mouse-hover">Work</a>
         <a href="about.html" class="nav-item mouse-hover">About</a>
         <a href="#contact" class="nav-item mouse-hover">Contact</a>
       </div>
-      <button class="menu-toggle mouse-hover" aria-label="Open Mobile Menu">
+      <button
+        class="menu-toggle mouse-hover"
+        aria-label="Toggle Menu"
+        aria-expanded="false"
+      >
         <div class="bar"></div>
         <div class="bar"></div>
       </button>
     </nav>
 
-    <div class="mobile-menu">
+    <div class="mobile-menu" aria-hidden="true">
       <a href="#work" class="mobile-link">Work</a>
       <a href="about.html" class="mobile-link">About</a>
       <a href="#contact" class="mobile-link">Contact</a>
@@ -224,26 +233,16 @@
     <main>
       <section id="hero">
         <div class="hero-line">
-          <h1
-            class="hero-text hero-name"
-            style="opacity: 1; transform: translate(0, 0)"
-          >
-            SWAYAM PURWAR
-          </h1>
+          <h1 class="hero-text hero-name">SWAYAM PURWAR</h1>
         </div>
         <div class="hero-line">
-          <span
-            class="hero-text outline-text"
-            style="opacity: 1; transform: translate(0, 0)"
-            >DEVELOPER</span
-          >
+          <span class="hero-text outline-text">DEVELOPER</span>
         </div>
         <p class="hero-sub">
           Based in Bhopal, India &bull;
           <span id="live-clock">--:--:-- IST</span> &bull; Available for
           Freelance
         </p>
-
         <div class="cv-wrapper">
           <a
             href="cv.html"
@@ -278,6 +277,7 @@
           href="work/apple-music.html"
           class="project-link"
           data-img="./assets/images/project/apple-music-preview.webp"
+          aria-label="View Apple Music project"
         >
           <article class="project mouse-hover">
             <h2>APPLE MUSIC APP</h2>
@@ -292,6 +292,7 @@
           href="work/instagram.html"
           class="project-link"
           data-img="./assets/images/project/instagram-preview.webp"
+          aria-label="View Instagram project"
         >
           <article class="project mouse-hover">
             <h2>INSTAGRAM APP</h2>
@@ -317,6 +318,7 @@
           href="work/kite.html"
           class="project-link"
           data-img="./assets/images/project/kite-preview.webp"
+          aria-label="View Kite project"
         >
           <article class="project mouse-hover">
             <h2>KITE TRADING APP</h2>
@@ -335,11 +337,12 @@
           href="work/ai-saas.html"
           class="project-link"
           data-img="./assets/images/project/ai-saas-preview.webp"
+          aria-label="View AI SaaS project"
         >
           <article class="project mouse-hover">
             <h2>AI SaaS Tool</h2>
             <div class="project-meta">
-              <p>Artificial Intelligence + Software as a Service</p>
+              <p>AI + SaaS</p>
               <p>Coming Soon</p>
             </div>
           </article>
@@ -354,14 +357,14 @@
             width="600"
             height="800"
             loading="lazy"
-            alt="Swayam Purwar"
+            alt="Swayam Purwar profile"
           />
         </div>
         <div class="about-text">
           <h2>Code meets<br />Creativity.</h2>
           <p>
-            I am Swayam, a developer focused on building high-end digital
-            experiences using Python, React, and GSAP.
+            I am Swayam, a developer building high-end digital experiences using
+            Python, React, and GSAP.
           </p>
           <a href="about.html" class="footer-link mouse-hover">Read More</a>
         </div>
@@ -408,6 +411,7 @@
                 name="name"
                 required
                 placeholder="Your Name"
+                autocomplete="name"
               />
             </div>
             <div class="form-group">
@@ -418,6 +422,7 @@
                 name="email"
                 required
                 placeholder="Your Email"
+                autocomplete="email"
               />
             </div>
             <div class="form-group">
@@ -463,22 +468,12 @@
         </div>
       </div>
     </footer>
-    <div id="cmd-terminal">
+
+    <div id="cmd-terminal" aria-label="Terminal UI">
       <div class="cmd-header">
         <span>SWAYAM.OS [VERSION 1.0]</span>
         <span>ADMIN ACCESS: GRANTED</span>
-        <button
-          id="cmd-close-mobile"
-          style="
-            background: none;
-            border: none;
-            color: inherit;
-            font-family: inherit;
-            cursor: pointer;
-          "
-        >
-          [X]
-        </button>
+        <button id="cmd-close-mobile" aria-label="Close terminal">[X]</button>
       </div>
       <div class="cmd-output" id="cmd-output">
         Type 'help' for a list of commands...
@@ -490,6 +485,7 @@
           id="cmd-input"
           autocomplete="off"
           spellcheck="false"
+          aria-label="Terminal Input"
         />
       </div>
     </div>
@@ -497,12 +493,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
-
     <script type="module" src="./assets/js/main.js" defer></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // Fallback if GSAP preloader gets stuck
+        // Dynamic Year
+        const yearElement = document.getElementById("year");
+        if (yearElement) yearElement.textContent = new Date().getFullYear();
+
+        // GSAP Fallback
         setTimeout(() => {
           const heroTexts = document.querySelectorAll(".hero-text");
           heroTexts.forEach((el) => {
@@ -534,14 +533,12 @@
         );
       });
 
-      // --- UPDATED FORM HANDLING ---
+      // Form Handling
       const form = document.getElementById("portfolio-form");
-
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
         const submitBtn = form.querySelector(".submit-btn");
         const originalText = submitBtn.innerText;
-
         submitBtn.innerText = "SENDING...";
         submitBtn.disabled = true;
 
@@ -555,16 +552,13 @@
             },
             body: JSON.stringify(Object.fromEntries(formData)),
           });
-
           if (response.ok) {
             window.location.href = "success.html";
           } else {
             throw new Error("Submission failed");
           }
         } catch (error) {
-          alert(
-            "Failed to send message. Please check your connection or email me directly.",
-          );
+          alert("Failed to send message. Please email me directly.");
           submitBtn.innerText = originalText;
           submitBtn.disabled = false;
         }
