@@ -1,11 +1,52 @@
 import { interactiveSelector } from './constants.js';
 
+// ==========================================
+// 🚨 BRUTE-FORCE SCROLL LOCK HELPERS 🚨
+// ==========================================
+function preventScroll(e) {
+    // Block scroll keys (Spacebar, Arrows, Page Up/Down, etc.)
+    const keys = ["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "PageUp", "PageDown", "Home", "End"];
+    if (e.type === 'keydown' && !keys.includes(e.code)) return;
+    
+    // Kill the event
+    e.preventDefault();
+    e.stopPropagation();
+    return false;
+}
+
+function lockScroll() {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+    document.body.style.height = '100vh';
+    document.documentElement.style.height = '100vh';
+    
+    // Actively block all scroll inputs at the browser level
+    window.addEventListener('wheel', preventScroll, { passive: false });
+    window.addEventListener('touchmove', preventScroll, { passive: false });
+    window.addEventListener('keydown', preventScroll, { passive: false });
+}
+
+function unlockScroll() {
+    document.body.style.overflow = '';
+    document.documentElement.style.overflow = '';
+    document.body.style.height = '';
+    document.documentElement.style.height = '';
+    
+    // Remove the blocks
+    window.removeEventListener('wheel', preventScroll);
+    window.removeEventListener('touchmove', preventScroll);
+    window.removeEventListener('keydown', preventScroll);
+}
+// ==========================================
+
+
 export function initAnimations() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let lenis;
 
     // --- SMOOTH SCROLLING ---
     if (typeof Lenis !== 'undefined' && !prefersReducedMotion) {
-        const lenis = new Lenis({
+        lenis = new Lenis({
             duration: 1.2,
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
             smooth: true
@@ -26,10 +67,20 @@ export function initAnimations() {
             gsap.set(".hero-sub", { opacity: 1, y: 0 });
             if(document.querySelector(".cv-wrapper")) gsap.set(".cv-wrapper", { opacity: 1 });
             gsap.set("nav", { y: 0, opacity: 1 }); 
-            document.body.style.overflow = "";
+            unlockScroll(); // Ensure it's unlocked if we skip the loader
         } else {
             sessionStorage.setItem("visited", "true");
-            document.body.style.overflow = "hidden";
+            
+            // 1. Force scroll to top (Using Lenis if available, otherwise native)
+            if (lenis) {
+                lenis.scrollTo(0, { immediate: true });
+                lenis.stop();
+            } else {
+                window.scrollTo(0, 0);
+            }
+            
+            // 2. Activate the Brute-Force Lock
+            lockScroll();
             
             gsap.set("nav", { y: -50, opacity: 0 });
 
@@ -55,14 +106,24 @@ export function initAnimations() {
                 duration: 1.2,
                 ease: "power4.inOut",
                 onStart: () => {
-            // Optional: You can also hide the custom cursor here to prevent distraction
-            document.getElementById("cursor").style.display = "none";
-        },
+                    // Re-confirm lock is active during the slide-up transition
+                    lockScroll();
+                    if(document.getElementById("cursor")) {
+                        document.getElementById("cursor").style.display = "none";
+                    }
+                },
                 onComplete: () => {
-                    document.body.style.overflow = "";
+                    // 3. Remove the lock and restore inputs
+                    unlockScroll();
+                    
                     document.querySelector(".preloader-container").classList.add("hidden");
-            document.getElementById("cursor").style.display = "block";
+                    if(document.getElementById("cursor")) {
+                        document.getElementById("cursor").style.display = "block";
+                    }
                     gsap.set(".preloader-container", { display: "none" });
+                    
+                    // 4. Turn Lenis back on
+                    if (lenis) lenis.start();
                 }
             });
 

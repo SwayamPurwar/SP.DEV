@@ -266,6 +266,9 @@ export function initTerminal() {
       response =
         "I am the System Access Manager. I was compiled to act as the interface between human curiosity and the source code of this portfolio.";
     }
+    else if (text.includes("loading") || text.includes("lock")) {
+    response = "During the initialization sequence, I restricted all hardware inputs to ensure a stable kernel boot. Full system access is now granted.";
+}
 
     // --- PROJECT DEEP DIVES ---
     else if (text.includes("kite")) {
