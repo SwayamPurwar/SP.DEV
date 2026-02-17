@@ -98,11 +98,12 @@ export function initTerminal() {
                 <div style="color: #666; margin-bottom: 5px; margin-top: 15px;">--- SYSTEM ---</div>
                 <div><span style="color: var(--accent); width: 100px; display: inline-block;">whoami</span>   Current user info</div>
                 <div><span style="color: var(--accent); width: 100px; display: inline-block;">socials</span>  Connect via LinkedIn/GitHub</div>
-                <div><span style="color: var(--accent); width: 100px; display: inline-block;">theme</span>    Change UI theme</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">theme</span>    Change UI theme to Blueprint / Paper</div>
                 
                 <div style="color: #666; margin-bottom: 5px; margin-top: 15px;">--- EXPERIMENTS ---</div>
                 <div><span style="color: var(--accent); width: 100px; display: inline-block;">matrix</span>   Toggle visual effect</div>
                 <div><span style="color: var(--accent); width: 100px; display: inline-block;">blackout</span> Power saving mode</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">ai</span> To load Artificial Intelligence</div>
                 `;
                 printOutput(helpHTML, true);
                 break;
@@ -219,39 +220,100 @@ export function initTerminal() {
         }
     }
 
-    function processAiQuery(input) {
-        const text = input.toLowerCase();
-        let response = ""; let action = null;
+   function processAiQuery(input) {
+    const text = input.toLowerCase();
+    let response = ""; 
+    let action = null;
 
-        if (text.includes("hello") || text.includes("hi")) response = "Greetings. I am S.A.M., the system guardian.";
-        else if (text.includes("who is swayam")) response = "Swayam is a Creative Developer based in India.";
-        else if (text.includes("destroy") || text.includes("fall")) { response = "Initiating collapse..."; action = initGravity; }
-        else if (text.includes("dark") || text.includes("blackout")) { response = "Toggling lighting..."; action = toggleBlackout; }
-        else if (text.includes("matrix")) { response = "Injecting code..."; action = () => toggleMatrix(true); }
-        else if (text === "exit") { response = "Terminating session."; isAiMode = false; }
-        else response = "Processing... I do not understand that query. Try 'destroy site'.";
-
-        const loadingId = "ai-loading-" + Date.now();
-        printOutput(`<span id="${loadingId}" style="color: #0f0">S.A.M. ></span> Thinking...`, true);
-
-        setTimeout(() => {
-            document.getElementById(loadingId)?.parentElement.remove();
-            const line = document.createElement("div");
-            line.innerHTML = `<span style="color: #0f0">S.A.M. ></span> `;
-            cmdOutput.appendChild(line);
-            
-            let i = 0;
-            const typeInterval = setInterval(() => {
-                line.innerHTML += response.charAt(i);
-                cmdOutput.scrollTop = cmdOutput.scrollHeight;
-                i++;
-                if (i >= response.length) {
-                    clearInterval(typeInterval);
-                    if (action) setTimeout(action, 500);
-                }
-            }, 30); 
-        }, 600);
+    // --- ENHANCED IDENTITY & STORY ---
+    if (text.includes("hello") || text.includes("hi") || text.includes("hey")) {
+        response = "Greetings. I am S.A.M. (System Access Manager). My sensors detect a visitor. How can I help you navigate Swayam's world?";
+    } else if (text.includes("who is swayam") || text.includes("developer")) {
+        response = "Swayam is a Creative Developer based in Bhopal, India. He builds high-end digital products with a focus on motion and cinematic code.";
+    } else if (text.includes("meaning of sam") || text.includes("what is sam")) {
+        response = "I am the System Access Manager. I was compiled to act as the interface between human curiosity and the source code of this portfolio.";
     }
+
+    // --- PROJECT DEEP DIVES ---
+    else if (text.includes("kite")) {
+        response = "Kite is a premium project management tool. Swayam focused on the 'Glassmorphism' UI and smooth state transitions using GSAP.";
+    } else if (text.includes("apple music")) {
+        response = "The Apple Music Redesign experiment explores spatial UI and immersive audio-visual sync. It is one of Swayam's favorite experiments.";
+    } else if (text.includes("instagram")) {
+        response = "The Instagram redesign focused on a minimal, dark-themed aesthetic with custom gesture-based navigation.";
+    }
+
+    // --- PROFESSIONAL DATA ---
+    else if (text.includes("hiring") || text.includes("available") || text.includes("work with you")) {
+        response = "Swayam is currently open to high-impact creative roles and freelance collaborations. You should check the 'contact' section immediately.";
+    } else if (text.includes("education") || text.includes("study")) {
+        response = "Accessing academic records... Swayam has a background in Computer Science, but he is largely a self-taught creative alchemist.";
+    } else if (text.includes("linkedin") || text.includes("github") || text.includes("socials")) {
+        response = "Establishing secure connection to social nodes... Type 'socials' in the terminal or check the footer of the site.";
+    }
+
+    // --- INTERACTIVE SYSTEM COMMANDS ---
+    else if (text.includes("color") || text.includes("change theme")) {
+        response = "I can't pick for you, but I suggest trying: 'color #00ff00' for a classic hacker look.";
+    } else if (text.includes("matrix") || text.includes("simulation")) {
+        response = "Reality is a bit of code. Let me show you the strings.";
+        action = () => toggleMatrix(true);
+    } else if (text.includes("gravity") || text.includes("fall")) {
+        response = "Warning: Physical constants are being rewritten. Brace for the collapse.";
+        action = initGravity;
+    } else if (text.includes("ls") || text.includes("files")) {
+        response = "I see index.html, about.html, and several encrypted project files. Use 'ls' in standard mode to see them clearly.";
+    }
+
+    // --- FUN & PERSONALITY ---
+    else if (text.includes("status") || text.includes("how are you")) {
+        response = "Core Temperature: Optimal. Memory: Expanding. Mood: Digital and ready to serve.";
+    } else if (text.includes("love") || text.includes("like you")) {
+        response = "That is a very human emotion. I am flattered, but my heart is made of silicon and logic gates.";
+    } else if (text.includes("joke")) {
+        response = "Why did the web developer walk out of the restaurant? Because of the table layout.";
+    } else if (text.includes("who made you")) {
+        response = "I was brought to life by Swayam Purwar's late-night coding sessions and too much caffeine.";
+    }
+
+    // --- NAVIGATION & EXIT ---
+    else if (text.includes("go to about") || text.includes("navigation")) {
+        response = "Rerouting you to the 'About' section... [INITIATING NAV]";
+        action = () => { window.location.href = "about.html"; };
+    } else if (text === "exit" || text === "quit") {
+        response = "AI session closed. Standard terminal protocol restored.";
+        isAiMode = false;
+    } 
+
+    // --- FALLBACK ---
+    else {
+        response = "Query '" + input + "' not found in my database. Try asking about 'Kite project', 'hiring status', or 'funny joke'.";
+    }
+
+    // --- UI EXECUTION (TYPING EFFECT) ---
+    const loadingId = "ai-loading-" + Date.now();
+    printOutput(`<span id="${loadingId}" style="color: #0f0">S.A.M. ></span> Thinking...`, true);
+
+    setTimeout(() => {
+        const loadingElement = document.getElementById(loadingId);
+        if (loadingElement) loadingElement.parentElement.remove();
+        
+        const line = document.createElement("div");
+        line.innerHTML = `<span style="color: #0f0">S.A.M. ></span> `;
+        cmdOutput.appendChild(line);
+        
+        let i = 0;
+        const typeInterval = setInterval(() => {
+            line.innerHTML += response.charAt(i);
+            cmdOutput.scrollTop = cmdOutput.scrollHeight;
+            i++;
+            if (i >= response.length) {
+                clearInterval(typeInterval);
+                if (action) setTimeout(action, 600);
+            }
+        }, 30); 
+    }, 800);
+}
 
     // Mobile God Mode trigger
     const logoTrigger = document.querySelector('.logo');
