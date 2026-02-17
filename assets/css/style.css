@@ -1248,15 +1248,30 @@ main, nav, footer {
         /* ADD THIS LINE for smooth transitions */
         transition: padding 0.3s ease, background 0.3s ease !important;
     }
+    .project h2 {
+        font-size: 6vw; /* Reduced from 8vw */
+        transition: color 0.3s ease, transform 0.3s ease;
+        line-height: 1.1; /* Tighter spacing if it does wrap */
+    }
+     .project-meta {
+        transition: transform 0.3s ease, color 0.3s ease; /* Enable animation for meta */
+    }
 
     .project.is-active {
         padding: 2rem 1rem !important;
         background: rgba(255, 255, 255, 0.04) !important;
     }
 
-    /* Optional: Ensure the text still highlights nicely */
-    .project h2 {
-        transition: color 0.3s ease;
+    /* 2. Slide BOTH Title and MetaData together */
+    .project.is-active h2,
+    .project.is-active .project-meta {
+        transform: translateX(10px); /* Move both right */
+        color: #fff;
+    }
+
+      /* Optional: Ensure Meta text brightens up too */
+    .project.is-active .project-meta {
+        color: #ccc; 
     }
 }
 
