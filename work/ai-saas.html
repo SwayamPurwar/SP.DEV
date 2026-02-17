@@ -180,6 +180,7 @@
       .code-line span {
         color: #a855f7;
       }
+
       .side-viz {
         padding: 3rem;
         background: rgba(168, 85, 247, 0.02);
@@ -368,9 +369,18 @@
           text-align: center;
         }
       }
+
+      @keyframes wave-height {
+        0%,
+        100% {
+          transform: scaleY(1);
+        }
+        50% {
+          transform: scaleY(0.6);
+        }
+      }
     </style>
 
-    <!-- Google tag (gtag.js) -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"
@@ -381,7 +391,6 @@
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-QLM3SVXXJT");
     </script>
   </head>
@@ -393,7 +402,7 @@
     <nav>
       <a href="../index.html" class="logo mouse-hover">SP.DEV</a>
       <div class="nav-links mobile-back-btn">
-        <a href="../index.html" class="nav-item mouse-hover">Back to home</a>
+        <a href="../index.html" class="nav-item mouse-hover">Back to Home</a>
       </div>
     </nav>
 
@@ -558,34 +567,22 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        const loaderTl = gsap.timeline();
-        loaderTl.to(".counter", {
-          textContent: 100,
-          duration: 1.5,
-          ease: "power2.inOut",
-          snap: { textContent: 1 },
-        });
-        loaderTl.to(".blind", {
-          height: 0,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: "power3.inOut",
-        });
-        loaderTl.to(".preloader-container", { display: "none" });
+        // REMOVED DEAD BOOT SEQUENCE CODE (loaderTl)
 
+        // 1. Entrance Animations
         gsap.from(".p-title", {
           y: 60,
           opacity: 0,
           duration: 1.5,
           ease: "power4.out",
-          delay: 1.8,
+          delay: 0.2,
         });
         gsap.from(".outline-sub", {
           y: 30,
           opacity: 0,
           duration: 1.5,
           ease: "power4.out",
-          delay: 2.0,
+          delay: 0.4,
         });
         gsap.from(".p-img-container", {
           rotateX: 20,
@@ -593,16 +590,18 @@
           opacity: 0,
           duration: 1.5,
           ease: "power3.out",
-          delay: 2.2,
+          delay: 0.6,
         });
 
+        // 2. Parallax Effect
         window.addEventListener("scroll", () => {
           const scrolled = window.pageYOffset;
           const sub = document.querySelector(".parallax-sub");
-          const limit = window.innerWidth > 768 ? 0.1 : 0.05; // Less parallax on mobile to prevent clipping
-          sub.style.transform = `translateX(${scrolled * limit}px)`;
+          const limit = window.innerWidth > 768 ? 0.1 : 0.05;
+          if (sub) sub.style.transform = `translateX(${scrolled * limit}px)`;
         });
 
+        // 3. AI Terminal Typewriter
         const panel = document.getElementById("ai-runtime");
         const logs = [
           "> Booting <span>Synapse_Neural_v1</span>...",
@@ -624,14 +623,16 @@
             typeLog();
           }, 1200);
         }
-        setTimeout(typeLog, 3500);
+        setTimeout(typeLog, 1500); // Started sooner since preloader is gone
 
+        // 4. Particle Canvas System
         const canvas = document.getElementById("neural-canvas");
         const ctx = canvas.getContext("2d");
         let w,
           h,
           dots = [],
           mouse = { x: null, y: null };
+
         function resize() {
           w = canvas.width = window.innerWidth;
           h = canvas.height = window.innerHeight;
@@ -650,10 +651,12 @@
           mouse.y = e.clientY;
         });
         resize();
+
         function draw() {
           ctx.clearRect(0, 0, w, h);
           ctx.fillStyle = "rgba(168, 85, 247, 0.6)";
           ctx.strokeStyle = "rgba(168, 85, 247, 0.08)";
+
           dots.forEach((d) => {
             d.x += d.vx;
             d.y += d.vy;
@@ -668,9 +671,11 @@
             }
             if (d.x < 0 || d.x > w) d.vx *= -1;
             if (d.y < 0 || d.y > h) d.vy *= -1;
+
             ctx.beginPath();
             ctx.arc(d.x, d.y, 1.2, 0, Math.PI * 2);
             ctx.fill();
+
             dots.forEach((d2) => {
               if (Math.hypot(d.x - d2.x, d.y - d2.y) < 180) {
                 ctx.beginPath();
@@ -684,6 +689,7 @@
         }
         draw();
 
+        // 5. Waveform Animation
         function createWaves(id) {
           const cont = document.getElementById(id);
           if (!cont) return;
@@ -697,6 +703,7 @@
         createWaves("wave-1");
         createWaves("wave-2");
 
+        // 6. Scroll Trigger Entrances
         document.querySelectorAll(".animate-on-scroll").forEach((el) => {
           gsap.from(el, {
             scrollTrigger: { trigger: el, start: "top 90%" },
@@ -708,16 +715,5 @@
         });
       });
     </script>
-    <style>
-      @keyframes wave-height {
-        0%,
-        100% {
-          transform: scaleY(1);
-        }
-        50% {
-          transform: scaleY(0.6);
-        }
-      }
-    </style>
   </body>
 </html>

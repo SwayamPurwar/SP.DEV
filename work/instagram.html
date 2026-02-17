@@ -25,13 +25,13 @@
     />
 
     <style>
-      /* --- PAGE SPECIFIC STYLES --- */
+      /* --- INSTAGRAM PROJECT STYLES --- */
       body {
         background-color: var(--bg-color);
         overflow-x: hidden;
       }
 
-      /* 1. TECH GRID BACKGROUND */
+      /* 1. ATMOSPHERICS */
       .grid-bg {
         position: fixed;
         top: 0;
@@ -46,7 +46,6 @@
         pointer-events: none;
       }
 
-      /* 2. FLOATING AMBIENT ORBS */
       .orb {
         position: fixed;
         border-radius: 50%;
@@ -80,33 +79,14 @@
         }
       }
 
-      /* Mobile Navigation Overrides */
-      @media (max-width: 768px) {
-        .nav-links {
-          display: flex !important;
-          gap: 1rem;
-        }
-        .nav-item {
-          font-size: 0.8rem;
-        }
-        nav,
-        nav.scrolled {
-          padding: 1.5rem 2rem !important;
-        }
-        .grid-bg {
-          background-size: 30px 30px;
-        }
-      }
-
+      /* 2. HERO SECTION */
       .p-hero {
-        /* Fixed Block Layout */
         padding: 180px 10vw 5vh;
         min-height: 100vh;
         display: block;
         perspective: 1000px;
       }
 
-      /* 3. GRADIENT TYPOGRAPHY */
       .p-title {
         font-size: clamp(3rem, 9vw, 9rem);
         line-height: 1.1;
@@ -126,7 +106,6 @@
         background-clip: text;
         -webkit-text-fill-color: transparent;
         width: fit-content;
-        /* Animation Initial State handled by JS */
       }
 
       .outline-sub {
@@ -135,13 +114,12 @@
         color: transparent;
         -webkit-text-stroke: 1px rgba(255, 255, 255, 0.8);
         -webkit-text-fill-color: transparent;
-        background: none;
         display: block;
         opacity: 1;
         margin-top: 10px;
       }
 
-      /* 4. 3D IMAGE CONTAINER */
+      /* 3. 3D IMAGE WRAPPER */
       .p-img-wrapper {
         width: 100%;
         height: 70vh;
@@ -159,8 +137,6 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
         transform: rotateX(5deg);
         transition: transform 0.5s ease-out;
-        /* Visible by default */
-        opacity: 1;
       }
 
       .p-img {
@@ -170,6 +146,7 @@
         transform: scale(1.1);
       }
 
+      /* 4. CONTENT & GRID */
       .p-content {
         padding: 0 10vw 10vh;
         display: grid;
@@ -187,7 +164,6 @@
         position: relative;
         overflow: hidden;
       }
-
       .glass-card::before {
         content: "";
         position: absolute;
@@ -216,7 +192,6 @@
         gap: 1rem;
         flex-wrap: wrap;
       }
-
       .btn {
         padding: 16px 40px;
         border: 1px solid rgba(255, 255, 255, 0.2);
@@ -238,6 +213,7 @@
         box-shadow: 0 10px 20px rgba(255, 255, 255, 0.2);
       }
 
+      /* Sidebar Info */
       .p-info h4 {
         color: #888;
         font-size: 0.8rem;
@@ -246,14 +222,12 @@
         letter-spacing: 2px;
         font-weight: 600;
       }
-
       .tech-list {
         display: flex;
         flex-wrap: wrap;
         gap: 10px;
         margin-bottom: 3rem;
       }
-
       .tech-pill {
         font-size: 0.85rem;
         color: #ddd;
@@ -267,7 +241,6 @@
         background: rgba(255, 255, 255, 0.1);
         border-color: rgba(255, 255, 255, 0.5);
       }
-
       .info-text {
         color: white;
         font-size: 1.2rem;
@@ -277,6 +250,7 @@
         font-family: "Syne", sans-serif;
       }
 
+      /* --- RESPONSIVE OPTIMIZATIONS --- */
       @media (max-width: 1024px) {
         .p-hero {
           padding: 160px 6vw 5vh;
@@ -291,6 +265,23 @@
       }
 
       @media (max-width: 768px) {
+        /* Mobile Nav Fix */
+        .nav-links {
+          display: flex !important;
+          gap: 1rem;
+        }
+        .nav-item {
+          font-size: 0.8rem;
+        }
+        nav,
+        nav.scrolled {
+          padding: 1.5rem 2rem !important;
+        }
+
+        /* Layout Fixes */
+        .grid-bg {
+          background-size: 30px 30px;
+        }
         .p-hero {
           padding: 140px 6vw 2vh;
         }
@@ -317,7 +308,6 @@
       }
     </style>
 
-    <!-- Google tag (gtag.js) -->
     <script
       async
       src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"
@@ -328,7 +318,6 @@
         dataLayer.push(arguments);
       }
       gtag("js", new Date());
-
       gtag("config", "G-QLM3SVXXJT");
     </script>
   </head>
@@ -480,10 +469,9 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        // JS-Only Animation (Styles are visible by default)
-        const tl = gsap.timeline();
+        // JS-Only Animation
 
-        // 1. Title Entrance (Manually hide then show)
+        // 1. Title Entrance
         gsap.from(".p-title", {
           y: 50,
           opacity: 0,
@@ -492,7 +480,7 @@
           delay: 0.2,
         });
 
-        // 2. Image Reveal (Using .from to guarantee visibility end state)
+        // 2. Image Reveal
         gsap.from(".p-img-container", {
           rotateX: 15,
           scale: 0.9,
@@ -502,7 +490,7 @@
           delay: 0.4,
         });
 
-        // 3. Text Stagger (Using .from)
+        // 3. Text Stagger
         gsap.from(".glass-card, .p-info", {
           y: 30,
           opacity: 0,
@@ -527,11 +515,7 @@
         // Flatten tilt on scroll
         gsap.to(".p-img-container", {
           rotateX: 0,
-          scrollTrigger: {
-            trigger: ".p-hero",
-            start: "top top",
-            scrub: 1,
-          },
+          scrollTrigger: { trigger: ".p-hero", start: "top top", scrub: 1 },
         });
       });
     </script>
