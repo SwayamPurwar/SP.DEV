@@ -51,7 +51,9 @@
       rel="stylesheet"
     />
     <link rel="canonical" href="https://swayampurwar.vercel.app/" />
-    <script>document.documentElement.classList.add('js-loaded');</script>
+    <script>
+      document.documentElement.classList.add("js-loaded");
+    </script>
 
     <style>
       /* --- CRITICAL FAIL-SAFE CSS --- */
@@ -112,41 +114,43 @@
       }
     </style>
 
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Swayam Purwar",
+        "url": "https://swayampurwar.vercel.app/",
+        "sameAs": [
+          "https://www.linkedin.com/in/swayam-purwar",
+          "https://github.com/SwayamPurwar",
+          "https://www.instagram.com/swayam_purwar"
+        ],
+        "jobTitle": "Creative Developer",
+        "worksFor": {
+          "@type": "Organization",
+          "name": "Freelance"
+        },
+        "alumniOf": {
+          "@type": "CollegeOrUniversity",
+          "name": "LNCT University"
+        }
+      }
+    </script>
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Swayam Purwar",
-  "url": "https://swayampurwar.vercel.app/",
-  "sameAs": [
-    "https://www.linkedin.com/in/swayam-purwar",
-    "https://github.com/SwayamPurwar",
-    "https://www.instagram.com/swayam_purwar"
-  ],
-  "jobTitle": "Creative Developer",
-  "worksFor": {
-    "@type": "Organization",
-    "name": "Freelance"
-  },
-  "alumniOf": {
-    "@type": "CollegeOrUniversity",
-    "name": "LNCT University"
-  }
-}
-</script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QLM3SVXXJT');
-</script>
-
+      gtag("config", "G-QLM3SVXXJT");
+    </script>
   </head>
 
   <body>
@@ -484,65 +488,74 @@
     <script type="module" src="./assets/js/main.js" defer></script>
 
     <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    // Fallback if GSAP preloader gets stuck
-    setTimeout(() => {
-      const heroTexts = document.querySelectorAll(".hero-text");
-      heroTexts.forEach((el) => {
-        el.style.opacity = "1";
-        el.style.transform = "translate(0,0)";
-      });
-      const preloader = document.querySelector(".preloader-container");
-      if (preloader) {
-        gsap.to(preloader, {
-          yPercent: -100,
-          duration: 1,
-          ease: "power2.inOut",
-          onComplete: () => (preloader.style.display = "none"),
-        });
-      }
-    }, 3500);
+      document.addEventListener("DOMContentLoaded", () => {
+        // Fallback if GSAP preloader gets stuck
+        setTimeout(() => {
+          const heroTexts = document.querySelectorAll(".hero-text");
+          heroTexts.forEach((el) => {
+            el.style.opacity = "1";
+            el.style.transform = "translate(0,0)";
+          });
+          const preloader = document.querySelector(".preloader-container");
+          if (preloader) {
+            gsap.to(preloader, {
+              yPercent: -100,
+              duration: 1,
+              ease: "power2.inOut",
+              onComplete: () => (preloader.style.display = "none"),
+            });
+          }
+        }, 3500);
 
-    gsap.fromTo(
-      ".hero-text",
-      { y: 100, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "power4.out", delay: 3 }
-    );
-  });
-
-  // --- UPDATED FORM HANDLING ---
-  const form = document.getElementById("portfolio-form");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const submitBtn = form.querySelector(".submit-btn");
-    const originalText = submitBtn.innerText;
-    
-    submitBtn.innerText = "SENDING...";
-    submitBtn.disabled = true; 
-
-    try {
-      const formData = new FormData(form);
-      const response = await fetch("https://submit-form.com/vPN4ntpxv", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify(Object.fromEntries(formData)),
+        gsap.fromTo(
+          ".hero-text",
+          { y: 100, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.1,
+            ease: "power4.out",
+            delay: 3,
+          },
+        );
       });
 
-      if (response.ok) {
-        window.location.href = "success.html";
-      } else {
-        throw new Error('Submission failed');
-      }
-    } catch (error) {
-      alert("Failed to send message. Please check your connection or email me directly.");
-      submitBtn.innerText = originalText;
-      submitBtn.disabled = false;
-    }
-  });
-</script>
+      // --- UPDATED FORM HANDLING ---
+      const form = document.getElementById("portfolio-form");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector(".submit-btn");
+        const originalText = submitBtn.innerText;
+
+        submitBtn.innerText = "SENDING...";
+        submitBtn.disabled = true;
+
+        try {
+          const formData = new FormData(form);
+          const response = await fetch("https://submit-form.com/vPN4ntpxv", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(Object.fromEntries(formData)),
+          });
+
+          if (response.ok) {
+            window.location.href = "success.html";
+          } else {
+            throw new Error("Submission failed");
+          }
+        } catch (error) {
+          alert(
+            "Failed to send message. Please check your connection or email me directly.",
+          );
+          submitBtn.innerText = originalText;
+          submitBtn.disabled = false;
+        }
+      });
+    </script>
   </body>
 </html>

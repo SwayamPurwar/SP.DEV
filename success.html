@@ -138,16 +138,20 @@
       }
     </style>
 
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-QLM3SVXXJT');
-</script>
+      gtag("config", "G-QLM3SVXXJT");
+    </script>
   </head>
   <body>
     <div id="ambient-glow"></div>
@@ -184,38 +188,63 @@
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-          const tl = gsap.timeline();
+        const tl = gsap.timeline();
 
-          // 1. Enter Animations
-          tl.from(".outline-text", {
-            y: 50, opacity: 0, duration: 1.2, ease: "power4.out", delay: 0.2
+        // 1. Enter Animations
+        tl.from(".outline-text", {
+          y: 50,
+          opacity: 0,
+          duration: 1.2,
+          ease: "power4.out",
+          delay: 0.2,
+        });
+
+        tl.from(
+          ".solid-text",
+          {
+            y: 50,
+            opacity: 0,
+            duration: 1.2,
+            ease: "power4.out",
+          },
+          "-=1",
+        );
+
+        tl.from(
+          "p",
+          {
+            y: 20,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out",
+          },
+          "-=0.8",
+        );
+
+        tl.to(
+          ".btn-container",
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            ease: "power3.out",
+          },
+          "-=0.8",
+        );
+
+        // 2. AUTO-REDIRECT LOGIC (New)
+        // Wait 5 seconds, then fade out and go home
+        setTimeout(() => {
+          gsap.to("main", {
+            opacity: 0,
+            y: -30,
+            duration: 0.8,
+            ease: "power2.in",
+            onComplete: () => {
+              window.location.href = "index.html";
+            },
           });
-          
-          tl.from(".solid-text", {
-            y: 50, opacity: 0, duration: 1.2, ease: "power4.out"
-          }, "-=1");
-
-          tl.from("p", {
-              y: 20, opacity: 0, duration: 1, ease: "power3.out",
-          }, "-=0.8");
-
-          tl.to(".btn-container", {
-              y: 0, opacity: 1, duration: 1, ease: "power3.out"
-          }, "-=0.8");
-
-          // 2. AUTO-REDIRECT LOGIC (New)
-          // Wait 5 seconds, then fade out and go home
-          setTimeout(() => {
-            gsap.to("main", {
-                opacity: 0,
-                y: -30,
-                duration: 0.8,
-                ease: "power2.in",
-                onComplete: () => {
-                    window.location.href = "index.html";
-                }
-            });
-          }, 5000); 
+        }, 5000);
       });
     </script>
   </body>
