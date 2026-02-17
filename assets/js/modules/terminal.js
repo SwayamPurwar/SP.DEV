@@ -8,6 +8,10 @@ export function initTerminal() {
     let isTerminalOpen = false;
     let isAiMode = false;
 
+
+    // --- NEW: History Variables ---
+    let commandHistory = [];
+    let historyIndex = -1;
     if(!terminal || !cmdInput || !cmdOutput) return;
 
     window.addEventListener("keydown", (e) => {
@@ -33,10 +37,35 @@ export function initTerminal() {
         cmdOutput.appendChild(line);
     }
 
-    cmdInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") {
+   cmdInput.addEventListener("keydown", (e) => {
+        // --- NEW: Handle Arrow Keys ---
+        if (e.key === "ArrowUp") {
+            e.preventDefault();
+            if (historyIndex < commandHistory.length - 1) {
+                historyIndex++;
+                cmdInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
+            }
+        } else if (e.key === "ArrowDown") {
+            e.preventDefault();
+            if (historyIndex > 0) {
+                historyIndex--;
+                cmdInput.value = commandHistory[commandHistory.length - 1 - historyIndex];
+            } else {
+                historyIndex = -1;
+                cmdInput.value = "";
+            }
+        }
+
+        
+
+         else if (e.key === "Enter") {
             const input = cmdInput.value.trim();
             if (!input) return;
+            
+            // Save to history
+            commandHistory.push(input);
+            historyIndex = -1; // Reset index
+
             if (isAiMode) {
                 printOutput(`<span style="color: #fff">You:</span> ${input}`, true);
                 processAiQuery(input);
@@ -50,25 +79,107 @@ export function initTerminal() {
         }
     });
 
-    function executeCommand(cmd) {
+   function executeCommand(cmd) {
         const parts = cmd.split(" ");
         const action = parts[0];
-        const arg = parts[1];
+        const arg = parts.slice(1).join(" "); // Handles multi-word args if needed
         
         switch (action) {
             case "help":
-                printOutput(`AVAILABLE COMMANDS:\nhelp, clear, goto [page], color [hex], matrix, socials, whoami, blackout, gravity, theme [name]`);
+                const helpHTML = `
+                <div style="color: #666; margin-bottom: 5px; margin-top: 5px;">--- BASIC COMMANDS ---</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">ls</span>       List directory contents (pages)</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">cd</span>       Change directory (navigation)</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">pwd</span>      Print working directory</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">date</span>     Show system date & time</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">history</span>  View command history</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">clear</span>    Clear terminal screen</div>
+                
+                <div style="color: #666; margin-bottom: 5px; margin-top: 15px;">--- SYSTEM ---</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">whoami</span>   Current user info</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">socials</span>  Connect via LinkedIn/GitHub</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">theme</span>    Change UI theme</div>
+                
+                <div style="color: #666; margin-bottom: 5px; margin-top: 15px;">--- EXPERIMENTS ---</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">matrix</span>   Toggle visual effect</div>
+                <div><span style="color: var(--accent); width: 100px; display: inline-block;">blackout</span> Power saving mode</div>
+                `;
+                printOutput(helpHTML, true);
                 break;
-            case "clear": cmdOutput.innerHTML = ""; break;
-            case "goto":
-                if (arg === "home") window.location.href = "index.html";
-                else if (arg === "about") window.location.href = "about.html";
-                else if (arg === "work") window.location.href = "#work";
-                else printOutput("Error: Page not found.");
+
+            // --- STANDARD UTILS ---
+            case "ls":
+            case "dir":
+                printOutput("index.html   about.html   work/   contact.exe   cv.pdf");
                 break;
-            case "socials": printOutput("GitHub | LinkedIn"); window.open("https://github.com/SwayamPurwar", "_blank"); break;
-            case "whoami": printOutput("Guest User [IP: UNKNOWN]. Access Level: Visitor."); break;
-            case "matrix": printOutput("Initializing Matrix..."); toggleMatrix(true); break;
+
+            case "cd":
+                if (arg === ".." || arg === "home" || arg === "index" || arg === "~") {
+                    window.location.href = "index.html";
+                    printOutput("Navigating to /home...");
+                } else if (arg === "about") {
+                    window.location.href = "about.html";
+                    printOutput("Navigating to /about...");
+                } else if (arg === "work" || arg === "projects") {
+                    window.location.href = "#work";
+                    printOutput("Navigating to /work...");
+                } else if (arg === "") {
+                    printOutput("Usage: cd [page_name]");
+                } else {
+                    printOutput(`bash: cd: ${arg}: No such directory`);
+                }
+                break;
+
+            case "pwd":
+                printOutput("/home/guest/swayam.dev");
+                break;
+
+            case "date":
+            case "time":
+                printOutput(new Date().toString());
+                break;
+
+            case "history":
+                if (typeof commandHistory !== 'undefined' && commandHistory.length > 0) {
+                    printOutput(commandHistory.map((c, i) => `${i + 1}  ${c}`).join("\n"));
+                } else {
+                    printOutput("No history found.");
+                }
+                break;
+
+            case "echo":
+                printOutput(arg);
+                break;
+
+            case "exit":
+            case "gui":
+                toggleTerminal(); // Closes the terminal
+                break;
+
+            // --- EXISTING CUSTOM COMMANDS ---
+            case "clear": 
+            case "cls":
+                cmdOutput.innerHTML = ""; 
+                break;
+
+            case "goto": // Keep old command as alias
+                executeCommand(`cd ${arg}`);
+                break;
+
+            case "socials": 
+                printOutput("GitHub | LinkedIn"); 
+                window.open("https://github.com/SwayamPurwar", "_blank"); 
+                break;
+
+            case "whoami": 
+                printOutput("Guest User [IP: " + (Math.floor(Math.random()*255)+1) + ".0.0.1]. Access Level: Visitor."); 
+                break;
+
+            case "matrix": 
+                printOutput("Initializing Matrix..."); 
+                toggleMatrix(true); 
+                break;
+
             case "color":
                 if (arg) {
                     document.documentElement.style.setProperty('--accent', arg);
@@ -76,29 +187,35 @@ export function initTerminal() {
                     if(glow) glow.style.background = `radial-gradient(circle, ${arg}40 0%, rgba(0, 0, 0, 0) 70%)`;
                     printOutput(`SUCCESS: System accent changed to ${arg}`);
                     sfx.playBoot();
-                } else printOutput("Error: Please specify a color.");
+                } else printOutput("Error: Please specify a color (e.g., color #ff0000).");
                 break;
+
             case "blackout":
             case "shutdown":
                 printOutput("INITIATING SYSTEM POWER CUT...", true);
                 setTimeout(toggleBlackout, 800);
                 break;
+
             case "gravity":
                 printOutput("WARNING: ARTIFICIAL GRAVITY GENERATORS FAILING...", true);
                 setTimeout(() => { printOutput("CRITICAL ERROR: STRUCTURE UNSTABLE."); initGravity(); }, 1000);
                 break;
+
             case "theme":
                 if (arg === "blueprint") { document.body.className = "theme-blueprint"; printOutput("System reloaded: BLUEPRINT."); } 
                 else if (arg === "paper") { document.body.className = "theme-paper"; printOutput("System reloaded: ANALOG."); } 
                 else if (arg === "reset" || arg === "default") { document.body.className = ""; printOutput("System restored."); } 
                 else printOutput("Themes available: blueprint, paper, reset");
                 break;
+
             case "ai":
             case "chat":
                 isAiMode = true;
                 printOutput("S.A.M. v1.0 ONLINE. Talk to me.");
                 break;
-            default: printOutput(`Command not found: '${cmd}'. Type 'help'.`);
+
+            default: 
+                printOutput(`Command not found: '${cmd}'. Type 'help' for options.`);
         }
     }
 
