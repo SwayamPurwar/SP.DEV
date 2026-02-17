@@ -194,7 +194,7 @@ a {
     font-family: var(--font-main);
     font-size: 0.9rem;
     color: white;
-    transition: 0.3s ease;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
     background: transparent;
     cursor: none;
 }
@@ -672,7 +672,8 @@ input:focus, textarea:focus { border-bottom-color: var(--accent); }
   letter-spacing: 1px;
   text-decoration: none;
   overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+  transition: background 0.4s, color 0.4s, border-color 0.4s, box-shadow 0.4s;
+  transition-timing-function: cubic-bezier(0.25, 1, 0.5, 1);
   backdrop-filter: blur(10px);
 }
 
