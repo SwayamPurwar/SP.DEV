@@ -75,11 +75,21 @@ body::before {
     width: 100%;
     height: 100vh;
     background-color: #050505; /* Deep Black */
-    z-index: 9999;
+    z-index: 999999;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s;
+      pointer-events: all; 
+    touch-action: none;
+}
+
+
+.preloader-container.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none; /* Crucial: allows clicks to pass through to the terminal */
 }
 
 /* FIXED: Center Loader on Screen */
@@ -1328,3 +1338,5 @@ body.theme-paper .glass-card {
 #cmd-output::-webkit-scrollbar-thumb:hover {
     background: var(--accent); /* Light up when grabbing */
 }
+
+

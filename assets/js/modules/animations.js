@@ -30,6 +30,7 @@ export function initAnimations() {
         } else {
             sessionStorage.setItem("visited", "true");
             document.body.style.overflow = "hidden";
+            
             gsap.set("nav", { y: -50, opacity: 0 });
 
             const tl = gsap.timeline();
@@ -53,8 +54,14 @@ export function initAnimations() {
                 yPercent: -100,
                 duration: 1.2,
                 ease: "power4.inOut",
+                onStart: () => {
+            // Optional: You can also hide the custom cursor here to prevent distraction
+            document.getElementById("cursor").style.display = "none";
+        },
                 onComplete: () => {
                     document.body.style.overflow = "";
+                    document.querySelector(".preloader-container").classList.add("hidden");
+            document.getElementById("cursor").style.display = "block";
                     gsap.set(".preloader-container", { display: "none" });
                 }
             });
