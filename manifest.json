@@ -15,7 +15,7 @@
       "purpose": "any"
     },
     {
-      "src": "assets/images/ui/favicon.webp",
+      "src": "assets/images/ui/apple-touch-icon.webp",
       "sizes": "512x512",
       "type": "image/webp",
       "purpose": "maskable"
