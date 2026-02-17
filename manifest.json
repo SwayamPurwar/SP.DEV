@@ -1,19 +1,19 @@
 {
   "name": "Swayam Purwar",
   "short_name": "Swayam",
-  "start_url": "/",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#050505",
   "theme_color": "#050505",
   "orientation": "portrait",
- "icons": [
+  "icons": [
     {
-      "src": "assets/images/ui/logo.png?v=2",
+      "src": "assets/images/ui/logo.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/images/ui/logo.png?v=2",
+      "src": "assets/images/ui/logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }
