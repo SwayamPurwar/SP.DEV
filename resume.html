@@ -498,9 +498,9 @@
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
-    
-    <script>
-      const HOST_LAT = 23.2599; const HOST_LON = 77.4126;
+  
+  <script>const HOST_LAT = 23.2599; 
+  const HOST_LON = 77.4126;
 
   function getHaversineDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; 
@@ -513,6 +513,7 @@
   function typeLog(message, delay) {
     setTimeout(() => {
       const log = document.getElementById('terminal-log');
+      if (!log) return;
       const newLine = document.createElement('span');
       newLine.innerText = `> ${message}`;
       log.appendChild(newLine);
@@ -522,10 +523,17 @@
 
   function updateClocks(clientTZ) {
     const now = new Date();
-    document.getElementById('host-time').innerText = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute:'2-digit', hour12: false });
+    const hostTime = document.getElementById('host-time');
+    if (hostTime) {
+        hostTime.innerText = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute:'2-digit', hour12: false });
+    }
+    
     if(clientTZ && clientTZ !== 'STEALTH') {
-      try { document.getElementById('client-time').innerText = now.toLocaleTimeString('en-US', { timeZone: clientTZ, hour: '2-digit', minute:'2-digit', hour12: false }); } 
-      catch (e) { document.getElementById('client-time').innerText = "SYS_ERR"; }
+      const clientTime = document.getElementById('client-time');
+      try { 
+        if (clientTime) clientTime.innerText = now.toLocaleTimeString('en-US', { timeZone: clientTZ, hour: '2-digit', minute:'2-digit', hour12: false }); 
+      } 
+      catch (e) { if (clientTime) clientTime.innerText = "SYS_ERR"; }
     }
   }
 
@@ -542,30 +550,15 @@
 
   async function establishAdvancedUplink() {
     typeLog("Resolving IP address...", 400);
-    document.getElementById('data-os').innerText = getClientDeviceStats();
+    const osElement = document.getElementById('data-os');
+    if (osElement) osElement.innerText = getClientDeviceStats();
 
-    // Primary API: ipwho.is
     try {
-      let res = await fetch('https://ipwho.is/');
+      // Primary API: ipapi.co (HTTPS compatible and reliable)
+      let res = await fetch('https://ipapi.co/json/');
       let data = await res.json();
       
-      // If primary fails, try Backup API: ip-api.com
-      if (!data.success) {
-        typeLog("Primary node busy, rerouting...", 800);
-        const backupRes = await fetch('http://ip-api.com/json/'); // Note: Some browsers may block HTTP on HTTPS sites
-        const backupData = await backupRes.json();
-        if(backupData.status !== "success") throw new Error('All nodes failed');
-        
-        // Map backup data to our format
-        data = {
-          city: backupData.city,
-          latitude: backupData.lat,
-          longitude: backupData.lon,
-          timezone: { id: backupData.timezone },
-          connection: { org: backupData.org || backupData.isp },
-          ip: backupData.query
-        };
-      }
+      if (data.error) throw new Error('API Rate Limit');
 
       typeLog(`Payload secured from ${data.city || 'target'}...`, 1200);
       typeLog("Uplink successfully established.", 2000);
@@ -575,24 +568,33 @@
       const maskedIp = data.ip ? data.ip.split('.').map((p, i) => i > 1 ? '***' : p).join('.') : 'Hidden';
 
       document.getElementById('client-city').innerText = data.city || 'Unknown';
-      document.getElementById('data-org').innerText = data.connection?.org || data.connection?.isp || 'Private Network';
+      document.getElementById('data-org').innerText = data.org || 'Private Network';
       document.getElementById('data-ip').innerText = maskedIp;
       document.getElementById('data-distance').innerHTML = `${distance.toLocaleString()} <span class="text-[8px]">km</span>`;
       document.getElementById('data-ping').innerHTML = `~${ping} <span class="text-[8px]">ms</span>`;
 
-      updateClocks(data.timezone?.id);
-      setInterval(() => updateClocks(data.timezone?.id), 1000);
+      updateClocks(data.timezone);
+      setInterval(() => updateClocks(data.timezone), 1000);
 
     } catch (error) {
       typeLog("Firewall block detected...", 800);
       typeLog("Stealth mode active.", 2000);
 
-      document.getElementById('client-city').innerText = "Stealth Node";
-      document.getElementById('client-city').classList.replace('text-white', 'text-slate-400');
-      document.getElementById('client-time').innerText = "ENCRYPTED";
-      document.getElementById('client-time').classList.replace('text-emerald-400', 'text-slate-500');
-      document.getElementById('client-node').classList.replace('bg-emerald-500', 'bg-slate-700');
-      document.getElementById('status-dot').classList.replace('bg-emerald-500', 'bg-amber-500');
+      const cityEl = document.getElementById('client-city');
+      const timeEl = document.getElementById('client-time');
+      const nodeEl = document.getElementById('client-node');
+      const statusEl = document.getElementById('status-dot');
+
+      if (cityEl) {
+          cityEl.innerText = "Stealth Node";
+          cityEl.classList.replace('text-white', 'text-slate-400');
+      }
+      if (timeEl) {
+          timeEl.innerText = "ENCRYPTED";
+          timeEl.classList.replace('text-emerald-400', 'text-slate-500');
+      }
+      if (nodeEl) nodeEl.classList.replace('bg-emerald-500', 'bg-slate-700');
+      if (statusEl) statusEl.classList.replace('bg-emerald-500', 'bg-amber-500');
       
       document.getElementById('data-org').innerText = "Encrypted Tunnel";
       document.getElementById('data-ip').innerText = "127.0.0.1";
@@ -604,8 +606,8 @@
     }
   }
 
-  setTimeout(establishAdvancedUplink, 500);
-  </script>
+  // Initialize after short delay to ensure DOM is ready
+  setTimeout(establishAdvancedUplink, 800);</script>
 
     <script>
       window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
