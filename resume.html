@@ -1,31 +1,11 @@
-<!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<!doctype html>
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Swayam Purwar - MERN Full Stack Web Developer based in Bhopal, India. Specializing in React, Node.js, and crafting pixel-perfect interfaces." />
-    <meta name="keywords" content="Swayam Purwar, Web Developer, MERN Stack, React Developer, Bhopal, Portfolio, Frontend, Backend" />
-    <meta name="author" content="Swayam Purwar" />
-    
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://swayampurwar.vercel.app/" />
-    <meta property="og:title" content="Swayam Purwar - MERN Full Stack Web Developer" />
-    <meta property="og:description" content="Passionate about crafting pixel-perfect interfaces. I bridge the gap between design and code using React and Tailwind." />
-    <meta property="og:image" content="assets/images/profile/profile.webp" />
-
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://swayampurwar.vercel.app/" />
-    <meta property="twitter:title" content="Swayam Purwar - MERN Full Stack Web Developer" />
-    <meta property="twitter:description" content="Passionate about crafting pixel-perfect interfaces. I bridge the gap between design and code using React and Tailwind." />
-    <meta property="twitter:image" content="assets/images/profile/profile.webp" />
-
-    <title>Swayam Purwar | MERN Full Stack Web Developer</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    
+    <meta name="description" content="Resume and Portfolio of Swayam Purwar - MERN Full Stack Web Developer specializing in React, Tailwind, and Node.js." />
+    <title>Swayam Purwar - MERN Full Stack Web Development</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -37,40 +17,26 @@
       href="assets/images/ui/favicon.webp"
       sizes="32x32"
     />
-
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              sans: ['Plus Jakarta Sans', 'sans-serif'],
-            },
-            animation: {
-              blob: "blob 7s infinite",
-              'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-            },
-            keyframes: {
-              blob: {
-                "0%": { transform: "translate(0px, 0px) scale(1)" },
-                "33%": { transform: "translate(30px, -50px) scale(1.1)" },
-                "66%": { transform: "translate(-20px, 20px) scale(0.9)" },
-                "100%": { transform: "translate(0px, 0px) scale(1)" },
-              },
-            },
-          },
-        },
-      };
-    </script>
+    <link
+      rel="icon"
+      type="image/webp"
+      href="assets/images/ui/favicon.webp"
+      sizes="192x192"
+    />
+    <link rel="apple-touch-icon" href="assets/images/ui/favicon.webp" />
 
     <style>
       body {
+        font-family: "Plus Jakarta Sans", sans-serif;
         background-color: #020617;
-        /* Custom scrollbar handling */
-        scrollbar-width: thin;
-        scrollbar-color: #334155 #0f172a;
       }
 
-      /* Custom Scrollbar for Webkit */
+      /* Smooth Scroll */
+      html {
+        scroll-behavior: smooth;
+      }
+
+      /* Custom Scrollbar */
       ::-webkit-scrollbar {
         width: 8px;
       }
@@ -85,13 +51,13 @@
         background: #475569;
       }
 
-      /* Bento Card Glassmorphism */
+      /* Bento Card Base Style */
       .bento-card {
         background: rgba(30, 41, 59, 0.4);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 255, 255, 0.05);
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: all 0.3s ease;
       }
       .bento-card:hover {
         border-color: rgba(255, 255, 255, 0.15);
@@ -99,87 +65,130 @@
         box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
       }
 
+      /* Live Clock Style */
+      #live-clock {
+        font-family: monospace;
+        font-variant-numeric: tabular-nums;
+        color: #818cf8; /* Indigo-400 */
+      }
+
+      /* Gradient Animation */
+      @keyframes blob {
+        0% {
+          transform: translate(0px, 0px) scale(1);
+        }
+        33% {
+          transform: translate(30px, -50px) scale(1.1);
+        }
+        66% {
+          transform: translate(-20px, 20px) scale(0.9);
+        }
+        100% {
+          transform: translate(0px, 0px) scale(1);
+        }
+      }
+      .animate-blob {
+        animation: blob 7s infinite;
+      }
       .animation-delay-2000 {
         animation-delay: 2s;
       }
       .animation-delay-4000 {
         animation-delay: 4s;
       }
-      
-      /* Tooltip for Copy */
-      .tooltip {
-        position: relative;
-      }
-      .tooltip::after {
-        content: "Copied!";
-        position: absolute;
-        top: -30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #10b981;
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
-        font-size: 10px;
-        opacity: 0;
-        transition: opacity 0.2s;
-        pointer-events: none;
-      }
-      .tooltip.active::after {
-        opacity: 1;
+
+      /* Print Styles */
+      @media print {
+        nav, .animate-blob, .no-print {
+            display: none !important;
+        }
+        body {
+            background-color: white;
+            color: black;
+        }
+        .bento-card {
+            background: white;
+            border: 1px solid #ddd;
+            color: black;
+            break-inside: avoid;
+            box-shadow: none;
+        }
+        .text-white { color: #000 !important; }
+        .text-slate-300, .text-slate-400 { color: #333 !important; }
+        .text-indigo-400 { color: #2563eb !important; }
+        a { text-decoration: none; color: #000; }
       }
     </style>
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"
+    ></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
+      function gtag() {
+        dataLayer.push(arguments);
+      }
       gtag("js", new Date());
+
       gtag("config", "G-QLM3SVXXJT");
     </script>
   </head>
-  <body class="text-slate-300 overflow-x-hidden selection:bg-indigo-500 selection:text-white antialiased">
-    
-    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden" aria-hidden="true">
-      <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-      <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-      <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+  <body
+    class="text-slate-300 overflow-x-hidden selection:bg-indigo-500 selection:text-white"
+  >
+    <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
+      <div
+        class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"
+      ></div>
+      <div
+        class="absolute top-0 right-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"
+      ></div>
+      <div
+        class="absolute -bottom-32 left-1/3 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"
+      ></div>
     </div>
 
     <nav class="fixed top-6 left-6 z-50">
-        <a href="index.html" class="flex items-center gap-2 px-4 py-2 bg-slate-900/50 backdrop-blur-md border border-slate-700/50 rounded-full hover:bg-slate-800 transition-colors text-sm font-medium text-white group" aria-label="Back to main site">
+        <a href="index.html" class="flex items-center gap-2 px-4 py-2 bg-slate-900/50 backdrop-blur-md border border-slate-700/50 rounded-full hover:bg-slate-800 transition-colors text-sm font-medium text-white group">
             <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             <span>Back to Site</span>
         </a>
     </nav>
 
     <main class="relative z-10 max-w-7xl mx-auto p-6 md:p-12 lg:p-16 mt-12 md:mt-0">
-      <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-auto">
-        
-        <div class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group">
-          <div class="flex justify-end md:absolute md:top-0 md:right-0 md:p-6 mb-4 md:mb-0">
-            <span class="inline-flex items-center rounded-full bg-green-400/10 px-2 py-1 text-[10px] font-medium text-green-400 ring-1 ring-inset ring-green-400/20 animate-pulse-slow">
-              <span class="w-1.5 h-1.5 rounded-full bg-green-400 mr-1.5"></span>
-              Available for work
-            </span>
+      <div
+        class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-auto"
+      >
+        <div
+          class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group"
+        >
+          <div
+            class="flex justify-end md:absolute md:top-0 md:right-0 md:p-6 mb-4 md:mb-0 opacity-50 group-hover:opacity-100 transition-opacity"
+          >
+            <span
+              class="inline-flex items-center rounded-full bg-green-400/10 px-2 py-1 text-[10px] font-medium text-green-400 ring-1 ring-inset ring-green-400/20"
+              >Available for work</span
+            >
           </div>
 
-          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
-            <div class="relative group-hover:scale-105 transition-transform duration-500">
+          <div
+            class="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6"
+          >
+            <div class="relative">
               <img
                 src="/assets/images/profile/profile.webp"
-                alt="Swayam Purwar Profile Picture"
-                width="96"
-                height="96"
+                alt="Swayam Purwar"
                 class="w-24 h-24 rounded-2xl object-cover border-2 border-slate-700 shadow-2xl"
-                loading="eager"
               />
             </div>
             <div class="text-center sm:text-left">
-              <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">
+              <h1
+                class="text-3xl md:text-4xl font-extrabold text-white tracking-tight"
+              >
                 Swayam Purwar
               </h1>
-              <p class="text-indigo-400 font-medium mt-1">MERN Full Stack Web Development</p>
+              <p class="text-indigo-400 font-medium">MERN Full Stack Web Development</p>
             </div>
           </div>
 
@@ -192,11 +201,11 @@
               pursuing BCA and building cool web apps.
             </p>
 
-            <div class="flex flex-col sm:flex-row gap-3 pt-2 flex-wrap">
+            <div class="flex flex-col sm:flex-row gap-3 pt-2 flex-wrap no-print">
               <a
-                href="assets/resume.pdf" 
+                href="./assets/docs/Swayam Purwar | Full-Stack Engineer.pdf" 
                 download="Swayam_Purwar_Resume"
-                class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-indigo-500 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20 active:scale-95"
+                class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-indigo-500 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20"
                 aria-label="Download Resume"
               >
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
@@ -205,7 +214,7 @@
 
               <a
                 href="mailto:swayampurwar111104@gmail.com"
-                class="bg-white text-slate-900 px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors flex items-center justify-center gap-2 active:scale-95"
+                class="bg-white text-slate-900 px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors flex items-center justify-center gap-2"
                 aria-label="Send Email"
               >
                 <span>Email Me</span>
@@ -213,8 +222,7 @@
               <a
                 href="https://linkedin.com/in/swayam-purwar"
                 target="_blank"
-                rel="noopener noreferrer"
-                class="bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors border border-slate-700 flex items-center justify-center active:scale-95"
+                class="bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors border border-slate-700 flex items-center justify-center"
                 aria-label="Visit LinkedIn Profile"
               >
                 LinkedIn
@@ -223,45 +231,54 @@
           </div>
         </div>
 
-        <div class="bento-card col-span-1 md:col-span-1 rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden h-64 md:h-auto">
+        <div
+          class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-6 flex flex-col justify-between relative overflow-hidden h-64 md:h-auto"
+        >
           <div class="absolute inset-0 z-0 opacity-40">
-            <div class="w-full h-full" style="background-image: radial-gradient(#475569 1px, transparent 1px); background-size: 20px 20px;"></div>
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-indigo-500 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] animate-pulse"></div>
+            <div
+              class="w-full h-full"
+              style="
+                background-image: radial-gradient(#475569 1px, transparent 1px);
+                background-size: 20px 20px;
+              "
+            ></div>
+            <div
+              class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-indigo-500 rounded-full shadow-[0_0_20px_rgba(99,102,241,0.6)] animate-pulse"
+            ></div>
           </div>
           <div class="relative z-10 mt-auto">
-            <p class="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1">Based in</p>
+            <p
+              class="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-1"
+            >
+              Based in
+            </p>
             <h3 class="text-xl font-bold text-white">Bhopal, India</h3>
-            <p class="text-[10px] text-slate-400">IST (UTC+5:30)</p>
+            
+            <div class="flex items-center gap-2 mt-1">
+                <p class="text-[10px] text-slate-400">IST (UTC+5:30)</p>
+                <span class="text-[10px] text-slate-600">•</span>
+                <p id="live-clock" class="text-[10px] font-medium"></p>
+            </div>
           </div>
         </div>
 
-        <a href="https://github.com/SwayamPurwar" target="_blank" rel="noopener noreferrer" class="bento-card col-span-1 md:col-span-1 rounded-3xl p-6 flex flex-col justify-center items-center gap-4 group cursor-pointer" aria-label="Visit GitHub Profile">
-          <div class="w-16 h-16 rounded-full bg-slate-800 flex items-center justify-center group-hover:scale-110 transition-transform duration-300 group-hover:bg-slate-700">
-            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
-            </svg>
-          </div>
-          <div class="text-center">
-            <p class="font-bold text-white text-lg">GitHub</p>
-            <span class="text-xs text-indigo-400 group-hover:text-indigo-300 font-mono mt-1 block">@SwayamPurwar</span>
-          </div>
-        </a>
-
         <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8">
-          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Technical Skills</h3>
+          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">
+            Technical Skills
+          </h3>
+          
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            
             <div class="space-y-3">
                 <h4 class="text-white font-bold text-sm border-b border-slate-700 pb-2 mb-2 flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-blue-400"></span> Front-End
                 </h4>
                 <div class="flex flex-wrap gap-2">
-                    <span class="skill-badge">React.js</span>
-                    <span class="skill-badge">JavaScript (ES6+)</span>
-                    <span class="skill-badge">GSAP</span>
-                    <span class="skill-badge">Framer Motion</span>
-                    <span class="skill-badge">HTML5</span>
-                    <span class="skill-badge">CSS3</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">React.js</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">JavaScript (ES6+)</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">GSAP</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Framer Motion</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">HTML5</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">CSS3</span>
                 </div>
             </div>
 
@@ -270,10 +287,10 @@
                     <span class="w-2 h-2 rounded-full bg-green-400"></span> Back-End
                 </h4>
                 <div class="flex flex-wrap gap-2">
-                    <span class="skill-badge">Node.js</span>
-                    <span class="skill-badge">Express.js</span>
-                    <span class="skill-badge">REST APIs</span>
-                    <span class="skill-badge">WebSockets</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Node.js</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Express.js</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">REST APIs</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">WebSockets</span>
                 </div>
             </div>
 
@@ -282,9 +299,9 @@
                     <span class="w-2 h-2 rounded-full bg-yellow-400"></span> Database
                 </h4>
                 <div class="flex flex-wrap gap-2">
-                    <span class="skill-badge">MongoDB</span>
-                    <span class="skill-badge">SQL</span>
-                    <span class="skill-badge">Auth Systems (JWT)</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">MongoDB</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">SQL</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Auth Systems (JWT)</span>
                 </div>
             </div>
 
@@ -293,86 +310,167 @@
                     <span class="w-2 h-2 rounded-full bg-orange-400"></span> Tools
                 </h4>
                 <div class="flex flex-wrap gap-2">
-                    <span class="skill-badge">Git</span>
-                    <span class="skill-badge">GitHub</span>
-                    <span class="skill-badge">Vercel</span>
-                    <span class="skill-badge">Figma</span>
-                    <span class="skill-badge">Postman</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Git</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">GitHub</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Vercel</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Figma</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Postman</span>
                 </div>
             </div>
           </div>
         </div>
 
-        <div class="col-span-1 md:col-span-4 mt-4 mb-2 flex items-end justify-between px-2">
+        <div
+          class="col-span-1 md:col-span-4 mt-4 mb-2 flex items-end justify-between px-2"
+        >
           <h2 class="text-2xl font-bold text-white">Selected Works</h2>
-          <div class="h-px bg-slate-800 flex-grow ml-6 relative top-[-10px]"></div>
+          <div
+            class="h-px bg-slate-800 flex-grow ml-6 relative top-[-10px]"
+          ></div>
         </div>
 
-        <a href="work/apple-music.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer">
+        <a href="work/apple-music.html"
+          class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer"
+        >
           <div class="p-8 pb-0 relative z-10">
-            <div class="w-10 h-10 rounded-lg bg-pink-500/20 text-pink-500 flex items-center justify-center mb-4 text-xl">🎵</div>
-            <div class="flex items-center gap-2 mb-2">
-                <h3 class="text-xl font-bold text-white group-hover:text-pink-400 transition-colors">Apple Music App</h3>
-                <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            <div
+              class="w-10 h-10 rounded-lg bg-pink-500/20 text-pink-500 flex items-center justify-center mb-4 text-xl"
+            >
+              🎵
             </div>
-            <p class="text-slate-400 text-sm mb-6">A pixel-perfect replication of the Apple Music web player featuring audio playback control and dynamic UI states.</p>
+            <div class="flex items-center gap-2 mb-2">
+                <h3 class="text-xl font-bold text-white">Apple Music App</h3>
+                <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </div>
+            <p class="text-slate-400 text-sm mb-6">
+              A pixel-perfect replication of the Apple Music web player
+              featuring audio playback control and dynamic UI states.
+            </p>
           </div>
-          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden">
-            <div class="text-slate-600 font-mono text-[10px] mb-12">[ Interactive Audio Player UI ]</div>
-            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-purple-500"></div>
+          <div
+            class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden"
+          >
+            <div class="text-slate-600 font-mono text-[10px] mb-12">
+              [ Interactive Audio Player UI ]
+            </div>
+            <div
+              class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-purple-500"
+            ></div>
           </div>
         </a>
 
-        <a href="work/instagram.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer">
+        <a href="work/instagram.html"
+          class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer"
+        >
           <div class="p-8 pb-0 relative z-10">
-            <div class="w-10 h-10 rounded-lg bg-orange-500/20 text-orange-500 flex items-center justify-center mb-4 text-xl">📸</div>
-             <div class="flex items-center gap-2 mb-2">
-                <h3 class="text-xl font-bold text-white group-hover:text-orange-400 transition-colors">Instagram App</h3>
-                <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            <div
+              class="w-10 h-10 rounded-lg bg-orange-500/20 text-orange-500 flex items-center justify-center mb-4 text-xl"
+            >
+              📸
             </div>
-            <p class="text-slate-400 text-sm mb-6">Responsive social media interface with complex grid layouts, stories carousel, and profile management.</p>
+             <div class="flex items-center gap-2 mb-2">
+                <h3 class="text-xl font-bold text-white">Instagram App</h3>
+                <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </div>
+            <p class="text-slate-400 text-sm mb-6">
+              Responsive social media interface with complex grid layouts,
+              stories carousel, and profile management.
+            </p>
           </div>
-          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden">
-            <div class="text-slate-600 font-mono text-[10px] mb-12">[ Responsive Grid Feed ]</div>
-            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-red-500"></div>
+          <div
+            class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden"
+          >
+            <div class="text-slate-600 font-mono text-[10px] mb-12">
+              [ Responsive Grid Feed ]
+            </div>
+            <div
+              class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-red-500"
+            ></div>
           </div>
         </a>
         
-        <a href="work/kite.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer">
+        <a href="work/kite.html"
+          class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer"
+        >
           <div class="p-8 pb-0 relative z-10">
-            <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-500 flex items-center justify-center mb-4 text-xl">📈</div>
-             <div class="flex items-center gap-2 mb-2">
-                <h3 class="text-xl font-bold text-white group-hover:text-blue-400 transition-colors">Kite Zerodha</h3>
-                <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            <div
+              class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-500 flex items-center justify-center mb-4 text-xl"
+            >
+              📈
             </div>
-            <p class="text-slate-400 text-sm mb-6">A responsive replica of the Zerodha Kite trading dashboard with real-time data visualization and order management UI.</p>
+             <div class="flex items-center gap-2 mb-2">
+                <h3 class="text-xl font-bold text-white">Kite Zerodha</h3>
+                <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
+            </div>
+            <p class="text-slate-400 text-sm mb-6">
+              A responsive replica of the Zerodha Kite trading dashboard with real-time data visualization.
+            </p>
           </div>
-          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden">
-            <div class="text-slate-600 font-mono text-[10px] mb-12">[ Trading Dashboard ]</div>
-            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-orange-500"></div>
+          <div
+            class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden"
+          >
+            <div class="text-slate-600 font-mono text-[10px] mb-12">
+              [ Trading Dashboard ]
+            </div>
+            <div
+              class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-orange-500"
+            ></div>
           </div>
         </a>
 
-        <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-1 overflow-hidden relative group">
-          <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          <div class="flex flex-col h-full justify-between p-8">
-            <div>
-                <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-2 block">Meta</span>
-                <h3 class="text-2xl font-bold text-white mb-3">This Portfolio</h3>
-                <p class="text-slate-400 text-xs mb-6">Built with semantic HTML, Tailwind CSS Grid, and custom glassmorphism effects.</p>
+        <div
+          class="bento-card col-span-1 md:col-span-2 rounded-3xl p-1 overflow-hidden relative group"
+        >
+          <div
+            class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity"
+          ></div>
+          <div class="flex flex-col h-full">
+            <div class="p-8 w-full">
+              <span
+                class="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-2 block"
+                >Meta</span
+              >
+              <h3 class="text-2xl font-bold text-white mb-3">This Portfolio</h3>
+              <p class="text-slate-400 text-xs mb-6">
+                Built with semantic HTML, Tailwind CSS Grid, and custom
+                glassmorphism effects.
+              </p>
+              <div class="flex gap-2">
+                <span
+                  class="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-white"
+                  >Dark Mode</span
+                >
+                <span
+                  class="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-white"
+                  >Bento Grid</span
+                >
+              </div>
             </div>
-            <div class="bg-slate-950 rounded-lg border border-slate-800 p-4 font-mono text-[10px] text-slate-400">
-                <p><span class="text-purple-400">const</span> <span class="text-blue-400">portfolio</span> = {</p>
-                <p class="pl-4">tech: [<span class="text-green-400">'React'</span>, <span class="text-green-400">'Tailwind'</span>],</p>
-                <p class="pl-4">performance: <span class="text-orange-400">100</span>,</p>
-                <p class="pl-4">design: <span class="text-green-400">'Bento'</span></p>
+            <div class="w-full p-4 mt-auto">
+              <div
+                class="bg-slate-950 rounded-lg border border-slate-800 p-4 font-mono text-[10px] text-slate-400"
+              >
+                <p>
+                  <span class="text-purple-400">const</span>
+                  <span class="text-blue-400">portfolio</span> = {
+                </p>
+                <p class="pl-4">
+                  tech: [<span class="text-green-400">'React'</span>,
+                  <span class="text-green-400">'Tailwind'</span>],
+                </p>
+                <p class="pl-4">
+                  performance: <span class="text-orange-400">100</span>,
+                </p>
                 <p>}</p>
+              </div>
             </div>
           </div>
         </div>
 
         <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8">
-          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Experience</h3>
+          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">
+            Experience
+          </h3>
           <div class="space-y-8">
             <div class="flex flex-col md:flex-row justify-between gap-4 md:gap-0">
                 <div>
@@ -408,14 +506,21 @@
         </div>
 
         <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6">
-          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Education</h3>
+          <h3
+            class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4"
+          >
+            Education
+          </h3>
           <div class="space-y-4">
             <div class="flex justify-between items-start">
               <div>
                 <h4 class="font-bold text-white text-sm">BCA</h4>
                 <p class="text-[10px] text-slate-400">LNCT University</p>
               </div>
-              <span class="bg-slate-800 text-slate-300 text-[10px] px-2 py-1 rounded shrink-0 ml-2">Pursuing</span>
+              <span
+                class="bg-slate-800 text-slate-300 text-[10px] px-2 py-1 rounded shrink-0 ml-2"
+                >Pursuing</span
+              >
             </div>
             <div class="w-full h-px bg-slate-800"></div>
             <div class="flex justify-between items-start">
@@ -429,47 +534,69 @@
         </div>
 
         <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6">
-          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Certifications</h3>
+          <h3
+            class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4"
+          >
+            Certifications
+          </h3>
           <ul class="space-y-3">
             <li class="flex items-center gap-3">
-              <div class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]">✓</div>
-              <span class="text-xs text-slate-300">MERN Full Stack Web Development (Sheryians Coding School)</span>
+              <div
+                class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]"
+              >
+                ✓
+              </div>
+              <span class="text-xs text-slate-300">MERN Full Stack Web Development (Sheryians Coding
+School)</span>
             </li>
             <li class="flex items-center gap-3">
-              <div class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]">✓</div>
-              <span class="text-xs text-slate-300">React JS Development (Sheryians Coding School)</span>
+              <div
+                class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]"
+              >
+                ✓
+              </div>
+              <span class="text-xs text-slate-300">React JS Development (Sheryians Coding
+School)</span>
             </li>
             <li class="flex items-center gap-3">
-              <div class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]">✓</div>
-              <span class="text-xs text-slate-300">Microsoft Excel (Infosys)</span>
+              <div
+                class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]"
+              >
+                ✓
+              </div>
+              <span class="text-xs text-slate-300"
+                >Microsoft Excel (Infosys)</span
+              >
             </li>
           </ul>
         </div>
         
         <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8">
-            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Contact & Profiles</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="flex items-center gap-4 group cursor-pointer" onclick="copyToClipboard('swayampurwar111104@gmail.com', this)">
-                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 transition-colors shrink-0">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                    </div>
-                    <div class="tooltip">
-                        <p class="text-xs text-slate-400 mb-0.5">Email (Click to Copy)</p>
-                        <p class="text-sm font-bold text-white group-hover:text-indigo-400 transition-colors break-all">swayampurwar111104@gmail.com</p>
-                    </div>
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">
+                Contact & Profiles
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <a href="mailto:swayampurwar111104@gmail.com" class="flex items-center gap-4 group" aria-label="Email Me">
+                <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 transition-colors shrink-0">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
                 </div>
-
-                <a href="tel:+919993900688" class="flex items-center gap-4 group">
-                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-green-600 transition-colors shrink-0">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                    </div>
-                    <div>
-                        <p class="text-xs text-slate-400 mb-0.5">Phone</p>
-                        <p class="text-sm font-bold text-white group-hover:text-green-400 transition-colors">+91 99939 00688</p>
-                    </div>
+                <div>
+                    <p class="text-xs text-slate-400 mb-0.5">Email</p>
+                    <p class="text-sm font-bold text-white group-hover:text-indigo-400 transition-colors break-all">swayampurwar111104@gmail.com</p>
+                </div>
                 </a>
 
-                 <a href="https://swayampurwar.vercel.app" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 group">
+                <a href="tel:+919993900688" class="flex items-center gap-4 group" aria-label="Call Me">
+                <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-green-600 transition-colors shrink-0">
+                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
+                </div>
+                <div>
+                    <p class="text-xs text-slate-400 mb-0.5">Phone</p>
+                    <p class="text-sm font-bold text-white group-hover:text-green-400 transition-colors">+91 99939 00688</p>
+                </div>
+                </a>
+
+                 <a href="https://swayampurwar.vercel.app" target="_blank" class="flex items-center gap-4 group" aria-label="View Portfolio">
                     <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-blue-600 transition-colors shrink-0">
                         <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
                     </div>
@@ -479,7 +606,7 @@
                     </div>
                 </a>
 
-                 <a href="https://linkedin.com/in/swayam-purwar" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 group">
+                 <a href="https://linkedin.com/in/swayam-purwar" target="_blank" class="flex items-center gap-4 group" aria-label="Visit LinkedIn">
                     <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-[#0077b5] transition-colors shrink-0">
                         <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h5v-8.306c0-4.613 9.289-5.124 9.289 0v8.306h5v-10.306c0-6.117-7.025-6.32-9.632-3.132v-2.56z"/></svg>
                     </div>
@@ -488,18 +615,9 @@
                         <p class="text-sm font-bold text-white group-hover:text-[#0077b5] transition-colors">/in/swayam-purwar</p>
                     </div>
                 </a>
-
-                <a href="https://github.com/SwayamPurwar" target="_blank" rel="noopener noreferrer" class="flex items-center gap-4 group">
-                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-slate-700 transition-colors shrink-0">
-                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-                    </div>
-                    <div>
-                        <p class="text-xs text-slate-400 mb-0.5">GitHub</p>
-                        <p class="text-sm font-bold text-white group-hover:text-slate-300 transition-colors">/SwayamPurwar</p>
-                    </div>
-                </a>
             </div>
         </div>
+
       </div>
 
       <footer class="mt-12 text-center text-slate-600 text-sm">
@@ -509,38 +627,33 @@
         </p>
       </footer>
     </main>
-
     <script>
-      // Year Update
       document.getElementById("year").textContent = new Date().getFullYear();
-
-      // Copy to Clipboard Function
-      function copyToClipboard(text, element) {
-        navigator.clipboard.writeText(text).then(() => {
-          const tooltip = element.querySelector('.tooltip');
-          tooltip.classList.add('active');
-          setTimeout(() => {
-            tooltip.classList.remove('active');
-          }, 2000);
-        }).catch(err => {
-          console.error('Failed to copy: ', err);
-        });
-      }
     </script>
-
+    
     <script>
-      // Skill Badge Component Logic (Pure CSS class reuse via JS not needed if using @apply, 
-      // but here we used inline classes for simplicity. 
-      // I've added a CSS class .skill-badge in the <style> to clean up HTML below)
-    </script>
-    <style>
-        .skill-badge {
-            @apply bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors cursor-default;
+      function updateClock() {
+        const now = new Date();
+        const options = {
+          timeZone: 'Asia/Kolkata',
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          hour12: false
+        };
+        const timeString = now.toLocaleTimeString('en-US', options);
+        const clockElement = document.getElementById('live-clock');
+        if (clockElement) {
+          clockElement.textContent = timeString;
         }
-    </style>
-    <script>
-      window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+      }
+      setInterval(updateClock, 1000);
+      updateClock(); // Initial call
     </script>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
+
+    <script>
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+<script defer src="/_vercel/speed-insights/script.js"></script>
   </body>
 </html>
