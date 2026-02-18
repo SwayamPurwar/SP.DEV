@@ -548,11 +548,27 @@
     return `${os} [${cores}]`;
   }
 
-  async function establishAdvancedUplink() {
-    typeLog("Resolving IP address...", 400);
-    const osElement = document.getElementById('data-os');
-    if (osElement) osElement.innerText = getClientDeviceStats();
+ async function establishAdvancedUplink() {
+    typeLog("Initiating high-precision scan...", 400);
 
+    // 1. Try HTML5 Geolocation (GPS/Wi-Fi precision)
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            async (position) => {
+                // Success: Use precise GPS coordinates
+                const { latitude, longitude } = position.coords;
+                updateHUDWithCoords(latitude, longitude, "GPS Verified");
+            },
+            async (error) => {
+                // Denied or Failed: Fallback to IP-based detection
+                typeLog("GPS denied. Falling back to IP-Link...", 800);
+                const ipData = await fetchIPData(); 
+                updateHUDWithCoords(ipData.latitude, ipData.longitude, ipData.city);
+            },
+            { enableHighAccuracy: true, timeout: 5000 }
+        );
+    }
+}
     try {
       // Primary API: ipapi.co (HTTPS compatible and reliable)
       let res = await fetch('https://ipapi.co/json/');
