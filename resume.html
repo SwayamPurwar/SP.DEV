@@ -65,53 +65,24 @@
         box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
       }
 
-      /* Live Clock Style */
-      #live-clock {
-        font-family: monospace;
-        font-variant-numeric: tabular-nums;
-        color: #818cf8; /* Indigo-400 */
-      }
-
       /* Gradient Animation */
       @keyframes blob {
-        0% {
-          transform: translate(0px, 0px) scale(1);
-        }
-        33% {
-          transform: translate(30px, -50px) scale(1.1);
-        }
-        66% {
-          transform: translate(-20px, 20px) scale(0.9);
-        }
-        100% {
-          transform: translate(0px, 0px) scale(1);
-        }
+        0% { transform: translate(0px, 0px) scale(1); }
+        33% { transform: translate(30px, -50px) scale(1.1); }
+        66% { transform: translate(-20px, 20px) scale(0.9); }
+        100% { transform: translate(0px, 0px) scale(1); }
       }
-      .animate-blob {
-        animation: blob 7s infinite;
-      }
-      .animation-delay-2000 {
-        animation-delay: 2s;
-      }
-      .animation-delay-4000 {
-        animation-delay: 4s;
-      }
+      .animate-blob { animation: blob 7s infinite; }
+      .animation-delay-2000 { animation-delay: 2s; }
+      .animation-delay-4000 { animation-delay: 4s; }
 
       /* Print Styles */
       @media print {
-        nav, .animate-blob, .no-print {
-            display: none !important;
-        }
-        body {
-            background-color: white;
-            color: black;
-        }
+        nav, .animate-blob, .no-print { display: none !important; }
+        body { background-color: white; color: black; }
         .bento-card {
-            background: white;
-            border: 1px solid #ddd;
-            color: black;
-            break-inside: avoid;
-            box-shadow: none;
+            background: white; border: 1px solid #ddd;
+            color: black; break-inside: avoid; box-shadow: none;
         }
         .text-white { color: #000 !important; }
         .text-slate-300, .text-slate-400 { color: #333 !important; }
@@ -120,33 +91,19 @@
       }
     </style>
 
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"
-    ></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
+      function gtag() { dataLayer.push(arguments); }
       gtag("js", new Date());
-
       gtag("config", "G-QLM3SVXXJT");
     </script>
   </head>
-  <body
-    class="text-slate-300 overflow-x-hidden selection:bg-indigo-500 selection:text-white"
-  >
+  <body class="text-slate-300 overflow-x-hidden selection:bg-indigo-500 selection:text-white">
     <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
-      <div
-        class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"
-      ></div>
-      <div
-        class="absolute top-0 right-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"
-      ></div>
-      <div
-        class="absolute -bottom-32 left-1/3 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"
-      ></div>
+      <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+      <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+      <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
     </div>
 
     <nav class="fixed top-6 left-6 z-50">
@@ -157,252 +114,131 @@
     </nav>
 
     <main class="relative z-10 max-w-7xl mx-auto p-6 md:p-12 lg:p-16 mt-12 md:mt-0">
-      <div
-        class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-auto"
-      >
-        <div
-          class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group"
-        >
-          <div
-            class="flex justify-end md:absolute md:top-0 md:right-0 md:p-6 mb-4 md:mb-0 opacity-50 group-hover:opacity-100 transition-opacity"
-          >
-            <span
-              class="inline-flex items-center rounded-full bg-green-400/10 px-2 py-1 text-[10px] font-medium text-green-400 ring-1 ring-inset ring-green-400/20"
-              >Available for work</span
-            >
+      <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-auto">
+        
+        <div class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group">
+          <div class="flex justify-end md:absolute md:top-0 md:right-0 md:p-6 mb-4 md:mb-0 opacity-50 group-hover:opacity-100 transition-opacity">
+            <span class="inline-flex items-center rounded-full bg-green-400/10 px-2 py-1 text-[10px] font-medium text-green-400 ring-1 ring-inset ring-green-400/20">Available for work</span>
           </div>
 
-          <div
-            class="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6"
-          >
+          <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
             <div class="relative">
-              <img
-                src="/assets/images/profile/profile.webp"
-                alt="Swayam Purwar"
-                class="w-24 h-24 rounded-2xl object-cover border-2 border-slate-700 shadow-2xl"
-              />
+              <img src="/assets/images/profile/profile.webp" alt="Swayam Purwar" class="w-24 h-24 rounded-2xl object-cover border-2 border-slate-700 shadow-2xl" />
             </div>
             <div class="text-center sm:text-left">
-              <h1
-                class="text-3xl md:text-4xl font-extrabold text-white tracking-tight"
-              >
-                Swayam Purwar
-              </h1>
+              <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Swayam Purwar</h1>
               <p class="text-indigo-400 font-medium">MERN Full Stack Web Development</p>
             </div>
           </div>
 
           <div class="space-y-4">
             <p class="text-slate-400 leading-relaxed text-sm md:text-base">
-              Passionate about crafting pixel-perfect interfaces. I bridge the
-              gap between design and code using
+              Passionate about crafting pixel-perfect interfaces. I bridge the gap between design and code using
               <span class="text-white font-semibold">React</span> and
-              <span class="text-white font-semibold">Tailwind</span>. Currently
-              pursuing BCA and building cool web apps.
+              <span class="text-white font-semibold">Tailwind</span>. Currently pursuing BCA and building cool web apps.
             </p>
 
             <div class="flex flex-col sm:flex-row gap-3 pt-2 flex-wrap no-print">
-              <a
-                href="./assets/docs/Swayam Purwar | Full-Stack Engineer.pdf" 
-                download="Swayam_Purwar_Resume"
-                class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-indigo-500 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20"
-                aria-label="Download Resume"
-              >
+              <a href="./assets/docs/Swayam Purwar | Full-Stack Engineer.pdf" download="Swayam_Purwar_Resume" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-indigo-500 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20" aria-label="Download Resume">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                 <span>Download Resume</span>
               </a>
 
-              <a
-                href="mailto:swayampurwar111104@gmail.com"
-                class="bg-white text-slate-900 px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors flex items-center justify-center gap-2"
-                aria-label="Send Email"
-              >
+              <a href="mailto:swayampurwar111104@gmail.com" class="bg-white text-slate-900 px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors flex items-center justify-center gap-2" aria-label="Send Email">
                 <span>Email Me</span>
               </a>
-              <a
-                href="https://linkedin.com/in/swayam-purwar"
-                target="_blank"
-                class="bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors border border-slate-700 flex items-center justify-center"
-                aria-label="Visit LinkedIn Profile"
-              >
+              <a href="https://linkedin.com/in/swayam-purwar" target="_blank" class="bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors border border-slate-700 flex items-center justify-center" aria-label="Visit LinkedIn Profile">
                 LinkedIn
               </a>
             </div>
           </div>
         </div>
-<div class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between h-64 md:h-auto border-slate-800 bg-[#020617] group">
-  
-  <div class="absolute inset-0 opacity-20 transition-opacity group-hover:opacity-40" style="background-image: radial-gradient(#6366f1 1px, transparent 1px); background-size: 20px 20px;"></div>
 
-  <div id="uplink-loading" class="absolute inset-0 z-20 bg-[#020617]/90 backdrop-blur-md flex flex-col items-center justify-center transition-opacity duration-500">
-    <div class="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin mb-3"></div>
-    <p class="text-[10px] text-indigo-400 font-mono tracking-widest uppercase animate-pulse">Establishing secure uplink...</p>
-  </div>
-
-  <div class="relative z-10 flex justify-between items-start mb-2">
-    <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2">
-      <span id="status-dot" class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>
-      <span id="status-text">Live Geo-Telemetry</span>
-    </h3>
-    <p class="text-[10px] text-slate-500 font-mono">P2P Connection</p>
-  </div>
-
-  <div class="relative z-10 flex items-center justify-between w-full my-8 px-2">
-    <div class="relative flex flex-col items-center w-20">
-      <div id="client-node" class="w-4 h-4 rounded-full bg-emerald-500 shadow-[0_0_15px_rgba(16,185,129,0.8)] z-10 border-2 border-[#020617] transition-colors duration-500"></div>
-      <span id="client-city" class="text-xs font-bold text-white mt-3 absolute top-4 w-24 text-center truncate">Locating...</span>
-      <span id="client-time" class="text-[10px] text-emerald-400 font-mono absolute top-8 whitespace-nowrap mt-3 transition-colors duration-500">--:--</span>
-    </div>
-
-    <div class="flex-grow h-px bg-slate-800 relative mx-4 overflow-hidden rounded-full">
-      <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-indigo-500/50 to-transparent animate-[sweep_2s_linear_infinite]"></div>
-      <div class="absolute top-1/2 -translate-y-1/2 left-0 w-1.5 h-1.5 bg-white rounded-full shadow-[0_0_10px_rgba(255,255,255,1)] animate-[packet_2s_ease-in-out_infinite]"></div>
-      
-      <div class="absolute -top-1.5 left-1/2 -translate-x-1/2 bg-[#020617] px-2 text-[8px] text-slate-500 font-mono border border-slate-800 rounded-full z-10">UPLINK</div>
-    </div>
-
-    <div class="relative flex flex-col items-center w-20">
-      <div class="w-4 h-4 rounded-full bg-indigo-500 shadow-[0_0_15px_rgba(99,102,241,0.8)] z-10 border-2 border-[#020617]"></div>
-      <span class="text-xs font-bold text-white mt-3 absolute top-4 w-24 text-center truncate">Bhopal, IND</span>
-      <span id="host-time" class="text-[10px] text-indigo-400 font-mono absolute top-8 whitespace-nowrap mt-3">--:--</span>
-    </div>
-  </div>
-
-  <div class="relative z-10 grid grid-cols-2 gap-3 mt-auto pt-4 border-t border-slate-800/50">
-    <div>
-      <p class="text-[10px] text-slate-500 uppercase font-bold mb-1">Physical Distance</p>
-      <p id="geo-distance" class="text-sm text-slate-300 font-mono">Calculating...</p>
-    </div>
-    <div>
-      <p class="text-[10px] text-slate-500 uppercase font-bold mb-1">Est. Latency</p>
-      <p id="geo-ping" class="text-sm text-slate-300 font-mono">Calculating...</p>
-    </div>
-  </div>
-
-  <style>
-    @keyframes sweep {
-      0% { transform: translateX(-100%); }
-      100% { transform: translateX(100%); }
-    }
-    @keyframes packet {
-      0% { left: 0%; opacity: 0; transform: scale(0.5); }
-      20% { opacity: 1; transform: scale(1); }
-      80% { opacity: 1; transform: scale(1); }
-      100% { left: 100%; opacity: 0; transform: scale(0.5); }
-    }
-  </style>
-</div>
-
-<script>
-  // Swayam's Location (Bhopal coordinates)
-  const HOST_LAT = 23.2599;
-  const HOST_LON = 77.4126;
-
-  // Haversine formula for spherical distance
-  function getHaversineDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; 
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-              Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-              Math.sin(dLon/2) * Math.sin(dLon/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-    return Math.round(R * c);
-  }
-
-  // Number Counter Animation
-  function animateValue(id, start, end, duration, suffix) {
-    const obj = document.getElementById(id);
-    let startTimestamp = null;
-    const step = (timestamp) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      // easeOutQuart formula for smooth deceleration
-      const ease = 1 - Math.pow(1 - progress, 4);
-      const current = Math.floor(ease * (end - start) + start);
-      obj.innerHTML = `${current.toLocaleString()} <span class="text-[10px] text-slate-500">${suffix}</span>`;
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
-    };
-    window.requestAnimationFrame(step);
-  }
-
-  // Formatting live clocks
-  function updateClocks(clientTZ) {
-    const now = new Date();
-    document.getElementById('host-time').innerText = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute:'2-digit', hour12: false });
-    
-    if(clientTZ && clientTZ !== 'STEALTH') {
-      try {
-        document.getElementById('client-time').innerText = now.toLocaleTimeString('en-US', { timeZone: clientTZ, hour: '2-digit', minute:'2-digit', hour12: false });
-      } catch (e) {
-        document.getElementById('client-time').innerText = "SYS_ERR";
-      }
-    }
-  }
-
-  async function establishUplink() {
-    let loader = document.getElementById('uplink-loading');
-    
-    try {
-      // Fetch recruiter IP via public API
-      const res = await fetch('https://ipapi.co/json/');
-      if (!res.ok) throw new Error('API blocked');
-      const data = await res.json();
-
-      if (data.error) throw new Error('Rate limited');
-
-      const clientCity = data.city || 'Unknown Node';
-      const distance = getHaversineDistance(HOST_LAT, HOST_LON, data.latitude, data.longitude);
-      const estimatedPing = Math.max(12, Math.round((distance / 200000) * 1000 * 2.5 + 20)); 
-
-      // Update UI
-      document.getElementById('client-city').innerText = clientCity;
-      
-      // Trigger smooth number animations
-      animateValue("geo-distance", 0, distance, 1500, "km");
-      animateValue("geo-ping", 0, estimatedPing, 1500, "ms");
-
-      updateClocks(data.timezone);
-      setInterval(() => updateClocks(data.timezone), 1000);
-
-    } catch (error) {
-      // AD-BLOCKER STEALTH MODE FALLBACK
-      document.getElementById('client-city').innerText = "Stealth Node";
-      document.getElementById('client-city').classList.replace('text-white', 'text-slate-400');
-      
-      document.getElementById('client-time').innerText = "ENCRYPTED";
-      document.getElementById('client-time').classList.replace('text-emerald-400', 'text-slate-500');
-      
-      document.getElementById('client-node').classList.replace('bg-emerald-500', 'bg-slate-700');
-      document.getElementById('client-node').classList.replace('shadow-[0_0_15px_rgba(16,185,129,0.8)]', 'shadow-none');
-      
-      document.getElementById('status-dot').classList.replace('bg-emerald-500', 'bg-amber-500');
-      document.getElementById('status-dot').classList.replace('shadow-[0_0_8px_rgba(16,185,129,0.8)]', 'shadow-[0_0_8px_rgba(245,158,11,0.8)]');
-      document.getElementById('status-text').innerText = "Secure Connection Routed";
-
-      document.getElementById('geo-distance').innerHTML = `Location Masked`;
-      document.getElementById('geo-ping').innerHTML = `<span class="text-amber-500">VPN / Proxy Detected</span>`;
-      
-      updateClocks('STEALTH');
-      setInterval(() => updateClocks('STEALTH'), 1000);
-      
-    } finally {
-      // Remove loading screen
-      loader.style.opacity = '0';
-      setTimeout(() => loader.style.display = 'none', 500);
-    }
-  }
-
-  // Initialize
-  setTimeout(establishUplink, 800);
-</script>
-        <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8">
-          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">
-            Technical Skills
-          </h3>
+        <div class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between h-auto min-h-[340px] border border-slate-800 bg-[#020617] group">
           
+          <div class="absolute inset-0 opacity-10 transition-opacity group-hover:opacity-30" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 19px, #6366f1 19px, #6366f1 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, #6366f1 19px, #6366f1 20px); background-size: 20px 20px;"></div>
+
+          <div class="relative z-10 flex justify-between items-start mb-4 border-b border-slate-800/80 pb-3">
+            <div>
+              <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2 mb-1">
+                <span id="status-dot" class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse"></span>
+                <span id="status-text">Advanced Telemetry HUD</span>
+              </h3>
+              <p class="text-[9px] text-slate-500 font-mono">ENCRYPTED P2P SOCKET</p>
+            </div>
+            <div class="text-right">
+               <span class="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded text-[9px] font-mono tracking-wider animate-pulse">REC_LINK_ACTIVE</span>
+            </div>
+          </div>
+
+          <div class="relative z-10 bg-slate-900/50 border border-slate-800 rounded-lg p-2.5 mb-5 h-16 overflow-hidden">
+            <div id="terminal-log" class="text-[9px] text-emerald-400 font-mono flex flex-col gap-0.5 transition-all">
+              <span class="text-slate-500">> Initiating handshake protocol...</span>
+            </div>
+          </div>
+
+          <div class="relative z-10 w-full mb-6 px-1">
+            
+            <div class="flex items-center justify-between w-full relative">
+              <div id="client-node" class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.8)] z-10 transition-colors shrink-0 border-2 border-[#020617]"></div>
+
+              <div class="flex-grow h-px bg-slate-800 relative mx-3 overflow-hidden rounded-full">
+                <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-indigo-500 to-transparent animate-[sweep_2s_linear_infinite]"></div>
+                <div class="absolute top-1/2 -translate-y-1/2 left-0 w-1.5 h-1.5 bg-white rounded-full animate-[packet_1.5s_ease-in-out_infinite]"></div>
+              </div>
+
+              <div class="w-3 h-3 rounded-full bg-indigo-500 shadow-[0_0_12px_rgba(99,102,241,0.8)] z-10 shrink-0 border-2 border-[#020617]"></div>
+            </div>
+
+            <div class="flex items-start justify-between w-full mt-2">
+              <div class="flex flex-col items-start w-28">
+                <span id="client-city" class="text-[11px] font-bold text-white truncate w-full text-left">Scanning...</span>
+                <span id="client-time" class="text-[9px] text-emerald-400 font-mono mt-0.5 transition-colors">--:--</span>
+              </div>
+              
+              <div class="flex flex-col items-end w-28">
+                <span class="text-[11px] font-bold text-white truncate w-full text-right">Bhopal, IND</span>
+                <span id="host-time" class="text-[9px] text-indigo-400 font-mono mt-0.5">--:--</span>
+              </div>
+            </div>
+            
+          </div>
+
+          <div class="relative z-10 grid grid-cols-2 md:grid-cols-3 gap-2 mt-auto">
+            <div class="bg-slate-900/80 border border-slate-800 p-2.5 rounded-lg">
+              <p class="text-[8px] text-slate-500 uppercase font-bold mb-1">Network Org / ISP</p>
+              <p id="data-org" class="text-[10px] text-slate-300 font-mono truncate">Identifying...</p>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800 p-2.5 rounded-lg">
+              <p class="text-[8px] text-slate-500 uppercase font-bold mb-1">Client IPv4</p>
+              <p id="data-ip" class="text-[10px] text-slate-300 font-mono">***.***.*.*</p>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800 p-2.5 rounded-lg">
+              <p class="text-[8px] text-slate-500 uppercase font-bold mb-1">Hardware / OS</p>
+              <p id="data-os" class="text-[10px] text-slate-300 font-mono truncate">Analyzing...</p>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800 p-2.5 rounded-lg">
+              <p class="text-[8px] text-slate-500 uppercase font-bold mb-1">Distance Metric</p>
+              <p id="data-distance" class="text-[10px] text-slate-300 font-mono">0 km</p>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800 p-2.5 rounded-lg">
+              <p class="text-[8px] text-slate-500 uppercase font-bold mb-1">Est. Latency</p>
+              <p id="data-ping" class="text-[10px] text-slate-300 font-mono">0 ms</p>
+            </div>
+            <div class="bg-slate-900/80 border border-slate-800 p-2.5 rounded-lg">
+              <p class="text-[8px] text-slate-500 uppercase font-bold mb-1">Target Status</p>
+              <p class="text-[10px] text-emerald-400 font-mono">Ready for Hire</p>
+            </div>
+          </div>
+
+          <style>
+            @keyframes sweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+            @keyframes packet { 0% { left: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
+          </style>
+        </div>
+
+        <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8">
+          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Technical Skills</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div class="space-y-3">
                 <h4 class="text-white font-bold text-sm border-b border-slate-700 pb-2 mb-2 flex items-center gap-2">
@@ -456,147 +292,73 @@
           </div>
         </div>
 
-        <div
-          class="col-span-1 md:col-span-4 mt-4 mb-2 flex items-end justify-between px-2"
-        >
+        <div class="col-span-1 md:col-span-4 mt-4 mb-2 flex items-end justify-between px-2">
           <h2 class="text-2xl font-bold text-white">Selected Works</h2>
-          <div
-            class="h-px bg-slate-800 flex-grow ml-6 relative top-[-10px]"
-          ></div>
+          <div class="h-px bg-slate-800 flex-grow ml-6 relative top-[-10px]"></div>
         </div>
 
-        <a href="work/apple-music.html"
-          class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer"
-        >
+        <a href="work/apple-music.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer">
           <div class="p-8 pb-0 relative z-10">
-            <div
-              class="w-10 h-10 rounded-lg bg-pink-500/20 text-pink-500 flex items-center justify-center mb-4 text-xl"
-            >
-              🎵
-            </div>
+            <div class="w-10 h-10 rounded-lg bg-pink-500/20 text-pink-500 flex items-center justify-center mb-4 text-xl">🎵</div>
             <div class="flex items-center gap-2 mb-2">
                 <h3 class="text-xl font-bold text-white">Apple Music App</h3>
                 <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
             </div>
-            <p class="text-slate-400 text-sm mb-6">
-              A pixel-perfect replication of the Apple Music web player
-              featuring audio playback control and dynamic UI states.
-            </p>
+            <p class="text-slate-400 text-sm mb-6">A pixel-perfect replication of the Apple Music web player featuring audio playback control and dynamic UI states.</p>
           </div>
-          <div
-            class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden"
-          >
-            <div class="text-slate-600 font-mono text-[10px] mb-12">
-              [ Interactive Audio Player UI ]
-            </div>
-            <div
-              class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-purple-500"
-            ></div>
+          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden">
+            <div class="text-slate-600 font-mono text-[10px] mb-12">[ Interactive Audio Player UI ]</div>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-purple-500"></div>
           </div>
         </a>
 
-        <a href="work/instagram.html"
-          class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer"
-        >
+        <a href="work/instagram.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer">
           <div class="p-8 pb-0 relative z-10">
-            <div
-              class="w-10 h-10 rounded-lg bg-orange-500/20 text-orange-500 flex items-center justify-center mb-4 text-xl"
-            >
-              📸
-            </div>
+            <div class="w-10 h-10 rounded-lg bg-orange-500/20 text-orange-500 flex items-center justify-center mb-4 text-xl">📸</div>
              <div class="flex items-center gap-2 mb-2">
                 <h3 class="text-xl font-bold text-white">Instagram App</h3>
                 <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
             </div>
-            <p class="text-slate-400 text-sm mb-6">
-              Responsive social media interface with complex grid layouts,
-              stories carousel, and profile management.
-            </p>
+            <p class="text-slate-400 text-sm mb-6">Responsive social media interface with complex grid layouts, stories carousel, and profile management.</p>
           </div>
-          <div
-            class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden"
-          >
-            <div class="text-slate-600 font-mono text-[10px] mb-12">
-              [ Responsive Grid Feed ]
-            </div>
-            <div
-              class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-red-500"
-            ></div>
+          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden">
+            <div class="text-slate-600 font-mono text-[10px] mb-12">[ Responsive Grid Feed ]</div>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-red-500"></div>
           </div>
         </a>
         
-        <a href="work/kite.html"
-          class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer"
-        >
+        <a href="work/kite.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer">
           <div class="p-8 pb-0 relative z-10">
-            <div
-              class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-500 flex items-center justify-center mb-4 text-xl"
-            >
-              📈
-            </div>
+            <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-500 flex items-center justify-center mb-4 text-xl">📈</div>
              <div class="flex items-center gap-2 mb-2">
                 <h3 class="text-xl font-bold text-white">Kite Zerodha</h3>
                 <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
             </div>
-            <p class="text-slate-400 text-sm mb-6">
-              A responsive replica of the Zerodha Kite trading dashboard with real-time data visualization.
-            </p>
+            <p class="text-slate-400 text-sm mb-6">A responsive replica of the Zerodha Kite trading dashboard with real-time data visualization.</p>
           </div>
-          <div
-            class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden"
-          >
-            <div class="text-slate-600 font-mono text-[10px] mb-12">
-              [ Trading Dashboard ]
-            </div>
-            <div
-              class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-orange-500"
-            ></div>
+          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden">
+            <div class="text-slate-600 font-mono text-[10px] mb-12">[ Trading Dashboard ]</div>
+            <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-orange-500"></div>
           </div>
         </a>
 
-        <div
-          class="bento-card col-span-1 md:col-span-2 rounded-3xl p-1 overflow-hidden relative group"
-        >
-          <div
-            class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity"
-          ></div>
+        <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-1 overflow-hidden relative group">
+          <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div class="flex flex-col h-full">
             <div class="p-8 w-full">
-              <span
-                class="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-2 block"
-                >Meta</span
-              >
+              <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-2 block">Meta</span>
               <h3 class="text-2xl font-bold text-white mb-3">This Portfolio</h3>
-              <p class="text-slate-400 text-xs mb-6">
-                Built with semantic HTML, Tailwind CSS Grid, and custom
-                glassmorphism effects.
-              </p>
+              <p class="text-slate-400 text-xs mb-6">Built with semantic HTML, Tailwind CSS Grid, and custom glassmorphism effects.</p>
               <div class="flex gap-2">
-                <span
-                  class="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-white"
-                  >Dark Mode</span
-                >
-                <span
-                  class="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-white"
-                  >Bento Grid</span
-                >
+                <span class="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-white">Dark Mode</span>
+                <span class="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-white">Bento Grid</span>
               </div>
             </div>
             <div class="w-full p-4 mt-auto">
-              <div
-                class="bg-slate-950 rounded-lg border border-slate-800 p-4 font-mono text-[10px] text-slate-400"
-              >
-                <p>
-                  <span class="text-purple-400">const</span>
-                  <span class="text-blue-400">portfolio</span> = {
-                </p>
-                <p class="pl-4">
-                  tech: [<span class="text-green-400">'React'</span>,
-                  <span class="text-green-400">'Tailwind'</span>],
-                </p>
-                <p class="pl-4">
-                  performance: <span class="text-orange-400">100</span>,
-                </p>
+              <div class="bg-slate-950 rounded-lg border border-slate-800 p-4 font-mono text-[10px] text-slate-400">
+                <p><span class="text-purple-400">const</span> <span class="text-blue-400">portfolio</span> = {</p>
+                <p class="pl-4">tech: [<span class="text-green-400">'React'</span>, <span class="text-green-400">'Tailwind'</span>],</p>
+                <p class="pl-4">performance: <span class="text-orange-400">100</span>,</p>
                 <p>}</p>
               </div>
             </div>
@@ -604,9 +366,7 @@
         </div>
 
         <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8">
-          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">
-            Experience
-          </h3>
+          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Experience</h3>
           <div class="space-y-8">
             <div class="flex flex-col md:flex-row justify-between gap-4 md:gap-0">
                 <div>
@@ -642,21 +402,14 @@
         </div>
 
         <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6">
-          <h3
-            class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4"
-          >
-            Education
-          </h3>
+          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Education</h3>
           <div class="space-y-4">
             <div class="flex justify-between items-start">
               <div>
                 <h4 class="font-bold text-white text-sm">BCA</h4>
                 <p class="text-[10px] text-slate-400">LNCT University</p>
               </div>
-              <span
-                class="bg-slate-800 text-slate-300 text-[10px] px-2 py-1 rounded shrink-0 ml-2"
-                >Pursuing</span
-              >
+              <span class="bg-slate-800 text-slate-300 text-[10px] px-2 py-1 rounded shrink-0 ml-2">Pursuing</span>
             </div>
             <div class="w-full h-px bg-slate-800"></div>
             <div class="flex justify-between items-start">
@@ -670,47 +423,25 @@
         </div>
 
         <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6">
-          <h3
-            class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4"
-          >
-            Certifications
-          </h3>
+          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Certifications</h3>
           <ul class="space-y-3">
             <li class="flex items-center gap-3">
-              <div
-                class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]"
-              >
-                ✓
-              </div>
-              <span class="text-xs text-slate-300">MERN Full Stack Web Development (Sheryians Coding
-School)</span>
+              <div class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]">✓</div>
+              <span class="text-xs text-slate-300">MERN Full Stack Web Development (Sheryians Coding School)</span>
             </li>
             <li class="flex items-center gap-3">
-              <div
-                class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]"
-              >
-                ✓
-              </div>
-              <span class="text-xs text-slate-300">React JS Development (Sheryians Coding
-School)</span>
+              <div class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]">✓</div>
+              <span class="text-xs text-slate-300">React JS Development (Sheryians Coding School)</span>
             </li>
             <li class="flex items-center gap-3">
-              <div
-                class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]"
-              >
-                ✓
-              </div>
-              <span class="text-xs text-slate-300"
-                >Microsoft Excel (Infosys)</span
-              >
+              <div class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]">✓</div>
+              <span class="text-xs text-slate-300">Microsoft Excel (Infosys)</span>
             </li>
           </ul>
         </div>
         
         <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8">
-            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">
-                Contact & Profiles
-            </h3>
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Contact & Profiles</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <a href="mailto:swayampurwar111104@gmail.com" class="flex items-center gap-4 group" aria-label="Email Me">
                 <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 transition-colors shrink-0">
@@ -763,33 +494,116 @@ School)</span>
         </p>
       </footer>
     </main>
+    
     <script>
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
     
     <script>
-      function updateClock() {
+      const HOST_LAT = 23.2599; const HOST_LON = 77.4126;
+
+      function getHaversineDistance(lat1, lon1, lat2, lon2) {
+        const R = 6371; 
+        const dLat = (lat2 - lat1) * Math.PI / 180;
+        const dLon = (lon2 - lon1) * Math.PI / 180;
+        const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+        return Math.round(R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))));
+      }
+
+      function typeLog(message, delay) {
+        setTimeout(() => {
+          const log = document.getElementById('terminal-log');
+          const newLine = document.createElement('span');
+          newLine.innerText = `> ${message}`;
+          log.appendChild(newLine);
+          if(log.children.length > 3) log.removeChild(log.firstChild);
+        }, delay);
+      }
+
+      function updateClocks(clientTZ) {
         const now = new Date();
-        const options = {
-          timeZone: 'Asia/Kolkata',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: false
-        };
-        const timeString = now.toLocaleTimeString('en-US', options);
-        const clockElement = document.getElementById('live-clock');
-        if (clockElement) {
-          clockElement.textContent = timeString;
+        document.getElementById('host-time').innerText = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute:'2-digit', hour12: false });
+        if(clientTZ && clientTZ !== 'STEALTH') {
+          try { document.getElementById('client-time').innerText = now.toLocaleTimeString('en-US', { timeZone: clientTZ, hour: '2-digit', minute:'2-digit', hour12: false }); } 
+          catch (e) { document.getElementById('client-time').innerText = "SYS_ERR"; }
         }
       }
-      setInterval(updateClock, 1000);
-      updateClock(); // Initial call
+
+      function getClientDeviceStats() {
+        const cores = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}-Core` : 'Unknown CPU';
+        let os = 'Unknown OS';
+        if (navigator.userAgent.indexOf("Win") != -1) os = "Windows";
+        if (navigator.userAgent.indexOf("Mac") != -1) os = "MacOS";
+        if (navigator.userAgent.indexOf("Linux") != -1) os = "Linux";
+        if (navigator.userAgent.indexOf("Android") != -1) os = "Android";
+        if (navigator.userAgent.indexOf("like Mac") != -1) os = "iOS";
+        return `${os} [${cores}]`;
+      }
+
+      async function establishAdvancedUplink() {
+        typeLog("Resolving IP address...", 400);
+        
+        // Inject Browser Info Immediately
+        document.getElementById('data-os').innerText = getClientDeviceStats();
+
+        try {
+          // Switched to ipwho.is - better for local testing and fewer adblock issues
+          const res = await fetch('https://ipwho.is/');
+          const data = await res.json();
+          
+          // If the API fails (e.g., rate limit), trigger fallback
+          if (!data.success) throw new Error('API blocked or Rate Limited');
+
+          typeLog(`Payload secured from ${data.city || 'target'}...`, 1200);
+          typeLog("Uplink successfully established.", 2000);
+
+          // Calculate Math
+          const distance = getHaversineDistance(HOST_LAT, HOST_LON, data.latitude, data.longitude);
+          const ping = Math.max(12, Math.round((distance / 200000) * 1000 * 2.5 + 20)); 
+
+          // Mask the IP for privacy
+          const maskedIp = data.ip ? data.ip.split('.').map((p, i) => i > 1 ? '***' : p).join('.') : 'Hidden';
+
+          // Inject the Live Visitor Data!
+          document.getElementById('client-city').innerText = data.city || 'Unknown';
+          document.getElementById('data-org').innerText = data.connection?.org || data.connection?.isp || 'Private Network';
+          document.getElementById('data-ip').innerText = maskedIp;
+          document.getElementById('data-distance').innerHTML = `${distance.toLocaleString()} <span class="text-[8px]">km</span>`;
+          document.getElementById('data-ping').innerHTML = `~${ping} <span class="text-[8px]">ms</span>`;
+
+          // Update Clocks
+          updateClocks(data.timezone?.id);
+          setInterval(() => updateClocks(data.timezone?.id), 1000);
+
+        } catch (error) {
+          // STEALTH MODE FALLBACK (Triggers if API is strictly blocked)
+          typeLog("Firewall block detected...", 800);
+          typeLog("Rerouting through proxy node...", 1400);
+          typeLog("Stealth mode active.", 2000);
+
+          document.getElementById('client-city').innerText = "Stealth Node";
+          document.getElementById('client-city').classList.replace('text-white', 'text-slate-400');
+          document.getElementById('client-time').innerText = "ENCRYPTED";
+          document.getElementById('client-time').classList.replace('text-emerald-400', 'text-slate-500');
+          document.getElementById('client-node').classList.replace('bg-emerald-500', 'bg-amber-500');
+          document.getElementById('status-dot').classList.replace('bg-emerald-500', 'bg-amber-500');
+          
+          document.getElementById('data-org').innerText = "Encrypted Tunnel";
+          document.getElementById('data-ip').innerText = "127.0.0.1";
+          document.getElementById('data-distance').innerText = "Masked";
+          document.getElementById('data-ping').innerText = "Routed";
+          
+          updateClocks('STEALTH');
+          setInterval(() => updateClocks('STEALTH'), 1000);
+        }
+      }
+
+      setTimeout(establishAdvancedUplink, 500);
     </script>
 
     <script>
-  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-</script>
-<script defer src="/_vercel/speed-insights/script.js"></script>
+      window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
   </body>
 </html>
