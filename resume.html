@@ -37,10 +37,10 @@
         border: 1px solid white;
         border-radius: 50%;
         pointer-events: none;
-        z-index: 2147483647; /* Maximum visible Z-Index */
+        z-index: 2147483647;
         transform: translate(-50%, -50%);
         transition: width 0.2s, height 0.2s, background-color 0.2s, transform 0.1s;
-        mix-blend-mode: difference; /* Ensures visibility on light/dark backgrounds */
+        mix-blend-mode: difference;
       }
       
       #cursor.active {
@@ -49,7 +49,6 @@
         mix-blend-mode: difference;
       }
 
-      /* Mobile: Disable custom cursor */
       @media (hover: none) and (pointer: coarse) {
           body { cursor: auto !important; }
           #cursor { display: none !important; }
@@ -84,6 +83,18 @@
         z-index: 10;
       }
       .bento-card:hover::after { opacity: 1; }
+
+      /* --- SKILL PILLS --- */
+      .skill-pill {
+        font-size: 0.75rem;
+        padding: 0.4rem 0.8rem;
+        border: 1px solid;
+        border-radius: 9999px;
+        color: #94a3b8;
+        transition: all 0.3s ease;
+        background-color: rgba(30, 41, 59, 0.5);
+        cursor: default;
+      }
 
       /* --- ANIMATIONS --- */
       @keyframes fadeUp {
@@ -247,48 +258,72 @@
         </div>
 
         <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8 animate-enter" style="animation-delay: 0.3s;">
-          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Technical Skills</h3>
+          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-8 flex items-center gap-2">
+            Technical Arsenal <span class="h-px bg-slate-800 flex-grow ml-2"></span>
+          </h3>
+          
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="space-y-3">
-                <h4 class="text-white font-bold text-sm border-b border-slate-700 pb-2 mb-2 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-blue-400"></span> Front-End
+            
+            <div class="space-y-4 group">
+                <h4 class="text-white font-bold text-sm flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center border border-blue-500/20 group-hover:bg-blue-500/30 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    </div>
+                    Front-End
                 </h4>
                 <div class="flex flex-wrap gap-2">
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">React.js</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">JavaScript</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">GSAP</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">HTML5/CSS3</span>
+                    <span class="skill-pill border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/50 hover:text-blue-300">React.js</span>
+                    <span class="skill-pill border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/50 hover:text-blue-300">GSAP</span>
+                    <span class="skill-pill border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/50 hover:text-blue-300">Tailwind</span>
+                    <span class="skill-pill border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/50 hover:text-blue-300">Three.js</span>
+                    <span class="skill-pill border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/50 hover:text-blue-300">Framer Motion</span>
                 </div>
             </div>
-            <div class="space-y-3">
-                <h4 class="text-white font-bold text-sm border-b border-slate-700 pb-2 mb-2 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-green-400"></span> Back-End
+
+            <div class="space-y-4 group">
+                <h4 class="text-white font-bold text-sm flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/20 group-hover:bg-emerald-500/30 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path></svg>
+                    </div>
+                    Back-End
                 </h4>
                 <div class="flex flex-wrap gap-2">
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Node.js</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Express.js</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">REST APIs</span>
+                    <span class="skill-pill border-emerald-500/20 hover:bg-emerald-500/20 hover:border-emerald-500/50 hover:text-emerald-300">Node.js</span>
+                    <span class="skill-pill border-emerald-500/20 hover:bg-emerald-500/20 hover:border-emerald-500/50 hover:text-emerald-300">Express</span>
+                    <span class="skill-pill border-emerald-500/20 hover:bg-emerald-500/20 hover:border-emerald-500/50 hover:text-emerald-300">REST APIs</span>
+                    <span class="skill-pill border-emerald-500/20 hover:bg-emerald-500/20 hover:border-emerald-500/50 hover:text-emerald-300">WebSockets</span>
                 </div>
             </div>
-            <div class="space-y-3">
-                <h4 class="text-white font-bold text-sm border-b border-slate-700 pb-2 mb-2 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-yellow-400"></span> Database
+
+            <div class="space-y-4 group">
+                <h4 class="text-white font-bold text-sm flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/20 group-hover:bg-amber-500/30 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"></path></svg>
+                    </div>
+                    Database
                 </h4>
                 <div class="flex flex-wrap gap-2">
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">MongoDB</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">SQL</span>
+                    <span class="skill-pill border-amber-500/20 hover:bg-amber-500/20 hover:border-amber-500/50 hover:text-amber-300">MongoDB</span>
+                    <span class="skill-pill border-amber-500/20 hover:bg-amber-500/20 hover:border-amber-500/50 hover:text-amber-300">MySQL</span>
+                    <span class="skill-pill border-amber-500/20 hover:bg-amber-500/20 hover:border-amber-500/50 hover:text-amber-300">JWT Auth</span>
                 </div>
             </div>
-            <div class="space-y-3">
-                <h4 class="text-white font-bold text-sm border-b border-slate-700 pb-2 mb-2 flex items-center gap-2">
-                    <span class="w-2 h-2 rounded-full bg-orange-400"></span> Tools
+
+            <div class="space-y-4 group">
+                <h4 class="text-white font-bold text-sm flex items-center gap-3 mb-2">
+                    <div class="w-8 h-8 rounded-lg bg-purple-500/20 text-purple-400 flex items-center justify-center border border-purple-500/20 group-hover:bg-purple-500/30 transition-colors">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    Tools
                 </h4>
                 <div class="flex flex-wrap gap-2">
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Git/GitHub</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Vercel</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Figma</span>
+                    <span class="skill-pill border-purple-500/20 hover:bg-purple-500/20 hover:border-purple-500/50 hover:text-purple-300">Git</span>
+                    <span class="skill-pill border-purple-500/20 hover:bg-purple-500/20 hover:border-purple-500/50 hover:text-purple-300">Vercel</span>
+                    <span class="skill-pill border-purple-500/20 hover:bg-purple-500/20 hover:border-purple-500/50 hover:text-purple-300">Figma</span>
+                    <span class="skill-pill border-purple-500/20 hover:bg-purple-500/20 hover:border-purple-500/50 hover:text-purple-300">Postman</span>
                 </div>
             </div>
+
           </div>
         </div>
 
@@ -313,7 +348,7 @@
           <div class="p-8 pb-0 relative z-10">
             <div class="w-10 h-10 rounded-lg bg-orange-500/20 text-orange-500 flex items-center justify-center mb-4 text-xl">📸</div>
             <h3 class="text-xl font-bold text-white mb-2">Instagram App</h3>
-            <p class="text-slate-400 text-sm mb-6">Responsive social media interface with stories and feed.</p>
+            <p class="text-slate-400 text-sm mb-6">Responsive social media interface with complex grid layouts.</p>
           </div>
           <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center">
             <div class="text-slate-600 font-mono text-[10px] mb-12">[ Responsive Feed ]</div>
@@ -325,7 +360,7 @@
           <div class="p-8 pb-0 relative z-10">
             <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-500 flex items-center justify-center mb-4 text-xl">📈</div>
             <h3 class="text-xl font-bold text-white mb-2">Kite Zerodha</h3>
-            <p class="text-slate-400 text-sm mb-6">Real-time trading dashboard replica.</p>
+            <p class="text-slate-400 text-sm mb-6">Real-time trading dashboard replica with data visualization.</p>
           </div>
           <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center">
             <div class="text-slate-600 font-mono text-[10px] mb-12">[ Trading Dashboard ]</div>
@@ -351,64 +386,84 @@
 
         <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8 animate-enter" style="animation-delay: 0.8s;">
           <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-8 flex items-center gap-2">Experience <span class="h-px bg-slate-800 flex-grow ml-2"></span></h3>
-          <div class="border-l border-slate-800 ml-3 space-y-10 pl-8 relative">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8 relative">
             
-            <div class="relative">
-                <span class="absolute -left-[37px] top-2 w-2.5 h-2.5 rounded-full bg-slate-900 border-2 border-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></span>
-                <div class="flex justify-between flex-wrap gap-2 mb-2">
+            <div class="relative pl-8 border-l-2 border-slate-800 hover:border-indigo-500 transition-colors duration-300">
+                <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-900 border-2 border-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></span>
+                <div class="flex justify-between flex-wrap gap-2 mb-1">
                     <h4 class="text-white font-bold text-lg">SDE Intern</h4>
-                    <span class="text-[10px] text-indigo-400 border border-indigo-500/20 px-2 py-1 rounded-full">Oct 2025 – Nov 2025</span>
+                    <span class="text-[10px] text-indigo-400 border border-indigo-500/20 px-2 py-1 rounded-full bg-indigo-500/5">Oct 2025 – Nov 2025</span>
                 </div>
-                <p class="text-indigo-400 text-sm mb-2">Bluestock Fintech</p>
-                <ul class="list-disc list-inside text-slate-400 text-sm space-y-1">
-                    <li>Contributed to fintech software development cycles.</li>
-                    <li>Collaborated on React component optimization.</li>
-                </ul>
+                <p class="text-indigo-300 text-sm font-medium mb-3">Bluestock Fintech</p>
+                <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                    Orchestrated frontend modules for a high-traffic fintech dashboard. Integrated secure REST APIs for real-time stock data visualization.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-300">React.js</span>
+                    <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-300">Redux</span>
+                    <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-300">APIs</span>
+                </div>
             </div>
 
-            <div class="relative">
-                 <span class="absolute -left-[37px] top-2 w-2.5 h-2.5 rounded-full bg-slate-900 border-2 border-slate-600"></span>
-                 <div class="flex justify-between flex-wrap gap-2 mb-2">
+            <div class="relative pl-8 border-l-2 border-slate-800 hover:border-slate-500 transition-colors duration-300">
+                 <span class="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-slate-900 border-2 border-slate-600"></span>
+                 <div class="flex justify-between flex-wrap gap-2 mb-1">
                     <h4 class="text-white font-bold text-lg">Creative Developer</h4>
-                    <span class="text-[10px] text-slate-400 border border-slate-700 px-2 py-1 rounded-full">2024 – Present</span>
+                    <span class="text-[10px] text-slate-400 border border-slate-700 px-2 py-1 rounded-full bg-slate-800/30">2024 – Present</span>
                 </div>
-                <p class="text-indigo-400 text-sm mb-2">Freelance</p>
-                <ul class="list-disc list-inside text-slate-400 text-sm space-y-1">
-                    <li>Built high-performance portfolios for clients.</li>
-                    <li>Achieved 95+ Lighthouse scores for SEO.</li>
-                </ul>
+                <p class="text-indigo-300 text-sm font-medium mb-3">Freelance</p>
+                <p class="text-slate-400 text-sm mb-4 leading-relaxed">
+                    Engineered award-winning 3D portfolios and high-conversion landing pages. Achieved 40% performance boost via code-splitting.
+                </p>
+                <div class="flex flex-wrap gap-2">
+                    <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-300">GSAP</span>
+                    <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-300">Three.js</span>
+                    <span class="text-[10px] bg-slate-800 px-2 py-1 rounded text-slate-300">UI/UX</span>
+                </div>
             </div>
           </div>
         </div>
 
         <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6 animate-enter" style="animation-delay: 0.9s;">
           <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Education</h3>
-          <div class="space-y-6 border-l border-slate-800 ml-2 pl-6 relative">
-            <div class="relative">
-              <span class="absolute -left-[29px] top-1.5 w-2 h-2 rounded-full bg-indigo-500"></span>
+          <div class="space-y-8 relative">
+            
+            <div class="relative pl-4 border-l border-slate-800">
+              <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
               <h4 class="font-bold text-white text-sm">Bachelor of Computer Applications</h4>
-              <p class="text-[10px] text-indigo-400">LNCT University (Pursuing)</p>
+              <p class="text-[11px] text-indigo-400 mb-1">LNCT University (Pursuing)</p>
+              <p class="text-[10px] text-slate-500">Focus on Full Stack Development & Database Management.</p>
             </div>
-            <div class="relative">
-              <span class="absolute -left-[29px] top-1.5 w-2 h-2 rounded-full bg-slate-600"></span>
+
+            <div class="relative pl-4 border-l border-slate-800">
+              <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-slate-600"></span>
               <h4 class="font-bold text-white text-sm">Senior Secondary (XII)</h4>
-              <p class="text-[10px] text-slate-400">Satya Niketan Higher Secondary (2023)</p>
+              <p class="text-[11px] text-slate-400 mb-1">Satya Niketan Higher Secondary (2023)</p>
+              <p class="text-[10px] text-slate-500">Major in Mathematics & Physics. (PCM Stream).</p>
             </div>
+
+             <div class="relative pl-4 border-l border-slate-800">
+              <span class="absolute -left-[5px] top-1.5 w-2.5 h-2.5 rounded-full bg-slate-600"></span>
+              <h4 class="font-bold text-white text-sm">Secondary (X)</h4>
+              <p class="text-[11px] text-slate-400 mb-1">Satya Niketan Higher Secondary (2021)</p>
+              <p class="text-[10px] text-slate-500">General Studies with Science Focus.</p>
+            </div>
+
           </div>
         </div>
 
         <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6 animate-enter" style="animation-delay: 1.0s;">
           <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Certifications</h3>
           <div class="space-y-4">
-            <div class="flex items-center gap-4 bg-slate-800/30 border border-slate-700/50 p-3 rounded-xl">
-                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-500 flex items-center justify-center shrink-0">✓</div>
+            <div class="flex items-center gap-4 bg-slate-800/30 border border-slate-700/50 p-3 rounded-xl hover:bg-slate-800/50 transition-colors">
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-500 flex items-center justify-center shrink-0 border border-emerald-500/10">✓</div>
                 <div>
                     <h4 class="text-sm font-bold text-white">MERN Full Stack</h4>
                     <p class="text-[10px] text-slate-400">Sheryians Coding School</p>
                 </div>
             </div>
-             <div class="flex items-center gap-4 bg-slate-800/30 border border-slate-700/50 p-3 rounded-xl">
-                <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-500 flex items-center justify-center shrink-0">✓</div>
+             <div class="flex items-center gap-4 bg-slate-800/30 border border-slate-700/50 p-3 rounded-xl hover:bg-slate-800/50 transition-colors">
+                <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-500 flex items-center justify-center shrink-0 border border-blue-500/10">✓</div>
                 <div>
                     <h4 class="text-sm font-bold text-white">React JS Development</h4>
                     <p class="text-[10px] text-slate-400">Sheryians Coding School</p>
@@ -478,7 +533,7 @@
   animateCursor();
 
   // Hover states
-  document.querySelectorAll('.interactive-element, a, button').forEach(el => {
+  document.querySelectorAll('.interactive-element, a, button, .bento-card').forEach(el => {
       el.addEventListener('mouseenter', () => cursor.classList.add('active'));
       el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
   });
