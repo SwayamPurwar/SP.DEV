@@ -51,18 +51,56 @@
         background: #475569;
       }
 
-      /* Bento Card Base Style */
+      /* --- UI UPGRADE 1: Bento Card Spotlight Base --- */
       .bento-card {
         background: rgba(30, 41, 59, 0.4);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 255, 255, 0.05);
         transition: all 0.3s ease;
+        position: relative; /* Essential for spotlight */
+        overflow: hidden;   /* Keeps spotlight inside */
       }
+      
       .bento-card:hover {
         border-color: rgba(255, 255, 255, 0.15);
         transform: translateY(-2px);
         box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+      }
+
+      /* Spotlight Gradient Overlay */
+      .bento-card::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: inherit;
+        background: radial-gradient(
+          600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
+          rgba(99, 102, 241, 0.15),
+          transparent 40%
+        );
+        opacity: 0;
+        transition: opacity 0.3s;
+        pointer-events: none;
+        z-index: 10;
+      }
+
+      .bento-card:hover::after {
+        opacity: 1;
+      }
+
+      /* --- UI UPGRADE 2: Staggered Fade-In Animations --- */
+      @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .animate-enter {
+        animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        opacity: 0; /* Start hidden */
       }
 
       /* Gradient Animation */
@@ -89,24 +127,25 @@
         .text-indigo-400 { color: #2563eb !important; }
         a { text-decoration: none; color: #000; }
       }
-    #location-toast {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  z-index: 100;
-  background: rgba(15, 23, 42, 0.8);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(99, 102, 241, 0.3);
-  padding: 1rem;
-  border-radius: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  transform: translateY(200%);
-  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-#location-toast.active { transform: translateY(0); }
-</style>
+      
+      #location-toast {
+        position: fixed;
+        bottom: 2rem;
+        right: 2rem;
+        z-index: 100;
+        background: rgba(15, 23, 42, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        padding: 1rem;
+        border-radius: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        transform: translateY(200%);
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      }
+      #location-toast.active { transform: translateY(0); }
+    </style>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"></script>
     <script>
@@ -117,14 +156,20 @@
     </script>
     
   </head>
+  
   <body class="text-slate-300 overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+    
+    <div class="fixed inset-0 z-[60] pointer-events-none opacity-[0.03] mix-blend-overlay" 
+         style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');">
+    </div>
+
     <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
       <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
       <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
       <div class="absolute -bottom-32 left-1/3 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
     </div>
 
-    <nav class="fixed top-6 left-6 z-50">
+    <nav class="fixed top-6 left-6 z-50 animate-enter" style="animation-delay: 0s;">
         <a href="index.html" class="flex items-center gap-2 px-4 py-2 bg-slate-900/50 backdrop-blur-md border border-slate-700/50 rounded-full hover:bg-slate-800 transition-colors text-sm font-medium text-white group">
             <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             <span>Back to Site</span>
@@ -134,14 +179,14 @@
     <main class="relative z-10 max-w-7xl mx-auto p-6 md:p-12 lg:p-16 mt-12 md:mt-0">
       <div class="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 gap-4 md:gap-6 auto-rows-auto">
         
-        <div class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group">
+        <div class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-8 flex flex-col justify-between overflow-hidden relative group animate-enter" style="animation-delay: 0.1s;">
           <div class="flex justify-end md:absolute md:top-0 md:right-0 md:p-6 mb-4 md:mb-0 opacity-50 group-hover:opacity-100 transition-opacity">
             <span class="inline-flex items-center rounded-full bg-green-400/10 px-2 py-1 text-[10px] font-medium text-green-400 ring-1 ring-inset ring-green-400/20">Available for work</span>
           </div>
 
           <div class="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
             <div class="relative">
-              <img src="/assets/images/profile/profile.webp" alt="Swayam Purwar" class="w-24 h-24 rounded-2xl object-cover border-2 border-slate-700 shadow-2xl" />
+              <img src="assets/images/profile/profile.webp" alt="Swayam Purwar" class="w-24 h-24 rounded-2xl object-cover border-2 border-slate-700 shadow-2xl" />
             </div>
             <div class="text-center sm:text-left">
               <h1 class="text-3xl md:text-4xl font-extrabold text-white tracking-tight">Swayam Purwar</h1>
@@ -172,7 +217,7 @@
           </div>
         </div>
 
-        <div class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between h-auto min-h-[340px] border border-slate-800 bg-[#020617] group">
+        <div class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between h-auto min-h-[340px] border border-slate-800 bg-[#020617] group animate-enter" style="animation-delay: 0.2s;">
           
           <div class="absolute inset-0 opacity-10 transition-opacity group-hover:opacity-30" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 19px, #6366f1 19px, #6366f1 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, #6366f1 19px, #6366f1 20px); background-size: 20px 20px;"></div>
 
@@ -255,7 +300,7 @@
           </style>
         </div>
 
-        <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8">
+        <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8 animate-enter" style="animation-delay: 0.3s;">
           <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Technical Skills</h3>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div class="space-y-3">
@@ -310,12 +355,12 @@
           </div>
         </div>
 
-        <div class="col-span-1 md:col-span-4 mt-4 mb-2 flex items-end justify-between px-2">
+        <div class="col-span-1 md:col-span-4 mt-4 mb-2 flex items-end justify-between px-2 animate-enter" style="animation-delay: 0.35s;">
           <h2 class="text-2xl font-bold text-white">Selected Works</h2>
           <div class="h-px bg-slate-800 flex-grow ml-6 relative top-[-10px]"></div>
         </div>
 
-        <a href="work/apple-music.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer">
+        <a href="work/apple-music.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer animate-enter" style="animation-delay: 0.4s;">
           <div class="p-8 pb-0 relative z-10">
             <div class="w-10 h-10 rounded-lg bg-pink-500/20 text-pink-500 flex items-center justify-center mb-4 text-xl">🎵</div>
             <div class="flex items-center gap-2 mb-2">
@@ -330,7 +375,7 @@
           </div>
         </a>
 
-        <a href="work/instagram.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer">
+        <a href="work/instagram.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer animate-enter" style="animation-delay: 0.5s;">
           <div class="p-8 pb-0 relative z-10">
             <div class="w-10 h-10 rounded-lg bg-orange-500/20 text-orange-500 flex items-center justify-center mb-4 text-xl">📸</div>
              <div class="flex items-center gap-2 mb-2">
@@ -345,7 +390,7 @@
           </div>
         </a>
         
-        <a href="work/kite.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer">
+        <a href="work/kite.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer animate-enter" style="animation-delay: 0.6s;">
           <div class="p-8 pb-0 relative z-10">
             <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-500 flex items-center justify-center mb-4 text-xl">📈</div>
              <div class="flex items-center gap-2 mb-2">
@@ -360,7 +405,7 @@
           </div>
         </a>
 
-        <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-1 overflow-hidden relative group">
+        <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-1 overflow-hidden relative group animate-enter" style="animation-delay: 0.7s;">
           <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
           <div class="flex flex-col h-full">
             <div class="p-8 w-full">
@@ -383,7 +428,7 @@
           </div>
         </div>
 
-        <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8">
+        <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8 animate-enter" style="animation-delay: 0.8s;">
           <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Experience</h3>
           <div class="space-y-8">
             <div class="flex flex-col md:flex-row justify-between gap-4 md:gap-0">
@@ -419,7 +464,7 @@
           </div>
         </div>
 
-        <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6">
+        <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6 animate-enter" style="animation-delay: 0.9s;">
           <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Education</h3>
           <div class="space-y-4">
             <div class="flex justify-between items-start">
@@ -440,7 +485,7 @@
           </div>
         </div>
 
-        <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6">
+        <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6 animate-enter" style="animation-delay: 1.0s;">
           <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Certifications</h3>
           <ul class="space-y-3">
             <li class="flex items-center gap-3">
@@ -458,7 +503,7 @@
           </ul>
         </div>
         
-        <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8">
+        <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8 animate-enter" style="animation-delay: 1.1s;">
             <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Contact & Profiles</h3>
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 <a href="mailto:swayampurwar111104@gmail.com" class="flex items-center gap-4 group" aria-label="Email Me">
@@ -505,7 +550,7 @@
 
       </div>
 
-      <footer class="mt-12 text-center text-slate-600 text-sm">
+      <footer class="mt-12 text-center text-slate-600 text-sm animate-enter" style="animation-delay: 1.2s;">
         <p>
           &copy; <span id="year"></span> Swayam Purwar. Crafted with
           <span class="text-indigo-500">Tailwind CSS</span>.
@@ -657,6 +702,20 @@ async function establishAdvancedUplink() {
   }
 
   setTimeout(establishAdvancedUplink, 800);
+</script>
+
+<script>
+  // --- UI UPGRADE 4: Initialize Spotlight Events ---
+  const cards = document.querySelectorAll('.bento-card');
+  cards.forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      card.style.setProperty('--mouse-x', `${x}px`);
+      card.style.setProperty('--mouse-y', `${y}px`);
+    });
+  });
 </script>
 
     <script>
