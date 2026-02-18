@@ -502,104 +502,110 @@
     <script>
       const HOST_LAT = 23.2599; const HOST_LON = 77.4126;
 
-      function getHaversineDistance(lat1, lon1, lat2, lon2) {
-        const R = 6371; 
-        const dLat = (lat2 - lat1) * Math.PI / 180;
-        const dLon = (lon2 - lon1) * Math.PI / 180;
-        const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
-        return Math.round(R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))));
-      }
+  function getHaversineDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; 
+    const dLat = (lat2 - lat1) * Math.PI / 180;
+    const dLon = (lon2 - lon1) * Math.PI / 180;
+    const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
+    return Math.round(R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))));
+  }
 
-      function typeLog(message, delay) {
-        setTimeout(() => {
-          const log = document.getElementById('terminal-log');
-          const newLine = document.createElement('span');
-          newLine.innerText = `> ${message}`;
-          log.appendChild(newLine);
-          if(log.children.length > 3) log.removeChild(log.firstChild);
-        }, delay);
-      }
+  function typeLog(message, delay) {
+    setTimeout(() => {
+      const log = document.getElementById('terminal-log');
+      const newLine = document.createElement('span');
+      newLine.innerText = `> ${message}`;
+      log.appendChild(newLine);
+      if(log.children.length > 3) log.removeChild(log.firstChild);
+    }, delay);
+  }
 
-      function updateClocks(clientTZ) {
-        const now = new Date();
-        document.getElementById('host-time').innerText = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute:'2-digit', hour12: false });
-        if(clientTZ && clientTZ !== 'STEALTH') {
-          try { document.getElementById('client-time').innerText = now.toLocaleTimeString('en-US', { timeZone: clientTZ, hour: '2-digit', minute:'2-digit', hour12: false }); } 
-          catch (e) { document.getElementById('client-time').innerText = "SYS_ERR"; }
-        }
-      }
+  function updateClocks(clientTZ) {
+    const now = new Date();
+    document.getElementById('host-time').innerText = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute:'2-digit', hour12: false });
+    if(clientTZ && clientTZ !== 'STEALTH') {
+      try { document.getElementById('client-time').innerText = now.toLocaleTimeString('en-US', { timeZone: clientTZ, hour: '2-digit', minute:'2-digit', hour12: false }); } 
+      catch (e) { document.getElementById('client-time').innerText = "SYS_ERR"; }
+    }
+  }
 
-      function getClientDeviceStats() {
-        const cores = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}-Core` : 'Unknown CPU';
-        let os = 'Unknown OS';
-        if (navigator.userAgent.indexOf("Win") != -1) os = "Windows";
-        if (navigator.userAgent.indexOf("Mac") != -1) os = "MacOS";
-        if (navigator.userAgent.indexOf("Linux") != -1) os = "Linux";
-        if (navigator.userAgent.indexOf("Android") != -1) os = "Android";
-        if (navigator.userAgent.indexOf("like Mac") != -1) os = "iOS";
-        return `${os} [${cores}]`;
-      }
+  function getClientDeviceStats() {
+    const cores = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}-Core` : 'Unknown CPU';
+    let os = 'Unknown OS';
+    if (navigator.userAgent.indexOf("Win") != -1) os = "Windows";
+    if (navigator.userAgent.indexOf("Mac") != -1) os = "MacOS";
+    if (navigator.userAgent.indexOf("Linux") != -1) os = "Linux";
+    if (navigator.userAgent.indexOf("Android") != -1) os = "Android";
+    if (navigator.userAgent.indexOf("like Mac") != -1) os = "iOS";
+    return `${os} [${cores}]`;
+  }
 
-      async function establishAdvancedUplink() {
-        typeLog("Resolving IP address...", 400);
+  async function establishAdvancedUplink() {
+    typeLog("Resolving IP address...", 400);
+    document.getElementById('data-os').innerText = getClientDeviceStats();
+
+    // Primary API: ipwho.is
+    try {
+      let res = await fetch('https://ipwho.is/');
+      let data = await res.json();
+      
+      // If primary fails, try Backup API: ip-api.com
+      if (!data.success) {
+        typeLog("Primary node busy, rerouting...", 800);
+        const backupRes = await fetch('http://ip-api.com/json/'); // Note: Some browsers may block HTTP on HTTPS sites
+        const backupData = await backupRes.json();
+        if(backupData.status !== "success") throw new Error('All nodes failed');
         
-        // Inject Browser Info Immediately
-        document.getElementById('data-os').innerText = getClientDeviceStats();
-
-        try {
-          // Switched to ipwho.is - better for local testing and fewer adblock issues
-          const res = await fetch('https://ipwho.is/');
-          const data = await res.json();
-          
-          // If the API fails (e.g., rate limit), trigger fallback
-          if (!data.success) throw new Error('API blocked or Rate Limited');
-
-          typeLog(`Payload secured from ${data.city || 'target'}...`, 1200);
-          typeLog("Uplink successfully established.", 2000);
-
-          // Calculate Math
-          const distance = getHaversineDistance(HOST_LAT, HOST_LON, data.latitude, data.longitude);
-          const ping = Math.max(12, Math.round((distance / 200000) * 1000 * 2.5 + 20)); 
-
-          // Mask the IP for privacy
-          const maskedIp = data.ip ? data.ip.split('.').map((p, i) => i > 1 ? '***' : p).join('.') : 'Hidden';
-
-          // Inject the Live Visitor Data!
-          document.getElementById('client-city').innerText = data.city || 'Unknown';
-          document.getElementById('data-org').innerText = data.connection?.org || data.connection?.isp || 'Private Network';
-          document.getElementById('data-ip').innerText = maskedIp;
-          document.getElementById('data-distance').innerHTML = `${distance.toLocaleString()} <span class="text-[8px]">km</span>`;
-          document.getElementById('data-ping').innerHTML = `~${ping} <span class="text-[8px]">ms</span>`;
-
-          // Update Clocks
-          updateClocks(data.timezone?.id);
-          setInterval(() => updateClocks(data.timezone?.id), 1000);
-
-        } catch (error) {
-          // STEALTH MODE FALLBACK (Triggers if API is strictly blocked)
-          typeLog("Firewall block detected...", 800);
-          typeLog("Rerouting through proxy node...", 1400);
-          typeLog("Stealth mode active.", 2000);
-
-          document.getElementById('client-city').innerText = "Stealth Node";
-          document.getElementById('client-city').classList.replace('text-white', 'text-slate-400');
-          document.getElementById('client-time').innerText = "ENCRYPTED";
-          document.getElementById('client-time').classList.replace('text-emerald-400', 'text-slate-500');
-          document.getElementById('client-node').classList.replace('bg-emerald-500', 'bg-amber-500');
-          document.getElementById('status-dot').classList.replace('bg-emerald-500', 'bg-amber-500');
-          
-          document.getElementById('data-org').innerText = "Encrypted Tunnel";
-          document.getElementById('data-ip').innerText = "127.0.0.1";
-          document.getElementById('data-distance').innerText = "Masked";
-          document.getElementById('data-ping').innerText = "Routed";
-          
-          updateClocks('STEALTH');
-          setInterval(() => updateClocks('STEALTH'), 1000);
-        }
+        // Map backup data to our format
+        data = {
+          city: backupData.city,
+          latitude: backupData.lat,
+          longitude: backupData.lon,
+          timezone: { id: backupData.timezone },
+          connection: { org: backupData.org || backupData.isp },
+          ip: backupData.query
+        };
       }
 
-      setTimeout(establishAdvancedUplink, 500);
-    </script>
+      typeLog(`Payload secured from ${data.city || 'target'}...`, 1200);
+      typeLog("Uplink successfully established.", 2000);
+
+      const distance = getHaversineDistance(HOST_LAT, HOST_LON, data.latitude, data.longitude);
+      const ping = Math.max(12, Math.round((distance / 200000) * 1000 * 2.5 + 20)); 
+      const maskedIp = data.ip ? data.ip.split('.').map((p, i) => i > 1 ? '***' : p).join('.') : 'Hidden';
+
+      document.getElementById('client-city').innerText = data.city || 'Unknown';
+      document.getElementById('data-org').innerText = data.connection?.org || data.connection?.isp || 'Private Network';
+      document.getElementById('data-ip').innerText = maskedIp;
+      document.getElementById('data-distance').innerHTML = `${distance.toLocaleString()} <span class="text-[8px]">km</span>`;
+      document.getElementById('data-ping').innerHTML = `~${ping} <span class="text-[8px]">ms</span>`;
+
+      updateClocks(data.timezone?.id);
+      setInterval(() => updateClocks(data.timezone?.id), 1000);
+
+    } catch (error) {
+      typeLog("Firewall block detected...", 800);
+      typeLog("Stealth mode active.", 2000);
+
+      document.getElementById('client-city').innerText = "Stealth Node";
+      document.getElementById('client-city').classList.replace('text-white', 'text-slate-400');
+      document.getElementById('client-time').innerText = "ENCRYPTED";
+      document.getElementById('client-time').classList.replace('text-emerald-400', 'text-slate-500');
+      document.getElementById('client-node').classList.replace('bg-emerald-500', 'bg-slate-700');
+      document.getElementById('status-dot').classList.replace('bg-emerald-500', 'bg-amber-500');
+      
+      document.getElementById('data-org').innerText = "Encrypted Tunnel";
+      document.getElementById('data-ip').innerText = "127.0.0.1";
+      document.getElementById('data-distance').innerText = "Masked";
+      document.getElementById('data-ping').innerText = "Routed";
+      
+      updateClocks('STEALTH');
+      setInterval(() => updateClocks('STEALTH'), 1000);
+    }
+  }
+
+  setTimeout(establishAdvancedUplink, 500);
+  </script>
 
     <script>
       window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
