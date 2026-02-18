@@ -89,7 +89,24 @@
         .text-indigo-400 { color: #2563eb !important; }
         a { text-decoration: none; color: #000; }
       }
-    </style>
+    #location-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 100;
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transform: translateY(200%);
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+#location-toast.active { transform: translateY(0); }
+</style>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"></script>
     <script>
@@ -98,6 +115,7 @@
       gtag("js", new Date());
       gtag("config", "G-QLM3SVXXJT");
     </script>
+    
   </head>
   <body class="text-slate-300 overflow-x-hidden selection:bg-indigo-500 selection:text-white">
     <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -493,6 +511,13 @@
           <span class="text-indigo-500">Tailwind CSS</span>.
         </p>
       </footer>
+       <div id="location-toast" class="no-print">
+  <div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400">📡</div>
+  <div>
+    <p class="text-xs font-bold text-white">Precision Uplink Requested</p>
+    <p class="text-[10px] text-slate-400">Authorize GPS for accurate distance metrics.</p>
+  </div>
+</div>
     </main>
     
     <script>
@@ -567,11 +592,14 @@
     return `${os} [${cores}]`;
   }
 
-  async function establishAdvancedUplink() {
+async function establishAdvancedUplink() {
+    const toast = document.getElementById('location-toast');
+    if (toast) toast.classList.add('active'); // Show toast immediately
+    
     typeLog("Initiating high-precision scan...", 400);
     document.getElementById('data-os').innerText = getClientDeviceStats();
 
-    // 1. First, always get IP data for Network/ISP info
+    // 1. Get baseline IP data
     let ipData = null;
     try {
       const res = await fetch('https://ipapi.co/json/');
@@ -580,10 +608,12 @@
       console.error("IP Fetch Failed");
     }
 
-    // 2. Try for precise GPS
+    // 2. Request Precision Location
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (pos) => {
+          // USER ALLOWED
+          if (toast) toast.classList.remove('active'); 
           typeLog("GPS signal acquired. Accuracy: High.", 1200);
           updateHUD(
             pos.coords.latitude, 
@@ -595,7 +625,8 @@
           );
         },
         () => {
-          // Fallback to IP if GPS fails or is denied
+          // USER DENIED or ERROR
+          if (toast) toast.classList.remove('active');
           typeLog("GPS denied. Using IP triangulation.", 1200);
           if (ipData) {
             updateHUD(ipData.latitude, ipData.longitude, ipData.city, ipData.org, ipData.ip, ipData.timezone);
@@ -603,12 +634,16 @@
             activateStealthMode();
           }
         },
-        { enableHighAccuracy: true, timeout: 5000 }
+        { enableHighAccuracy: true, timeout: 8000 } // Extended timeout for mobile
       );
-    } else if (ipData) {
-      updateHUD(ipData.latitude, ipData.longitude, ipData.city, ipData.org, ipData.ip, ipData.timezone);
     } else {
-      activateStealthMode();
+      // Browser doesn't support geolocation
+      if (toast) toast.classList.remove('active');
+      if (ipData) {
+        updateHUD(ipData.latitude, ipData.longitude, ipData.city, ipData.org, ipData.ip, ipData.timezone);
+      } else {
+        activateStealthMode();
+      }
     }
   }
 
