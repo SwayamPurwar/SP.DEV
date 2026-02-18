@@ -3,63 +3,67 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Resume and Portfolio of Swayam Purwar - MERN Full Stack Web Developer specializing in React, Tailwind, and Node.js." />
+    <meta name="description" content="Resume and Portfolio of Swayam Purwar - MERN Full Stack Web Developer." />
     <title>Swayam Purwar - MERN Full Stack Web Development</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
     
-    <link
-      rel="icon"
-      type="image/webp"
-      href="assets/images/ui/favicon.webp"
-      sizes="32x32"
-    />
-    <link
-      rel="icon"
-      type="image/webp"
-      href="assets/images/ui/favicon.webp"
-      sizes="192x192"
-    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    
+    <link rel="icon" type="image/webp" href="assets/images/ui/favicon.webp" sizes="32x32" />
     <link rel="apple-touch-icon" href="assets/images/ui/favicon.webp" />
 
     <style>
+      /* --- GLOBAL RESET --- */
       body {
         font-family: "Plus Jakarta Sans", sans-serif;
         background-color: #020617;
+        cursor: none !important; /* Force hide default cursor */
+        overflow-x: hidden;
       }
 
-      /* Smooth Scroll */
-      html {
-        scroll-behavior: smooth;
+      /* --- CUSTOM SCROLLBAR --- */
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #0f172a; }
+      ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+      /* --- CUSTOM CURSOR (Vanilla CSS) --- */
+      #cursor {
+        position: fixed;
+        top: 0; left: 0;
+        width: 20px; height: 20px;
+        background-color: rgba(255, 255, 255, 0.8);
+        border: 1px solid white;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: 2147483647; /* Maximum visible Z-Index */
+        transform: translate(-50%, -50%);
+        transition: width 0.2s, height 0.2s, background-color 0.2s, transform 0.1s;
+        mix-blend-mode: difference; /* Ensures visibility on light/dark backgrounds */
+      }
+      
+      #cursor.active {
+        width: 50px; height: 50px;
+        background-color: white;
+        mix-blend-mode: difference;
       }
 
-      /* Custom Scrollbar */
-      ::-webkit-scrollbar {
-        width: 8px;
-      }
-      ::-webkit-scrollbar-track {
-        background: #0f172a;
-      }
-      ::-webkit-scrollbar-thumb {
-        background: #334155;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #475569;
+      /* Mobile: Disable custom cursor */
+      @media (hover: none) and (pointer: coarse) {
+          body { cursor: auto !important; }
+          #cursor { display: none !important; }
       }
 
-      /* --- UI UPGRADE 1: Bento Card Spotlight Base --- */
+      /* --- BENTO CARD STYLES --- */
       .bento-card {
         background: rgba(30, 41, 59, 0.4);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         border: 1px solid rgba(255, 255, 255, 0.05);
-        transition: all 0.3s ease;
-        position: relative; /* Essential for spotlight */
-        overflow: hidden;   /* Keeps spotlight inside */
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
       }
       
       .bento-card:hover {
@@ -68,42 +72,29 @@
         box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
       }
 
-      /* Spotlight Gradient Overlay */
+      /* Spotlight Effect */
       .bento-card::after {
         content: "";
         position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        border-radius: inherit;
-        background: radial-gradient(
-          600px circle at var(--mouse-x, 0) var(--mouse-y, 0),
-          rgba(99, 102, 241, 0.15),
-          transparent 40%
-        );
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: radial-gradient(600px circle at var(--mouse-x, 0) var(--mouse-y, 0), rgba(99, 102, 241, 0.15), transparent 40%);
         opacity: 0;
         transition: opacity 0.3s;
         pointer-events: none;
         z-index: 10;
       }
+      .bento-card:hover::after { opacity: 1; }
 
-      .bento-card:hover::after {
-        opacity: 1;
-      }
-
-      /* --- UI UPGRADE 2: Staggered Fade-In Animations --- */
+      /* --- ANIMATIONS --- */
       @keyframes fadeUp {
         from { opacity: 0; transform: translateY(20px); }
         to { opacity: 1; transform: translateY(0); }
       }
-
       .animate-enter {
         animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        opacity: 0; /* Start hidden */
+        opacity: 0;
       }
-
-      /* Gradient Animation */
+      
       @keyframes blob {
         0% { transform: translate(0px, 0px) scale(1); }
         33% { transform: translate(30px, -50px) scale(1.1); }
@@ -114,55 +105,20 @@
       .animation-delay-2000 { animation-delay: 2s; }
       .animation-delay-4000 { animation-delay: 4s; }
 
-      /* Print Styles */
-      @media print {
-        nav, .animate-blob, .no-print { display: none !important; }
-        body { background-color: white; color: black; }
-        .bento-card {
-            background: white; border: 1px solid #ddd;
-            color: black; break-inside: avoid; box-shadow: none;
-        }
-        .text-white { color: #000 !important; }
-        .text-slate-300, .text-slate-400 { color: #333 !important; }
-        .text-indigo-400 { color: #2563eb !important; }
-        a { text-decoration: none; color: #000; }
-      }
-      
-      #location-toast {
-        position: fixed;
-        bottom: 2rem;
-        right: 2rem;
-        z-index: 100;
-        background: rgba(15, 23, 42, 0.8);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(99, 102, 241, 0.3);
-        padding: 1rem;
-        border-radius: 1rem;
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        transform: translateY(200%);
-        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-      }
-      #location-toast.active { transform: translateY(0); }
-    </style>
+      /* Telemetry Animations */
+      @keyframes sweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+      @keyframes packet { 0% { left: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-QLM3SVXXJT"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() { dataLayer.push(arguments); }
-      gtag("js", new Date());
-      gtag("config", "G-QLM3SVXXJT");
-    </script>
-    
+      /* Print Hide */
+      @media print { .no-print, #cursor, nav { display: none !important; } }
+    </style>
   </head>
   
-  <body class="text-slate-300 overflow-x-hidden selection:bg-indigo-500 selection:text-white">
+  <body class="text-slate-300 selection:bg-indigo-500 selection:text-white">
     
-    <div class="fixed inset-0 z-[60] pointer-events-none opacity-[0.03] mix-blend-overlay" 
-         style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');">
-    </div>
+    <div id="cursor"></div>
 
+    <div class="fixed inset-0 z-[60] pointer-events-none opacity-[0.03] mix-blend-overlay" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E');"></div>
     <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
       <div class="absolute top-0 left-1/4 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
       <div class="absolute top-0 right-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
@@ -170,7 +126,7 @@
     </div>
 
     <nav class="fixed top-6 left-6 z-50 animate-enter" style="animation-delay: 0s;">
-        <a href="index.html" class="flex items-center gap-2 px-4 py-2 bg-slate-900/50 backdrop-blur-md border border-slate-700/50 rounded-full hover:bg-slate-800 transition-colors text-sm font-medium text-white group">
+        <a href="index.html" class="interactive-element flex items-center gap-2 px-4 py-2 bg-slate-900/50 backdrop-blur-md border border-slate-700/50 rounded-full hover:bg-slate-800 transition-colors text-sm font-medium text-white group">
             <svg class="w-4 h-4 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
             <span>Back to Site</span>
         </a>
@@ -198,29 +154,33 @@
             <p class="text-slate-400 leading-relaxed text-sm md:text-base">
               Passionate about crafting pixel-perfect interfaces. I bridge the gap between design and code using
               <span class="text-white font-semibold">React</span> and
-              <span class="text-white font-semibold">Tailwind</span>. Currently pursuing BCA and building cool web apps.
+              <span class="text-white font-semibold">Tailwind</span>.
             </p>
 
             <div class="flex flex-col sm:flex-row gap-3 pt-2 flex-wrap no-print">
-              <a href="./assets/docs/Swayam Purwar | Full-Stack Engineer.pdf" download="Swayam_Purwar_Resume" class="bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-indigo-500 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20" aria-label="Download Resume">
+              <a href="./assets/docs/Swayam Purwar | Full-Stack Engineer.pdf" download="Swayam_Purwar_Resume" class="interactive-element bg-indigo-600 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-indigo-500 transition-all flex items-center justify-center gap-2 shadow-lg shadow-indigo-500/20">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
                 <span>Download Resume</span>
               </a>
 
-              <a href="mailto:swayampurwar111104@gmail.com" class="bg-white text-slate-900 px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors flex items-center justify-center gap-2" aria-label="Send Email">
-                <span>Email Me</span>
+              <a href="https://github.com/SwayamPurwar" target="_blank" class="interactive-element bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors border border-slate-700 flex items-center justify-center gap-2">
+                 <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                 <span>GitHub</span>
               </a>
-              <a href="https://linkedin.com/in/swayam-purwar" target="_blank" class="bg-slate-800 text-white px-5 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors border border-slate-700 flex items-center justify-center" aria-label="Visit LinkedIn Profile">
-                LinkedIn
+
+              <a href="mailto:swayampurwar111104@gmail.com" class="interactive-element bg-white text-slate-900 px-3 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors flex items-center justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              </a>
+              
+              <a href="https://linkedin.com/in/swayam-purwar" target="_blank" class="interactive-element bg-[#0077b5] text-white px-3 py-2.5 rounded-xl font-bold text-sm hover:bg-[#006396] transition-colors flex items-center justify-center">
+                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h5v-8.306c0-4.613 9.289-5.124 9.289 0v8.306h5v-10.306c0-6.117-7.025-6.32-9.632-3.132v-2.56z"/></svg>
               </a>
             </div>
           </div>
         </div>
 
         <div class="bento-card col-span-1 md:col-span-2 row-span-2 rounded-3xl p-6 relative overflow-hidden flex flex-col justify-between h-auto min-h-[340px] border border-slate-800 bg-[#020617] group animate-enter" style="animation-delay: 0.2s;">
-          
           <div class="absolute inset-0 opacity-10 transition-opacity group-hover:opacity-30" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 19px, #6366f1 19px, #6366f1 20px), repeating-linear-gradient(90deg, transparent, transparent 19px, #6366f1 19px, #6366f1 20px); background-size: 20px 20px;"></div>
-
           <div class="relative z-10 flex justify-between items-start mb-4 border-b border-slate-800/80 pb-3">
             <div>
               <h3 class="text-[10px] font-bold text-slate-500 uppercase tracking-widest flex items-center gap-2 mb-1">
@@ -233,40 +193,31 @@
                <span class="bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 px-2 py-0.5 rounded text-[9px] font-mono tracking-wider animate-pulse">REC_LINK_ACTIVE</span>
             </div>
           </div>
-
           <div class="relative z-10 bg-slate-900/50 border border-slate-800 rounded-lg p-2.5 mb-5 h-16 overflow-hidden">
             <div id="terminal-log" class="text-[9px] text-emerald-400 font-mono flex flex-col gap-0.5 transition-all">
               <span class="text-slate-500">> Initiating handshake protocol...</span>
             </div>
           </div>
-
           <div class="relative z-10 w-full mb-6 px-1">
-            
             <div class="flex items-center justify-between w-full relative">
               <div id="client-node" class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.8)] z-10 transition-colors shrink-0 border-2 border-[#020617]"></div>
-
               <div class="flex-grow h-px bg-slate-800 relative mx-3 overflow-hidden rounded-full">
                 <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-transparent via-indigo-500 to-transparent animate-[sweep_2s_linear_infinite]"></div>
                 <div class="absolute top-1/2 -translate-y-1/2 left-0 w-1.5 h-1.5 bg-white rounded-full animate-[packet_1.5s_ease-in-out_infinite]"></div>
               </div>
-
               <div class="w-3 h-3 rounded-full bg-indigo-500 shadow-[0_0_12px_rgba(99,102,241,0.8)] z-10 shrink-0 border-2 border-[#020617]"></div>
             </div>
-
             <div class="flex items-start justify-between w-full mt-2">
               <div class="flex flex-col items-start w-28">
                 <span id="client-city" class="text-[11px] font-bold text-white truncate w-full text-left">Scanning...</span>
                 <span id="client-time" class="text-[9px] text-emerald-400 font-mono mt-0.5 transition-colors">--:--</span>
               </div>
-              
               <div class="flex flex-col items-end w-28">
                 <span class="text-[11px] font-bold text-white truncate w-full text-right">Bhopal, IND</span>
                 <span id="host-time" class="text-[9px] text-indigo-400 font-mono mt-0.5">--:--</span>
               </div>
             </div>
-            
           </div>
-
           <div class="relative z-10 grid grid-cols-2 md:grid-cols-3 gap-2 mt-auto">
             <div class="bg-slate-900/80 border border-slate-800 p-2.5 rounded-lg">
               <p class="text-[8px] text-slate-500 uppercase font-bold mb-1">Network Org / ISP</p>
@@ -293,11 +244,6 @@
               <p class="text-[10px] text-emerald-400 font-mono">Ready for Hire</p>
             </div>
           </div>
-
-          <style>
-            @keyframes sweep { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
-            @keyframes packet { 0% { left: 0%; opacity: 0; } 10% { opacity: 1; } 90% { opacity: 1; } 100% { left: 100%; opacity: 0; } }
-          </style>
         </div>
 
         <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8 animate-enter" style="animation-delay: 0.3s;">
@@ -309,14 +255,11 @@
                 </h4>
                 <div class="flex flex-wrap gap-2">
                     <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">React.js</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">JavaScript (ES6+)</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">JavaScript</span>
                     <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">GSAP</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Framer Motion</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">HTML5</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">CSS3</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">HTML5/CSS3</span>
                 </div>
             </div>
-
             <div class="space-y-3">
                 <h4 class="text-white font-bold text-sm border-b border-slate-700 pb-2 mb-2 flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-green-400"></span> Back-End
@@ -325,10 +268,8 @@
                     <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Node.js</span>
                     <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Express.js</span>
                     <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">REST APIs</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">WebSockets</span>
                 </div>
             </div>
-
             <div class="space-y-3">
                 <h4 class="text-white font-bold text-sm border-b border-slate-700 pb-2 mb-2 flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-yellow-400"></span> Database
@@ -336,20 +277,16 @@
                 <div class="flex flex-wrap gap-2">
                     <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">MongoDB</span>
                     <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">SQL</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Auth Systems (JWT)</span>
                 </div>
             </div>
-
             <div class="space-y-3">
                 <h4 class="text-white font-bold text-sm border-b border-slate-700 pb-2 mb-2 flex items-center gap-2">
                     <span class="w-2 h-2 rounded-full bg-orange-400"></span> Tools
                 </h4>
                 <div class="flex flex-wrap gap-2">
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Git</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">GitHub</span>
+                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Git/GitHub</span>
                     <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Vercel</span>
                     <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Figma</span>
-                    <span class="bg-slate-800/50 px-3 py-1.5 rounded-lg text-xs text-slate-300 border border-slate-700/50 hover:bg-slate-700/50 transition-colors">Postman</span>
                 </div>
             </div>
           </div>
@@ -360,46 +297,37 @@
           <div class="h-px bg-slate-800 flex-grow ml-6 relative top-[-10px]"></div>
         </div>
 
-        <a href="work/apple-music.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer animate-enter" style="animation-delay: 0.4s;">
+        <a href="work/apple-music.html" class="bento-card interactive-element col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer animate-enter" style="animation-delay: 0.4s;">
           <div class="p-8 pb-0 relative z-10">
             <div class="w-10 h-10 rounded-lg bg-pink-500/20 text-pink-500 flex items-center justify-center mb-4 text-xl">🎵</div>
-            <div class="flex items-center gap-2 mb-2">
-                <h3 class="text-xl font-bold text-white">Apple Music App</h3>
-                <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-            </div>
-            <p class="text-slate-400 text-sm mb-6">A pixel-perfect replication of the Apple Music web player featuring audio playback control and dynamic UI states.</p>
+            <h3 class="text-xl font-bold text-white mb-2">Apple Music App</h3>
+            <p class="text-slate-400 text-sm mb-6">Pixel-perfect replication of Apple Music with audio playback.</p>
           </div>
-          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden">
-            <div class="text-slate-600 font-mono text-[10px] mb-12">[ Interactive Audio Player UI ]</div>
+          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center">
+            <div class="text-slate-600 font-mono text-[10px] mb-12">[ Interactive Audio Player ]</div>
             <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-pink-500 to-purple-500"></div>
           </div>
         </a>
 
-        <a href="work/instagram.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer animate-enter" style="animation-delay: 0.5s;">
+        <a href="work/instagram.html" class="bento-card interactive-element col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer animate-enter" style="animation-delay: 0.5s;">
           <div class="p-8 pb-0 relative z-10">
             <div class="w-10 h-10 rounded-lg bg-orange-500/20 text-orange-500 flex items-center justify-center mb-4 text-xl">📸</div>
-             <div class="flex items-center gap-2 mb-2">
-                <h3 class="text-xl font-bold text-white">Instagram App</h3>
-                <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-            </div>
-            <p class="text-slate-400 text-sm mb-6">Responsive social media interface with complex grid layouts, stories carousel, and profile management.</p>
+            <h3 class="text-xl font-bold text-white mb-2">Instagram App</h3>
+            <p class="text-slate-400 text-sm mb-6">Responsive social media interface with stories and feed.</p>
           </div>
-          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden">
-            <div class="text-slate-600 font-mono text-[10px] mb-12">[ Responsive Grid Feed ]</div>
+          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center">
+            <div class="text-slate-600 font-mono text-[10px] mb-12">[ Responsive Feed ]</div>
             <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-yellow-500 to-red-500"></div>
           </div>
         </a>
         
-        <a href="work/kite.html" class="bento-card col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer animate-enter" style="animation-delay: 0.6s;">
+        <a href="work/kite.html" class="bento-card interactive-element col-span-1 md:col-span-2 rounded-3xl overflow-hidden group block cursor-pointer animate-enter" style="animation-delay: 0.6s;">
           <div class="p-8 pb-0 relative z-10">
             <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-500 flex items-center justify-center mb-4 text-xl">📈</div>
-             <div class="flex items-center gap-2 mb-2">
-                <h3 class="text-xl font-bold text-white">Kite Zerodha</h3>
-                <svg class="w-4 h-4 text-slate-500 opacity-0 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"></path></svg>
-            </div>
-            <p class="text-slate-400 text-sm mb-6">A responsive replica of the Zerodha Kite trading dashboard with real-time data visualization.</p>
+            <h3 class="text-xl font-bold text-white mb-2">Kite Zerodha</h3>
+            <p class="text-slate-400 text-sm mb-6">Real-time trading dashboard replica.</p>
           </div>
-          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center overflow-hidden">
+          <div class="bg-slate-900 h-64 mx-8 rounded-t-xl border-t border-l border-r border-slate-700 relative top-2 group-hover:-translate-y-2 transition-transform duration-500 flex items-end justify-center">
             <div class="text-slate-600 font-mono text-[10px] mb-12">[ Trading Dashboard ]</div>
             <div class="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 to-orange-500"></div>
           </div>
@@ -407,147 +335,105 @@
 
         <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-1 overflow-hidden relative group animate-enter" style="animation-delay: 0.7s;">
           <div class="absolute inset-0 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-          <div class="flex flex-col h-full">
-            <div class="p-8 w-full">
+          <div class="p-8 flex flex-col h-full justify-between">
+            <div>
               <span class="text-blue-400 text-[10px] font-bold uppercase tracking-widest mb-2 block">Meta</span>
-              <h3 class="text-2xl font-bold text-white mb-3">This Portfolio</h3>
-              <p class="text-slate-400 text-xs mb-6">Built with semantic HTML, Tailwind CSS Grid, and custom glassmorphism effects.</p>
-              <div class="flex gap-2">
-                <span class="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-white">Dark Mode</span>
-                <span class="px-3 py-1 rounded-full bg-slate-800 border border-slate-700 text-[10px] text-white">Bento Grid</span>
-              </div>
+              <h3 class="text-2xl font-bold text-white mb-2">This Portfolio</h3>
+              <p class="text-slate-400 text-xs">Built with Semantic HTML & Tailwind.</p>
             </div>
-            <div class="w-full p-4 mt-auto">
-              <div class="bg-slate-950 rounded-lg border border-slate-800 p-4 font-mono text-[10px] text-slate-400">
-                <p><span class="text-purple-400">const</span> <span class="text-blue-400">portfolio</span> = {</p>
-                <p class="pl-4">tech: [<span class="text-green-400">'React'</span>, <span class="text-green-400">'Tailwind'</span>],</p>
-                <p class="pl-4">performance: <span class="text-orange-400">100</span>,</p>
-                <p>}</p>
-              </div>
+            <div class="bg-slate-950 rounded-lg border border-slate-800 p-4 font-mono text-[10px] text-slate-400">
+               <p><span class="text-purple-400">const</span> <span class="text-blue-400">portfolio</span> = {</p>
+               <p class="pl-4">tech: [<span class="text-green-400">'React'</span>, <span class="text-green-400">'Tailwind'</span>]</p>
+               <p>}</p>
             </div>
           </div>
         </div>
 
         <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8 animate-enter" style="animation-delay: 0.8s;">
-          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Experience</h3>
-          <div class="space-y-8">
-            <div class="flex flex-col md:flex-row justify-between gap-4 md:gap-0">
-                <div>
-                    <h4 class="text-white font-bold text-lg">Software Development Engineer (Intern)</h4>
-                    <p class="text-indigo-400 text-sm font-medium">Bluestock Fintech</p>
-                    <ul class="mt-3 space-y-1 text-slate-400 text-sm list-disc list-inside">
-                        <li>Contributed to software development initiatives within a Fintech environment.</li>
-                        <li>Collaborated on engineering tasks to support financial technology solutions.</li>
-                    </ul>
+          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-8 flex items-center gap-2">Experience <span class="h-px bg-slate-800 flex-grow ml-2"></span></h3>
+          <div class="border-l border-slate-800 ml-3 space-y-10 pl-8 relative">
+            
+            <div class="relative">
+                <span class="absolute -left-[37px] top-2 w-2.5 h-2.5 rounded-full bg-slate-900 border-2 border-indigo-500 shadow-[0_0_10px_rgba(99,102,241,0.5)]"></span>
+                <div class="flex justify-between flex-wrap gap-2 mb-2">
+                    <h4 class="text-white font-bold text-lg">SDE Intern</h4>
+                    <span class="text-[10px] text-indigo-400 border border-indigo-500/20 px-2 py-1 rounded-full">Oct 2025 – Nov 2025</span>
                 </div>
-                <div class="shrink-0">
-                    <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1 rounded-full border border-slate-700">Oct 2025 – Nov 2025</span>
-                </div>
+                <p class="text-indigo-400 text-sm mb-2">Bluestock Fintech</p>
+                <ul class="list-disc list-inside text-slate-400 text-sm space-y-1">
+                    <li>Contributed to fintech software development cycles.</li>
+                    <li>Collaborated on React component optimization.</li>
+                </ul>
             </div>
 
-            <div class="w-full h-px bg-slate-800/50"></div>
-
-            <div class="flex flex-col md:flex-row justify-between gap-4 md:gap-0">
-                 <div>
+            <div class="relative">
+                 <span class="absolute -left-[37px] top-2 w-2.5 h-2.5 rounded-full bg-slate-900 border-2 border-slate-600"></span>
+                 <div class="flex justify-between flex-wrap gap-2 mb-2">
                     <h4 class="text-white font-bold text-lg">Creative Developer</h4>
-                    <p class="text-indigo-400 text-sm font-medium">Freelance</p>
-                    <ul class="mt-3 space-y-1 text-slate-400 text-sm list-disc list-inside">
-                        <li>Delivered interactive portfolios and brand websites.</li>
-                        <li>Managed full development lifecycle from design to deployment.</li>
-                        <li>Optimized performance and SEO using Lighthouse benchmarks.</li>
-                    </ul>
+                    <span class="text-[10px] text-slate-400 border border-slate-700 px-2 py-1 rounded-full">2024 – Present</span>
                 </div>
-                 <div class="shrink-0">
-                    <span class="bg-slate-800 text-slate-300 text-xs px-3 py-1 rounded-full border border-slate-700">2024 – Present</span>
-                </div>
+                <p class="text-indigo-400 text-sm mb-2">Freelance</p>
+                <ul class="list-disc list-inside text-slate-400 text-sm space-y-1">
+                    <li>Built high-performance portfolios for clients.</li>
+                    <li>Achieved 95+ Lighthouse scores for SEO.</li>
+                </ul>
             </div>
           </div>
         </div>
 
         <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6 animate-enter" style="animation-delay: 0.9s;">
-          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Education</h3>
-          <div class="space-y-4">
-            <div class="flex justify-between items-start">
-              <div>
-                <h4 class="font-bold text-white text-sm">Bachelor of Computer Applications (BCA)</h4>
-                <p class="text-[10px] text-slate-400">LNCT University</p>
-              </div>
-              <span class="bg-slate-800 text-slate-300 text-[10px] px-2 py-1 rounded shrink-0 ml-2">Pursuing</span>
+          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Education</h3>
+          <div class="space-y-6 border-l border-slate-800 ml-2 pl-6 relative">
+            <div class="relative">
+              <span class="absolute -left-[29px] top-1.5 w-2 h-2 rounded-full bg-indigo-500"></span>
+              <h4 class="font-bold text-white text-sm">Bachelor of Computer Applications</h4>
+              <p class="text-[10px] text-indigo-400">LNCT University (Pursuing)</p>
             </div>
-            <div class="w-full h-px bg-slate-800"></div>
-            <div class="flex justify-between items-start">
-              <div>
-                <h4 class="font-bold text-white text-sm">Senior Secondary (XII) – Science (Mathematics)</h4>
-                <p class="text-[10px] text-slate-400">Satya Niketan School Higher Secondary School</p>
-              </div>
-              <span class="text-slate-500 text-[10px] shrink-0 ml-2">2023</span>
-            </div>
-            <div class="w-full h-px bg-slate-800"></div>
-            <div class="flex justify-between items-start">
-              <div>
-                <h4 class="font-bold text-white text-sm">Secondary (X)</h4>
-                <p class="text-[10px] text-slate-400">Satya Niketan School Higher Secondary School</p>
-              </div>
-              <span class="text-slate-500 text-[10px] shrink-0 ml-2">2021</span>
+            <div class="relative">
+              <span class="absolute -left-[29px] top-1.5 w-2 h-2 rounded-full bg-slate-600"></span>
+              <h4 class="font-bold text-white text-sm">Senior Secondary (XII)</h4>
+              <p class="text-[10px] text-slate-400">Satya Niketan Higher Secondary (2023)</p>
             </div>
           </div>
         </div>
 
         <div class="bento-card col-span-1 md:col-span-2 rounded-3xl p-6 animate-enter" style="animation-delay: 1.0s;">
-          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4">Certifications</h3>
-          <ul class="space-y-3">
-            <li class="flex items-center gap-3">
-              <div class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]">✓</div>
-              <span class="text-xs text-slate-300">MERN Full Stack Web Development (Sheryians Coding School)</span>
-            </li>
-            <li class="flex items-center gap-3">
-              <div class="w-6 h-6 rounded-full bg-green-500/20 text-green-500 flex items-center justify-center text-[10px]">✓</div>
-              <span class="text-xs text-slate-300">React JS Development (Sheryians Coding School)</span>
-            </li>
-          </ul>
+          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Certifications</h3>
+          <div class="space-y-4">
+            <div class="flex items-center gap-4 bg-slate-800/30 border border-slate-700/50 p-3 rounded-xl">
+                <div class="w-10 h-10 rounded-lg bg-emerald-500/20 text-emerald-500 flex items-center justify-center shrink-0">✓</div>
+                <div>
+                    <h4 class="text-sm font-bold text-white">MERN Full Stack</h4>
+                    <p class="text-[10px] text-slate-400">Sheryians Coding School</p>
+                </div>
+            </div>
+             <div class="flex items-center gap-4 bg-slate-800/30 border border-slate-700/50 p-3 rounded-xl">
+                <div class="w-10 h-10 rounded-lg bg-blue-500/20 text-blue-500 flex items-center justify-center shrink-0">✓</div>
+                <div>
+                    <h4 class="text-sm font-bold text-white">React JS Development</h4>
+                    <p class="text-[10px] text-slate-400">Sheryians Coding School</p>
+                </div>
+            </div>
+          </div>
         </div>
         
         <div class="bento-card col-span-1 md:col-span-4 rounded-3xl p-8 animate-enter" style="animation-delay: 1.1s;">
-            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Contact & Profiles</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <a href="mailto:swayampurwar111104@gmail.com" class="flex items-center gap-4 group" aria-label="Email Me">
-                <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-indigo-600 transition-colors shrink-0">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
-                </div>
-                <div>
-                    <p class="text-xs text-slate-400 mb-0.5">Email</p>
-                    <p class="text-sm font-bold text-white group-hover:text-indigo-400 transition-colors break-all">swayampurwar111104@gmail.com</p>
-                </div>
+            <h3 class="text-xs font-bold text-slate-500 uppercase tracking-widest mb-6">Connect</h3>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <a href="mailto:swayampurwar111104@gmail.com" class="interactive-element flex flex-col items-center justify-center p-4 bg-slate-800/50 rounded-xl hover:bg-indigo-600/20 transition-colors border border-slate-700">
+                    <span class="text-xs font-bold text-white">Email</span>
                 </a>
-
-                <a href="tel:+919993900688" class="flex items-center gap-4 group" aria-label="Call Me">
-                <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-green-600 transition-colors shrink-0">
-                    <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path></svg>
-                </div>
-                <div>
-                    <p class="text-xs text-slate-400 mb-0.5">Phone</p>
-                    <p class="text-sm font-bold text-white group-hover:text-green-400 transition-colors">+91 99939 00688</p>
-                </div>
+                <a href="https://linkedin.com/in/swayam-purwar" target="_blank" class="interactive-element flex flex-col items-center justify-center p-4 bg-slate-800/50 rounded-xl hover:bg-blue-600/20 transition-colors border border-slate-700">
+                    <span class="text-xs font-bold text-white">LinkedIn</span>
                 </a>
-
-                 <a href="https://swayampurwar.vercel.app" target="_blank" class="flex items-center gap-4 group" aria-label="View Portfolio">
-                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-blue-600 transition-colors shrink-0">
-                        <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"></path></svg>
-                    </div>
-                    <div>
-                        <p class="text-xs text-slate-400 mb-0.5">Portfolio</p>
-                        <p class="text-sm font-bold text-white group-hover:text-blue-400 transition-colors">swayampurwar.vercel.app</p>
-                    </div>
+                <a href="https://github.com/SwayamPurwar" target="_blank" class="interactive-element flex flex-col items-center justify-center p-4 bg-slate-800/50 rounded-xl hover:bg-slate-600/20 transition-colors border border-slate-700">
+                    <span class="text-xs font-bold text-white">GitHub</span>
                 </a>
-
-                 <a href="https://linkedin.com/in/swayam-purwar" target="_blank" class="flex items-center gap-4 group" aria-label="Visit LinkedIn">
-                    <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center group-hover:bg-[#0077b5] transition-colors shrink-0">
-                        <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24"><path d="M4.98 3.5c0 1.381-1.11 2.5-2.48 2.5s-2.48-1.119-2.48-2.5c0-1.38 1.11-2.5 2.48-2.5s2.48 1.12 2.48 2.5zm.02 4.5h-5v16h5v-16zm7.982 0h-4.968v16h5v-8.306c0-4.613 9.289-5.124 9.289 0v8.306h5v-10.306c0-6.117-7.025-6.32-9.632-3.132v-2.56z"/></svg>
-                    </div>
-                    <div>
-                        <p class="text-xs text-slate-400 mb-0.5">LinkedIn</p>
-                        <p class="text-sm font-bold text-white group-hover:text-[#0077b5] transition-colors">/in/swayam-purwar</p>
-                    </div>
+                <a href="tel:+919993900688" class="interactive-element flex flex-col items-center justify-center p-4 bg-slate-800/50 rounded-xl hover:bg-green-600/20 transition-colors border border-slate-700">
+                    <span class="text-xs font-bold text-white">Phone</span>
+                </a>
+                <a href="https://swayampurwar.vercel.app" target="_blank" class="interactive-element flex flex-col items-center justify-center p-4 bg-slate-800/50 rounded-xl hover:bg-purple-600/20 transition-colors border border-slate-700">
+                    <span class="text-xs font-bold text-white">Portfolio</span>
                 </a>
             </div>
         </div>
@@ -555,176 +441,119 @@
       </div>
 
       <footer class="mt-12 text-center text-slate-600 text-sm animate-enter" style="animation-delay: 1.2s;">
-        <p>
-          &copy; <span id="year"></span> Swayam Purwar. Crafted with
-          <span class="text-indigo-500">Tailwind CSS</span>.
-        </p>
+        <p>&copy; <span id="year"></span> Swayam Purwar.</p>
       </footer>
-       <div id="location-toast" class="no-print">
-  <div class="w-8 h-8 rounded-full bg-indigo-500/20 flex items-center justify-center text-indigo-400">📡</div>
-  <div>
-    <p class="text-xs font-bold text-white">Precision Uplink Requested</p>
-    <p class="text-[10px] text-slate-400">Authorize GPS for accurate distance metrics.</p>
-  </div>
-</div>
     </main>
     
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-    </script>
+    <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
   
 <script>
-  const HOST_LAT = 23.2599; 
-  const HOST_LON = 77.4126;
+  // --- 1. VANILLA JS CURSOR ---
+  const cursor = document.getElementById('cursor');
+  let mouseX = 0, mouseY = 0;
+  let cursorX = 0, cursorY = 0;
 
-  // Calculate distance between two points
-  function getHaversineDistance(lat1, lon1, lat2, lon2) {
-    const R = 6371; 
-    const dLat = (lat2 - lat1) * Math.PI / 180;
-    const dLon = (lon2 - lon1) * Math.PI / 180;
-    const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
-    return Math.round(R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))));
-  }
-
-  // Update the visual UI elements
-  function updateHUD(lat, lon, city, org, ip, timezone) {
-    const distance = getHaversineDistance(HOST_LAT, HOST_LON, lat, lon);
-    const ping = Math.max(12, Math.round((distance / 200000) * 1000 * 2.5 + 20)); 
-    const maskedIp = ip ? ip.split('.').map((p, i) => i > 1 ? '***' : p).join('.') : 'Hidden';
-
-    document.getElementById('client-city').innerText = city || 'Unknown';
-    document.getElementById('data-org').innerText = org || 'Private Network';
-    document.getElementById('data-ip').innerText = maskedIp;
-    document.getElementById('data-distance').innerHTML = `${distance.toLocaleString()} <span class="text-[8px]">km</span>`;
-    document.getElementById('data-ping').innerHTML = `~${ping} <span class="text-[8px]">ms</span>`;
-
-    updateClocks(timezone);
-    setInterval(() => updateClocks(timezone), 1000);
-  }
-
-  function typeLog(message, delay) {
-    setTimeout(() => {
-      const log = document.getElementById('terminal-log');
-      if (!log) return;
-      const newLine = document.createElement('span');
-      newLine.innerText = `> ${message}`;
-      log.appendChild(newLine);
-      if(log.children.length > 3) log.removeChild(log.firstChild);
-    }, delay);
-  }
-
-  function updateClocks(clientTZ) {
-    const now = new Date();
-    const hostTime = document.getElementById('host-time');
-    if (hostTime) {
-        hostTime.innerText = now.toLocaleTimeString('en-US', { timeZone: 'Asia/Kolkata', hour: '2-digit', minute:'2-digit', hour12: false });
-    }
+  document.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
     
-    if(clientTZ && clientTZ !== 'STEALTH') {
-      const clientTime = document.getElementById('client-time');
-      try { 
-        if (clientTime) clientTime.innerText = now.toLocaleTimeString('en-US', { timeZone: clientTZ, hour: '2-digit', minute:'2-digit', hour12: false }); 
-      } 
-      catch (e) { if (clientTime) clientTime.innerText = "SYS_ERR"; }
-    }
-  }
-
-  function getClientDeviceStats() {
-    const cores = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}-Core` : 'Unknown CPU';
-    let os = 'Unknown OS';
-    const ua = navigator.userAgent;
-    if (ua.indexOf("Win") != -1) os = "Windows";
-    else if (ua.indexOf("Mac") != -1) os = "MacOS";
-    else if (ua.indexOf("Linux") != -1) os = "Linux";
-    else if (ua.indexOf("Android") != -1) os = "Android";
-    else if (ua.indexOf("like Mac") != -1) os = "iOS";
-    return `${os} [${cores}]`;
-  }
-
-async function establishAdvancedUplink() {
-    const toast = document.getElementById('location-toast');
-    if (toast) toast.classList.add('active'); // Show toast immediately
-    
-    typeLog("Initiating high-precision scan...", 400);
-    document.getElementById('data-os').innerText = getClientDeviceStats();
-
-    // 1. Get baseline IP data
-    let ipData = null;
-    try {
-      const res = await fetch('https://ipapi.co/json/');
-      ipData = await res.json();
-    } catch (e) {
-      console.error("IP Fetch Failed");
-    }
-
-    // 2. Request Precision Location
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          // USER ALLOWED
-          if (toast) toast.classList.remove('active'); 
-          typeLog("GPS signal acquired. Accuracy: High.", 1200);
-          updateHUD(
-            pos.coords.latitude, 
-            pos.coords.longitude, 
-            ipData ? ipData.city + " (GPS)" : "Detected", 
-            ipData ? ipData.org : "Unknown", 
-            ipData ? ipData.ip : "0.0.0.0", 
-            ipData ? ipData.timezone : null
-          );
-        },
-        () => {
-          // USER DENIED or ERROR
-          if (toast) toast.classList.remove('active');
-          typeLog("GPS denied. Using IP triangulation.", 1200);
-          if (ipData) {
-            updateHUD(ipData.latitude, ipData.longitude, ipData.city, ipData.org, ipData.ip, ipData.timezone);
-          } else {
-            activateStealthMode();
-          }
-        },
-        { enableHighAccuracy: true, timeout: 8000 } // Extended timeout for mobile
-      );
-    } else {
-      // Browser doesn't support geolocation
-      if (toast) toast.classList.remove('active');
-      if (ipData) {
-        updateHUD(ipData.latitude, ipData.longitude, ipData.city, ipData.org, ipData.ip, ipData.timezone);
-      } else {
-        activateStealthMode();
-      }
-    }
-  }
-
-  function activateStealthMode() {
-    typeLog("Firewall block detected...", 800);
-    typeLog("Stealth mode active.", 2000);
-    document.getElementById('client-city').innerText = "Stealth Node";
-    document.getElementById('data-org').innerText = "Encrypted Tunnel";
-    document.getElementById('data-ip').innerText = "127.0.0.1";
-    updateClocks('STEALTH');
-  }
-
-  setTimeout(establishAdvancedUplink, 800);
-</script>
-
-<script>
-  // --- UI UPGRADE 4: Initialize Spotlight Events ---
-  const cards = document.querySelectorAll('.bento-card');
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      card.style.setProperty('--mouse-x', `${x}px`);
-      card.style.setProperty('--mouse-y', `${y}px`);
+    // Spotlight variables
+    document.querySelectorAll('.bento-card').forEach(card => {
+        const rect = card.getBoundingClientRect();
+        card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+        card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
     });
   });
-</script>
 
-    <script>
-      window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
-    </script>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
-  </body>
+  // Smooth follow loop
+  function animateCursor() {
+    cursorX += (mouseX - cursorX) * 0.15;
+    cursorY += (mouseY - cursorY) * 0.15;
+    if(cursor) {
+        cursor.style.left = `${cursorX}px`;
+        cursor.style.top = `${cursorY}px`;
+    }
+    requestAnimationFrame(animateCursor);
+  }
+  animateCursor();
+
+  // Hover states
+  document.querySelectorAll('.interactive-element, a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('active'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('active'));
+  });
+
+  // --- 2. AUDIO SYSTEM ---
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  let audioCtx = new AudioContext();
+  let masterGain = audioCtx.createGain();
+  masterGain.gain.value = 0.08;
+  masterGain.connect(audioCtx.destination);
+  let audioUnlocked = false;
+
+  function unlockAudio() {
+    if (!audioUnlocked && audioCtx.state === 'suspended') {
+        audioCtx.resume().then(() => {
+            audioUnlocked = true;
+            console.log("Audio System Unlocked");
+        });
+    }
+  }
+
+  function playTone(freq, type, duration) {
+    if (audioCtx.state === 'suspended') unlockAudio();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + duration);
+    osc.connect(gain);
+    gain.connect(masterGain);
+    osc.start();
+    osc.stop(audioCtx.currentTime + duration);
+  }
+
+  // Interaction Listeners
+  window.addEventListener('click', unlockAudio);
+  window.addEventListener('keydown', unlockAudio);
+
+  document.querySelectorAll('.interactive-element, a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => playTone(600, 'sine', 0.1)); // Hover
+      el.addEventListener('mousedown', () => playTone(150, 'square', 0.15)); // Click
+  });
+
+  // --- 3. TELEMETRY MOCKUP ---
+  const HOST_LAT = 23.2599, HOST_LON = 77.4126;
+  function updateHUD(lat, lon, city, ip) {
+    document.getElementById('client-city').innerText = city || 'Unknown';
+    document.getElementById('data-ip').innerText = ip ? ip.split('.').map((p,i) => i>1?'***':p).join('.') : 'Hidden';
+    
+    // Distance Calc
+    const R = 6371;
+    const dLat = (lat-HOST_LAT)*Math.PI/180;
+    const dLon = (lon-HOST_LON)*Math.PI/180;
+    const a = Math.sin(dLat/2)*Math.sin(dLat/2) + Math.cos(HOST_LAT*Math.PI/180)*Math.cos(lat*Math.PI/180)*Math.sin(dLon/2)*Math.sin(dLon/2);
+    const dist = Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)));
+    
+    document.getElementById('data-distance').innerHTML = `${dist.toLocaleString()} km`;
+    document.getElementById('data-ping').innerHTML = `${Math.round(dist/500 + 20)} ms`;
+  }
+
+  // IP Fetch
+  fetch('https://ipapi.co/json/').then(r=>r.json()).then(data => {
+      updateHUD(data.latitude, data.longitude, data.city, data.ip);
+  }).catch(() => {
+      document.getElementById('client-city').innerText = "Stealth Mode";
+  });
+
+  setInterval(() => {
+    const now = new Date();
+    document.getElementById('host-time').innerText = now.toLocaleTimeString('en-US', {timeZone: 'Asia/Kolkata', hour12:false});
+    document.getElementById('client-time').innerText = now.toLocaleTimeString('en-US', {hour12:false});
+  }, 1000);
+
+  document.getElementById('data-os').innerText = navigator.platform;
+</script>
+</body>
 </html>
