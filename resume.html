@@ -499,15 +499,33 @@
       document.getElementById("year").textContent = new Date().getFullYear();
     </script>
   
-  <script>const HOST_LAT = 23.2599; 
+<script>
+  const HOST_LAT = 23.2599; 
   const HOST_LON = 77.4126;
 
+  // Calculate distance between two points
   function getHaversineDistance(lat1, lon1, lat2, lon2) {
     const R = 6371; 
     const dLat = (lat2 - lat1) * Math.PI / 180;
     const dLon = (lon2 - lon1) * Math.PI / 180;
     const a = Math.sin(dLat/2) * Math.sin(dLat/2) + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon/2) * Math.sin(dLon/2);
     return Math.round(R * (2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a))));
+  }
+
+  // Update the visual UI elements
+  function updateHUD(lat, lon, city, org, ip, timezone) {
+    const distance = getHaversineDistance(HOST_LAT, HOST_LON, lat, lon);
+    const ping = Math.max(12, Math.round((distance / 200000) * 1000 * 2.5 + 20)); 
+    const maskedIp = ip ? ip.split('.').map((p, i) => i > 1 ? '***' : p).join('.') : 'Hidden';
+
+    document.getElementById('client-city').innerText = city || 'Unknown';
+    document.getElementById('data-org').innerText = org || 'Private Network';
+    document.getElementById('data-ip').innerText = maskedIp;
+    document.getElementById('data-distance').innerHTML = `${distance.toLocaleString()} <span class="text-[8px]">km</span>`;
+    document.getElementById('data-ping').innerHTML = `~${ping} <span class="text-[8px]">ms</span>`;
+
+    updateClocks(timezone);
+    setInterval(() => updateClocks(timezone), 1000);
   }
 
   function typeLog(message, delay) {
@@ -540,90 +558,71 @@
   function getClientDeviceStats() {
     const cores = navigator.hardwareConcurrency ? `${navigator.hardwareConcurrency}-Core` : 'Unknown CPU';
     let os = 'Unknown OS';
-    if (navigator.userAgent.indexOf("Win") != -1) os = "Windows";
-    if (navigator.userAgent.indexOf("Mac") != -1) os = "MacOS";
-    if (navigator.userAgent.indexOf("Linux") != -1) os = "Linux";
-    if (navigator.userAgent.indexOf("Android") != -1) os = "Android";
-    if (navigator.userAgent.indexOf("like Mac") != -1) os = "iOS";
+    const ua = navigator.userAgent;
+    if (ua.indexOf("Win") != -1) os = "Windows";
+    else if (ua.indexOf("Mac") != -1) os = "MacOS";
+    else if (ua.indexOf("Linux") != -1) os = "Linux";
+    else if (ua.indexOf("Android") != -1) os = "Android";
+    else if (ua.indexOf("like Mac") != -1) os = "iOS";
     return `${os} [${cores}]`;
   }
 
- async function establishAdvancedUplink() {
+  async function establishAdvancedUplink() {
     typeLog("Initiating high-precision scan...", 400);
+    document.getElementById('data-os').innerText = getClientDeviceStats();
 
-    // 1. Try HTML5 Geolocation (GPS/Wi-Fi precision)
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            async (position) => {
-                // Success: Use precise GPS coordinates
-                const { latitude, longitude } = position.coords;
-                updateHUDWithCoords(latitude, longitude, "GPS Verified");
-            },
-            async (error) => {
-                // Denied or Failed: Fallback to IP-based detection
-                typeLog("GPS denied. Falling back to IP-Link...", 800);
-                const ipData = await fetchIPData(); 
-                updateHUDWithCoords(ipData.latitude, ipData.longitude, ipData.city);
-            },
-            { enableHighAccuracy: true, timeout: 5000 }
-        );
-    }
-}
+    // 1. First, always get IP data for Network/ISP info
+    let ipData = null;
     try {
-      // Primary API: ipapi.co (HTTPS compatible and reliable)
-      let res = await fetch('https://ipapi.co/json/');
-      let data = await res.json();
-      
-      if (data.error) throw new Error('API Rate Limit');
+      const res = await fetch('https://ipapi.co/json/');
+      ipData = await res.json();
+    } catch (e) {
+      console.error("IP Fetch Failed");
+    }
 
-      typeLog(`Payload secured from ${data.city || 'target'}...`, 1200);
-      typeLog("Uplink successfully established.", 2000);
-
-      const distance = getHaversineDistance(HOST_LAT, HOST_LON, data.latitude, data.longitude);
-      const ping = Math.max(12, Math.round((distance / 200000) * 1000 * 2.5 + 20)); 
-      const maskedIp = data.ip ? data.ip.split('.').map((p, i) => i > 1 ? '***' : p).join('.') : 'Hidden';
-
-      document.getElementById('client-city').innerText = data.city || 'Unknown';
-      document.getElementById('data-org').innerText = data.org || 'Private Network';
-      document.getElementById('data-ip').innerText = maskedIp;
-      document.getElementById('data-distance').innerHTML = `${distance.toLocaleString()} <span class="text-[8px]">km</span>`;
-      document.getElementById('data-ping').innerHTML = `~${ping} <span class="text-[8px]">ms</span>`;
-
-      updateClocks(data.timezone);
-      setInterval(() => updateClocks(data.timezone), 1000);
-
-    } catch (error) {
-      typeLog("Firewall block detected...", 800);
-      typeLog("Stealth mode active.", 2000);
-
-      const cityEl = document.getElementById('client-city');
-      const timeEl = document.getElementById('client-time');
-      const nodeEl = document.getElementById('client-node');
-      const statusEl = document.getElementById('status-dot');
-
-      if (cityEl) {
-          cityEl.innerText = "Stealth Node";
-          cityEl.classList.replace('text-white', 'text-slate-400');
-      }
-      if (timeEl) {
-          timeEl.innerText = "ENCRYPTED";
-          timeEl.classList.replace('text-emerald-400', 'text-slate-500');
-      }
-      if (nodeEl) nodeEl.classList.replace('bg-emerald-500', 'bg-slate-700');
-      if (statusEl) statusEl.classList.replace('bg-emerald-500', 'bg-amber-500');
-      
-      document.getElementById('data-org').innerText = "Encrypted Tunnel";
-      document.getElementById('data-ip').innerText = "127.0.0.1";
-      document.getElementById('data-distance').innerText = "Masked";
-      document.getElementById('data-ping').innerText = "Routed";
-      
-      updateClocks('STEALTH');
-      setInterval(() => updateClocks('STEALTH'), 1000);
+    // 2. Try for precise GPS
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          typeLog("GPS signal acquired. Accuracy: High.", 1200);
+          updateHUD(
+            pos.coords.latitude, 
+            pos.coords.longitude, 
+            ipData ? ipData.city + " (GPS)" : "Detected", 
+            ipData ? ipData.org : "Unknown", 
+            ipData ? ipData.ip : "0.0.0.0", 
+            ipData ? ipData.timezone : null
+          );
+        },
+        () => {
+          // Fallback to IP if GPS fails or is denied
+          typeLog("GPS denied. Using IP triangulation.", 1200);
+          if (ipData) {
+            updateHUD(ipData.latitude, ipData.longitude, ipData.city, ipData.org, ipData.ip, ipData.timezone);
+          } else {
+            activateStealthMode();
+          }
+        },
+        { enableHighAccuracy: true, timeout: 5000 }
+      );
+    } else if (ipData) {
+      updateHUD(ipData.latitude, ipData.longitude, ipData.city, ipData.org, ipData.ip, ipData.timezone);
+    } else {
+      activateStealthMode();
     }
   }
 
-  // Initialize after short delay to ensure DOM is ready
-  setTimeout(establishAdvancedUplink, 800);</script>
+  function activateStealthMode() {
+    typeLog("Firewall block detected...", 800);
+    typeLog("Stealth mode active.", 2000);
+    document.getElementById('client-city').innerText = "Stealth Node";
+    document.getElementById('data-org').innerText = "Encrypted Tunnel";
+    document.getElementById('data-ip').innerText = "127.0.0.1";
+    updateClocks('STEALTH');
+  }
+
+  setTimeout(establishAdvancedUplink, 800);
+</script>
 
     <script>
       window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
