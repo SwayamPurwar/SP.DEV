@@ -93,7 +93,7 @@ SP.DEV (Vanilla HTML)/
 - **Portfolio:** (swayampurwar.vercel.app)
 - **LinkedIn**: [Swayam Purwar](https://www.linkedin.com/in/SwayamPurwar)
 - **GitHub**: [@SwayamPurwar](https://github.com/SwayamPurwar/)
-- **Instagram**: [@swayam_purwar] (https://github.com/SwayamPurwar/)
+- **Instagram**: [@SwayamPurwar] (https://instagram/swayam_purwar/)
 - **Email**: [swayampurwar111104@gmail.com](mailto:swayampurwar111104@gmail.com)
 
 ## 📄 License
