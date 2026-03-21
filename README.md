@@ -96,10 +96,23 @@ SP.DEV (Vanilla HTML)/
 - **Instagram**: [@swayam_purwar](https://instagram/swayam_purwar/)
 - **Email**: [swayampurwar111104@gmail.com](mailto:swayampurwar111104@gmail.com)
 
-## 📄 License
+## ⚖️ License & Terms of Use
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
+
+This repository is a mix of open-source code and personal content.
+
+### Software (The Code)
+The underlying source code of this portfolio is licensed under the **MIT License**. 
+- You are free to use, copy, and modify the code.
+- Please provide attribution if you use significant portions of the logic.
+
+### Content (The "Me" Stuff)
+All **personal branding, images, bio text, and project descriptions** are © [2026] [Swayam Purwar]. 
+- **Not included in the MIT License.**
+- You may not use my headshot, logo, or personal identity for your own projects.
+- Please do not "clone" this portfolio exactly; use it as a reference to build your own unique space!
 ---
 
 <p align="center">
