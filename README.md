@@ -90,7 +90,7 @@ SP.DEV (Vanilla HTML)/
 ## 👨‍💻 Author
 
 **Swayam Purwar**
-- **Portfolio**: [swayampurwar] (swayampurwar.vercel.app)
+- **Portfolio**: [Swayam Purwar](https://github.com/SwayamPurwar/)
 - **LinkedIn**: [Swayam Purwar](https://www.linkedin.com/in/SwayamPurwar)
 - **GitHub**: [@SwayamPurwar](https://github.com/SwayamPurwar/)
 - **Email**: [swayampurwar111104@gmail.com](mailto:swayampurwar111104@gmail.com)
