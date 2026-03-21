@@ -93,6 +93,7 @@ SP.DEV (Vanilla HTML)/
 - **Portfolio**: [Swayam Purwar](https://github.com/SwayamPurwar/)
 - **LinkedIn**: [Swayam Purwar](https://www.linkedin.com/in/SwayamPurwar)
 - **GitHub**: [@SwayamPurwar](https://github.com/SwayamPurwar/)
+- **Instagram**: [@swayam_purwar](https://instagram/swayam_purwar/)
 - **Email**: [swayampurwar111104@gmail.com](mailto:swayampurwar111104@gmail.com)
 
 ## 📄 License
