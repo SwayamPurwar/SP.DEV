@@ -205,12 +205,7 @@ export default function Kite() {
             </aside>
           </div>
 
-          {/* FOOTER NAVIGATION */}
-          <div style={{ textAlign: 'center', marginTop: '10rem', paddingBottom: '4rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '6rem' }}>
-            <div style={{ marginBottom: '4rem' }}>
-              <Link to="/" className="btn mouse-hover">&larr; Back to Home</Link>
-            </div>
-          </div>
+          
         </section>
       </main>
      <MoreProjectsFooter currentProject="kite" />

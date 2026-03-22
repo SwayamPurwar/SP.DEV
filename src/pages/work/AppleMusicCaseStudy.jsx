@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SEO from '../../components/SEO';
+import CaseStudyFooter from '../../components/CaseStudyFooter'; // <-- Imported the new footer
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -70,6 +71,10 @@ export default function AppleMusicCaseStudy() {
     <>
       <SEO title="Apple Music Redesign | Case Study" description="UI/UX Case Study on the Apple Music iOS app redesign." />
       <div ref={containerRef}>
+        
+        {/* <-- ADDED THE GRID BACKGROUND HERE --> */}
+        <div className="grid-bg"></div>
+        
         {/* The subtle red ambient glow in the background */}
         <div className="ambient-glow" style={{background: 'radial-gradient(circle, rgba(252, 60, 68, 0.15) 0%, rgba(0, 0, 0, 0) 70%)'}}></div>
         
@@ -160,18 +165,14 @@ export default function AppleMusicCaseStudy() {
             </div>
           </section>
 
-          {/* BOTTOM NAVIGATION WITH BACK BUTTON */}
-          <div style={{ textAlign: 'center', marginTop: '10rem', paddingBottom: '4rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '6rem' }}>
-            <div style={{ marginBottom: '4rem' }}>
-              <Link to="/work/apple-music" className="btn mouse-hover">&larr; Back to Project</Link>
-            </div>
-            <p style={{ color: '#888', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.8rem', marginBottom: '1rem' }}>Next Project</p>
-            <Link to="/work/instagram" className="mouse-hover" style={{ textDecoration: 'none' }}>
-              <h2 style={{ fontSize: 'clamp(2rem, 5vw, 4rem)', color: 'white', fontFamily: '"Syne", sans-serif' }}>INSTAGRAM CLONE &rarr;</h2>
-            </Link>
-          </div>
+        </div> {/* <-- Closes .cs-content */}
+        
+        {/* <-- ADDED THE NEW FOOTER HERE, OUTSIDE .cs-content SO IT CENTERS PROPERLY --> */}
+        <CaseStudyFooter 
+          currentProject="apple-music" 
+          backLink="/work/apple-music" 
+        />
 
-        </div>
       </div>
     </>
   );

@@ -1,20 +1,22 @@
 import { useNavigate, Link } from 'react-router-dom';
 import gsap from 'gsap';
 
-const ALL_PROJECTS = [
-  { id: 'apple-music', title: 'APPLE MUSIC', link: '/work/apple-music' },
-  { id: 'instagram', title: 'INSTAGRAM', link: '/work/instagram' },
-  { id: 'kite', title: 'KITE ZERODHA', link: '/work/kite' },
-  { id: 'codesense', title: 'CODESENSE AI', link: '/work/CodeSenseAiSaas' }
+// Array of all case studies mapped to their specific routes
+const CASE_STUDIES = [
+  { id: 'kite', title: 'KITE ZERODHA', link: '/work/kite-casestudy' },
+  { id: 'apple-music', title: 'APPLE MUSIC', link: '/work/apple-music-casestudy' },
+  { id: 'instagram', title: 'INSTAGRAM', link: '/work/instagram-casestudy' }
 ];
 
-export default function MoreProjectsFooter({ currentProject }) {
+export default function CaseStudyFooter({ currentProject, backLink }) {
   const navigate = useNavigate();
-  const displayedProjects = ALL_PROJECTS.filter(p => p.id !== currentProject);
+
+  // Filter out the current case study so we only show the others
+  const otherCaseStudies = CASE_STUDIES.filter(project => project.id !== currentProject);
 
   // 🚀 CINEMATIC TRANSITION LOGIC
   const handleProjectClick = (e, link) => {
-    e.preventDefault(); 
+    e.preventDefault();
     
     const curtain = document.querySelector('.page-transition-curtain');
     
@@ -37,28 +39,27 @@ export default function MoreProjectsFooter({ currentProject }) {
     }
   };
 
-  return (
+ return (
     <div className="cs-next-footer">
       
-      {/* Premium Label */}
-      <div className="cs-next-label">EXPLORE OTHER WORKS</div>
+      {/* Premium Multiple Next Projects List */}
+      <div className="cs-next-label">EXPLORE OTHER CASE STUDIES</div>
       
-      {/* Stacked Hollow-to-Solid Links */}
       <div className="cs-options-list">
-        {displayedProjects.map((project) => (
+        {otherCaseStudies.map((project) => (
           <div 
-            key={project.id} 
-            onClick={(e) => handleProjectClick(e, project.link)}
+            key={project.id}
+            onClick={(e) => handleProjectClick(e, project.link)} 
             className="mouse-hover" 
             style={{ 
               cursor: 'none', 
-              display: 'flex', 
+              display: 'flex',
               justifyContent: 'center', 
-              alignItems: 'center', 
+              alignItems: 'center',    
               padding: '10px 0',
               width: '100%',
               textAlign: 'center'
-            }} 
+            }}
           >
             <h2 className="cs-next-title">
               {project.title}
@@ -73,12 +74,14 @@ export default function MoreProjectsFooter({ currentProject }) {
         ))}
       </div>
 
-      {/* Optional: Back to Home or Contact Button */}
-      <div className="cs-back-btn" style={{ marginTop: '5rem', marginBottom: 0 }}>
-        <Link to="/" className="btn mouse-hover">
-          &larr; Back to Home
-        </Link>
-      </div>
+      {/* Back to main project link (Moved to Bottom) */}
+      {backLink && (
+        <div className="cs-back-btn">
+          <Link to={backLink} className="btn mouse-hover">
+            &larr; Back to Overview
+          </Link>
+        </div>
+      )}
 
     </div>
   );

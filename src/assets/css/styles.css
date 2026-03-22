@@ -3958,3 +3958,153 @@ footer {
         margin-top: 5rem;
     }
 }
+
+
+
+
+
+/* =========================================
+   CASE STUDY FOOTER (MULTIPLE PROJECTS)
+   ========================================= */
+
+.cs-next-footer {
+    /* 1. Add auto margins to center it, keep the 8rem top margin */
+    margin: 8rem auto 0; 
+    
+    /* 2. Add 5vw side padding to match your .case-layout padding */
+    padding: 6rem 5vw; 
+    
+    /* 3. Constrain it to the exact same width as your content */
+    max-width: 1400px; 
+    box-sizing: border-box;
+    
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    width: 100%;
+}
+
+.cs-back-btn {
+    /* Changed margin from bottom to top so it spaces out from the links above it */
+    margin: 6rem auto 0 auto; 
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.cs-next-label {
+    font-family: var(--font-code);
+    color: var(--accent); 
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 3rem;
+    
+    /* These three lines force the label and lines to the absolute center */
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    
+    width: 100%;
+    gap: 15px;
+}
+
+.cs-next-label::before, 
+.cs-next-label::after {
+    content: '';
+    display: inline-block;
+    width: 30px;
+    height: 1px;
+    background: rgba(168, 85, 247, 0.5); 
+}
+
+.cs-options-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;      /* Centers the stack */
+    justify-content: center; 
+    gap: 1rem;
+    width: 100%;
+}
+/* Massive Hollow Title */
+.cs-next-title {
+    font-family: var(--font-display);
+    /* Slightly scaled down so multiple stack cleanly */
+    font-size: clamp(2.5rem, 6vw, 5.5rem); 
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.03em;
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    margin: 0;
+}
+
+/* Fill Solid White on Hover + Add Glow */
+.cs-next-title:hover {
+    color: #fff;
+    -webkit-text-stroke: 1px transparent;
+    text-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
+    transform: translateX(10px); /* Slides right slightly instead of up for lists */
+}
+
+/* Arrow Animation Setup */
+.cs-next-title .cta-arrow {
+    display: inline-flex;
+    align-items: center;
+    color: var(--accent);
+    -webkit-text-stroke: 0;
+    opacity: 0; /* Hide arrow initially to keep the list clean */
+    transform: translateX(-20px);
+    transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.cs-next-title .cta-arrow svg {
+    width: 0.8em;
+    height: 0.8em;
+}
+
+/* Arrow appears and shoots right on hover */
+.cs-next-title:hover .cta-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .cs-next-footer {
+        padding: 4rem 0;
+        margin-top: 5rem;
+    }
+    
+    .cs-next-title {
+        font-size: clamp(2rem, 8vw, 3.5rem);
+        flex-direction: row; /* Keep arrow inline on mobile */
+        gap: 1rem;
+    }
+
+    /* Always show arrow on mobile */
+    .cs-next-title .cta-arrow {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .cs-next-title .cta-arrow svg {
+        width: 0.8em;
+        height: 0.8em;
+    }
+
+    .cs-next-title:hover {
+        transform: none; /* Disable slide on mobile */
+    }
+}

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SEO from '../../components/SEO';
-
+import CaseStudyFooter from '../../components/CaseStudyFooter';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function KiteCaseStudy() {
@@ -217,19 +217,13 @@ export default function KiteCaseStudy() {
               </p>
             </section>
 
-            {/* BOTTOM NAVIGATION WITH BACK BUTTON */}
-            <div style={{ textAlign: 'center', marginTop: '8rem', paddingBottom: '4rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '6rem' }}>
-              <div style={{ marginBottom: '4rem' }}>
-                <Link to="/work/kite" className="btn mouse-hover">&larr; Back to Project</Link>
-              </div>
-              <p style={{ color: '#888', textTransform: 'uppercase', letterSpacing: '2px', fontSize: '0.8rem', marginBottom: '1rem' }}>Next Project</p>
-              <Link to="/work/CodeSenseAiSaas" className="mouse-hover" style={{ textDecoration: 'none' }}>
-                <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', color: 'white', fontFamily: '"Syne", sans-serif' }}>CodeSense AI &rarr;</h2>
-              </Link>
-            </div>
 
           </div>
         </div>
+        <CaseStudyFooter 
+  currentProject="kite" 
+  backLink="/work/kite" 
+/>
       </div>
     </>
   );
