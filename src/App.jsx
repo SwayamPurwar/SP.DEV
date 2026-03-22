@@ -15,6 +15,7 @@ import { initTerminal } from "./utils/terminal.js";
 // 🚀 LAZY LOADED PAGES
 const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
 const Resume = lazy(() => import("./pages/Resume"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Success = lazy(() => import("./pages/Success"));
@@ -87,6 +88,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
           <Route path="/resume" element={<Resume />} />
+          <Route path="/contact" element={<Contact />} />
           <Route path="/success" element={<Success />} />
           <Route path="/work/apple-music" element={<AppleMusic />} />
           <Route path="/work/instagram" element={<Instagram />} />

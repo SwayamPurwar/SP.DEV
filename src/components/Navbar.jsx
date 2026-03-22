@@ -18,6 +18,7 @@ export default function Navbar() {
   const isKnownRoute = 
     path === '/' || 
     path === '/about' || 
+    path === '/contact' || 
     path === '/resume' || 
     path === '/success' || 
     validWorkRoutes.includes(path);
@@ -25,22 +26,22 @@ export default function Navbar() {
   // Hide nav on resume, success, or 404 pages
   if (path === '/resume' || path === '/success' || !isKnownRoute) return null;
 
- const handleNavClick = (e, targetId) => {
-  setIsMenuOpen(false); // Close mobile menu if open
-  
-  if (path !== '/') {
-      // Let React router navigate directly to the hash URL (e.g. /#work)
-      navigate(`/${targetId}`); 
-  } else {
-      e.preventDefault();
-      // Already on home page, just smooth scroll
-      const element = document.querySelector(targetId);
-      if (element) element.scrollIntoView({ behavior: 'smooth' });
-  }
-};
+  const handleNavClick = (e, targetId) => {
+    setIsMenuOpen(false); // Close mobile menu if open
+    
+    if (path !== '/') {
+        // Let React router navigate directly to the hash URL (e.g. /#work)
+        navigate(`/${targetId}`); 
+    } else {
+        e.preventDefault();
+        // Already on home page, just smooth scroll
+        const element = document.querySelector(targetId);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
-  // Back Button for About Page ONLY
- if (path === '/about') {
+  // --- MINIMAL NAV FOR SUBPAGES (About, Contact, Work, Case Studies) ---
+  if (path === '/about' || path === '/contact' || path.startsWith('/work/')) {
     return (
       <nav id="main-nav">
         <Link to="/" className="logo mouse-hover" aria-label="Home">SP.DEV</Link>
@@ -48,17 +49,7 @@ export default function Navbar() {
     );
   }
 
-  // Work Pages AND Case Study Pages (Apple Music, Kite, Instagram, CodeSense, etc.)
-  // Removed the "Back" buttons since they are handled at the bottom of the pages
-  if (path.startsWith('/work/')) {
-    return (
-      <nav id="main-nav">
-        <Link to="/" className="logo mouse-hover" aria-label="Home">SP.DEV</Link>
-      </nav>
-    );
-  }
-
-  // DEFAULT NAV (Home Page)
+  // --- DEFAULT NAV (Home Page) ---
   return (
     <>
       <nav id="main-nav">
@@ -66,7 +57,7 @@ export default function Navbar() {
         <div className="nav-links" role="navigation">
           <a href="#work" onClick={(e) => handleNavClick(e, '#work')} className="nav-item mouse-hover">Work</a>
           <Link to="/about" className="nav-item mouse-hover">About</Link>
-          <a href="#contact" onClick={(e) => handleNavClick(e, '#contact')} className="nav-item mouse-hover">Contact</a>
+          <Link to="/contact" className="nav-item mouse-hover">Contact</Link>
         </div>
         
         <button 
@@ -83,7 +74,7 @@ export default function Navbar() {
       <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`} aria-hidden={!isMenuOpen}>
         <a href="#work" className="mobile-link" onClick={(e) => handleNavClick(e, '#work')}>Work</a>
         <Link to="/about" className="mobile-link" onClick={() => setIsMenuOpen(false)}>About</Link>
-        <a href="#contact" className="mobile-link" onClick={(e) => handleNavClick(e, '#contact')}>Contact</a>
+        <Link to="/contact" className="mobile-link" onClick={() => setIsMenuOpen(false)}>Contact</Link>
       </div>
     </>
   );
