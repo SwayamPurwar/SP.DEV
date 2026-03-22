@@ -6,6 +6,7 @@ import SEO from '../components/SEO';
 import { lockScroll, unlockScroll } from '../utils/animations';
 import { useEffect } from 'react'; 
 import { useLocation } from 'react-router-dom';
+import SEO from '../../components/SEO';
 
 gsap.registerPlugin(ScrollTrigger);
 
