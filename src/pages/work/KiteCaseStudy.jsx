@@ -109,7 +109,7 @@ export default function KiteCaseStudy() {
 
   return (
     <>
-      <SEO title="Kite Trading Architecture" description="Deep dive into the high-frequency trading architecture of the Kite clone." />
+      <SEO title="Kite Trading Architecture | Engineering Deep Dive" description="Deep dive into the high-frequency trading architecture of the Kite clone." />
       <div ref={containerRef}>
         
         <div className="grid-bg"></div>

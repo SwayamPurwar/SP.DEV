@@ -31,7 +31,7 @@ export default function Instagram() {
   return (
     <div ref={containerRef}>
       <SEO 
-        title="Instagram Clone" 
+        title="Instagram | Project Details" 
         description="Full-stack social media platform built with MERN stack and Real-time Socket.io."
         image="/assets/images/project/instagram-preview.webp"
       />

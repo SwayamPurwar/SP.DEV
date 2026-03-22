@@ -69,7 +69,7 @@ export default function InstagramCaseStudy() {
 
   return (
     <>
-      <SEO title="Instagram Clone Case Study" description="Full-stack architecture and development of an Instagram clone." />
+      <SEO title="Instagram Clone | Architecture Case Study" description="Full-stack architecture and development of an Instagram clone." />
       <div ref={containerRef}>
         
         {/* Instagram Theme Background Elements */}

@@ -34,6 +34,8 @@ export default function AppleMusic() {
   }, []);
 
   return (
+    <>
+     <SEO title="Apple Music Redesign | Case Study" description="UI/UX case study and redesign of Apple Music focusing on glassmorphism and fluid animations." />
     <div ref={containerRef}>
       <div className="ambient-glow-red"></div>
 
@@ -99,4 +101,5 @@ export default function AppleMusic() {
       </main>
     </div>
   );
+  </>
 }

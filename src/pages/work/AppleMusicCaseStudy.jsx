@@ -68,7 +68,7 @@ export default function AppleMusicCaseStudy() {
 
   return (
     <>
-      <SEO title="Apple Music UX Study" description="UI/UX Case Study on the Apple Music iOS app redesign." />
+      <SEO title="Apple Music Redesign | Case Study" description="UI/UX Case Study on the Apple Music iOS app redesign." />
       <div ref={containerRef}>
         {/* The subtle red ambient glow in the background */}
         <div className="ambient-glow" style={{background: 'radial-gradient(circle, rgba(252, 60, 68, 0.15) 0%, rgba(0, 0, 0, 0) 70%)'}}></div>

@@ -63,7 +63,7 @@ export default function Resume() {
 
   return (
     <div className="bg-[#020617] min-h-screen text-slate-300 selection:bg-indigo-500 selection:text-white overflow-x-hidden font-['Plus_Jakarta_Sans']">
-      <SEO title="Resume | Swayam Purwar" description="Resume and Portfolio of Swayam Purwar - MERN Full Stack Web Developer." />
+      <SEO title="Swayam Purwar - MERN Full Stack Web Development" description="Resume and Portfolio of Swayam Purwar - MERN Full Stack Web Developer." />
 
       {/* --- INJECTED COMPONENT STYLES --- */}
       <style>{`

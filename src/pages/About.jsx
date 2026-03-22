@@ -7,7 +7,7 @@ export default function About() {
   return (
     <>
       <SEO 
-        title="About Swayam" 
+        title="About Swayam Purwar | React Developer" 
         description="Learn more about Swayam Purwar, a BCA student and creative developer from Bhopal." 
         image="/assets/images/profile/swayam-purwar.webp"
       />

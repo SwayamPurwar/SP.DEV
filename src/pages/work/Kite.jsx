@@ -111,7 +111,7 @@ export default function Kite() {
   return (
     <>
     <SEO 
-        title="Kite Trading Engine" 
+        title="Kite Trading | High-Frequency Engine" 
         description="High-frequency trading architecture handling 10k+ concurrent connections with 50ms latency."
         image="/assets/images/project/kite-preview.webp"
       />
