@@ -82,6 +82,7 @@ SP.DEV/
 3. **Run the Development Server:**
    ```bash
   npm run dev
+  ```
 4. **Build for Production:**
   ```bash
   npm run build
