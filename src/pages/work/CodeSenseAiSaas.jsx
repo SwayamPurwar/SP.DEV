@@ -122,12 +122,12 @@ export default function AiSaas() {
             <div className="meta-item"><h4>Deployment</h4><p>Vercel Edge</p></div>
           </div>
 
-          {/* ADDED BUTTONS HERE */}
+         {/* ADDED BUTTONS HERE 
           <div className="cs-hero-btns btn-group" style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
             <Link to="#" className="btn mouse-hover">View Case Study</Link>
             <a href="#" target="_blank" rel="noreferrer" className="btn mouse-hover">View Live Code</a>
           </div>
-
+          */}
         </header>
 
         <div className="cs-content">
