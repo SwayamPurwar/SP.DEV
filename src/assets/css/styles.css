@@ -3415,16 +3415,24 @@ footer {
 }
 
 .cta-arrow {
-    display: inline-block;
+    display: inline-flex; /* Changed to flex to perfectly center the SVG */
+    align-items: center;
+    justify-content: center;
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
     color: var(--accent);
-    -webkit-text-stroke: 0; /* Keep the arrow solid */
+    -webkit-text-stroke: 0; /* Ensures the hollow text effect doesn't hit the arrow */
+}
+
+/* Add this new block to control the SVG size */
+.cta-arrow svg {
+    width: 0.8em; /* Scales perfectly relative to the massive font size */
+    height: 0.8em;
+    display: block;
 }
 
 .footer-cta:hover .cta-arrow {
     transform: translate(30px, -30px) rotate(10deg);
 }
-
 .footer-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -3501,20 +3509,24 @@ footer {
         text-align: left;
     }
     
-    /* 2. Treat the arrow like an inline letter rather than a flex item */
-    .cta-arrow {
-        display: inline-block;
-        font-size: 0.75em; /* Scale it down slightly so it's not overpowering */
+   .cta-arrow {
+        display: inline-flex;
         margin-left: 0.5rem;
-        vertical-align: baseline; /* Locks it to the bottom of the letters */
+        vertical-align: middle; 
         position: relative;
-        top: -0.05em; /* Tiny optical nudge upwards to center it with the font */
+        top: -0.05em; 
     }
 
-    /* 3. Adjust hover animation for the new inline-block setup */
+    .cta-arrow svg {
+        width: 0.75em; /* Slightly smaller on mobile so it doesn't overpower the text */
+        height: 0.75em;
+        stroke-width: 3px; /* Slightly thicker stroke on small screens for crispness */
+    }
+
     .footer-cta:hover .cta-arrow { 
         transform: translate(10px, -10px); 
     }
+
     
     .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
     .footer-col.right-align { text-align: left !important; }
