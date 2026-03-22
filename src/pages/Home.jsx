@@ -1,12 +1,9 @@
-import { useLayoutEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { useLayoutEffect, useRef, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SEO from '../components/SEO';
 import { lockScroll, unlockScroll } from '../utils/animations';
-import { useEffect } from 'react'; 
-import { useLocation } from 'react-router-dom';
-
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,17 +12,25 @@ export default function Home() {
   const counterRef = useRef(null);
   const previewRef = useRef(null);
   const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  // --- Handlers for Hover Effects ---
-  const handleMouseEnter = (imgUrl) => {
-    if (imgUrl && previewRef.current) {
-        previewRef.current.style.backgroundImage = `url('${imgUrl}')`;
-        gsap.to(previewRef.current, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" });
-    }
-  };
-
   const location = useLocation();
 
+  // 🚀 ENHANCEMENT #2: PRELOAD PROJECT HOVER IMAGES
+  // This ensures the images are downloaded immediately, preventing a flicker when hovering
+  useEffect(() => {
+    const imagesToPreload = [
+      '/assets/images/project/apple-music-preview.webp',
+      '/assets/images/project/instagram-preview.webp',
+      '/assets/images/project/kite-preview.webp',
+      '/assets/images/project/codesense-ai-saas-preview.webp'
+    ];
+
+    imagesToPreload.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
+  // Smooth scroll to hash anchor on load
   useEffect(() => {
     if (location.hash) {
       const element = document.querySelector(location.hash);
@@ -34,8 +39,20 @@ export default function Home() {
       }
     }
   }, [location.hash]);
-  
+
+  // --- Handlers for Hover Effects ---
+  const handleMouseEnter = (imgUrl) => {
+    if (window.matchMedia("(hover: none)").matches) return; // Skip on touch devices
+
+    if (imgUrl && previewRef.current) {
+        previewRef.current.style.backgroundImage = `url('${imgUrl}')`;
+        gsap.to(previewRef.current, { opacity: 1, scale: 1, duration: 0.5, ease: "power3.out" });
+    }
+  };
+
   const handleMouseLeave = (e) => {
+    if (window.matchMedia("(hover: none)").matches) return; // Skip on touch devices
+
     if(previewRef.current) gsap.to(previewRef.current, { opacity: 0, scale: 0.7, duration: 0.4, ease: "power3.in" });
     
     const inner = e.currentTarget.querySelector(".project");
@@ -49,9 +66,13 @@ export default function Home() {
   };
 
   const handleMouseMove = (e) => {
+    // 🚀 ENHANCEMENT #1: Prevent sticky 3D transforms on mobile touch
+    if (window.matchMedia("(hover: none)").matches) return; 
+
     if(previewRef.current) {
       gsap.to(previewRef.current, { x: e.clientX - window.innerWidth / 2, y: e.clientY - window.innerHeight / 2, duration: 0.8, ease: "power3.out" });
     }
+    
     if(!prefersReducedMotion) {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -79,13 +100,13 @@ export default function Home() {
       const initScrollAnimations = () => {
         ScrollTrigger.refresh();
         
-        // --- ADDED: Mobile Scroll Highlight for Projects ---
+        // --- Mobile Scroll Highlight for Projects ---
         gsap.utils.toArray('.project').forEach((project) => {
           ScrollTrigger.create({
             trigger: project,
             start: "top 65%",   // Triggers when the top of the project hits 65% down the screen
             end: "bottom 35%",  // Ends when the bottom of the project passes 35%
-            toggleClass: "is-active", // Adds your pre-styled CSS class
+            toggleClass: "is-active", 
           });
         });
         
@@ -236,7 +257,12 @@ export default function Home() {
             <article className="project mouse-hover"><h2>CodeSense AI</h2><div className="project-meta"><p>AI-Powered Code Assistant + Saas</p><p>Coming Soon</p></div></article>
           </Link>
         </section>
-
+        <section className="marquee-section" aria-hidden="true">
+          <div className="marquee-content">
+            <span>REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull; NODE.JS &bull; MONGODB &bull; </span>
+            <span>REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull; NODE.JS &bull; MONGODB &bull; </span>
+          </div>
+        </section>
         <section id="about">
           <div className="about-img reveal-container" style={{ transformStyle: "preserve-3d" }}>
             <div className="reveal-curtain"></div>
@@ -248,13 +274,6 @@ export default function Home() {
             <Link to="/about" className="btn mouse-hover reveal-text" data-strength="30">Read More</Link>
           </div>
         </section>
- <section className="marquee-section" aria-hidden="true">
-          <div className="marquee-content">
-            <span>REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull; NODE.JS &bull; MONGODB &bull; </span>
-            <span>REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull; NODE.JS &bull; MONGODB &bull; </span>
-          </div>
-        </section>
-       
       </main>
     </div>
   );
