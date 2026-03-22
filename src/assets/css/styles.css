@@ -3501,109 +3501,256 @@ footer {
 
 
 
-
-
-
-/* --- NATIVE PREMIUM CONTACT UI --- */
-.contact-grid {
-    padding: 180px 10vw 5vh;
-    min-height: 85vh; /* Leaves room for the bottom return button */
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 6rem;
-    align-items: center;
-    max-width: 1600px;
-    margin: 0 auto;
-    position: relative;
-    z-index: 10;
-}
-
-.contact-heading {
-    font-family: var(--font-display);
-    font-size: clamp(3.5rem, 8vw, 6.5rem);
-    font-weight: 700;
-    line-height: 1;
-    text-transform: uppercase;
-    letter-spacing: -0.04em;
-    margin-bottom: 2rem;
-    color: #fff;
-}
-
-.contact-sub {
-    font-family: var(--font-main);
-    font-size: 1.15rem;
-    color: #999;
-    line-height: 1.7;
-    margin-bottom: 3.5rem;
-    max-width: 90%;
-}
-
-.contact-links {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 2rem;
-}
-
-.c-link-group {
+/* --- PREMIUM STACKED LUX CONTACT UI --- */
+.contact-lux-wrapper {
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
-    gap: 0.8rem;
+    position: relative;
+    z-index: 10;
+    overflow-x: hidden; 
 }
 
-.c-link-label {
-    font-family: var(--font-code);
-    font-size: 0.8rem;
-    color: #666;
-    text-transform: uppercase;
-    letter-spacing: 2px;
+/* Single column, centered container */
+.contact-stacked-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6rem;
+    max-width: 1250px; /* Perfect reading width */
+    margin: 0 auto;
+    padding: 160px 5vw 80px; 
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.c-link-val {
+/* --- Top Section: Typography & Info --- */
+.lux-info-section {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+    width: 100%;
+}
+
+.lux-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.8rem, 8vw, 6.5rem); 
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 1.5rem 0;
+    background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    word-wrap: break-word; 
+}
+
+.lux-subtitle {
     font-family: var(--font-main);
-    font-size: 1.1rem;
+    font-size: clamp(1rem, 2.5vw, 1.15rem);
+    color: #999;
+    line-height: 1.7;
+    font-weight: 300;
+}
+
+/* Split the contact details into two columns on desktop */
+.lux-details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    margin-top: 1rem;
+}
+
+.lux-contact-link {
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 4vw, 2rem);
     color: #fff;
     text-decoration: none;
     transition: color 0.3s ease;
-    display: inline-flex;
-    align-items: center;
+    display: inline-block;
+    word-break: break-all; 
 }
 
-.c-link-val:hover {
+.lux-contact-link:hover {
     color: var(--accent);
 }
 
-/* Sleek Native Inputs */
-.c-input {
+.lux-social-list {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap; 
+}
+
+.lux-social-pill {
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 100px;
+    color: #ccc;
+    font-family: var(--font-main);
+    font-size: clamp(0.85rem, 2vw, 0.95rem);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+}
+
+.lux-social-pill:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: #fff;
+    color: #fff;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* --- Bottom Section: Premium Glass Form --- */
+.lux-form-card {
+    background: rgba(15, 15, 15, 0.4);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 4rem 5rem; /* Extra wide padding for the wide layout */
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     width: 100%;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
-    padding: 15px 0;
+    box-sizing: border-box;
+}
+
+/* 50/50 Grid for Name and Email */
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    width: 100%;
+}
+
+.lux-input-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+    width: 100%;
+}
+
+.lux-input {
+    width: 100%;
+    box-sizing: border-box; 
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 26px 20px 10px 20px;
     color: #fff;
     font-family: var(--font-main);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     outline: none;
-    transition: border-color 0.3s ease;
-    margin-bottom: 2.5rem;
+    transition: all 0.3s ease;
     resize: vertical;
 }
 
-.c-input:focus {
-    border-bottom-color: var(--accent);
+.lux-input:focus {
+    background: rgba(255, 255, 255, 0.02);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 4px rgba(168, 85, 247, 0.1);
 }
 
-.c-input::placeholder {
-    color: #555;
+.lux-label {
+    position: absolute;
+    left: 20px;
+    top: 18px;
+    color: #666;
     font-family: var(--font-code);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    pointer-events: none;
+    transition: all 0.3s ease;
+}
+
+.lux-input:focus ~ .lux-label,
+.lux-input:not(:placeholder-shown) ~ .lux-label {
+    top: 8px;
+    font-size: 0.65rem;
+    color: var(--accent);
+}
+
+.lux-submit-btn {
+    width: 100%;
+    box-sizing: border-box;
+    background: #fff;
+    color: #000;
+    border: none;
+    border-radius: 12px;
+    padding: 18px;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1rem;
     text-transform: uppercase;
     letter-spacing: 2px;
+    cursor: none;
+    transition: all 0.3s ease;
+    margin-top: 1rem;
 }
 
+.lux-submit-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(168, 85, 247, 0.2);
+}
+
+.lux-return-zone {
+    padding: 4rem 0 3rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    width: 100%;
+}
+
+/* =========================================
+   AGGRESSIVE MOBILE MEDIA QUERIES
+   ========================================= */
+
 @media (max-width: 1024px) {
-    .contact-grid {
-        grid-template-columns: 1fr;
+    .contact-stacked-container {
+        padding: 140px 6vw 50px;
         gap: 4rem;
-        padding: 150px 6vw 5vh;
+    }
+    .lux-form-card {
+        padding: 3rem 4rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .contact-stacked-container {
+        padding: 120px 5vw 40px;
+        gap: 3rem;
+    }
+    .lux-details-grid {
+        grid-template-columns: 1fr; /* Stack email and socials vertically */
+        gap: 2rem;
+    }
+    .form-row {
+        grid-template-columns: 1fr; /* Stack Name and Email vertically */
+        gap: 0; 
+    }
+    .lux-form-card {
+        padding: 2.5rem 1.5rem;
+        border-radius: 16px;
+    }
+    .lux-input {
+        padding: 24px 15px 10px 15px;
+        font-size: 1rem;
+    }
+    .lux-label {
+        left: 15px;
+        top: 15px;
+        font-size: 0.8rem;
+    }
+    .lux-submit-btn {
+        padding: 15px;
+        font-size: 0.9rem;
     }
 }

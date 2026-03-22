@@ -4,42 +4,42 @@ import SEO from '../components/SEO';
 import gsap from 'gsap';
 
 export default function Contact() {
-  const leftColRef = useRef(null);
-  const rightColRef = useRef(null);
+  const topInfoRef = useRef(null);
+  const formCardRef = useRef(null);
   const formRef = useRef(null);
   const backBtnRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    // 1. Smooth, staggered reveal for Left Column
+    // 1. Staggered fade up for the Top Section (Typography & Info)
     gsap.fromTo(
-      leftColRef.current.children,
-      { y: 30, opacity: 0 },
+      topInfoRef.current.children,
+      { y: 40, opacity: 0 },
       { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power3.out' }
     );
 
-    // 2. Elegant fade up for the Glass Card
+    // 2. Smooth entrance for the Glass Form Card below it
     gsap.fromTo(
-      rightColRef.current,
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.2 }
+      formCardRef.current,
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.3 }
     );
 
-    // 3. Staggered pop-in for form fields inside the card
+    // 3. Inner stagger for form fields
     if (formRef.current) {
       gsap.fromTo(
         formRef.current.children,
-        { y: 15, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power2.out', delay: 0.5 }
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power2.out', delay: 0.6 }
       );
     }
 
-    // 4. Fade in the bottom Return button
+    // 4. Fade in bottom return button
     if (backBtnRef.current) {
       gsap.fromTo(
         backBtnRef.current,
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.8 }
+        { opacity: 0 },
+        { opacity: 1, duration: 1, ease: 'power2.out', delay: 1 }
       );
     }
   }, []);
@@ -51,138 +51,157 @@ export default function Contact() {
 
   return (
     <>
-      <SEO title="Contact | Swayam Purwar" description="Get in touch with Swayam Purwar. Let's build something amazing." />
+      <SEO title="Contact | Swayam Purwar" description="Get in touch. Open for freelance opportunities and full-time roles." />
       
-      {/* Native Ambient Background (Matches About & Work pages) */}
+      {/* Background Assets */}
       <div className="grid-bg"></div>
-      <div className="orb orb-1" style={{ opacity: 0.15 }}></div>
-      <div className="orb orb-2" style={{ opacity: 0.1, background: 'radial-gradient(circle, var(--accent), transparent 60%)' }}></div>
+      <div className="orb orb-1" style={{ opacity: 0.15, filter: 'blur(100px)' }}></div>
+      <div className="orb orb-2" style={{ opacity: 0.1, background: 'radial-gradient(circle, var(--accent), transparent 60%)', filter: 'blur(120px)' }}></div>
 
-      <div className="contact-grid">
+      <div className="contact-lux-wrapper">
         
-        {/* LEFT COLUMN: Typography & Links */}
-        <div ref={leftColRef}>
+        {/* The single-column stacked container */}
+        <div className="contact-stacked-container">
           
-          <div style={{ marginBottom: '1.5rem' }}>
-            <span style={{ fontFamily: 'var(--font-code)', color: 'var(--accent)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '2px' }}>
-              &gt; STATUS: OPEN FOR WORK
-            </span>
-          </div>
-
-          <h1 className="contact-heading glitch" data-text="LET'S CONNECT">
-            LET'S CONNECT
-          </h1>
-          
-          <p className="contact-sub">
-            I am currently looking for new opportunities. Whether you have a question, a project proposal, or just want to connect, my inbox is always open.
-          </p>
-
-          <div className="contact-links">
-            <div className="c-link-group">
-              <span className="c-link-label">Direct Email</span>
-              <a href="mailto:swayampurwar111104@gmail.com" className="c-link-val mouse-hover">
-                swayampurwar111104<br/>@gmail.com
-              </a>
-            </div>
-
-            <div className="c-link-group">
-              <span className="c-link-label">Socials</span>
-              <a href="https://www.linkedin.com/in/SwayamPurwar" target="_blank" rel="noreferrer" className="c-link-val mouse-hover">LinkedIn ↗</a>
-              <a href="https://github.com/SwayamPurwar/" target="_blank" rel="noreferrer" className="c-link-val mouse-hover">GitHub ↗</a>
-              <a href="https://x.com/" target="_blank" rel="noreferrer" className="c-link-val mouse-hover">Twitter / X ↗</a>
-            </div>
-          </div>
-
-        </div>
-
-        {/* RIGHT COLUMN: The Native Glass Card */}
-        <div ref={rightColRef}>
-          <div className="glass-card" style={{ padding: '3.5rem' }}>
+          {/* TOP SECTION: Typography & Info */}
+          <div className="lux-info-section" ref={topInfoRef}>
             
-            <h3 style={{ fontSize: '1.8rem', marginBottom: '2.5rem', color: 'white', fontFamily: 'var(--font-display)' }}>
-              Send a Message
-            </h3>
+            <div>
+              <span className="system-tag" style={{ marginBottom: '1.5rem', display: 'inline-block' }}>
+                STATUS: ACCEPTING NEW PROJECTS
+              </span>
+              <h1 className="lux-title">Let's build<br/>something<br/>extraordinary.</h1>
+              <p className="lux-subtitle">
+                I partner with ambitious brands and individuals to build digital experiences that matter. Have a project in mind? Let's bring it to life.
+              </p>
+            </div>
 
-            <form ref={formRef} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
-              
-              <input 
-                type="text" 
-                id="name" 
-                name="name"
-                required 
-                placeholder="[ YOUR NAME ]" 
-                className="c-input mouse-hover"
-                autoComplete="off"
-              />
+            {/* Split Contact Info on Desktop */}
+            <div className="lux-details-grid">
+              <div>
+                <h4 style={{ color: '#666', fontFamily: 'var(--font-code)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '1rem' }}>
+                  Direct Transmission
+                </h4>
+                <a href="mailto:swayampurwar111104@gmail.com" className="lux-contact-link mouse-hover">
+                  swayampurwar111104@gmail.com
+                </a>
+              </div>
 
-              <input 
-                type="email" 
-                id="email" 
-                name="email"
-                required 
-                placeholder="[ EMAIL ADDRESS ]" 
-                className="c-input mouse-hover"
-                autoComplete="off"
-              />
+              <div>
+                <h4 style={{ color: '#666', fontFamily: 'var(--font-code)', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '1rem' }}>
+                  Social Network
+                </h4>
+                <div className="lux-social-list">
+                  <a href="https://www.linkedin.com/in/SwayamPurwar" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
+                    LinkedIn ↗
+                  </a>
+                  <a href="https://github.com/SwayamPurwar/" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
+                    GitHub ↗
+                  </a>
+                  <a href="https://x.com/" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
+                    Twitter ↗
+                  </a>
+                </div>
+              </div>
+            </div>
 
-              <textarea 
-                id="message" 
-                name="message"
-                rows="4" 
-                required 
-                placeholder="[ MESSAGE PAYLOAD ]" 
-                className="c-input mouse-hover"
-              ></textarea>
-
-              <button type="submit" className="btn mouse-hover" style={{ alignSelf: 'flex-start', marginTop: '1rem', padding: '16px 40px' }}>
-                Transmit Data
-              </button>
-
-            </form>
           </div>
+
+          {/* BOTTOM SECTION: Premium Glass Form */}
+          <div ref={formCardRef}>
+            <div className="lux-form-card">
+              
+              <h3 style={{ fontSize: '2rem', marginBottom: '2.5rem', color: 'white', fontFamily: 'var(--font-display)' }}>
+                Send a Message
+              </h3>
+
+              <form ref={formRef} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+                
+                {/* 50/50 Grid for Name & Email on Desktop */}
+                <div className="form-row">
+                  <div className="lux-input-group">
+                    <input 
+                      type="text" 
+                      id="name" 
+                      name="name"
+                      required 
+                      placeholder=" " 
+                      className="lux-input mouse-hover"
+                      autoComplete="off"
+                    />
+                    <label htmlFor="name" className="lux-label">Your Name</label>
+                  </div>
+
+                  <div className="lux-input-group">
+                    <input 
+                      type="email" 
+                      id="email" 
+                      name="email"
+                      required 
+                      placeholder=" " 
+                      className="lux-input mouse-hover"
+                      autoComplete="off"
+                    />
+                    <label htmlFor="email" className="lux-label">Email Address</label>
+                  </div>
+                </div>
+
+                <div className="lux-input-group">
+                  <textarea 
+                    id="message" 
+                    name="message"
+                    rows="5" 
+                    required 
+                    placeholder=" " 
+                    className="lux-input mouse-hover"
+                  ></textarea>
+                  <label htmlFor="message" className="lux-label">Message Payload</label>
+                </div>
+
+                <button type="submit" className="lux-submit-btn mouse-hover">
+                  Transmit Data
+                </button>
+
+              </form>
+            </div>
+          </div>
+
+        </div>
+
+        {/* --- BOTTOM RETURN ZONE --- */}
+        <div className="lux-return-zone" ref={backBtnRef}>
+          <button 
+            onClick={() => navigate(-1)} 
+            className="mouse-hover"
+            style={{
+              background: 'transparent',
+              border: '1px solid rgba(255, 255, 255, 0.2)',
+              borderRadius: '100px',
+              color: '#888',
+              fontFamily: 'var(--font-code)',
+              fontSize: '0.85rem',
+              textTransform: 'uppercase',
+              letterSpacing: '2px',
+              padding: '12px 30px',
+              transition: 'all 0.3s ease',
+              cursor: 'none'
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.color = 'black';
+              e.currentTarget.style.background = 'white';
+              e.currentTarget.style.borderColor = 'white';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.color = '#888';
+              e.currentTarget.style.background = 'transparent';
+              e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
+            }}
+          >
+            ← Back To Home
+          </button>
         </div>
 
       </div>
-
-      {/* --- BOTTOM RETURN BUTTON --- */}
-      <div 
-        ref={backBtnRef}
-        style={{ 
-          width: '100%', 
-          display: 'flex', 
-          justifyContent: 'center', 
-          paddingBottom: '8vh',
-          position: 'relative',
-          zIndex: 10
-        }}
-      >
-        <button 
-          onClick={() => navigate(-1)} 
-          className="btn mouse-hover"
-          style={{
-            background: 'transparent',
-            borderColor: 'rgba(255, 255, 255, 0.2)',
-            color: '#888',
-            fontFamily: 'var(--font-code)',
-            fontSize: '0.85rem',
-            letterSpacing: '2px',
-            padding: '12px 35px'
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.color = '#000';
-            e.currentTarget.style.background = '#fff';
-            e.currentTarget.style.borderColor = '#fff';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.color = '#888';
-            e.currentTarget.style.background = 'transparent';
-            e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
-          }}
-        >
-          [ BACK TO HOME ]
-        </button>
-      </div>
-      
     </>
   );
 }
