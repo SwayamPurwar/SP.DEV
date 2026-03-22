@@ -232,11 +232,16 @@ export default function Home() {
           </Link>
           
           <div className="section-header upcoming"><span>UPCOMING PROJECTS</span><span>(IN LABS)</span></div>
-          <Link to="/work/CodeSenseAiSaas" className="project-link" onMouseEnter={() => handleMouseEnter('/assets/images/project/ai-saas-preview.webp')} onMouseLeave={handleMouseLeave} onMouseMove={handleMouseMove}>
+          <Link to="/work/CodeSenseAiSaas" className="project-link" onMouseEnter={() => handleMouseEnter('/assets/images/project/codesense-ai-saas-preview.webp')} onMouseLeave={handleMouseLeave} onMouseMove={handleMouseMove}>
             <article className="project mouse-hover"><h2>CodeSense AI</h2><div className="project-meta"><p>AI-Powered Code Assistant + Saas</p><p>Coming Soon</p></div></article>
           </Link>
         </section>
-
+ <section className="marquee-section" aria-hidden="true">
+          <div className="marquee-content">
+            <span>REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull; NODE.JS &bull; MONGODB &bull; </span>
+            <span>REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull; NODE.JS &bull; MONGODB &bull; </span>
+          </div>
+        </section>
         <section id="about">
           <div className="about-img reveal-container" style={{ transformStyle: "preserve-3d" }}>
             <div className="reveal-curtain"></div>
@@ -249,12 +254,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="marquee-section" aria-hidden="true">
-          <div className="marquee-content">
-            <span>REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull; NODE.JS &bull; MONGODB &bull; </span>
-            <span>REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull; NODE.JS &bull; MONGODB &bull; </span>
-          </div>
-        </section>
+       
       </main>
     </div>
   );
