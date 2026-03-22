@@ -80,9 +80,9 @@ SP.DEV/
    npm install
    ```
 3. **Run the Development Server:**
-   ```bash
-  npm run dev
-  ```
+  ```bash
+   npm install
+   ```
 4. **Build for Production:**
   ```bash
   npm run build
@@ -91,7 +91,7 @@ SP.DEV/
 ### 💡 Key Configurations
 
 **Interactive Elements**
-Custom cursor logic and interactive hover states are managed via global selectors defined in src/utils/constants.js. The following elements trigger interactive states:
+Custom cursor logic and interactive hover states are managed via global selectors defined in `src/utils/constants.js`. The following elements trigger interactive states:
 
 ```bash
 "a", "button", ".btn", ".t-btn", ".nav-item", ".toc-link", ".tech-pill", ".cv-btn", ".cs-tag", ".project-link", ".socials a", ".glass-btn", ".mouse-hover"
