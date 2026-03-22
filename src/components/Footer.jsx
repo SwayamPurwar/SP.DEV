@@ -12,8 +12,10 @@ export default function Footer() {
     return () => clearInterval(timer);
   }, []);
 
-  // Hide footer on 404, resume, success, and the new contact page
-  if (path === '/resume' || path === '/success' || path === '/contact' || path === '/404') return null;
+  const isWorkPage = path.startsWith('/work/');
+  if (path === '/resume' || path === '/success' || path === '/contact' || path === '/404' || isWorkPage) {
+      return null;
+  }
 
   return (
     <footer id="footer">

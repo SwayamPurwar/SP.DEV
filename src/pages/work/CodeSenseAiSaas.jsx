@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SEO from '../../components/SEO';
+import MoreProjectsFooter from '../../components/MoreProjectsFooter';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -213,6 +214,7 @@ export default function AiSaas() {
 
         </div>
       </div>
+     <MoreProjectsFooter currentProject="codesense" />
     </>
   );
 }

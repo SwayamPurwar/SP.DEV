@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import SEO from '../../components/SEO';
 
+import MoreProjectsFooter from '../../components/MoreProjectsFooter';
+
 export default function Kite() {
   const [price, setPrice] = useState(22450.00);
   const [toast, setToast] = useState(false);
@@ -211,6 +213,7 @@ export default function Kite() {
           </div>
         </section>
       </main>
+     <MoreProjectsFooter currentProject="kite" />
     </>
   );
 }

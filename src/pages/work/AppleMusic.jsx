@@ -4,6 +4,8 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import SEO from '../../components/SEO';
 
+import MoreProjectsFooter from '../../components/MoreProjectsFooter';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function AppleMusic() {
@@ -101,6 +103,8 @@ export default function AppleMusic() {
         </section>
       </main>
     </div>
+    
+      <MoreProjectsFooter currentProject="apple-music" />
      </>
   );
  
