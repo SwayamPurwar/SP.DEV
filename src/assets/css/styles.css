@@ -3492,13 +3492,34 @@ footer {
 
 @media (max-width: 768px) {
     .footer-content { padding: 6rem 6vw 3rem; }
-    .footer-cta { gap: 1rem; }
-    .footer-cta:hover .cta-arrow { transform: translate(10px, -10px); }
+    
+    /* 1. Remove Flexbox entirely on mobile so it wraps like natural text */
+    .footer-cta { 
+        display: block; 
+        font-size: clamp(3rem, 13vw, 5rem); 
+        line-height: 1.1;
+        text-align: left;
+    }
+    
+    /* 2. Treat the arrow like an inline letter rather than a flex item */
+    .cta-arrow {
+        display: inline-block;
+        font-size: 0.75em; /* Scale it down slightly so it's not overpowering */
+        margin-left: 0.5rem;
+        vertical-align: baseline; /* Locks it to the bottom of the letters */
+        position: relative;
+        top: -0.05em; /* Tiny optical nudge upwards to center it with the font */
+    }
+
+    /* 3. Adjust hover animation for the new inline-block setup */
+    .footer-cta:hover .cta-arrow { 
+        transform: translate(10px, -10px); 
+    }
+    
     .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
     .footer-col.right-align { text-align: left !important; }
     .footer-copyright { flex-direction: column; align-items: flex-start; gap: 1rem; }
 }
-
 
 
 /* --- PREMIUM STACKED LUX CONTACT UI --- */
