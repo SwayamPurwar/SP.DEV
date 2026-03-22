@@ -100,6 +100,7 @@ export default function AppleMusic() {
         </section>
       </main>
     </div>
+     </>
   );
-  </>
+ 
 }
