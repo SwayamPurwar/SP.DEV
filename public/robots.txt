@@ -1,0 +1,15 @@
+# https://www.robotstxt.org/robotstxt.html
+
+# Allow all search engines to index the site
+User-agent: *
+Allow: /
+
+# Disallow indexing of utility and private pages
+Disallow: /success
+Disallow: /404
+
+# Host
+Host: https://swayampurwar.vercel.app
+
+# Sitemaps
+Sitemap: https://swayampurwar.vercel.app/sitemap.xml
