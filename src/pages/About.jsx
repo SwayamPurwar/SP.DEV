@@ -107,25 +107,7 @@ export default function About() {
           <Link to="/" className="btn mouse-hover">&larr; Back to Home</Link>
         </div>
 
-        {/* --- CUSTOM ABOUT PAGE FOOTER --- */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: '2rem 6vw',
-          borderTop: '1px solid rgba(255,255,255,0.05)',
-          fontSize: '0.85rem',
-          color: '#666',
-          flexWrap: 'wrap',
-          gap: '1rem'
-        }}>
-          <span>&copy; {currentYear} Swayam Purwar.</span>
-          <div style={{ display: 'flex', gap: '1rem' }}>
-            <a href="https://www.instagram.com/swayam_purwar" target="_blank" rel="noopener noreferrer" className="mouse-hover" style={{ color: '#888', textDecoration: 'none', transition: '0.3s' }}>Instagram</a>
-            <a href="https://www.linkedin.com/in/swayam-purwar" target="_blank" rel="noopener noreferrer" className="mouse-hover" style={{ color: '#888', textDecoration: 'none', transition: '0.3s' }}>LinkedIn</a>
-            <a href="https://github.com/SwayamPurwar" target="_blank" rel="noopener noreferrer" className="mouse-hover" style={{ color: '#888', textDecoration: 'none', transition: '0.3s' }}>GitHub</a>
-          </div>
-        </div>
+        
 
       </main>
     </>
