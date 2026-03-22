@@ -11,196 +11,167 @@ export default function Contact() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Cinematic stagger reveal for the left column content
+    // 1. Smooth, staggered reveal for Left Column
     gsap.fromTo(
       leftColRef.current.children,
-      { y: 40, opacity: 0 },
-      { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power4.out' }
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: 'power3.out' }
     );
 
-    // Smooth entrance for the glass card on the right
+    // 2. Elegant fade up for the Glass Card
     gsap.fromTo(
       rightColRef.current,
-      { x: 50, opacity: 0 },
-      { x: 0, opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.2 }
+      { y: 40, opacity: 0 },
+      { y: 0, opacity: 1, duration: 1.2, ease: 'power3.out', delay: 0.2 }
     );
 
-    // Staggered pop-in for form fields
+    // 3. Staggered pop-in for form fields inside the card
     if (formRef.current) {
       gsap.fromTo(
         formRef.current.children,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power2.out', delay: 0.6 }
+        { y: 15, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power2.out', delay: 0.5 }
       );
     }
 
-    // Fade in the bottom back button last
+    // 4. Fade in the bottom Return button
     if (backBtnRef.current) {
       gsap.fromTo(
         backBtnRef.current,
         { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 1 }
+        { opacity: 1, y: 0, duration: 0.8, ease: 'power2.out', delay: 0.8 }
       );
     }
   }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setTimeout(() => navigate('/success'), 600); 
+    setTimeout(() => navigate('/success'), 500); 
   };
 
   return (
     <>
-      <SEO title="Contact | Swayam Purwar" description="Get in touch with Swayam Purwar. Let's build something amazing together." />
+      <SEO title="Contact | Swayam Purwar" description="Get in touch with Swayam Purwar. Let's build something amazing." />
       
-      {/* Immersive Background Ambient Layers */}
+      {/* Native Ambient Background (Matches About & Work pages) */}
       <div className="grid-bg"></div>
-      <div className="orb orb-1" style={{ opacity: 0.15, filter: 'blur(100px)' }}></div>
-      <div className="orb orb-2" style={{ opacity: 0.1, filter: 'blur(120px)', background: 'radial-gradient(circle, var(--accent), transparent 60%)' }}></div>
+      <div className="orb orb-1" style={{ opacity: 0.15 }}></div>
+      <div className="orb orb-2" style={{ opacity: 0.1, background: 'radial-gradient(circle, var(--accent), transparent 60%)' }}></div>
 
-      <div className="contact-container" style={{ paddingBottom: '5vh' }}>
+      <div className="contact-grid">
         
-        {/* LEFT COLUMN: INFO & SOCIALS */}
-        <div className="contact-info-block" ref={leftColRef}>
+        {/* LEFT COLUMN: Typography & Links */}
+        <div ref={leftColRef}>
           
-          <div>
-            <div className="status-badge">
-              <div className="status-dot"></div>
-              SYSTEM ONLINE
+          <div style={{ marginBottom: '1.5rem' }}>
+            <span style={{ fontFamily: 'var(--font-code)', color: 'var(--accent)', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '2px' }}>
+              &gt; STATUS: OPEN FOR WORK
+            </span>
+          </div>
+
+          <h1 className="contact-heading glitch" data-text="LET'S CONNECT">
+            LET'S CONNECT
+          </h1>
+          
+          <p className="contact-sub">
+            I am currently looking for new opportunities. Whether you have a question, a project proposal, or just want to connect, my inbox is always open.
+          </p>
+
+          <div className="contact-links">
+            <div className="c-link-group">
+              <span className="c-link-label">Direct Email</span>
+              <a href="mailto:swayampurwar111104@gmail.com" className="c-link-val mouse-hover">
+                swayampurwar111104<br/>@gmail.com
+              </a>
             </div>
-            {/* Massive Hollow-to-Solid Title */}
-            <h1 className="contact-title-massive">
-              LET'S COLLAB
-            </h1>
-            <p style={{ color: '#aaa', lineHeight: '1.8', fontSize: '1.1rem', maxWidth: '90%', fontFamily: 'var(--font-code)' }}>
-              &gt; I'm actively seeking new challenges and opportunities. Whether you have a project idea, a full-time role, or just want to connect, my inbox is open.
-            </p>
-          </div>
 
-          <div className="contact-method">
-            <h3>Direct Transmission</h3>
-            <a href="mailto:swayampurwar111104@gmail.com" className="contact-link-large mouse-hover" style={{ textTransform: 'uppercase', letterSpacing: '1px' }}>
-              swayampurwar111104<br/>@gmail.com
-            </a>
-          </div>
-
-          <div className="contact-method">
-            <h3>Digital Footprint</h3>
-            <div className="social-links-grid">
-              
-              <a href="https://www.linkedin.com/in/SwayamPurwar" target="_blank" rel="noreferrer" className="cyber-social-card mouse-hover">
-                <span className="social-sub">// 01 _ Professional</span>
-                <span className="social-name">LinkedIn</span>
-                <span className="social-arrow">↗</span>
-              </a>
-
-              <a href="https://github.com/SwayamPurwar/" target="_blank" rel="noreferrer" className="cyber-social-card mouse-hover">
-                <span className="social-sub">// 02 _ Open Source</span>
-                <span className="social-name">GitHub</span>
-                <span className="social-arrow">↗</span>
-              </a>
-
+            <div className="c-link-group">
+              <span className="c-link-label">Socials</span>
+              <a href="https://www.linkedin.com/in/SwayamPurwar" target="_blank" rel="noreferrer" className="c-link-val mouse-hover">LinkedIn ↗</a>
+              <a href="https://github.com/SwayamPurwar/" target="_blank" rel="noreferrer" className="c-link-val mouse-hover">GitHub ↗</a>
+              <a href="https://x.com/" target="_blank" rel="noreferrer" className="c-link-val mouse-hover">Twitter / X ↗</a>
             </div>
           </div>
 
         </div>
 
-        {/* RIGHT COLUMN: CYBER FORM CARD */}
+        {/* RIGHT COLUMN: The Native Glass Card */}
         <div ref={rightColRef}>
-          <div className="cyber-contact-card">
-            <div className="cyber-grid-overlay"></div>
+          <div className="glass-card" style={{ padding: '3.5rem' }}>
             
-            <div style={{ position: 'relative', zIndex: 2 }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem' }}>
-                <h2 style={{ fontFamily: 'var(--font-display)', fontSize: '2rem', color: 'white', textTransform: 'uppercase', letterSpacing: '2px' }}>DATA UPLOAD</h2>
-                <span style={{ color: 'var(--accent)', fontFamily: 'var(--font-code)', fontSize: '0.8rem' }}>[ SECURE_CHANNEL ]</span>
-              </div>
+            <h3 style={{ fontSize: '1.8rem', marginBottom: '2.5rem', color: 'white', fontFamily: 'var(--font-display)' }}>
+              Send a Message
+            </h3>
 
-              <form ref={formRef} className="contact-form" onSubmit={handleSubmit}>
-                
-                <div className="input-floating">
-                  <input 
-                    type="text" 
-                    id="name" 
-                    name="name"
-                    required 
-                    placeholder=" " 
-                    className="mouse-hover"
-                    autoComplete="off"
-                  />
-                  <label htmlFor="name" className="floating-label">[ IDENTIFIER / NAME ]</label>
-                </div>
+            <form ref={formRef} onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column' }}>
+              
+              <input 
+                type="text" 
+                id="name" 
+                name="name"
+                required 
+                placeholder="[ YOUR NAME ]" 
+                className="c-input mouse-hover"
+                autoComplete="off"
+              />
 
-                <div className="input-floating">
-                  <input 
-                    type="email" 
-                    id="email" 
-                    name="email"
-                    required 
-                    placeholder=" " 
-                    className="mouse-hover"
-                    autoComplete="off"
-                  />
-                  <label htmlFor="email" className="floating-label">[ RETURN_ADDRESS / EMAIL ]</label>
-                </div>
+              <input 
+                type="email" 
+                id="email" 
+                name="email"
+                required 
+                placeholder="[ EMAIL ADDRESS ]" 
+                className="c-input mouse-hover"
+                autoComplete="off"
+              />
 
-                <div className="input-floating">
-                  <textarea 
-                    id="message" 
-                    name="message"
-                    rows="5" 
-                    required 
-                    placeholder=" " 
-                    className="mouse-hover"
-                  ></textarea>
-                  <label htmlFor="message" className="floating-label">[ MESSAGE_PAYLOAD ]</label>
-                </div>
+              <textarea 
+                id="message" 
+                name="message"
+                rows="4" 
+                required 
+                placeholder="[ MESSAGE PAYLOAD ]" 
+                className="c-input mouse-hover"
+              ></textarea>
 
-                <button type="submit" className="cyber-submit-btn mouse-hover">
-                  <span>TRANSMIT_DATA</span>
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <line x1="22" y1="2" x2="11" y2="13"></line>
-                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                  </svg>
-                </button>
+              <button type="submit" className="btn mouse-hover" style={{ alignSelf: 'flex-start', marginTop: '1rem', padding: '16px 40px' }}>
+                Transmit Data
+              </button>
 
-              </form>
-            </div>
+            </form>
           </div>
         </div>
+
       </div>
 
-      {/* --- BOTTOM BACK BUTTON --- */}
+      {/* --- BOTTOM RETURN BUTTON --- */}
       <div 
         ref={backBtnRef}
         style={{ 
           width: '100%', 
           display: 'flex', 
           justifyContent: 'center', 
-          paddingBottom: '10vh', 
-          position: 'relative', 
-          zIndex: 10 
+          paddingBottom: '8vh',
+          position: 'relative',
+          zIndex: 10
         }}
       >
         <button 
           onClick={() => navigate(-1)} 
-          className="manual-btn mouse-hover"
+          className="btn mouse-hover"
           style={{
             background: 'transparent',
-            border: '1px solid rgba(255, 255, 255, 0.2)',
+            borderColor: 'rgba(255, 255, 255, 0.2)',
             color: '#888',
             fontFamily: 'var(--font-code)',
-            fontSize: '0.9rem',
+            fontSize: '0.85rem',
             letterSpacing: '2px',
-            textTransform: 'uppercase',
-            padding: '15px 40px',
-            transition: 'all 0.3s ease',
-            cursor: 'none'
+            padding: '12px 35px'
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.color = 'black';
-            e.currentTarget.style.background = 'white';
-            e.currentTarget.style.borderColor = 'white';
+            e.currentTarget.style.color = '#000';
+            e.currentTarget.style.background = '#fff';
+            e.currentTarget.style.borderColor = '#fff';
           }}
           onMouseLeave={(e) => {
             e.currentTarget.style.color = '#888';
@@ -208,7 +179,7 @@ export default function Contact() {
             e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)';
           }}
         >
-          [ RETURN ]
+          [ BACK TO HOME ]
         </button>
       </div>
       

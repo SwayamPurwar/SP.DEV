@@ -3500,3 +3500,110 @@ footer {
 }
 
 
+
+
+
+
+/* --- NATIVE PREMIUM CONTACT UI --- */
+.contact-grid {
+    padding: 180px 10vw 5vh;
+    min-height: 85vh; /* Leaves room for the bottom return button */
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6rem;
+    align-items: center;
+    max-width: 1600px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.contact-heading {
+    font-family: var(--font-display);
+    font-size: clamp(3.5rem, 8vw, 6.5rem);
+    font-weight: 700;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    margin-bottom: 2rem;
+    color: #fff;
+}
+
+.contact-sub {
+    font-family: var(--font-main);
+    font-size: 1.15rem;
+    color: #999;
+    line-height: 1.7;
+    margin-bottom: 3.5rem;
+    max-width: 90%;
+}
+
+.contact-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.c-link-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.c-link-label {
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.c-link-val {
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+}
+
+.c-link-val:hover {
+    color: var(--accent);
+}
+
+/* Sleek Native Inputs */
+.c-input {
+    width: 100%;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 15px 0;
+    color: #fff;
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    outline: none;
+    transition: border-color 0.3s ease;
+    margin-bottom: 2.5rem;
+    resize: vertical;
+}
+
+.c-input:focus {
+    border-bottom-color: var(--accent);
+}
+
+.c-input::placeholder {
+    color: #555;
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 1024px) {
+    .contact-grid {
+        grid-template-columns: 1fr;
+        gap: 4rem;
+        padding: 150px 6vw 5vh;
+    }
+}
