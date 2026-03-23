@@ -92,7 +92,7 @@ export default function Contact() {
                   Social Network
                 </h4>
                 <div className="lux-social-list">
-  <a href="https://www.linkedin.com/in/SwayamPurwar" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
+  <a href="https://www.linkedin.com/in/swayam-purwar/" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
     LinkedIn
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1em', height: '1em' }}>
       <line x1="7" y1="17" x2="17" y2="7"></line>
@@ -108,7 +108,7 @@ export default function Contact() {
     </svg>
   </a>
   
-  <a href="https://x.com/" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
+  <a href="https://x.com/swayampurwar?s=21" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
     Twitter
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1em', height: '1em' }}>
       <line x1="7" y1="17" x2="17" y2="7"></line>

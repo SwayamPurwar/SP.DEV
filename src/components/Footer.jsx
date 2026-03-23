@@ -67,9 +67,9 @@ export default function Footer() {
             <div className="footer-col">
               <h4>Social Network</h4>
               <div className="footer-socials">
-                <a href="https://www.linkedin.com/in/SwayamPurwar" target="_blank" rel="noreferrer" className="footer-social-link mouse-hover">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/swayam-purwar/" target="_blank" rel="noreferrer" className="footer-social-link mouse-hover">LinkedIn</a>
                 <a href="https://github.com/SwayamPurwar/" target="_blank" rel="noreferrer" className="footer-social-link mouse-hover">GitHub</a>
-                <a href="https://x.com/" target="_blank" rel="noreferrer" className="footer-social-link mouse-hover">Twitter / X</a>
+                <a href="https://x.com/swayampurwar?s=21" target="_blank" rel="noreferrer" className="footer-social-link mouse-hover">Twitter / X</a>
               </div>
             </div>
 
@@ -133,9 +133,9 @@ export default function Footer() {
           <div className="footer-col">
             <h4>Social Network</h4>
             <div className="footer-socials">
-              <a href="https://www.linkedin.com/in/SwayamPurwar" target="_blank" rel="noreferrer" className="footer-social-link mouse-hover">LinkedIn</a>
+              <a href="https://www.linkedin.com/in/swayam-purwar/" target="_blank" rel="noreferrer" className="footer-social-link mouse-hover">LinkedIn</a>
               <a href="https://github.com/SwayamPurwar/" target="_blank" rel="noreferrer" className="footer-social-link mouse-hover">GitHub</a>
-              <a href="https://x.com/" target="_blank" rel="noreferrer" className="footer-social-link mouse-hover">Twitter / X</a>
+              <a href="https://x.com/swayampurwar?s=21" target="_blank" rel="noreferrer" className="footer-social-link mouse-hover">Twitter / X</a>
             </div>
           </div>
 
