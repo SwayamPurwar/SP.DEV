@@ -39,7 +39,91 @@ export function initAnimations() {
     const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let lenis;
     let tickerCallback;
+    let loaderTl; // Declare here for cleanup
     
+    // --- ENHANCED CINEMATIC LOADER ---
+    const loaderContainer = document.querySelector(".preloader-container");
+    
+    // Only run if the loader exists and isn't already hidden
+    if (loaderContainer && !loaderContainer.classList.contains("hidden")) {
+        const counterElement = document.querySelector(".counter");
+        const loaderText = document.querySelector(".loader-text");
+        const blinds = document.querySelectorAll(".blind");
+        
+        // 1. Create a Master Timeline for the loader sequence
+        loaderTl = gsap.timeline({
+            onComplete: () => {
+                loaderContainer.classList.add("hidden");
+                // Add a class to body when loading is completely finished
+                document.body.classList.add("js-loaded", "loader-finished"); 
+            }
+        });
+
+        // 2. The Counting Animation (Stage 1)
+        let currentCount = { value: 0 };
+        loaderTl.to(currentCount, {
+            value: 100,
+            duration: 2.5, // Dramatic build
+            ease: "power2.inOut",
+            onUpdate: () => {
+                if (counterElement) {
+                    // Format the number to always show 3 digits (e.g., 007, 042, 100)
+                    counterElement.textContent = Math.floor(currentCount.value).toString().padStart(3, '0');
+                }
+            }
+        }, "start");
+
+        // 3. Fade in the loader text slightly after counting starts
+        if (loaderText) {
+            loaderTl.to(loaderText, {
+                opacity: 1,
+                duration: 1,
+                ease: "power1.out"
+            }, "start+=0.5");
+        }
+
+        // 4. The "Glitch" or "Snap" before revealing (Stage 2)
+        loaderTl.to(".counter-wrap", {
+            scale: 1.05,
+            duration: 0.1,
+            yoyo: true,
+            repeat: 1,
+            ease: "power1.inOut"
+        }, "+=0.2");
+
+        // 5. The Reveal: Opening the blinds/curtains (Stage 3)
+        if (blinds.length > 0) {
+            loaderTl.to(blinds, {
+                scaleY: 0,
+                duration: 0.8,
+                stagger: {
+                    each: 0.05,
+                    from: "center", // Opens from the middle outwards
+                    grid: "auto"
+                },
+                ease: "power4.inOut"
+            }, "+=0.1");
+        }
+
+        // 6. Fade out the text elements as the blinds open
+        loaderTl.to([".counter-wrap", loaderText], {
+            opacity: 0,
+            y: -20, // Slight upward movement as they fade
+            duration: 0.4,
+            ease: "power2.in"
+        }, "<"); 
+
+        // 7. Finally, fade out the whole container
+        loaderTl.to(loaderContainer, {
+            opacity: 0,
+            duration: 0.5,
+            ease: "power2.inOut"
+        }, "-=0.2");
+    } else {
+        // Fallback: If loader isn't present, ensure body has js-loaded class
+        document.body.classList.add("js-loaded");
+    }
+
     // --- BUTTERY SMOOTH SCROLLING ---
     if (typeof Lenis !== 'undefined' && !prefersReducedMotion) {
         lenis = new Lenis({
@@ -104,6 +188,7 @@ export function initAnimations() {
 
     // 🚨 FIX: Return a clean-up function to prevent memory leaks in React
     return () => {
+        if (loaderTl) loaderTl.kill(); // Kill the loader animation if unmounted
         if (lenis) {
             lenis.destroy(); // Safely destroy smooth scrolling
             delete window.lenis; // Clean up global reference
