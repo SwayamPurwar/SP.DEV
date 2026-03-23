@@ -118,63 +118,77 @@ body {
 
 /* FIXED: Center Loader on Screen */
 .loader-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    /* Dead Center */
+    position: relative;
     z-index: 10000;
-    color: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    /* Center text horizontally */
+    justify-content: center;
     mix-blend-mode: difference;
-    width: 100%;
 }
-
 .counter-wrap {
     display: flex;
-    align-items: center;
-    /* FIX: Vertically Center % relative to Number */
-    justify-content: center;
-    line-height: 1;
-    gap: 10px;
-    /* Space between number and % */
+    align-items: flex-start;
+    overflow: hidden; /* Crucial for the slide-up reveal effect */
+    padding: 10px;
 }
-
 .counter {
     font-family: var(--font-display);
-    font-size: 15vw;
-    /* Slightly larger for center impact */
+    font-size: clamp(6rem, 20vw, 15rem); /* Massive scaling */
     font-weight: 800;
-    color: #f0f0f0;
-    letter-spacing: -0.05em;
+    color: #ffffff;
+    letter-spacing: -0.06em;
     font-variant-numeric: tabular-nums;
-    line-height: 1;
+    line-height: 0.85; /* Tighten the box height */
     margin: 0;
+    transform: translateY(100%); /* Start hidden below the box */
+    animation: slide-up-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
-
 .percent {
     font-family: "Syne", sans-serif;
-    font-size: 4vw;
+    font-size: clamp(2rem, 5vw, 4rem);
     font-weight: 700;
-    color: #444;
-    margin: 0;
-    transform: translateY(10%);
-    /* Optical adjustment for perfect center */
+    color: var(--accent); /* Make the % symbol pop in purple */
+    margin-top: 1vw;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: fade-in-right 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.5s forwards;
 }
 
+
+
+
+
+
+
+
+/* The Wrapper clips the number so it looks like it's 
+  sliding up from behind an invisible wall 
+*/
+
+
+
+
+
+
+
+
+
+
+
 .loader-text {
-    font-family: "Fira Code", monospace;
-    font-size: 0.8rem;
-    color: #666;
-    letter-spacing: 0.3em;
-    margin-top: 1.5rem;
+    font-family: var(--font-code);
+    font-size: 0.75rem;
+    color: #888;
+    letter-spacing: 0.4em;
     text-transform: uppercase;
-    opacity: 0;
-    text-align: center;
+    margin-top: 3rem;
+    padding: 10px 20px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 100px;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(10px);
+    opacity: 0; /* Handled by GSAP */
 }
 
 /* Corner Metadata (Optional - keeps corners busy while loader is center) */
@@ -206,14 +220,14 @@ body {
     bottom: 0;
     right: 0;
 }
-
 .blind {
     flex: 1;
-    background-color: #000;
+    background-color: #030303;
     height: 100%;
-    border-right: 1px solid #111;
+    border-right: 1px solid rgba(255, 255, 255, 0.02); /* Very faint structural lines */
     transform-origin: top;
     will-change: transform;
+    z-index: 100;
 }
 
 
@@ -4247,4 +4261,66 @@ footer {
     justify-content: center;
     align-items: center;
     gap: 6px; /* Space between bars */
+}
+
+
+
+
+/* --- CINEMATIC LOADER STYLES --- */
+.preloader-container {
+    position: fixed;
+    inset: 0;
+    background-color: #030303; /* Slightly deeper black */
+    z-index: 999999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    pointer-events: all;
+    touch-action: none;
+    user-select: none;
+    /* We handle the fade out via GSAP now */
+}
+
+/* The scanning laser line effect */
+.preloader-container::after {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: 0;
+    width: 100%;
+    height: 20vh;
+    background: linear-gradient(to bottom, transparent, rgba(191, 165, 216, 0.05), transparent);
+    animation: scan-line 3s linear infinite;
+    pointer-events: none;
+    z-index: 10001;
+}
+
+@keyframes scan-line {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(600%); }
+}
+
+/* Container for perfect centering */
+
+
+/* The loading text at the bottom */
+
+
+/* Blinds (The physical curtains opening) */
+
+.blind:last-child {
+    border-right: none;
+}
+
+/* CSS Animations for the initial load-in */
+@keyframes slide-up-reveal {
+    to { transform: translateY(0); }
+}
+
+@keyframes fade-in-right {
+    to { 
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
