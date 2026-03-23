@@ -15,6 +15,7 @@ function preventScroll(e) {
     e.stopPropagation();
     return false;
 }
+// src/utils/animations.js
 
 export function lockScroll() {
     document.body.style.overflow = 'hidden';
@@ -22,6 +23,11 @@ export function lockScroll() {
     window.addEventListener('wheel', preventScroll, { passive: false });
     window.addEventListener('touchmove', preventScroll, { passive: false });
     window.addEventListener('keydown', preventScroll, { passive: false });
+
+    // 🚨 NEW: Tell Lenis to completely pause
+    if (window.lenis) {
+        window.lenis.stop();
+    }
 }
 
 export function unlockScroll() {
@@ -30,6 +36,11 @@ export function unlockScroll() {
     window.removeEventListener('wheel', preventScroll);
     window.removeEventListener('touchmove', preventScroll);
     window.removeEventListener('keydown', preventScroll);
+
+    // 🚨 NEW: Tell Lenis to resume scrolling
+    if (window.lenis) {
+        window.lenis.start();
+    }
 }
 
 // ==========================================
