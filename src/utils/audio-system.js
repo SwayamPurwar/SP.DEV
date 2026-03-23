@@ -2,6 +2,7 @@ import { interactiveSelector } from './constants.js';
 
 class SystemSound {
     constructor() {
+        // Initialize AudioContext; it will start in a 'suspended' state by default
         this.ctx = new (window.AudioContext || window.webkitAudioContext)();
         this.masterGain = this.ctx.createGain();
         this.masterGain.gain.value = 0.05; 
@@ -9,6 +10,7 @@ class SystemSound {
     }
 
     ensureAudio() {
+        // Attempting to resume here will only work if triggered by a valid user gesture
         if (this.ctx.state === 'suspended') {
             this.ctx.resume().catch(() => {});
         }
@@ -31,6 +33,9 @@ class SystemSound {
 
     playHover() {
         this.ensureAudio();
+        // If state is still suspended, browser is blocking playback
+        if (this.ctx.state !== 'running') return;
+
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.connect(gain);
@@ -46,6 +51,8 @@ class SystemSound {
 
     playClick() {
         this.ensureAudio();
+        if (this.ctx.state !== 'running') return;
+
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.connect(gain);
@@ -63,30 +70,44 @@ class SystemSound {
 export const sfx = new SystemSound();
 
 export function initAudio() {
-    // FIX: Check if audio is already bound to prevent ear-destroying stacked sounds
     if (window.audioSystemBound) return; 
 
-    const unlockEvents = ['mousedown', 'touchstart', 'keydown', 'click', 'mousemove', 'scroll'];
+    // Events that are recognized by browsers as "User Gestures" to unlock audio
+    const unlockEvents = ['mousedown', 'pointerdown', 'touchstart', 'keydown', 'click'];
 
     const unlockAudio = () => {
         if (sfx.ctx.state === 'suspended') {
             sfx.ctx.resume().then(() => {
                 if (sfx.ctx.state === 'running') {
+                    // Success! Play boot sound and clean up listeners
+                    sfx.playBoot();
                     unlockEvents.forEach(e => window.removeEventListener(e, unlockAudio));
+                    console.log("Audio System: Active");
                 }
-            }).catch(() => {});
+            }).catch(err => console.error("Audio unlock failed:", err));
         }
     };
 
-    unlockEvents.forEach(e => window.addEventListener(e, unlockAudio));
+    // Attach unlock listeners to the window so ANY initial interaction enables sound
+    unlockEvents.forEach(e => window.addEventListener(e, unlockAudio, { once: true }));
 
+    // Corrected Mouseover Listener
     document.addEventListener("mouseover", (e) => {
-        if (e.target.closest(interactiveSelector)) sfx.playHover();
+        if (e.target.closest(interactiveSelector)) {
+            if (sfx.ctx.state === 'suspended') {
+                // Optional: Provide visual feedback that sound is muted until clicked
+                console.warn("Audio suspended. Click anywhere to enable sound.");
+            } else {
+                sfx.playHover();
+            }
+        }
     });
 
     document.addEventListener("mousedown", (e) => {
-        if (e.target.closest(interactiveSelector)) sfx.playClick();
+        if (e.target.closest(interactiveSelector)) {
+            sfx.playClick();
+        }
     });
 
-    window.audioSystemBound = true; // Mark as bound globally
+    window.audioSystemBound = true;
 }
