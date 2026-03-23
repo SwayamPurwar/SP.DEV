@@ -185,7 +185,7 @@ export default function Contact() {
         {/* --- BOTTOM RETURN ZONE --- */}
         <div className="lux-return-zone" ref={backBtnRef}>
           <button 
-            onClick={() => navigate(-1)} 
+            onClick={() => navigate('/')} 
             className="mouse-hover"
             style={{
               background: 'transparent',
