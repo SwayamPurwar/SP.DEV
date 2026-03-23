@@ -4108,3 +4108,56 @@ footer {
         transform: none; /* Disable slide on mobile */
     }
 }
+
+
+@media (max-width: 768px) {
+    /* 1. Reset the mobile menu appearance */
+    .mobile-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 10%;
+        text-align: center;
+        transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1), 
+                    visibility 0.5s;
+    }
+
+    /* 2. Initial state of links (Hidden & Moved down) */
+    .mobile-link {
+        display: block;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), 
+                    transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        margin-bottom: 2rem;
+        font-family: var(--font-display); /* Using your Space Grotesk preference */
+        font-weight: 700;
+        text-decoration: none;
+        color: #ffffff;
+    }
+
+    /* 3. Active state: Slide up and fade in */
+    .mobile-menu.active .mobile-link {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* 4. The Stagger: Each link waits a bit longer than the last */
+    .mobile-menu.active .mobile-link:nth-child(1) { transition-delay: 0.2s; }
+    .mobile-menu.active .mobile-link:nth-child(2) { transition-delay: 0.3s; }
+    .mobile-menu.active .mobile-link:nth-child(3) { transition-delay: 0.4s; }
+    .mobile-menu.active .mobile-link:nth-child(4) { transition-delay: 0.5s; }
+
+    /* 5. Menu Toggle Enhancement */
+    .menu-toggle {
+        display: flex !important;
+        background: rgba(255, 255, 255, 0.08);
+        border-radius: 50%;
+        transition: transform 0.3s ease;
+    }
+    
+    .menu-toggle.active {
+        transform: rotate(90deg); /* Slight spin on open for extra flair */
+    }
+}

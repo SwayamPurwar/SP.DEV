@@ -1,8 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
 
-// 1. Move static lists OUTSIDE the component so they aren't recreated on every render.
-// 2. Use a Set for O(1) performance lookups instead of O(n) Array.includes().
 const VALID_WORK_ROUTES = new Set([
   '/work/apple-music', '/work/instagram', '/work/kite', '/work/ai-saas', 
   '/work/CodeSenseAiSaas', '/work/codesense-casestudy',
@@ -18,105 +16,67 @@ export default function Navbar() {
   const path = location.pathname;
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
 
-  // Strict Dynamic Route Checking
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? 'hidden' : 'unset';
+    return () => { document.body.style.overflow = 'unset'; };
+  }, [isMenuOpen]);
+
   const isKnownRoute = KNOWN_BASE_ROUTES.has(path) || VALID_WORK_ROUTES.has(path);
     
-  // HIDE NAV ON SPECIFIC PAGES OR 404 PAGES
   if (HIDDEN_ROUTES.has(path) || !isKnownRoute) {
     return null;
   }
 
   const handleNavClick = (e, targetId) => {
-    setIsMenuOpen(false); // Close mobile menu if open
-    
+    setIsMenuOpen(false);
     if (path !== '/') {
-        // Let React router navigate directly to the hash URL (e.g. /#work)
         navigate(`/${targetId}`); 
     } else {
         e.preventDefault();
-        // Already on home page, just smooth scroll
         document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
-  // 3. DRY: Reusable Logo component to prevent repetitive code
   const Logo = () => (
-    <Link to="/" className="logo mouse-hover" aria-label="Home">SP.DEV</Link>
+    <Link to="/" className="logo mouse-hover" aria-label="Home" onClick={() => setIsMenuOpen(false)}>
+      SP.DEV
+    </Link>
   );
 
-  // ==========================================
-  // CUSTOM NAV FOR 'ABOUT' PAGE
-  // ==========================================
-  if (path === '/about') {
-    return (
-      <nav id="main-nav" className="nav-about">
-        <Logo />
-        <div className="nav-links">
-          <Link to="/contact" className="nav-item mouse-hover">Contact</Link>
-        </div>
-      </nav>
-    );
-  }
+  const getNavContent = (isMobile = false) => {
+    const linkClass = isMobile ? "mobile-link" : "nav-item mouse-hover";
+    const closeAction = () => setIsMenuOpen(false);
 
-  // ==========================================
-  // CUSTOM NAV FOR 'CONTACT' PAGE
-  // ==========================================
-  if (path === '/contact') {
-    return (
-      <nav id="main-nav" className="nav-contact">
-        <Logo />
-        <div className="nav-links">
-          <a href="mailto:your@email.com" className="nav-item mouse-hover">Email Directly</a>
-        </div>
-      </nav>
-    );
-  }
-// ==========================================
-  // CUSTOM NAV FOR 'CASE STUDIES'
-  // ==========================================
-  if (path.startsWith('/work/') && path.includes('casestudy')) {
-    return (
-      <nav id="main-nav" className="nav-casestudy">
-        <Logo />
-        <div className="nav-links">
-           {/* Custom links specifically for reading a case study */}
-           <Link to="/#work" className="nav-item mouse-hover">Exit Case Study</Link>
-        </div>
-      </nav>
-    );
-  }
+    if (path === '/about') {
+      return <Link to="/contact" className={linkClass} onClick={closeAction}>Contact</Link>;
+    }
+    if (path === '/contact') {
+      return <a href="mailto:your@email.com" className={linkClass} onClick={closeAction}>Email Directly</a>;
+    }
+    if (path.startsWith('/work/')) {
+      const label = path.includes('casestudy') ? "Exit Case Study" : "All Projects";
+      return <Link to="/#work" className={linkClass} onClick={closeAction}>{label}</Link>;
+    }
 
-  // ==========================================
-  // CUSTOM NAV FOR 'WORK' PAGES
-  // ==========================================
-  if (path.startsWith('/work/') && !path.includes('casestudy')) {
     return (
-      <nav id="main-nav" className="nav-work">
-        <Logo />
-        <div className="nav-links">
-           {/* Custom links specifically for viewing a project */}
-           <Link to="/#work" className="nav-item mouse-hover">All Projects</Link>
-        </div>
-      </nav>
+      <>
+        <a href="#work" onClick={(e) => handleNavClick(e, '#work')} className={linkClass}>Work</a>
+        <Link to="/about" className={linkClass} onClick={closeAction}>About</Link>
+        <Link to="/contact" className={linkClass} onClick={closeAction}>Contact</Link>
+      </>
     );
-  }
-  // ==========================================
-  // DEFAULT NAV (HOME PAGE)
-  // ==========================================
+  };
+
   return (
     <>
-      <nav id="main-nav">
+      <nav id="main-nav" className={`nav-${path.replace(/\//g, '') || 'home'}`}>
         <Logo />
         <div className="nav-links" role="navigation">
-          <a href="#work" onClick={(e) => handleNavClick(e, '#work')} className="nav-item mouse-hover">Work</a>
-          <Link to="/about" className="nav-item mouse-hover">About</Link>
-          <Link to="/contact" className="nav-item mouse-hover">Contact</Link>
+          {getNavContent(false)}
         </div>
-        
         <button 
           className={`menu-toggle mouse-hover ${isMenuOpen ? 'active' : ''}`} 
           aria-label="Toggle Menu" 
-          aria-expanded={isMenuOpen}
           onClick={() => setIsMenuOpen(!isMenuOpen)} 
         >
           <div className="bar"></div>
@@ -125,9 +85,10 @@ export default function Navbar() {
       </nav>
 
       <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`} aria-hidden={!isMenuOpen}>
-        <a href="#work" className="mobile-link" onClick={(e) => handleNavClick(e, '#work')}>Work</a>
-        <Link to="/about" className="mobile-link" onClick={() => setIsMenuOpen(false)}>About</Link>
-        <Link to="/contact" className="mobile-link" onClick={() => setIsMenuOpen(false)}>Contact</Link>
+        {/* The container below allows us to target individual links for staggering */}
+        <div className="mobile-links-container">
+          {getNavContent(true)}
+        </div>
       </div>
     </>
   );
