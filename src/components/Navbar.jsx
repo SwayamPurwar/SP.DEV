@@ -16,6 +16,7 @@ export default function Navbar() {
   const path = location.pathname;
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
 
+  // Lock body scroll for a focused mobile experience
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? 'hidden' : 'unset';
     return () => { document.body.style.overflow = 'unset'; };
@@ -43,7 +44,7 @@ export default function Navbar() {
     </Link>
   );
 
-  const getNavContent = (isMobile = false) => {
+  const renderLinks = (isMobile = false) => {
     const linkClass = isMobile ? "mobile-link" : "nav-item mouse-hover";
     const closeAction = () => setIsMenuOpen(false);
 
@@ -72,8 +73,9 @@ export default function Navbar() {
       <nav id="main-nav" className={`nav-${path.replace(/\//g, '') || 'home'}`}>
         <Logo />
         <div className="nav-links" role="navigation">
-          {getNavContent(false)}
+          {renderLinks(false)}
         </div>
+        
         <button 
           className={`menu-toggle mouse-hover ${isMenuOpen ? 'active' : ''}`} 
           aria-label="Toggle Menu" 
@@ -85,9 +87,8 @@ export default function Navbar() {
       </nav>
 
       <div className={`mobile-menu ${isMenuOpen ? 'active' : ''}`} aria-hidden={!isMenuOpen}>
-        {/* The container below allows us to target individual links for staggering */}
         <div className="mobile-links-container">
-          {getNavContent(true)}
+          {renderLinks(true)}
         </div>
       </div>
     </>
