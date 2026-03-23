@@ -1,5 +1,6 @@
 import { useEffect, Suspense, lazy } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
+import { Analytics } from "@vercel/analytics/react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PageTransition from "./components/PageTransition";
@@ -60,6 +61,7 @@ function App() {
     <>
       <ScrollToTop />
       <PageTransition />
+      <Analytics />
       
       <div id="ambient-glow" aria-hidden="true"></div>
       <div id="cursor" aria-hidden="true"></div>
