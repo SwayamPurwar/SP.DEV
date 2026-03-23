@@ -408,25 +408,30 @@ export function initTerminal() {
       }, 30);
     }, 800);
   }
-
-  // Mobile God Mode trigger
-  const logoTrigger = document.querySelector(".logo");
+// --- REPLACED: Mobile God Mode trigger using Event Delegation ---
   let tapCount = 0,
     tapTimer;
-  if (logoTrigger) {
-    logoTrigger.addEventListener("click", (e) => {
+    
+  // Attach listener to the whole document so it survives React renders
+  document.addEventListener("click", (e) => {
+    // Check if what was clicked is the logo (or inside the logo)
+    const clickedLogo = e.target.closest(".logo");
+    
+    if (clickedLogo) {
       tapCount++;
       clearTimeout(tapTimer);
       tapTimer = setTimeout(() => (tapCount = 0), 500);
+      
       if (tapCount === 3) {
-        e.preventDefault();
+        e.preventDefault(); // Stop it from navigating on the 3rd click
         toggleTerminal();
         tapCount = 0;
         if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
       }
-    });
-  }
+    }
+  });
+
   document
     .getElementById("cmd-close-mobile")
     ?.addEventListener("click", toggleTerminal);
-}
+} // <-- End of initTerminal()
