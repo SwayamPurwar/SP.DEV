@@ -7,6 +7,7 @@ export default function Navbar() {
   const path = location.pathname;
   
   const [isMenuOpen, setIsMenuOpen] = useState(false); 
+  const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [lastScrollY, setLastScrollY] = useState(0);
 
