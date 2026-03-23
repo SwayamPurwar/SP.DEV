@@ -14,7 +14,7 @@ export default async function handler(req, res) {
   try {
     const data = await resend.emails.send({
       // Resend allows you to use their testing domain until you add your own
-      from: 'SP.DEV <sp.dev@gmail.com>', 
+      from: 'System <onboarding@resend.dev>', 
       to: 'swayampurwar111104@gmail.com', // Your receiving email
       subject: `New Transmission from ${name}`,
       text: `Incoming Transmission!\n---------------------------\nName: ${name}\nEmail: ${email}\n\nMessage Payload:\n${message}`,
