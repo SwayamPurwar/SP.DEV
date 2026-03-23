@@ -67,7 +67,7 @@ function App() {
       {/* --- GOD MODE TERMINAL HTML --- */}
       <div id="cmd-terminal" aria-hidden="true">
         <div className="cmd-header">
-          <span>SWAYAM.OS [VERSION 1.0]</span>
+          <span>SWAYAM.OS [VERSION 1.0.0]</span>
             <span>ADMIN ACCESS: GRANTED</span>
           <span id="cmd-close-mobile" onClick={() => document.getElementById("cmd-terminal").classList.remove("active")} style={{ cursor: "pointer" }}>X</span>
         </div>

@@ -1,22 +1,38 @@
+// Geminin/src/utils/audio-system.js
 import { interactiveSelector } from './constants.js';
 
 class SystemSound {
     constructor() {
-        // Initialize AudioContext; it will start in a 'suspended' state by default
         this.ctx = new (window.AudioContext || window.webkitAudioContext)();
         this.masterGain = this.ctx.createGain();
         this.masterGain.gain.value = 0.05; 
         this.masterGain.connect(this.ctx.destination);
+        // Default to muted
+        this.isMuted = true; 
     }
 
-    ensureAudio() {
-        // Attempting to resume here will only work if triggered by a valid user gesture
+    async ensureAudio() {
         if (this.ctx.state === 'suspended') {
-            this.ctx.resume().catch(() => {});
+            try {
+                await this.ctx.resume();
+            } catch (e) {
+                console.warn("AudioContext resume failed:", e);
+            }
         }
     }
 
+    toggleMute() {
+        this.isMuted = !this.isMuted;
+        // Unmuting counts as an interaction to resume context
+        if (!this.isMuted) {
+            this.ensureAudio();
+            this.playHover(); // Small feedback sound
+        }
+        return this.isMuted;
+    }
+
     playBoot() {
+        if (this.isMuted) return; // Skip if muted
         this.ensureAudio();
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
@@ -32,10 +48,7 @@ class SystemSound {
     }
 
     playHover() {
-        this.ensureAudio();
-        // If state is still suspended, browser is blocking playback
-        if (this.ctx.state !== 'running') return;
-
+        if (this.isMuted || this.ctx.state !== 'running') return;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.connect(gain);
@@ -50,9 +63,7 @@ class SystemSound {
     }
 
     playClick() {
-        this.ensureAudio();
-        if (this.ctx.state !== 'running') return;
-
+        if (this.isMuted || this.ctx.state !== 'running') return;
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.connect(gain);
@@ -72,41 +83,25 @@ export const sfx = new SystemSound();
 export function initAudio() {
     if (window.audioSystemBound) return; 
 
-    // Events that are recognized by browsers as "User Gestures" to unlock audio
     const unlockEvents = ['mousedown', 'pointerdown', 'touchstart', 'keydown', 'click'];
-
     const unlockAudio = () => {
         if (sfx.ctx.state === 'suspended') {
             sfx.ctx.resume().then(() => {
                 if (sfx.ctx.state === 'running') {
-                    // Success! Play boot sound and clean up listeners
-                    sfx.playBoot();
                     unlockEvents.forEach(e => window.removeEventListener(e, unlockAudio));
-                    console.log("Audio System: Active");
                 }
-            }).catch(err => console.error("Audio unlock failed:", err));
+            }).catch(() => {});
         }
     };
 
-    // Attach unlock listeners to the window so ANY initial interaction enables sound
-    unlockEvents.forEach(e => window.addEventListener(e, unlockAudio, { once: true }));
+    unlockEvents.forEach(e => window.addEventListener(e, unlockAudio));
 
-    // Corrected Mouseover Listener
     document.addEventListener("mouseover", (e) => {
-        if (e.target.closest(interactiveSelector)) {
-            if (sfx.ctx.state === 'suspended') {
-                // Optional: Provide visual feedback that sound is muted until clicked
-                console.warn("Audio suspended. Click anywhere to enable sound.");
-            } else {
-                sfx.playHover();
-            }
-        }
+        if (e.target.closest(interactiveSelector)) sfx.playHover();
     });
 
     document.addEventListener("mousedown", (e) => {
-        if (e.target.closest(interactiveSelector)) {
-            sfx.playClick();
-        }
+        if (e.target.closest(interactiveSelector)) sfx.playClick();
     });
 
     window.audioSystemBound = true;
