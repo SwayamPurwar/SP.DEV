@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import SEO from '../components/SEO';
 import gsap from 'gsap';
@@ -9,6 +9,9 @@ export default function Contact() {
   const formRef = useRef(null);
   const backBtnRef = useRef(null);
   const navigate = useNavigate();
+
+  // Added state to manage the button text and disable it during submission
+  const [isSending, setIsSending] = useState(false);
 
   useEffect(() => {
     // 1. Staggered fade up for the Top Section (Typography & Info)
@@ -44,9 +47,38 @@ export default function Contact() {
     }
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setTimeout(() => navigate('/success'), 500); 
+    setIsSending(true);
+
+    const formData = new FormData(formRef.current);
+    
+    const payload = {
+      name: formData.get('name'),
+      email: formData.get('email'),
+      message: formData.get('message')
+    };
+
+    try {
+      // Calls the Vercel serverless function
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (response.ok) {
+        navigate('/success'); 
+      } else {
+        console.error('Server Error');
+        alert('Transmission failed on the server. Please try again.');
+        setIsSending(false);
+      }
+    } catch (error) {
+      console.error('Network Error:', error);
+      alert('Network transmission failed. Please check your connection and try again.');
+      setIsSending(false);
+    }
   };
 
   return (
@@ -92,30 +124,30 @@ export default function Contact() {
                   Social Network
                 </h4>
                 <div className="lux-social-list">
-  <a href="https://www.linkedin.com/in/swayam-purwar/" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
-    LinkedIn
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1em', height: '1em' }}>
-      <line x1="7" y1="17" x2="17" y2="7"></line>
-      <polyline points="7 7 17 7 17 17"></polyline>
-    </svg>
-  </a>
-  
-  <a href="https://github.com/SwayamPurwar/" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
-    GitHub
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1em', height: '1em' }}>
-      <line x1="7" y1="17" x2="17" y2="7"></line>
-      <polyline points="7 7 17 7 17 17"></polyline>
-    </svg>
-  </a>
-  
-  <a href="https://x.com/swayampurwar?s=21" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
-    Twitter
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1em', height: '1em' }}>
-      <line x1="7" y1="17" x2="17" y2="7"></line>
-      <polyline points="7 7 17 7 17 17"></polyline>
-    </svg>
-  </a>
-</div>
+                  <a href="https://www.linkedin.com/in/swayam-purwar/" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
+                    LinkedIn
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1em', height: '1em' }}>
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </a>
+                  
+                  <a href="https://github.com/SwayamPurwar/" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
+                    GitHub
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1em', height: '1em' }}>
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </a>
+                  
+                  <a href="https://x.com/swayampurwar?s=21" target="_blank" rel="noreferrer" className="lux-social-pill mouse-hover">
+                    Twitter
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: '1em', height: '1em' }}>
+                      <line x1="7" y1="17" x2="17" y2="7"></line>
+                      <polyline points="7 7 17 7 17 17"></polyline>
+                    </svg>
+                  </a>
+                </div>
               </div>
             </div>
 
@@ -172,8 +204,8 @@ export default function Contact() {
                   <label htmlFor="message" className="lux-label">Message Payload</label>
                 </div>
 
-                <button type="submit" className="lux-submit-btn mouse-hover">
-                  Transmit Data
+                <button type="submit" className="lux-submit-btn mouse-hover" disabled={isSending}>
+                  {isSending ? 'Transmitting...' : 'Transmit Data'}
                 </button>
 
               </form>
