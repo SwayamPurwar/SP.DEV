@@ -1,10 +1,11 @@
 :root {
     --bg-color: #0a0a0a;
     --text-color: #f0f0f0;
-    --text-muted: #a1a1aa; /* Added a muted color for elegant paragraphs */
+    --text-muted: #a1a1aa;
+    /* Added a muted color for elegant paragraphs */
     --accent: #bfa5d8;
     --cursor-size: 20px;
-    
+
     /* NEW PREMIUM FONT STACK */
     --font-main: 'Outfit', sans-serif;
     --font-display: 'Space Grotesk', sans-serif;
@@ -15,14 +16,16 @@
 h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-display);
     text-transform: uppercase;
-    letter-spacing: -0.03em; /* Tighter letter-spacing on headings looks much more premium */
+    letter-spacing: -0.03em;
+    /* Tighter letter-spacing on headings looks much more premium */
     line-height: 1.1;
     font-weight: 700;
 }
 
 p {
     font-family: var(--font-main);
-    line-height: 1.7; /* Increased for better readability */
+    line-height: 1.7;
+    /* Increased for better readability */
     color: var(--text-muted);
     font-weight: 300;
     letter-spacing: 0.01em;
@@ -126,29 +129,37 @@ body {
     justify-content: center;
     mix-blend-mode: difference;
 }
+
 .counter-wrap {
     display: flex;
     align-items: flex-start;
-    overflow: hidden; /* Crucial for the slide-up reveal effect */
+    overflow: hidden;
+    /* Crucial for the slide-up reveal effect */
     padding: 10px;
 }
+
 .counter {
     font-family: var(--font-display);
-    font-size: clamp(6rem, 20vw, 15rem); /* Massive scaling */
+    font-size: clamp(6rem, 20vw, 15rem);
+    /* Massive scaling */
     font-weight: 800;
     color: #ffffff;
     letter-spacing: -0.06em;
     font-variant-numeric: tabular-nums;
-    line-height: 0.85; /* Tighten the box height */
+    line-height: 0.85;
+    /* Tighten the box height */
     margin: 0;
-    transform: translateY(100%); /* Start hidden below the box */
+    transform: translateY(100%);
+    /* Start hidden below the box */
     animation: slide-up-reveal 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
+
 .percent {
     font-family: "Syne", sans-serif;
     font-size: clamp(2rem, 5vw, 4rem);
     font-weight: 700;
-    color: var(--accent); /* Make the % symbol pop in purple */
+    color: var(--accent);
+    /* Make the % symbol pop in purple */
     margin-top: 1vw;
     opacity: 0;
     transform: translateX(-20px);
@@ -188,7 +199,8 @@ body {
     border-radius: 100px;
     background: rgba(255, 255, 255, 0.02);
     backdrop-filter: blur(10px);
-    opacity: 0; /* Handled by GSAP */
+    opacity: 0;
+    /* Handled by GSAP */
 }
 
 /* Corner Metadata (Optional - keeps corners busy while loader is center) */
@@ -220,11 +232,13 @@ body {
     bottom: 0;
     right: 0;
 }
+
 .blind {
     flex: 1;
     background-color: #030303;
     height: 100%;
-    border-right: 1px solid rgba(255, 255, 255, 0.02); /* Very faint structural lines */
+    border-right: 1px solid rgba(255, 255, 255, 0.02);
+    /* Very faint structural lines */
     transform-origin: top;
     will-change: transform;
     z-index: 100;
@@ -437,13 +451,16 @@ nav.scrolled {
     position: relative;
     padding: 0 1rem;
 }
+
 .hero-name {
     font-family: var(--font-display);
-    font-weight: 700; /* Changed from 800 to 700 for Space Grotesk */
+    font-weight: 700;
+    /* Changed from 800 to 700 for Space Grotesk */
     font-size: clamp(3.5rem, 12vw, 11rem);
     line-height: 0.9;
     text-transform: uppercase;
-    letter-spacing: -0.06em; /* Extremely tight tracking for massive text gives a modern tech feel */
+    letter-spacing: -0.06em;
+    /* Extremely tight tracking for massive text gives a modern tech feel */
     color: #ffffff;
     background: none;
     filter: drop-shadow(0 0 25px rgba(255, 255, 255, 0.15));
@@ -477,11 +494,13 @@ nav.scrolled {
     font-size: 0.95rem;
     color: #888;
     opacity: 0;
-    letter-spacing: 0.25em; /* Ultra-wide tracking for tiny subtext creates beautiful contrast */
+    letter-spacing: 0.25em;
+    /* Ultra-wide tracking for tiny subtext creates beautiful contrast */
     text-transform: uppercase;
     text-align: center;
     font-weight: 500;
 }
+
 /* --- SELECTED WORKS --- */
 #work {
     padding: 10vh 10vw;
@@ -980,11 +999,9 @@ body.user-is-tabbing #cursor {
     width: 100vw;
     height: 100dvh;
     /* Primary dynamic light that follows the mouse */
-   background: radial-gradient(
-        circle 200px at var(--mouse-x, 50%) var(--mouse-y, 50%), 
-        rgba(168, 85, 247, 0.18) 0%, 
-        transparent 100%
-    );
+    background: radial-gradient(circle 200px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(168, 85, 247, 0.18) 0%,
+            transparent 100%);
     z-index: -1;
     pointer-events: none;
     will-change: transform;
@@ -995,7 +1012,7 @@ body.user-is-tabbing #cursor {
     content: "";
     position: absolute;
     inset: 0;
-    background: 
+    background:
         radial-gradient(circle at 80% 20%, rgba(0, 210, 255, 0.06) 0%, transparent 40%),
         radial-gradient(circle at 15% 80%, rgba(157, 80, 187, 0.06) 0%, transparent 45%);
     filter: blur(40px);
@@ -1011,9 +1028,10 @@ body.user-is-tabbing #cursor {
     mix-blend-mode: overlay;
     pointer-events: none;
 }
+
 .crt-overlay, #matrix-canvas {
-  height: 100dvh !important;
-  will-change: opacity;
+    height: 100dvh !important;
+    will-change: opacity;
 }
 
 /* Ensure content stays on top of the light */
@@ -1073,18 +1091,18 @@ main, nav, footer {
 
 /* --- CRT MONITOR OVERLAY --- */
 .crt-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), 
-              linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  z-index: 9999;
-  pointer-events: none;
-  /* FIX: Force hardware acceleration for the overlay */
-  will-change: opacity;
-  transform: translateZ(0);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    z-index: 9999;
+    pointer-events: none;
+    /* FIX: Force hardware acceleration for the overlay */
+    will-change: opacity;
+    transform: translateZ(0);
 }
 
 
@@ -1197,17 +1215,19 @@ main, nav, footer {
     width: 100%;
     height: 100%;
     /* FIX: Matched the 250px restricted radius and purple color */
-    background: radial-gradient(
-        circle 200px at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(168, 85, 247, 0.15) 0%,
-        transparent 100%
-    );
-    opacity: 0; /* Hidden by default */
+    background: radial-gradient(circle 200px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+            rgba(168, 85, 247, 0.15) 0%,
+            transparent 100%);
+    opacity: 0;
+    /* Hidden by default */
     transition: opacity 0.3s;
     pointer-events: none;
-    z-index: 2; /* On top of background but behind text */
-    mix-blend-mode: overlay; /* Blends like light */
+    z-index: 2;
+    /* On top of background but behind text */
+    mix-blend-mode: overlay;
+    /* Blends like light */
 }
+
 /* Hover State */
 .project-link:hover .project::before {
     opacity: 1;
@@ -1656,11 +1676,21 @@ body.theme-paper .glass-card {
     top: 10vh;
     perspective: 1000px;
 }
+
 @keyframes float-card {
-    0% { transform: translateY(0px) rotateY(5deg); }
-    50% { transform: translateY(-15px) rotateY(2deg); }
-    100% { transform: translateY(0px) rotateY(5deg); }
+    0% {
+        transform: translateY(0px) rotateY(5deg);
+    }
+
+    50% {
+        transform: translateY(-15px) rotateY(2deg);
+    }
+
+    100% {
+        transform: translateY(0px) rotateY(5deg);
+    }
 }
+
 .bio-card {
     width: 100%;
     height: 100%;
@@ -1669,32 +1699,46 @@ body.theme-paper .glass-card {
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     transform: rotateY(5deg);
-  @keyframes float-card {
-    0% { transform: translateY(0px) rotateY(5deg); }
-    50% { transform: translateY(-15px) rotateY(2deg); }
-    100% { transform: translateY(0px) rotateY(5deg); }
-}
+
+    @keyframes float-card {
+        0% {
+            transform: translateY(0px) rotateY(5deg);
+        }
+
+        50% {
+            transform: translateY(-15px) rotateY(2deg);
+        }
+
+        100% {
+            transform: translateY(0px) rotateY(5deg);
+        }
+    }
 }
 
 /* 3. What happens when the user hovers over the card */
 .bio-card:hover {
     /* Pause the float so it doesn't fight the hover effect */
-    animation-play-state: paused; 
+    animation-play-state: paused;
     transform: translateY(-10px) rotateY(0deg) scale(1.02);
     border-color: rgba(255, 255, 255, 0.3);
     /* Adds a subtle glow using your theme's accent color */
-    box-shadow: 0 30px 60px rgba(191, 165, 216, 0.15); 
+    box-shadow: 0 30px 60px rgba(191, 165, 216, 0.15);
 }
+
 .bio-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: contrast(1.1); /* Full color, slightly boosted contrast */
-    transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1); /* Smooth springy transition */
+    filter: contrast(1.1);
+    /* Full color, slightly boosted contrast */
+    transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    /* Smooth springy transition */
 }
+
 .bio-card:hover .bio-img {
-    transform: scale(1.06); 
+    transform: scale(1.06);
 }
+
 .bio-text p {
     font-size: 1.35rem;
     line-height: 1.6;
@@ -3110,7 +3154,8 @@ body.theme-paper .glass-card {
 
 /* Accent color for the middle layer to add depth */
 .layer-accent {
-    background: var(--accent); /* Uses your purple #bfa5d8 */
+    background: var(--accent);
+    /* Uses your purple #bfa5d8 */
 }
 
 
@@ -3118,32 +3163,35 @@ body.theme-paper .glass-card {
 footer {
     min-height: 80vh;
     padding: 4rem;
-    background-color: #f4f1ea; /* Elegant, warm off-white paper base */
-    color: #111; 
+    background-color: #f4f1ea;
+    /* Elegant, warm off-white paper base */
+    color: #111;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     position: relative;
     /* This is the magic property! It ensures the z-index: -1 of the texture 
        stays ABOVE this background color, but BELOW the text */
-    isolation: isolate; 
+    isolation: isolate;
     overflow: hidden;
     box-shadow: inset 0 20px 40px rgba(0, 0, 0, 0.04);
 }
+
 footer::before {
     content: "";
     position: absolute;
     inset: 0;
     z-index: -1;
     pointer-events: none;
-    
+
     /* Razor-sharp, non-gradient diagonal line pattern using an SVG background */
     background-image: url("data:image/svg+xml,%3Csvg width='8' height='8' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M-2 10L10 -2M-2 2L2 -2M6 10L10 6' stroke='%23000000' stroke-width='0.5' stroke-opacity='0.1' fill='none'/%3E%3C/svg%3E");
     background-repeat: repeat;
-    
+
     /* Optional: multiply blending makes the dark lines merge naturally with the background color */
-    mix-blend-mode: multiply; 
+    mix-blend-mode: multiply;
 }
+
 /* Subtle physical top-edge highlight */
 footer::after {
     content: "";
@@ -3152,7 +3200,7 @@ footer::after {
     left: 0;
     width: 100%;
     height: 2px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.8), rgba(255,255,255,0.1));
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1));
     z-index: -1;
     pointer-events: none;
 }
@@ -3180,7 +3228,7 @@ footer::after {
         font-size: clamp(2.5rem, 12vw, 4rem);
         margin-bottom: 2rem;
     }
-    
+
     /* Give the sections a bit less bottom margin on mobile */
     .cs-section {
         margin-bottom: 6rem;
@@ -3189,6 +3237,7 @@ footer::after {
 
 /* --- Add a new media query for very small screens --- */
 @media (max-width: 480px) {
+
     /* Stack the meta items into a single column on phones */
     .cs-meta {
         grid-template-columns: 1fr;
@@ -3207,7 +3256,7 @@ footer::after {
 
     .lt-order {
         /* Remove display: none! */
-        display: block; 
+        display: block;
         width: 100%;
     }
 
@@ -3218,12 +3267,14 @@ footer::after {
     }
 
     .arch-node {
-        max-width: 100%; /* Let nodes fill the space */
+        max-width: 100%;
+        /* Let nodes fill the space */
         width: 100%;
     }
 
     .arch-arrow {
-        transform: rotate(90deg); /* Point arrows downward */
+        transform: rotate(90deg);
+        /* Point arrows downward */
         margin: 10px 0;
     }
 }
@@ -3238,10 +3289,11 @@ footer::after {
     }
 
     .cw-body {
-        font-size: 0.75rem; /* Slightly smaller text for mobile readability */
+        font-size: 0.75rem;
+        /* Slightly smaller text for mobile readability */
         padding: 1rem;
         /* Ensure scrolling stays inside the code block, not the page */
-        overflow-x: auto; 
+        overflow-x: auto;
     }
 
     /* Reduce terminal height slightly so it doesn't take up the whole screen */
@@ -3249,17 +3301,19 @@ footer::after {
         height: 300px;
     }
 }
+
 /* --- Update your existing max-width: 1024px media query --- */
 @media (max-width: 1024px) {
     .case-layout {
         grid-template-columns: 1fr;
         gap: 2rem;
-        padding: 40px 6vw; /* Reduced padding for mobile */
+        padding: 40px 6vw;
+        /* Reduced padding for mobile */
     }
 
     /* CRITICAL FIX: Prevents CSS Grid blowout from the wide code blocks */
     .content-area {
-        min-width: 0; 
+        min-width: 0;
         width: 100%;
     }
 
@@ -3271,11 +3325,13 @@ footer::after {
 
     .arch-node {
         width: 100%;
-        max-width: 100%; /* Allows it to fill the mobile container */
+        max-width: 100%;
+        /* Allows it to fill the mobile container */
     }
 
     .arch-arrow {
-        transform: rotate(90deg); /* Points the arrows downward */
+        transform: rotate(90deg);
+        /* Points the arrows downward */
         margin: 15px 0;
     }
 
@@ -3285,31 +3341,36 @@ footer::after {
     }
 
     .lt-order {
-        display: block !important; /* Overrides your existing display: none */
+        display: block !important;
+        /* Overrides your existing display: none */
         width: 100%;
-        overflow-x: auto; /* Allows scrolling if order text is too long */
+        overflow-x: auto;
+        /* Allows scrolling if order text is too long */
     }
 }
 
 /* --- Update your existing max-width: 768px media query --- */
 @media (max-width: 768px) {
+
     /* 3. Ensure the code window scrolls smoothly */
     .code-window {
         width: 100%;
     }
-    
+
     .cw-body {
-        font-size: 0.75rem; /* Slightly smaller text for readability */
+        font-size: 0.75rem;
+        /* Slightly smaller text for readability */
         padding: 1rem;
         overflow-x: auto;
-        -webkit-overflow-scrolling: touch; /* Smooth horizontal scrolling on iOS */
+        -webkit-overflow-scrolling: touch;
+        /* Smooth horizontal scrolling on iOS */
     }
 
     /* 4. Make the live order rows fit on small screens */
     .eo-row {
         font-size: 0.65rem;
         gap: 8px;
-        white-space: nowrap; 
+        white-space: nowrap;
     }
 
     /* Reduce terminal height so it doesn't take up the whole screen */
@@ -3329,7 +3390,8 @@ footer::after {
 /* --- ULTRA-PREMIUM DARK FOOTER --- */
 footer {
     padding: 0;
-    background-color: var(--bg-color); /* Matches your #0a0a0a dark theme */
+    background-color: var(--bg-color);
+    /* Matches your #0a0a0a dark theme */
     color: #fff;
     position: relative;
     overflow: hidden;
@@ -3338,7 +3400,8 @@ footer {
 
 /* Slanted Neon Marquee Strip */
 .footer-marquee {
-    width: 105%; /* Extra width to cover the slant */
+    width: 105%;
+    /* Extra width to cover the slant */
     padding: 1.2rem 0;
     background: var(--accent);
     color: #000;
@@ -3366,8 +3429,13 @@ footer {
 }
 
 @keyframes marquee-scroll {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
 /* Main Footer Content */
@@ -3429,17 +3497,20 @@ footer {
 }
 
 .cta-arrow {
-    display: inline-flex; /* Changed to flex to perfectly center the SVG */
+    display: inline-flex;
+    /* Changed to flex to perfectly center the SVG */
     align-items: center;
     justify-content: center;
     transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
     color: var(--accent);
-    -webkit-text-stroke: 0; /* Ensures the hollow text effect doesn't hit the arrow */
+    -webkit-text-stroke: 0;
+    /* Ensures the hollow text effect doesn't hit the arrow */
 }
 
 /* Add this new block to control the SVG size */
 .cta-arrow svg {
-    width: 0.8em; /* Scales perfectly relative to the massive font size */
+    width: 0.8em;
+    /* Scales perfectly relative to the massive font size */
     height: 0.8em;
     display: block;
 }
@@ -3447,6 +3518,7 @@ footer {
 .footer-cta:hover .cta-arrow {
     transform: translate(30px, -30px) rotate(10deg);
 }
+
 .footer-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -3513,38 +3585,53 @@ footer {
 }
 
 @media (max-width: 768px) {
-    .footer-content { padding: 6rem 6vw 3rem; }
-    
+    .footer-content {
+        padding: 6rem 6vw 3rem;
+    }
+
     /* 1. Remove Flexbox entirely on mobile so it wraps like natural text */
-    .footer-cta { 
-        display: block; 
-        font-size: clamp(3rem, 13vw, 5rem); 
+    .footer-cta {
+        display: block;
+        font-size: clamp(3rem, 13vw, 5rem);
         line-height: 1.1;
         text-align: left;
     }
-    
-   .cta-arrow {
+
+    .cta-arrow {
         display: inline-flex;
         margin-left: 0.5rem;
-        vertical-align: middle; 
+        vertical-align: middle;
         position: relative;
-        top: -0.05em; 
+        top: -0.05em;
     }
 
     .cta-arrow svg {
-        width: 0.75em; /* Slightly smaller on mobile so it doesn't overpower the text */
+        width: 0.75em;
+        /* Slightly smaller on mobile so it doesn't overpower the text */
         height: 0.75em;
-        stroke-width: 3px; /* Slightly thicker stroke on small screens for crispness */
+        stroke-width: 3px;
+        /* Slightly thicker stroke on small screens for crispness */
     }
 
-    .footer-cta:hover .cta-arrow { 
-        transform: translate(10px, -10px); 
+    .footer-cta:hover .cta-arrow {
+        transform: translate(10px, -10px);
     }
 
-    
-    .footer-grid { grid-template-columns: 1fr; gap: 3rem; }
-    .footer-col.right-align { text-align: left !important; }
-    .footer-copyright { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+
+    .footer-col.right-align {
+        text-align: left !important;
+    }
+
+    .footer-copyright {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
 }
 
 
@@ -3555,7 +3642,7 @@ footer {
     flex-direction: column;
     position: relative;
     z-index: 10;
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
 
 /* Single column, centered container */
@@ -3564,9 +3651,10 @@ footer {
     display: flex;
     flex-direction: column;
     gap: 6rem;
-    max-width: 1250px; /* Perfect reading width */
+    max-width: 1250px;
+    /* Perfect reading width */
     margin: 0 auto;
-    padding: 160px 5vw 80px; 
+    padding: 160px 5vw 80px;
     width: 100%;
     box-sizing: border-box;
 }
@@ -3581,7 +3669,7 @@ footer {
 
 .lux-title {
     font-family: var(--font-display);
-    font-size: clamp(2.8rem, 8vw, 6.5rem); 
+    font-size: clamp(2.8rem, 8vw, 6.5rem);
     font-weight: 800;
     line-height: 1.05;
     letter-spacing: -0.03em;
@@ -3590,7 +3678,7 @@ footer {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    word-wrap: break-word; 
+    word-wrap: break-word;
 }
 
 .lux-subtitle {
@@ -3616,7 +3704,7 @@ footer {
     text-decoration: none;
     transition: color 0.3s ease;
     display: inline-block;
-    word-break: break-all; 
+    word-break: break-all;
 }
 
 .lux-contact-link:hover {
@@ -3626,7 +3714,7 @@ footer {
 .lux-social-list {
     display: flex;
     gap: 1rem;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
 }
 
 .lux-social-pill {
@@ -3660,7 +3748,8 @@ footer {
     -webkit-backdrop-filter: blur(24px);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
-    padding: 4rem 5rem; /* Extra wide padding for the wide layout */
+    padding: 4rem 5rem;
+    /* Extra wide padding for the wide layout */
     box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
     width: 100%;
     box-sizing: border-box;
@@ -3682,7 +3771,7 @@ footer {
 
 .lux-input {
     width: 100%;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
@@ -3714,8 +3803,8 @@ footer {
     transition: all 0.3s ease;
 }
 
-.lux-input:focus ~ .lux-label,
-.lux-input:not(:placeholder-shown) ~ .lux-label {
+.lux-input:focus~.lux-label,
+.lux-input:not(:placeholder-shown)~.lux-label {
     top: 8px;
     font-size: 0.65rem;
     color: var(--accent);
@@ -3752,7 +3841,7 @@ footer {
     justify-content: center;
     align-items: center;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
     width: 100%;
 }
 
@@ -3765,6 +3854,7 @@ footer {
         padding: 140px 6vw 50px;
         gap: 4rem;
     }
+
     .lux-form-card {
         padding: 3rem 4rem;
     }
@@ -3775,27 +3865,35 @@ footer {
         padding: 120px 5vw 40px;
         gap: 3rem;
     }
+
     .lux-details-grid {
-        grid-template-columns: 1fr; /* Stack email and socials vertically */
+        grid-template-columns: 1fr;
+        /* Stack email and socials vertically */
         gap: 2rem;
     }
+
     .form-row {
-        grid-template-columns: 1fr; /* Stack Name and Email vertically */
-        gap: 0; 
+        grid-template-columns: 1fr;
+        /* Stack Name and Email vertically */
+        gap: 0;
     }
+
     .lux-form-card {
         padding: 2.5rem 1.5rem;
         border-radius: 16px;
     }
+
     .lux-input {
         padding: 24px 15px 10px 15px;
         font-size: 1rem;
     }
+
     .lux-label {
         left: 15px;
         top: 15px;
         font-size: 0.8rem;
     }
+
     .lux-submit-btn {
         padding: 15px;
         font-size: 0.9rem;
@@ -3876,8 +3974,10 @@ footer {
 
 /* Hover Effects */
 .mp-item:hover {
-    background: rgba(168, 85, 247, 0.03); /* Faint purple glass background */
-    padding: 3rem 2.5rem; /* Indents the row slightly for a physical feel */
+    background: rgba(168, 85, 247, 0.03);
+    /* Faint purple glass background */
+    padding: 3rem 2.5rem;
+    /* Indents the row slightly for a physical feel */
 }
 
 .mp-title {
@@ -3922,7 +4022,8 @@ footer {
 }
 
 .mp-item:hover .mp-arrow {
-    transform: translateX(15px); /* Arrow shoots right on hover */
+    transform: translateX(15px);
+    /* Arrow shoots right on hover */
 }
 
 /* Bottom Bar */
@@ -3954,9 +4055,10 @@ footer {
         gap: 1.5rem;
         padding: 2.5rem 0;
     }
-    
+
     .mp-item:hover {
-        padding: 2.5rem 1rem; /* Smaller indent on mobile */
+        padding: 2.5rem 1rem;
+        /* Smaller indent on mobile */
     }
 
     .mp-meta {
@@ -3983,15 +4085,15 @@ footer {
 
 .cs-next-footer {
     /* 1. Add auto margins to center it, keep the 8rem top margin */
-    margin: 8rem auto 0; 
-    
+    margin: 8rem auto 0;
+
     /* 2. Add 5vw side padding to match your .case-layout padding */
-    padding: 6rem 5vw; 
-    
+    padding: 6rem 5vw;
+
     /* 3. Constrain it to the exact same width as your content */
-    max-width: 1400px; 
+    max-width: 1400px;
     box-sizing: border-box;
-    
+
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     display: flex;
     flex-direction: column;
@@ -4003,7 +4105,7 @@ footer {
 
 .cs-back-btn {
     /* Changed margin from bottom to top so it spaces out from the links above it */
-    margin: 6rem auto 0 auto; 
+    margin: 6rem auto 0 auto;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -4013,43 +4115,45 @@ footer {
 
 .cs-next-label {
     font-family: var(--font-code);
-    color: var(--accent); 
+    color: var(--accent);
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 3px;
     margin-bottom: 3rem;
-    
+
     /* These three lines force the label and lines to the absolute center */
     display: flex;
     align-items: center;
-    justify-content: center; 
-    
+    justify-content: center;
+
     width: 100%;
     gap: 15px;
 }
 
-.cs-next-label::before, 
+.cs-next-label::before,
 .cs-next-label::after {
     content: '';
     display: inline-block;
     width: 30px;
     height: 1px;
-    background: rgba(168, 85, 247, 0.5); 
+    background: rgba(168, 85, 247, 0.5);
 }
 
 .cs-options-list {
     display: flex;
     flex-direction: column;
-    align-items: center;      /* Centers the stack */
-    justify-content: center; 
+    align-items: center;
+    /* Centers the stack */
+    justify-content: center;
     gap: 1rem;
     width: 100%;
 }
+
 /* Massive Hollow Title */
 .cs-next-title {
     font-family: var(--font-display);
     /* Slightly scaled down so multiple stack cleanly */
-    font-size: clamp(2.5rem, 6vw, 5.5rem); 
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
     font-weight: 900;
     color: transparent;
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
@@ -4069,7 +4173,8 @@ footer {
     color: #fff;
     -webkit-text-stroke: 1px transparent;
     text-shadow: 0 0 40px rgba(255, 255, 255, 0.15);
-    transform: translateX(10px); /* Slides right slightly instead of up for lists */
+    transform: translateX(10px);
+    /* Slides right slightly instead of up for lists */
 }
 
 /* Arrow Animation Setup */
@@ -4078,7 +4183,8 @@ footer {
     align-items: center;
     color: var(--accent);
     -webkit-text-stroke: 0;
-    opacity: 0; /* Hide arrow initially to keep the list clean */
+    opacity: 0;
+    /* Hide arrow initially to keep the list clean */
     transform: translateX(-20px);
     transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -4100,10 +4206,11 @@ footer {
         padding: 4rem 0;
         margin-top: 5rem;
     }
-    
+
     .cs-next-title {
         font-size: clamp(2rem, 8vw, 3.5rem);
-        flex-direction: row; /* Keep arrow inline on mobile */
+        flex-direction: row;
+        /* Keep arrow inline on mobile */
         gap: 1rem;
     }
 
@@ -4119,12 +4226,14 @@ footer {
     }
 
     .cs-next-title:hover {
-        transform: none; /* Disable slide on mobile */
+        transform: none;
+        /* Disable slide on mobile */
     }
 }
 
 
 @media (max-width: 768px) {
+
     /* 1. Reset the mobile menu appearance */
     .mobile-menu {
         display: flex;
@@ -4133,8 +4242,8 @@ footer {
         align-items: center;
         padding: 0 10%;
         text-align: center;
-        transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1), 
-                    visibility 0.5s;
+        transition: opacity 0.5s cubic-bezier(0.19, 1, 0.22, 1),
+            visibility 0.5s;
     }
 
     /* 2. Initial state of links (Hidden & Moved down) */
@@ -4142,10 +4251,11 @@ footer {
         display: block;
         opacity: 0;
         transform: translateY(30px);
-        transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1), 
-                    transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+        transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+            transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
         margin-bottom: 2rem;
-        font-family: var(--font-display); /* Using your Space Grotesk preference */
+        font-family: var(--font-display);
+        /* Using your Space Grotesk preference */
         font-weight: 700;
         text-decoration: none;
         color: #ffffff;
@@ -4158,21 +4268,33 @@ footer {
     }
 
     /* 4. The Stagger: Each link waits a bit longer than the last */
-    .mobile-menu.active .mobile-link:nth-child(1) { transition-delay: 0.2s; }
-    .mobile-menu.active .mobile-link:nth-child(2) { transition-delay: 0.3s; }
-    .mobile-menu.active .mobile-link:nth-child(3) { transition-delay: 0.4s; }
-    .mobile-menu.active .mobile-link:nth-child(4) { transition-delay: 0.5s; }
+    .mobile-menu.active .mobile-link:nth-child(1) {
+        transition-delay: 0.2s;
+    }
+
+    .mobile-menu.active .mobile-link:nth-child(2) {
+        transition-delay: 0.3s;
+    }
+
+    .mobile-menu.active .mobile-link:nth-child(3) {
+        transition-delay: 0.4s;
+    }
+
+    .mobile-menu.active .mobile-link:nth-child(4) {
+        transition-delay: 0.5s;
+    }
 
     /* 5. Menu Toggle Enhancement */
     .menu-toggle {
         display: flex !important;
-        
+
         border-radius: 50%;
         transition: transform 0.3s ease;
     }
-    
+
     .menu-toggle.active {
-        transform: rotate(90deg); /* Slight spin on open for extra flair */
+        transform: rotate(90deg);
+        /* Slight spin on open for extra flair */
     }
 }
 
@@ -4181,12 +4303,15 @@ footer {
 
 
 @media (max-width: 768px) {
+
     /* 1. Glassmorphism Menu Overlay */
     .mobile-menu {
         position: fixed;
         inset: 0;
-        background: rgba(10, 10, 10, 0.75); /* Dark translucent base */
-        backdrop-filter: blur(25px) saturate(180%); /* Premium Frosted Glass */
+        background: rgba(10, 10, 10, 0.75);
+        /* Dark translucent base */
+        backdrop-filter: blur(25px) saturate(180%);
+        /* Premium Frosted Glass */
         -webkit-backdrop-filter: blur(25px) saturate(180%);
         z-index: 9998;
         display: flex;
@@ -4195,8 +4320,8 @@ footer {
         align-items: center;
         opacity: 0;
         visibility: hidden;
-        transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), 
-                    visibility 0.6s;
+        transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+            visibility 0.6s;
     }
 
     .mobile-menu.active {
@@ -4214,9 +4339,10 @@ footer {
         letter-spacing: -0.03em;
         margin-bottom: 2rem;
         opacity: 0;
-        transform: translateY(40px) skewY(5deg); /* Added skew for dynamic motion */
-        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        transform: translateY(40px) skewY(5deg);
+        /* Added skew for dynamic motion */
+        transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+            transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
         text-decoration: none;
     }
 
@@ -4226,14 +4352,22 @@ footer {
     }
 
     /* Stagger timing */
-    .mobile-menu.active .mobile-link:nth-child(1) { transition-delay: 0.15s; }
-    .mobile-menu.active .mobile-link:nth-child(2) { transition-delay: 0.25s; }
-    .mobile-menu.active .mobile-link:nth-child(3) { transition-delay: 0.35s; }
+    .mobile-menu.active .mobile-link:nth-child(1) {
+        transition-delay: 0.15s;
+    }
+
+    .mobile-menu.active .mobile-link:nth-child(2) {
+        transition-delay: 0.25s;
+    }
+
+    .mobile-menu.active .mobile-link:nth-child(3) {
+        transition-delay: 0.35s;
+    }
 
     /* 3. Enhanced Toggle Button */
     .menu-toggle {
         display: flex !important;
-        
+
         border-radius: 50%;
         width: 48px;
         height: 48px;
@@ -4249,7 +4383,8 @@ footer {
 
 
 .bar {
-    width: 28px; /* Slightly smaller for a cleaner look without the circle */
+    width: 28px;
+    /* Slightly smaller for a cleaner look without the circle */
     height: 2px;
     background-color: white;
     transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -4260,7 +4395,8 @@ footer {
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 6px; /* Space between bars */
+    gap: 6px;
+    /* Space between bars */
 }
 
 
@@ -4270,7 +4406,8 @@ footer {
 .preloader-container {
     position: fixed;
     inset: 0;
-    background-color: #030303; /* Slightly deeper black */
+    background-color: #030303;
+    /* Slightly deeper black */
     z-index: 999999;
     display: flex;
     justify-content: center;
@@ -4297,8 +4434,13 @@ footer {
 }
 
 @keyframes scan-line {
-    0% { transform: translateY(-100%); }
-    100% { transform: translateY(600%); }
+    0% {
+        transform: translateY(-100%);
+    }
+
+    100% {
+        transform: translateY(600%);
+    }
 }
 
 /* Container for perfect centering */
@@ -4315,11 +4457,13 @@ footer {
 
 /* CSS Animations for the initial load-in */
 @keyframes slide-up-reveal {
-    to { transform: translateY(0); }
+    to {
+        transform: translateY(0);
+    }
 }
 
 @keyframes fade-in-right {
-    to { 
+    to {
         opacity: 1;
         transform: translateX(0);
     }
