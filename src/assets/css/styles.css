@@ -1355,6 +1355,74 @@ main, nav, footer {
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- GOD MODE MOBILE OPTIMIZATIONS --- */
+@media (max-width: 768px) {
+    #cmd-terminal {
+        height: 100dvh; /* Upgraded from 50vh to 100dvh to handle virtual keyboards */
+        padding: 1rem 0.5rem; /* Reduced padding to maximize horizontal space */
+        box-sizing: border-box;
+    }
+
+    .cmd-header {
+        padding: 0.5rem 1rem;
+        margin-bottom: 0.5rem;
+        align-items: center;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 8px;
+    }
+
+    .cmd-output {
+        font-size: 0.85rem; /* Slightly smaller text to fit more lines on mobile */
+        padding: 0 0.5rem;
+        flex-grow: 1;
+        /* Ensure scrolling works smoothly on iOS */
+        -webkit-overflow-scrolling: touch; 
+    }
+
+    .cmd-input-line {
+        padding: 0.5rem;
+        background: rgba(0, 0, 0, 0.5);
+        border-radius: 8px;
+        /* Adds padding for modern iOS home bars so the input isn't blocked */
+        margin-bottom: env(safe-area-inset-bottom, 10px); 
+    }
+
+    #cmd-input {
+        /* 16px is mandatory on mobile iOS to prevent the screen from auto-zooming in */
+        font-size: 16px !important; 
+        padding: 5px 0;
+    }
+
+    /* Make the mobile close button look like a distinct, tappable action */
+    #cmd-close-mobile {
+        display: inline-block;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        padding: 4px 12px;
+        color: #fff;
+        font-size: 0.8rem;
+        cursor: pointer;
+    }
+
+    #cmd-close-mobile:active {
+        background: rgba(255, 255, 255, 0.2);
+    }
+}
+
 /* --- BLACKOUT PROTOCOL (Easter Egg) --- */
 #blackout-overlay {
     position: fixed;
