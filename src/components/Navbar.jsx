@@ -8,7 +8,7 @@ const VALID_WORK_ROUTES = new Set([
   "/work/kite",
   "/work/ai-saas",
   "/work/CodeSenseAiSaas",
-  "/work/codesense-casestudy",
+  "/work/CodeSenseAiSaas-casestudy",
   "/work/apple-music-casestudy",
   "/work/instagram-casestudy",
   "/work/kite-casestudy",
