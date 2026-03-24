@@ -17,11 +17,15 @@ import {
 } from "firebase/database";
 
 export function initTerminal() {
+if (window.__TERMINAL_INITIALIZED__) return;
+  window.__TERMINAL_INITIALIZED__ = true;
+  
   const terminal = document.getElementById("cmd-terminal");
   const cmdInput = document.getElementById("cmd-input");
   const cmdOutput = document.getElementById("cmd-output");
   let isTerminalOpen = false;
   let isAiMode = false;
+  let hasBooted = false;
   let isVimMode = false; // <-- 1. ADD THIS LINE
 
   // --- NEW: Multiplayer State Variables ---
@@ -86,7 +90,13 @@ export function initTerminal() {
 
     // 2. Count Online Users
     onValue(allPresenceRef, (snap) => {
-      onlineCount = snap.numChildren();
+      onlineCount = snap.numChildren() || 1; // Fallback to 1 if empty
+      
+      // Find the counter on the screen and update it live!
+      const countDisplay = document.getElementById("network-online-count");
+      if (countDisplay) {
+          countDisplay.innerText = onlineCount;
+      }
     });
 
     // 3. Listen for incoming Global Messages
@@ -109,28 +119,37 @@ export function initTerminal() {
     }, 1000);
   }
 
-  function toggleTerminal() {
+ function toggleTerminal() {
     isTerminalOpen = !isTerminalOpen;
     if (isTerminalOpen) {
       terminal.classList.add("active");
       cmdInput.value = "";
       cmdInput.focus();
-      sfx.playClick();
-
+      if (sfx && sfx.playClick) sfx.playClick();
+      
       // Initialize network on first open
       initGlobalNetwork();
+      
+      // Only print the welcome sequence the VERY FIRST time they open it
+      if (!hasBooted) {
+          hasBooted = true;
+          cmdOutput.innerHTML = "";
+          setTimeout(() => {
+            // 1. The Welcome Line
+            printOutput("Welcome to S.A.M. Terminal. Type 'help' to see available commands.");
+            
+            // 2. The Global Network Line (with the ID for live updating!)
+            printOutput(`<span style="color: #a855f7">🌐 GLOBAL NETWORK ONLINE: [<span id="network-online-count">${onlineCount || 1}</span> anonymous users connected]</span>`, true);
+            
+            // 3. The Hint Line
+            printOutput(`<span style="color: #666">Hint: Unrecognized commands are broadcast globally to everyone online.</span>`, true);
+            
+            // Force an immediate UI update just in case Firebase loaded extremely fast
+            const countDisplay = document.getElementById("network-online-count");
+            if (countDisplay && onlineCount > 0) countDisplay.innerText = onlineCount;
+          }, 300);
+      }
 
-      // Print Welcome Message with Online Users
-      setTimeout(() => {
-        printOutput(
-          `<span style="color: #a855f7">🌐 GLOBAL NETWORK ONLINE: [${onlineCount} anonymous users connected]</span>`,
-          true,
-        );
-        printOutput(
-          `<span style="color: #666">Hint: Unrecognized commands are broadcast globally to everyone online.</span>`,
-          true,
-        );
-      }, 300);
     } else {
       terminal.classList.remove("active");
       cmdInput.blur();
