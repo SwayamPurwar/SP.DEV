@@ -4826,18 +4826,52 @@ footer#footer .footer-content {
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     will-change: transform;
 }
-
 .scratch-pill {
-    display: inline-block;
-    padding: 4px 12px;
-    border: 1px solid var(--accent);
-    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: #ccc;
     font-family: var(--font-code);
     font-size: 0.7rem;
-    border-radius: 100px;
-    margin-top: 10px;
+    border-radius: 4px; /* Sharp edges instead of completely round */
+    margin-top: 15px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
+/* Creates the glowing dot */
+.scratch-pill::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--accent);
+    border-radius: 50%;
+    box-shadow: 0 0 8px var(--accent);
+}
+/* Makes the title and the pill sit next to each other */
+.scratch-title-wrap {
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+}
+
+/* Remove the margin-top from the pill since it's no longer underneath */
+.scratch-pill {
+    /* ... use Option 1 or Option 2 design here ... */
+    margin-top: 0; 
+}
+
+/* Stack them vertically again on mobile */
+@media (max-width: 768px) {
+    .scratch-title-wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
 .scratch-arrow {
     width: 50px;
     height: 50px;

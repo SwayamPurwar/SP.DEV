@@ -91,7 +91,7 @@ export default function Home() {
     // 1. Fluid Image Tracking using quickTo
     if (xTo.current && yTo.current) {
      xTo.current(e.clientX);
-    yTo.current(e.clientY);
+   yTo.current(e.clientY - 20);
     }
 
     // 2. Velocity-based rotation
@@ -140,7 +140,7 @@ export default function Home() {
 
       // Initialize quickTo for buttery smooth image follow
       if (previewRef.current) {
-        gsap.set(previewRef.current, { xPercent: -50, yPercent: -50 });
+       gsap.set(previewRef.current, { xPercent: -50, yPercent: -125 });
         xTo.current = gsap.quickTo(previewRef.current, "x", {
           duration: 0.5,
           ease: "power3.out",
@@ -386,7 +386,14 @@ export default function Home() {
         <div className="loader-meta bottom-left">LOADING ASSETS</div>
         <div className="loader-meta bottom-right">PLEASE WAIT</div>
       </div>
-
+  <div
+            ref={previewRef}
+            className="project-preview-img"
+            role="img"
+            aria-label="Project Preview"
+            id="preview-img"
+            style={{ willChange: "transform, opacity, rotationZ" }}
+          ></div>
       <main style={{ perspective: "1000px" }}>
         <section id="hero">
           <div className="hero-line">
@@ -434,14 +441,7 @@ export default function Home() {
         </section>
 
         <section id="work">
-          <div
-            ref={previewRef}
-            className="project-preview-img"
-            role="img"
-            aria-label="Project Preview"
-            id="preview-img"
-            style={{ willChange: "transform, opacity, rotationZ" }}
-          ></div>
+        
 
           <div className="section-header">
             <span>SELECTED WORKS</span>
@@ -452,7 +452,7 @@ export default function Home() {
           index={0}
             title="APPLE MUSIC APP"
             category="iOS / UI Redesign"
-            year="2025"
+            year="Early '25"
             link="/work/apple-music"
             imgSrc="/assets/images/project/apple-music-preview.webp"
             onMouseEnter={handleMouseEnter}
@@ -465,7 +465,7 @@ export default function Home() {
 
             title="INSTAGRAM APP"
             category="Full Stack"
-            year="2025"
+            year="Mid '25"
             link="/work/instagram"
             imgSrc="/assets/images/project/instagram-preview.webp"
             onMouseEnter={handleMouseEnter}
@@ -477,7 +477,7 @@ export default function Home() {
             index={2}
             title="KITE ZERODHA APP"
             category="Web Sockets / FinTech"
-            year="2026"
+            year="Early '26"
             link="/work/kite"
             imgSrc="/assets/images/project/kite-preview.webp"
             onMouseEnter={handleMouseEnter}
@@ -493,7 +493,7 @@ export default function Home() {
             index={3}
             title="CodeSense AI"
             category="AI-Powered Code Assistant + SaaS"
-            year="2026"
+            year="Mid '26"
             link="/work/CodeSenseAiSaas"
             imgSrc="/assets/images/project/codesense-ai-saas-preview.webp"
             onMouseEnter={handleMouseEnter}
@@ -507,7 +507,7 @@ export default function Home() {
           <ProjectCard
             index={4}
             title="Project X"
-            category="Top Secret / Stay Tuned"
+            category="Top Secret / Stay Tune"
             year="Coming Soon"
             imgSrc="/assets/images/project/placeholder-preview.webp"
             onMouseEnter={handleMouseEnter}
