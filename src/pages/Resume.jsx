@@ -399,6 +399,30 @@ export default function Resume() {
           </Link>
         </div>
       </main>
+      <footer
+        id="footer"
+        className="footer-contact"
+        style={{
+          minHeight: "80px",
+          padding: "2rem 5vw",
+          background: "transparent", // Blends with the contact page background
+        }}
+      >
+        <div
+          className="footer-copyright"
+          style={{ marginTop: "0", borderTop: "none", paddingTop: "0" }}
+        >
+          <span>
+            © {new Date().getFullYear()} Swayam Purwar. All rights reserved.
+          </span>
+
+          {/* Minimal Social Links for Contact Page */}
+
+          <span style={{ fontFamily: "var(--font-code)", color: "#666" }}>
+            [ LOC: BHOPAL, IN ]
+          </span>
+        </div>
+      </footer>
     </div>
   );
 }
