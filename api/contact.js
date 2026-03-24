@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 
 // Vercel will automatically inject this environment variable securely
-const resend = new Resend(process.env.RESEND_API_KEY);
+const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
 export default async function handler(req, res) {
   // Only allow POST requests

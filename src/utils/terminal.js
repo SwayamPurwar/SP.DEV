@@ -88,11 +88,18 @@ if (window.__TERMINAL_INITIALIZED__) return;
       }
     });
 
-    // 2. Count Online Users
+    // 2. Count Online Users (Bulletproof method)
     onValue(allPresenceRef, (snap) => {
-      onlineCount = snap.numChildren() || 1; // Fallback to 1 if empty
+      const activeUsersData = snap.val();
       
-      // Find the counter on the screen and update it live!
+      if (activeUsersData) {
+        // This counts the actual number of connected users in the database
+        onlineCount = Object.keys(activeUsersData).length; 
+      } else {
+        onlineCount = 1; // Fallback only if the database is literally completely empty
+      }
+      
+      // Update the UI
       const countDisplay = document.getElementById("network-online-count");
       if (countDisplay) {
           countDisplay.innerText = onlineCount;
@@ -123,6 +130,12 @@ if (window.__TERMINAL_INITIALIZED__) return;
     isTerminalOpen = !isTerminalOpen;
     if (isTerminalOpen) {
       terminal.classList.add("active");
+
+      // --- NEW: Accessibility Fixes for Opening ---
+      terminal.setAttribute("aria-hidden", "false"); 
+      terminal.removeAttribute("inert");
+
+
       cmdInput.value = "";
       cmdInput.focus();
       if (sfx && sfx.playClick) sfx.playClick();
@@ -152,6 +165,11 @@ if (window.__TERMINAL_INITIALIZED__) return;
 
     } else {
       terminal.classList.remove("active");
+
+      // --- NEW: Accessibility Fixes for Closing ---
+      terminal.setAttribute("aria-hidden", "true");
+      terminal.setAttribute("inert", "");
+      
       cmdInput.blur();
     }
   }
