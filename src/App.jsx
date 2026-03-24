@@ -13,7 +13,7 @@ import { initEasterEggs } from "./utils/easter-eggs.js";
 import { initTerminal } from "./utils/terminal.js";
 
 // 🚀 LAZY LOADED PAGES
-const Home = lazy(() => import("./pages/Home"));
+import Home from "./pages/Home";
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Resume = lazy(() => import("./pages/Resume"));
