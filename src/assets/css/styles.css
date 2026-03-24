@@ -283,6 +283,7 @@ nav {
     transform: translateZ(0);
     transition: all 0.4s ease;
     mix-blend-mode: difference;
+   padding-top: max(2rem, env(safe-area-inset-top)); 
     padding-left: max(4rem, env(safe-area-inset-left));
     padding-right: max(4rem, env(safe-area-inset-right));
 }
@@ -296,6 +297,8 @@ nav.scrolled {
     padding: 1.5rem 4rem;
     padding-top: max(1.5rem, env(safe-area-inset-top));
     padding-bottom: 1.5rem;
+    padding-left: max(4rem, env(safe-area-inset-left));
+    padding-right: max(4rem, env(safe-area-inset-right));
 }
 
 .logo {
@@ -335,29 +338,38 @@ nav.scrolled {
 .nav-item:hover::after {
     transform: translateX(0);
 }
-
-
-
-
-
 @media (max-width: 768px) {
-    /* Hero sections on mobile */
+    /* Hero sections: About, Projects, and Case Studies */
     .a-hero, .p-hero, .cs-hero {
-        padding-top: calc(100px + env(safe-area-inset-top)) !important;
+        /* max() ensures you have at least 100px of breathing room, 
+           plus the specific hardware inset */
+        padding-top: calc(max(100px, env(safe-area-inset-top)) + 40px) !important;
     }
 
-    /* Fix the Menu Toggle Button position */
+    /* Fix the Menu Toggle & Logo alignment */
+    nav {
+        /* Pushes the entire bar down to clear the hardware */
+        padding-top: max(1.5rem, env(safe-area-inset-top)) !important;
+    }
+
     .menu-toggle {
-        margin-top: env(safe-area-inset-top);
+        /* Removing margin-top lets the nav padding handle the vertical centering */
+        margin-top: 0; 
     }
 }
-
-footer, .contact-lux-wrapper {
-    padding-bottom: env(safe-area-inset-bottom) !important;
+nav, .cs-content, .footer-content {
+    padding-left: max(1.5rem, env(safe-area-inset-left)) !important;
+    padding-right: max(1.5rem, env(safe-area-inset-right)) !important;
 }
+footer, .contact-lux-wrapper {
+    /* Ensures social links and "Return to Top" aren't blocked */
+    padding-bottom: max(2rem, env(safe-area-inset-bottom)) !important;
+}
+
+
 
 .lux-submit-btn {
-    /* Ensure the submit button isn't too close to the bottom edge */
+    /* Prevents the 'Send' button from sitting directly under the swipe bar */
     margin-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
@@ -3504,6 +3516,7 @@ footer {
     position: relative;
     overflow: hidden;
     z-index: 10;
+    padding-bottom: max(4rem, env(safe-area-inset-bottom));
 }
 
 /* Slanted Neon Marquee Strip */
@@ -3934,6 +3947,7 @@ footer {
     cursor: none;
     transition: all 0.3s ease;
     margin-top: 1rem;
+    margin-bottom: max(1rem, env(safe-area-inset-bottom));
 }
 
 .lux-submit-btn:hover {
