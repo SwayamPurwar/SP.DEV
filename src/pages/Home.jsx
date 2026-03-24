@@ -90,8 +90,8 @@ export default function Home() {
 
     // 1. Fluid Image Tracking using quickTo
     if (xTo.current && yTo.current) {
-      xTo.current(e.clientX - window.innerWidth / 2);
-      yTo.current(e.clientY - window.innerHeight / 2);
+     xTo.current(e.clientX);
+    yTo.current(e.clientY);
     }
 
     // 2. Velocity-based rotation
@@ -140,6 +140,7 @@ export default function Home() {
 
       // Initialize quickTo for buttery smooth image follow
       if (previewRef.current) {
+        gsap.set(previewRef.current, { xPercent: -50, yPercent: -50 });
         xTo.current = gsap.quickTo(previewRef.current, "x", {
           duration: 0.5,
           ease: "power3.out",
@@ -425,6 +426,7 @@ export default function Home() {
           </div>
 
           <ProjectCard
+          index={0}
             title="APPLE MUSIC APP"
             category="iOS / UI Redesign"
             year="2025"
@@ -436,6 +438,8 @@ export default function Home() {
           />
 
           <ProjectCard
+            index={1}
+
             title="INSTAGRAM APP"
             category="Full Stack"
             year="2025"
@@ -447,6 +451,7 @@ export default function Home() {
           />
 
           <ProjectCard
+            index={2}
             title="KITE ZERODHA APP"
             category="Web Sockets / FinTech"
             year="2026"
@@ -462,6 +467,7 @@ export default function Home() {
           </div>
 
           <ProjectCard
+            index={3}
             title="CodeSense AI"
             category="AI-Powered Code Assistant + SaaS"
             year="2026"
@@ -476,9 +482,14 @@ export default function Home() {
             <span>(IN LABS)</span>
           </div>
           <ProjectCard
+            index={4}
             title="Project X"
-            category="Something Exciting in the Works"
+            category="Top Secret / Stay Tuned"
             year="Coming Soon"
+            imgSrc="/assets/images/project/placeholder-preview.webp"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onMouseMove={handleMouseMove}
           />
         </section>
 

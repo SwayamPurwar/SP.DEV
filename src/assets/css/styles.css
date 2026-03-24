@@ -4750,3 +4750,328 @@ footer#footer .footer-content {
     transform: translateX(15px) skewX(-5deg);
     letter-spacing: 2px;
 }
+
+/* --- FROM-SCRATCH ELITE PERFORMANCE STYLES --- */
+
+.project-scratch {
+    position: relative;
+    padding: 6rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    overflow: hidden;
+    /* Force GPU layer */
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
+
+/* Kinetic SVG Number */
+.scratch-number-wrap {
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                opacity 0.8s ease;
+}
+
+.scratch-svg {
+    font-family: var(--font-display);
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.svg-text-outline {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 0.5px;
+}
+
+.svg-text-fill {
+    fill: var(--accent);
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-link:hover .scratch-number-wrap {
+    transform: translateY(-50%) translateX(40px);
+    opacity: 0.8;
+}
+
+.project-link:hover .svg-text-fill {
+    clip-path: inset(0 0% 0 0);
+}
+
+/* Content Architecture */
+.scratch-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+}
+
+.scratch-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.scratch-title {
+    font-size: clamp(2.5rem, 6vw, 6rem);
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: -0.04em;
+    /* Move title on hover without stuttering */
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: transform;
+}
+
+.scratch-pill {
+    display: inline-block;
+    padding: 4px 12px;
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    font-family: var(--font-code);
+    font-size: 0.7rem;
+    border-radius: 100px;
+    margin-top: 10px;
+}
+
+.scratch-arrow {
+    width: 50px;
+    height: 50px;
+    opacity: 0.2;
+    transform: translateX(-20px);
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-link:hover .scratch-title {
+    transform: translateX(60px);
+}
+
+.project-link:hover .scratch-arrow {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* Progress Line Detail */
+.scratch-bottom {
+    margin-top: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.scratch-category {
+    font-family: var(--font-code);
+    font-size: 0.8rem;
+    color: #666;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    white-space: nowrap;
+}
+
+.scratch-progress-track {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.05);
+    position: relative;
+}
+
+.scratch-progress-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%;
+    background: var(--accent);
+    transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-link:hover .scratch-progress-bar {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .scratch-number-wrap { display: none; }
+    .project-link:hover .scratch-title { transform: none; }
+    .scratch-progress-track { display: none; }
+}
+/* --- UPDATED MOBILE OPTIMIZATION --- */
+@media (max-width: 768px) {
+    /* 1. Show the number wrap but reset its position */
+    .scratch-number-wrap {
+        display: block; /* Overrides display: none */
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none !important;
+        width: 60px; /* Smaller for mobile */
+        height: auto;
+        margin-bottom: 0.5rem;
+        opacity: 1;
+    }
+
+    /* 2. Adjust the SVG scaling for mobile */
+    .scratch-svg {
+        width: 100%;
+        height: auto;
+    }
+
+    .svg-text-outline {
+        stroke: rgba(255, 255, 255, 0.2); /* Slightly brighter on mobile */
+    }
+
+    /* 3. Ensure the title doesn't shift horizontally on mobile touch */
+    .project-link:hover .scratch-title {
+        transform: translateX(10px); /* Subtle shift instead of 60px */
+    }
+
+    /* 4. Adjust padding for a tighter mobile list */
+    .project-scratch {
+        padding: 3rem 0;
+    }
+
+    .scratch-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    /* 5. Keep the progress bar hidden or make it static */
+    .scratch-progress-track {
+        display: block;
+        margin-top: 1.5rem;
+        opacity: 0.3;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* --- FROM-SCRATCH ELITE STYLES --- */
+
+.project-scratch {
+    position: relative;
+    padding: 6rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+    overflow: hidden;
+    transform: translateZ(0); /* GPU Acceleration */
+}
+
+.scratch-number-wrap {
+    position: absolute;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 300px;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
+}
+
+.svg-text-outline {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 0.5px;
+}
+
+.svg-text-fill {
+    fill: var(--accent); /* */
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.project-link:hover .svg-text-fill {
+    clip-path: inset(0 0% 0 0);
+}
+
+/* =========================================
+   REFINED MOBILE VIEW (768px and below)
+   ========================================= */
+
+@media (max-width: 768px) {
+    .project-scratch {
+        padding: 3rem 0; /* Tighter spacing for mobile */
+    }
+
+    /* 1. Move number from Background to Top-Left Inline */
+    .scratch-number-wrap {
+        position: relative;
+        top: 0;
+        left: 0;
+        transform: none !important;
+        width: 80px; /* Scaled down for mobile screens */
+        margin-bottom: 1rem;
+        opacity: 1;
+        display: block;
+    }
+
+    .svg-text-outline {
+        stroke: rgba(255, 255, 255, 0.3); /* Higher contrast on mobile */
+    }
+
+    /* 2. Stack content vertically */
+    .scratch-top {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .scratch-title {
+        font-size: 2.5rem; /* Better readability on phones */
+        transform: none !important; /* Remove horizontal shift to prevent stutter */
+    }
+
+    .scratch-arrow {
+        display: none; /* Remove hover-dependent elements for better touch UX */
+    }
+
+    .scratch-bottom {
+        margin-top: 1rem;
+    }
+
+    /* 3. Static Progress bar for Mobile */
+    .scratch-progress-track {
+        height: 1px;
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .scratch-progress-bar {
+        width: 100% !important; /* Always visible on mobile */
+        opacity: 0.3;
+    }
+}
+
+
+
+
+
+.project-preview-img {
+    position: fixed; /* Pins to viewport */
+    top: 0;
+    left: 0;
+    width: 400px;
+    height: 300px;
+    background-size: cover;
+    background-position: center;
+    pointer-events: none;
+    z-index: 11;
+    opacity: 0;
+    will-change: transform;
+    /* Move the center of the image to the 0,0 point */
+    transform: translate(-50%, -50%); 
+}
