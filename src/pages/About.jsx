@@ -146,6 +146,10 @@ export default function About() {
             paddingBottom: "4rem",
             borderTop: "1px solid rgba(255,255,255,0.1)",
             paddingTop: "6rem",
+            width: "90vw",
+            position: "relative",
+            left: "50%",
+            transform: "translateX(-50%)",
           }}
         >
           <Link to="/" className="btn mouse-hover">
