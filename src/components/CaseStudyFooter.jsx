@@ -1,4 +1,4 @@
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 
 // Array of all case studies mapped to their specific routes
@@ -12,7 +12,7 @@ const CASE_STUDIES = [
   { id: "instagram", title: "INSTAGRAM", link: "/work/instagram-casestudy" },
 ];
 
-export default function CaseStudyFooter({ currentProject, backLink }) {
+export default function CaseStudyFooter({ currentProject }) {
   const navigate = useNavigate();
 
   // Filter out the current case study so we only show the others
@@ -46,7 +46,14 @@ export default function CaseStudyFooter({ currentProject, backLink }) {
   };
 
   return (
-    <div className="cs-next-footer">
+    <div 
+      className="cs-next-footer" 
+      style={{ 
+        borderTop: "none", /* <-- THIS FORCES THE LINE TO DISAPPEAR */
+        paddingTop: "2rem",
+        marginTop: "8rem"
+      }}
+    >
       {/* Premium Multiple Next Projects List */}
       <div className="cs-next-label">EXPLORE OTHER CASE STUDIES</div>
 
@@ -85,15 +92,6 @@ export default function CaseStudyFooter({ currentProject, backLink }) {
           </div>
         ))}
       </div>
-
-      {/* Back to main project link (Moved to Bottom) */}
-      {backLink && (
-        <div className="cs-back-btn">
-          <Link to={backLink} className="btn mouse-hover">
-            &larr; Back to Overview
-          </Link>
-        </div>
-      )}
     </div>
   );
 }

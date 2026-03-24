@@ -374,7 +374,39 @@ export default function KiteCaseStudy() {
             </section>
           </div>
         </div>
-        <CaseStudyFooter currentProject="kite" backLink="/work/kite" />
+        <div className="cs-content" style={{ paddingBottom: 0, paddingTop: 0 }}>
+          <div 
+            style={{ 
+              marginTop: "4rem", 
+              paddingTop: "2rem",
+              display: "flex", 
+              justifyContent: "center", 
+              borderTop: "1px solid rgba(255, 255, 255, 0.1)"
+            }}
+          >
+            <Link
+              to="/work/kite"
+              className="mouse-hover"
+              style={{
+                color: "#fff",
+                textDecoration: "none",
+                fontFamily: "var(--font-code)",
+                fontSize: "1rem",
+                letterSpacing: "1px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                transition: "color 0.3s ease",
+                textTransform: "uppercase"
+              }}
+              onMouseOver={(e) => e.currentTarget.style.color = "#00E396"} // Kite Green
+              onMouseOut={(e) => e.currentTarget.style.color = "#fff"}
+            >
+              &larr; Back to Overview
+            </Link>
+          </div>
+        </div>
+        <CaseStudyFooter currentProject="kite" />
       </div>
     </>
   );

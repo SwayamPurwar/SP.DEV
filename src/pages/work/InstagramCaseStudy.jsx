@@ -246,6 +246,38 @@ export default function InstagramCaseStudy() {
               />
             </div>
           </section>
+          <div 
+            style={{ 
+              marginTop: "6rem", 
+              paddingTop: "2rem",
+              display: "flex", 
+              justifyContent: "center",
+              borderTop: "1px solid rgba(255, 255, 255, 0.1)"
+            }}
+          >
+            <Link
+              to="/work/instagram"
+              className="mouse-hover"
+              style={{
+                color: "#fff",
+                textDecoration: "none",
+                fontFamily: "var(--font-code)",
+                fontSize: "1rem",
+                letterSpacing: "1px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                transition: "color 0.3s ease",
+                textTransform: "uppercase"
+              }}
+              onMouseOver={(e) => e.currentTarget.style.color = "#bc2a8d"} // Instagram brand color hover
+              onMouseOut={(e) => e.currentTarget.style.color = "#fff"}
+            >
+              &larr; Back to Overview
+            </Link>
+          </div>
+
+
           <CaseStudyFooter
             currentProject="instagram"
             backLink="/work/instagram"

@@ -38,7 +38,14 @@ export default function MoreProjectsFooter({ currentProject }) {
   };
 
   return (
-    <div className="cs-next-footer">
+    <div 
+      className="cs-next-footer" 
+      style={{ 
+        borderTop: "none", /* <-- THIS FORCES THE LINE TO DISAPPEAR */
+        paddingTop: "2rem",
+        marginTop: "8rem"
+      }}
+    >
       {/* Premium Label */}
       <div className="cs-next-label">EXPLORE OTHER WORKS</div>
 

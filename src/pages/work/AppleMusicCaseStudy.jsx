@@ -243,7 +243,40 @@ export default function AppleMusicCaseStudy() {
               />
             </div>
           </section>
-        </div>{" "}
+          {/* --- ADDED: BOTTOM BACK BUTTON IN PAGE CONTENT --- */}
+          <div 
+            style={{ 
+              marginTop: "6rem", 
+              paddingTop: "2rem",
+              display: "flex", 
+              justifyContent: "center",
+              borderTop: "1px solid rgba(255, 255, 255, 0.1)"
+            }}
+          >
+            <Link
+              to="/work/apple-music"
+              className="mouse-hover"
+              style={{
+                color: "#fff",
+                textDecoration: "none",
+                fontFamily: "var(--font-code)",
+                fontSize: "1rem",
+                letterSpacing: "1px",
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                transition: "color 0.3s ease",
+                textTransform: "uppercase"
+              }}
+              onMouseOver={(e) => e.currentTarget.style.color = "#fc3c44"}
+              onMouseOut={(e) => e.currentTarget.style.color = "#fff"}
+            >
+              &larr; Back to Overview
+            </Link>
+          </div>
+
+        </div> {/* <-- Closes .cs-content */}
+
         {/* <-- Closes .cs-content */}
         {/* <-- ADDED THE NEW FOOTER HERE, OUTSIDE .cs-content SO IT CENTERS PROPERLY --> */}
         <CaseStudyFooter
