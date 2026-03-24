@@ -21,15 +21,17 @@ class SystemSound {
     }
   }
 
-  toggleMute() {
-    this.isMuted = !this.isMuted;
-    // Unmuting counts as an interaction to resume context
-    if (!this.isMuted) {
-      this.ensureAudio();
-      this.playHover(); // Small feedback sound
-    }
-    return this.isMuted;
+  // src/utils/audio-system.js
+toggleMute() {
+  this.isMuted = !this.isMuted;
+  if (!this.isMuted) {
+    this.ensureAudio();
+    this.playHover();
   }
+  // Dispatch a global event so components can listen for changes
+  window.dispatchEvent(new CustomEvent("audioMuteToggled", { detail: this.isMuted }));
+  return this.isMuted;
+}
 
   playBoot() {
     if (this.isMuted) return; // Skip if muted

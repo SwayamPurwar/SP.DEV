@@ -41,6 +41,16 @@ export default function Navbar() {
     };
   }, [isMenuOpen]);
 
+  // Listen for global mute toggles (e.g., from ResumeNavbar)
+  useEffect(() => {
+    const handleMuteChange = (e) => {
+      setIsMuted(e.detail);
+    };
+
+    window.addEventListener("audioMuteToggled", handleMuteChange);
+    return () => window.removeEventListener("audioMuteToggled", handleMuteChange);
+  }, []);
+
   // Route Guarding
   const isKnownRoute =
     KNOWN_BASE_ROUTES.has(path) || VALID_WORK_ROUTES.has(path);

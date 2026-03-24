@@ -13,6 +13,16 @@ export default function ResumeNavbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // NEW: Listen for global mute changes
+  useEffect(() => {
+    const handleMuteChange = (e) => {
+      setIsMuted(e.detail);
+    };
+
+    window.addEventListener("audioMuteToggled", handleMuteChange);
+    return () => window.removeEventListener("audioMuteToggled", handleMuteChange);
+  }, []);
+
   const handleToggleSound = () => {
     const newMutedState = sfx.toggleMute();
     setIsMuted(newMutedState);
