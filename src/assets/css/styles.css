@@ -4677,3 +4677,17 @@ footer {
     0%, 100% { opacity: 1; text-shadow: 0 0 5px var(--accent); }
     50% { opacity: 0.7; text-shadow: 0 0 0px var(--accent); }
 }
+
+/* =========================================
+   FINAL FOOTER GAP FIX 
+   ========================================= */
+footer#footer {
+    padding-bottom: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+footer#footer .footer-content {
+    flex-grow: 1 !important;
+    padding-bottom: max(2rem, env(safe-area-inset-bottom)) !important;
+}
