@@ -731,12 +731,6 @@ export default function Resume() {
                 >
                   GitHub
                 </a>
-                <a
-                  href="tel:+919993900688"
-                  className="text-zinc-400 hover:text-white transition-colors"
-                >
-                  Phone
-                </a>
               </div>
             </div>
           </section>

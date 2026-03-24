@@ -128,10 +128,59 @@ export function initUtils() {
     };
     window.addEventListener("mousemove", handleGlowMove);
   }
-  console.log(
-    "%c SWAYAM.DEV ",
-    "color:#050505;background:#bfa5d8;font-size:20px;font-weight:bold;padding:10px;border-radius:5px;",
-  );
+ // --- 5. THE ULTIMATE SECRET CONSOLE EXPERIENCE ---
+  const titleStyle = "color: #050505; background: #bfa5d8; font-size: 24px; font-weight: 900; padding: 10px 20px; border-radius: 6px; font-family: 'Fira Code', monospace; line-height: 2;";
+  const subStyle = "color: #bfa5d8; font-size: 13px; font-style: italic; font-family: monospace; padding-bottom: 10px;";
+  const textStyle = "color: #e2e8f0; font-size: 14px; font-family: sans-serif; line-height: 1.5;";
+  const highlightStyle = "color: #050505; background: #bfa5d8; font-size: 14px; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-weight: bold;";
+
+  // Wrap logs in setTimeout to ensure they render cleanly after React/Vite boot logs
+  setTimeout(() => {
+    // 1. The 3D Neon Glass Header
+    console.log(
+      "%c SWAYAM PURWAR %c \n" +
+      "%cWelcome to the developer tools. Let's build something beautiful.%c \n\n" +
+      "Check out the terminal on the UI, or drop me a line.",
+      "font-size: 50px; font-weight: 900; color: transparent; -webkit-text-stroke: 1px #bfa5d8; text-shadow: 3px 3px 0px #8a2387, 6px 6px 0px #050505; letter-spacing: 5px; line-height: 1.2;",
+      "",
+      "font-family: 'Inter', sans-serif; font-size: 14px; color: #e2e8f0; background: #1a1a1a; padding: 8px 16px; border-radius: 20px; border: 1px solid #333;",
+      ""
+    );
+
+    // 2. The Mainframe Prompt
+    console.log("%c✦ S.A.M. OS BY SP.DEV ✦", titleStyle);
+    console.log("%c[SYSTEM MESSAGE]: Curious developer detected in the mainframe.", subStyle);
+    console.log(
+      "%cIf you are reading this, you are exactly the kind of curious person I want to work with.\n\n" +
+      "Most people just look at the UI. You look under the hood. Let's build something incredible together.\n\n" +
+      "To initiate a secure connection protocol, type %cinitiateContact()%c and hit Enter.",
+      textStyle,
+      highlightStyle,
+      textStyle
+    );
+  }, 1000);
+
+  // 3. Expose the hidden function to the global window object
+  window.initiateContact = () => {
+    let dots = 0;
+    console.log("%c[SYSTEM]: Bypassing security firewalls...", "color: #bfa5d8; font-family: monospace; font-size: 14px;");
+    
+    const loading = setInterval(() => {
+      dots++;
+      if (dots === 3) {
+        clearInterval(loading);
+        console.log("%c[SUCCESS]: Handshake complete. Launching comms link...", "color: #4ade80; font-family: monospace; font-size: 14px; font-weight: bold;");
+        
+        // Opens a pre-filled email draft
+        setTimeout(() => {
+          // IMPORTANT: Replace with your actual email address!
+          window.open("mailto:swayampurwar111104@gmail.com?subject=S.A.M.%20OS%20Connection%20Established&body=Hey%20Swayam,%0A%0AI%20found%20your%20secret%20console%20command!%20Let's%20talk.");
+        }, 1000);
+      }
+    }, 800);
+
+    return "Executing protocol...";
+  };
 
   // 🚨 CLEANUP FUNCTION (Crucial for React!)
   return () => {
