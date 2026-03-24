@@ -33,10 +33,9 @@ export default function Footer() {
         id="footer"
         className="footer-contact"
         style={{
-          minHeight: "auto",
+          minHeight: "80px",
           padding: "2rem 5vw",
           background: "transparent", // Blends with the contact page background
-          borderTop: "1px solid rgba(255, 255, 255, 0.05)",
         }}
       >
         <div
