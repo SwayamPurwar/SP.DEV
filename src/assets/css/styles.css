@@ -4690,3 +4690,9 @@ footer#footer .footer-content {
     flex-grow: 1 !important;
     padding-bottom: max(2rem, env(safe-area-inset-bottom)) !important;
 }
+
+/* Remove global pseudo-element lines from the contact page footer */
+.footer-contact::after,
+.footer-contact::before {
+    display: none !important;
+}
