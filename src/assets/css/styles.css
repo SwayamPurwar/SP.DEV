@@ -1371,9 +1371,10 @@ main, nav, footer {
 /* --- GOD MODE MOBILE OPTIMIZATIONS --- */
 @media (max-width: 768px) {
     #cmd-terminal {
-        height: 100dvh; /* Upgraded from 50vh to 100dvh to handle virtual keyboards */
+        height: 50dvh; /* Upgraded from 50vh to 100dvh to handle virtual keyboards */
         padding: 1rem 0.5rem; /* Reduced padding to maximize horizontal space */
         box-sizing: border-box;
+        z-index: 999999 !important;
     }
 
     .cmd-header {
