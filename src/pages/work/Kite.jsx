@@ -388,7 +388,10 @@ export default function Kite() {
                   display: "flex",
                   alignItems: "center",
                   gap: "10px",
-                  transition: "color 0.3s ease",
+                 padding: "1rem 2rem", /* <-- ADDED: Space inside the button */
+      border: "1px solid rgba(255, 255, 255, 0.2)", /* <-- ADDED: The visible outline */
+      borderRadius: "50px", /* <-- ADDED: Rounded pill shape */
+      transition: "all 0.3s ease", /* Changed to 'all' so the border animates too */
                   textTransform: "uppercase"
                 }}
                 onMouseOver={(e) => e.currentTarget.style.color = "#fc3c44"} // Apple Music Red

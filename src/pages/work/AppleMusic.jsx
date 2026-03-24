@@ -164,8 +164,12 @@ export default function AppleMusic() {
                   display: "flex",
                   alignItems: "center",
                   gap: "10px",
-                  transition: "color 0.3s ease",
-                  textTransform: "uppercase"
+                 padding: "1rem 2rem", /* <-- ADDED: Space inside the button */
+      border: "1px solid rgba(255, 255, 255, 0.2)", /* <-- ADDED: The visible outline */
+      borderRadius: "50px", /* <-- ADDED: Rounded pill shape */
+      transition: "all 0.3s ease",
+                  textTransform: "uppercase",
+
                 }}
                 onMouseOver={(e) => e.currentTarget.style.color = "#fc3c44"} // Apple Music Red
                 onMouseOut={(e) => e.currentTarget.style.color = "#fff"}
