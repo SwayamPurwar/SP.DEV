@@ -111,7 +111,7 @@ export default function AiSaas() {
                 duration: 0.6,
                 ease: "power2.out",
                 delay: (i % 3) * 0.1,
-                clearProps: "all",
+                clearProps: "transform,opacity",
               },
             );
           });
