@@ -257,7 +257,7 @@ export default function Resume() {
                 <h3 className="project-title">Apple Music Clone</h3>
                 <p className="project-desc">Pixel-perfect replication of the Apple Music web player featuring full audio playback.</p>
               </div>
-              <div className="project-link">
+             <div className="resume-project-link">
                 <span>View Case Study</span>
                 <svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" stroke="currentColor" fill="none"/></svg>
               </div>
@@ -271,7 +271,7 @@ export default function Resume() {
                 <h3 className="project-title">Instagram Clone</h3>
                 <p className="project-desc">Responsive social media interface with complex grid layouts, feeds, and modern interactions.</p>
               </div>
-              <div className="project-link">
+            <div className="resume-project-link">
                 <span>View Case Study</span>
                 <svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" stroke="currentColor" fill="none"/></svg>
               </div>
@@ -285,7 +285,7 @@ export default function Resume() {
                 <h3 className="project-title">Kite Zerodha Replica</h3>
                 <p className="project-desc">A high-performance trading dashboard interface with complex state management.</p>
               </div>
-              <div className="project-link">
+             <div className="resume-project-link">
                 <span>View Case Study</span>
                 <svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" stroke="currentColor" fill="none"/></svg>
               </div>
@@ -299,7 +299,7 @@ export default function Resume() {
                 <h3 className="project-title">CodeSense AI SaaS</h3>
                 <p className="project-desc">Intelligent code analysis platform with secure authentication, AI integration, and a modern dashboard.</p>
               </div>
-              <div className="project-link">
+             <div className="resume-project-link">
                 <span>View Case Study</span>
                 <svg viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" stroke="currentColor" fill="none"/></svg>
               </div>
