@@ -467,7 +467,7 @@ export default function Home() {
               <h2>CodeSense AI</h2>
               <div className="project-meta">
                 <p>AI-Powered Code Assistant + Saas</p>
-                <p>Coming Soon</p>
+                <p>2026</p>
               </div>
             </article>
           </Link>
