@@ -1,14 +1,14 @@
-import { Link } from 'react-router-dom';
-import SEO from '../components/SEO';
+import { Link } from "react-router-dom";
+import SEO from "../components/SEO";
 
 export default function About() {
   const currentYear = new Date().getFullYear();
 
   return (
     <>
-      <SEO 
-        title="About Swayam Purwar | React Developer" 
-        description="Learn more about Swayam Purwar, a BCA student and creative developer from Bhopal." 
+      <SEO
+        title="About Swayam Purwar | React Developer"
+        description="Learn more about Swayam Purwar, a BCA student and creative developer from Bhopal."
         image="/assets/images/profile/swayam-purwar.webp"
       />
       <div className="grid-bg"></div>
@@ -18,10 +18,17 @@ export default function About() {
       <main>
         <header className="a-hero">
           <h1 className="a-title" aria-label="The Mind Behind Swayam Purwar">
-            THE MIND<br /><span style={{ color: 'transparent', WebkitTextStroke: '1px white' }}>BEHIND</span>
+            THE MIND
+            <br />
+            <span
+              style={{ color: "transparent", WebkitTextStroke: "1px white" }}
+            >
+              BEHIND
+            </span>
           </h1>
           <p className="a-subtitle">
-            I craft digital experiences where design meets logic. Driven by precision, powered by code.
+            I craft digital experiences where design meets logic. Driven by
+            precision, powered by code.
           </p>
         </header>
 
@@ -41,29 +48,54 @@ export default function About() {
 
           <article className="bio-text">
             <div className="bio-content-wrapper">
-              <p>Hello, I'm <strong>Swayam Purwar</strong>. A creative developer based in Bhopal, India.</p>
-              <p>My journey started with a curiosity for how things work, leading me to pursue a <strong>BCA at LNCT University</strong>. I wanted to build interfaces that people could <em>feel</em>, not just use.</p>
-              <p>I specialize in <strong>React and MongoDB</strong>, bridging the gap between powerful backend logic and fluid frontend interactivity.</p>
+              <p>
+                Hello, I'm <strong>Swayam Purwar</strong>. A creative developer
+                based in Bhopal, India.
+              </p>
+              <p>
+                My journey started with a curiosity for how things work, leading
+                me to pursue a <strong>BCA at LNCT University</strong>. I wanted
+                to build interfaces that people could <em>feel</em>, not just
+                use.
+              </p>
+              <p>
+                I specialize in <strong>React and MongoDB</strong>, bridging the
+                gap between powerful backend logic and fluid frontend
+                interactivity.
+              </p>
             </div>
 
             <div className="info-grid">
               <div className="info-col">
                 <h3>Experience</h3>
                 <div className="info-item">
-                  <h4>Bluestock Fintech <span className="role-tag">SDE Intern</span></h4>
-                  <p className="desc">Contributed to core software development cycles and financial API integrations.</p>
+                  <h4>
+                    Bluestock Fintech{" "}
+                    <span className="role-tag">SDE Intern</span>
+                  </h4>
+                  <p className="desc">
+                    Contributed to core software development cycles and
+                    financial API integrations.
+                  </p>
                   <p className="date">Oct 2025 – Nov 2025</p>
                 </div>
                 <div className="info-item">
-                  <h4>Freelance <span className="role-tag">Creative Dev</span></h4>
-                  <p className="desc">Building high-performance portfolios and brand experiences with 95+ Lighthouse scores.</p>
+                  <h4>
+                    Freelance <span className="role-tag">Creative Dev</span>
+                  </h4>
+                  <p className="desc">
+                    Building high-performance portfolios and brand experiences
+                    with 95+ Lighthouse scores.
+                  </p>
                   <p className="date">2024 – Present</p>
                 </div>
 
-                <h3 style={{ marginTop: '4rem' }}>Education</h3>
+                <h3 style={{ marginTop: "4rem" }}>Education</h3>
                 <div className="info-item">
                   <h4>LNCT University</h4>
-                  <p className="desc">Bachelor of Computer Applications (BCA)</p>
+                  <p className="desc">
+                    Bachelor of Computer Applications (BCA)
+                  </p>
                   <p className="date">2023 - Present (Pursuing)</p>
                 </div>
                 <div className="info-item">
@@ -79,7 +111,9 @@ export default function About() {
                   <h4>Development</h4>
                   <div className="tech-container">
                     <span className="tech-pill mouse-hover">React</span>
-                    <span className="tech-pill mouse-hover">JavaScript (ES6+)</span>
+                    <span className="tech-pill mouse-hover">
+                      JavaScript (ES6+)
+                    </span>
                     <span className="tech-pill mouse-hover">GSAP</span>
                     <span className="tech-pill mouse-hover">Three.js</span>
                     <span className="tech-pill mouse-hover">Node.js</span>
@@ -93,7 +127,9 @@ export default function About() {
                   <div className="tech-container">
                     <span className="tech-pill mouse-hover">Figma</span>
                     <span className="tech-pill mouse-hover">Adobe XD</span>
-                    <span className="tech-pill mouse-hover">UI/UX Principles</span>
+                    <span className="tech-pill mouse-hover">
+                      UI/UX Principles
+                    </span>
                     <span className="tech-pill mouse-hover">Motion Design</span>
                   </div>
                 </div>
@@ -103,12 +139,19 @@ export default function About() {
         </section>
 
         {/* --- ADDED BACK BUTTON --- */}
-        <div style={{ textAlign: 'center', marginTop: '6rem', paddingBottom: '4rem', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '6rem' }}>
-          <Link to="/" className="btn mouse-hover">&larr; Back to Home</Link>
+        <div
+          style={{
+            textAlign: "center",
+            marginTop: "6rem",
+            paddingBottom: "4rem",
+            borderTop: "1px solid rgba(255,255,255,0.1)",
+            paddingTop: "6rem",
+          }}
+        >
+          <Link to="/" className="btn mouse-hover">
+            &larr; Back to Home
+          </Link>
         </div>
-
-        
-
       </main>
     </>
   );

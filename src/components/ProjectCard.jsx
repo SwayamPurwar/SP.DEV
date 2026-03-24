@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 export default function ProjectCard({ title, category, year, link, imgSrc }) {
   return (

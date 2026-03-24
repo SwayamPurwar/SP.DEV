@@ -1,10 +1,10 @@
-import { useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import SEO from '../../components/SEO';
+import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import SEO from "../../components/SEO";
 
-import MoreProjectsFooter from '../../components/MoreProjectsFooter';
+import MoreProjectsFooter from "../../components/MoreProjectsFooter";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,9 +15,34 @@ export default function AppleMusic() {
     // Wrap all GSAP code in a context for easy React cleanup
     let ctx = gsap.context(() => {
       // Entrance Animations
-      gsap.fromTo(".p-title", { y: 100, opacity: 0 }, { y: 0, opacity: 1, duration: 1.5, ease: "power4.out", delay: 0.2 });
-      gsap.fromTo(".p-img-container", { scaleY: 0 }, { scaleY: 1, transformOrigin: "bottom", duration: 1.2, ease: "power4.inOut", delay: 0.4 });
-      gsap.fromTo(".p-desc, .p-info", { y: 50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, stagger: 0.15, ease: "power3.out", delay: 0.8 });
+      gsap.fromTo(
+        ".p-title",
+        { y: 100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.5, ease: "power4.out", delay: 0.2 },
+      );
+      gsap.fromTo(
+        ".p-img-container",
+        { scaleY: 0 },
+        {
+          scaleY: 1,
+          transformOrigin: "bottom",
+          duration: 1.2,
+          ease: "power4.inOut",
+          delay: 0.4,
+        },
+      );
+      gsap.fromTo(
+        ".p-desc, .p-info",
+        { y: 50, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.15,
+          ease: "power3.out",
+          delay: 0.8,
+        },
+      );
 
       // Parallax Scroll Trigger
       gsap.to(".p-img", {
@@ -33,15 +58,17 @@ export default function AppleMusic() {
     }, containerRef);
 
     // CRITICAL: Cleanup function runs when leaving the page
-    return () => ctx.revert(); 
+    return () => ctx.revert();
   }, []);
 
   return (
     <>
-      <SEO title="Apple Music Redesign | Case Study" description="UI/UX case study and redesign of Apple Music focusing on glassmorphism and fluid animations." />
-      
+      <SEO
+        title="Apple Music Redesign | Case Study"
+        description="UI/UX case study and redesign of Apple Music focusing on glassmorphism and fluid animations."
+      />
+
       <div ref={containerRef}>
-        
         {/* <-- ADDED GRID BACKGROUND HERE --> */}
         <div className="grid-bg"></div>
         <div className="ambient-glow-red"></div>
@@ -49,7 +76,8 @@ export default function AppleMusic() {
         <main>
           <section className="p-hero">
             <h1 className="p-title" style={{ opacity: 0 }}>
-              APPLE MUSIC<br />
+              APPLE MUSIC
+              <br />
               <span className="outline-sub">REDESIGN</span>
             </h1>
 
@@ -66,15 +94,32 @@ export default function AppleMusic() {
                 <h3>The Vision</h3>
                 <div>
                   <p>
-                    Music apps often feel cluttered. This project was a UI/UX case study aimed at simplifying the Apple Music experience while introducing fluid, gesture-based interactions.
+                    Music apps often feel cluttered. This project was a UI/UX
+                    case study aimed at simplifying the Apple Music experience
+                    while introducing fluid, gesture-based interactions.
                   </p>
                   <p>
-                    I focused on "Glassmorphism" and dynamic color extraction, where the interface adapts to the album art in real-time. The result is a cleaner, more immersive listening experience.
+                    I focused on "Glassmorphism" and dynamic color extraction,
+                    where the interface adapts to the album art in real-time.
+                    The result is a cleaner, more immersive listening
+                    experience.
                   </p>
                 </div>
                 <div className="btn-group">
-                  <Link to="/work/apple-music-casestudy" className="btn mouse-hover">View Case Study</Link>
-                  <a href="https://github.com/SwayamPurwar/Apple-Music.git" target="_blank" rel="noreferrer" className="btn mouse-hover">GitHub Code</a>
+                  <Link
+                    to="/work/apple-music-casestudy"
+                    className="btn mouse-hover"
+                  >
+                    View Case Study
+                  </Link>
+                  <a
+                    href="https://github.com/SwayamPurwar/Apple-Music.git"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="btn mouse-hover"
+                  >
+                    GitHub Code
+                  </a>
                 </div>
               </article>
 
@@ -95,15 +140,13 @@ export default function AppleMusic() {
                   <li>2025</li>
                 </ul>
               </aside>
-              
             </div>
-            
+
             {/* The old hardcoded footer was removed from here to prevent duplication */}
-            
           </section>
         </main>
       </div>
-      
+
       {/* THE NEW PREMIUM FOOTER */}
       <MoreProjectsFooter currentProject="apple-music" />
     </>

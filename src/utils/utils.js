@@ -1,5 +1,5 @@
 import { interactiveSelector } from "./constants.js";
-import gsap from 'gsap';
+import gsap from "gsap";
 
 // To prevent interval stacking globally during HMR
 let clockInterval;
@@ -18,18 +18,20 @@ export function initUtils() {
   // --- 2. CUSTOM CURSOR ---
   const cursor = document.getElementById("cursor");
   let xTo, yTo;
-  
+
   const handleMouseMoveCursor = (e) => {
     const isTerminal = e.target.closest("#cmd-terminal");
     if (isTerminal) {
-      cursor.style.opacity = 0; 
-      return; 
+      cursor.style.opacity = 0;
+      return;
     } else {
-      cursor.style.opacity = 1; 
+      cursor.style.opacity = 1;
     }
 
     const magnetTarget = e.target.closest(interactiveSelector);
-    const isBigCard = magnetTarget ? magnetTarget.matches(".project-link, .project, .hero-text") : false;
+    const isBigCard = magnetTarget
+      ? magnetTarget.matches(".project-link, .project, .hero-text")
+      : false;
 
     if (magnetTarget && !isBigCard) {
       const rect = magnetTarget.getBoundingClientRect();
@@ -42,13 +44,17 @@ export function initUtils() {
   };
 
   const handleMouseOverCursor = (e) => {
-    if (e.target.closest(interactiveSelector) && !e.target.closest("#cmd-terminal")) {
+    if (
+      e.target.closest(interactiveSelector) &&
+      !e.target.closest("#cmd-terminal")
+    ) {
       cursor.classList.add("hovered");
     }
   };
 
   const handleMouseOutCursor = (e) => {
-    if (e.target.closest(interactiveSelector)) cursor.classList.remove("hovered");
+    if (e.target.closest(interactiveSelector))
+      cursor.classList.remove("hovered");
   };
 
   const handleKeyDownTab = (e) => {
@@ -96,28 +102,28 @@ export function initUtils() {
         }) + " IST";
     }
   }
-  
-  updateLiveClock();
-  if (clockInterval) clearInterval(clockInterval); 
-  clockInterval = setInterval(updateLiveClock, 1000); 
 
- // --- 4. UPDATED AMBIENT GLOW LOGIC ---
+  updateLiveClock();
+  if (clockInterval) clearInterval(clockInterval);
+  clockInterval = setInterval(updateLiveClock, 1000);
+
+  // --- 4. UPDATED AMBIENT GLOW LOGIC ---
   const glow = document.getElementById("ambient-glow");
   let handleGlowMove;
-  
+
   if (glow) {
     handleGlowMove = (e) => {
       // Convert mouse position to percentages
       const xPct = (e.clientX / window.innerWidth) * 100;
       const yPct = (e.clientY / window.innerHeight) * 100;
-      
+
       // Use GSAP to smoothly animate the CSS variables
       gsap.to(glow, {
         "--mouse-x": `${xPct}%`,
         "--mouse-y": `${yPct}%`,
         duration: 1.5,
         ease: "power2.out",
-        overwrite: "auto"
+        overwrite: "auto",
       });
     };
     window.addEventListener("mousemove", handleGlowMove);
@@ -131,7 +137,7 @@ export function initUtils() {
   return () => {
     window.removeEventListener("scroll", handleScroll);
     if (clockInterval) clearInterval(clockInterval);
-    
+
     if (cursor) {
       window.removeEventListener("mousemove", handleMouseMoveCursor);
       document.body.removeEventListener("mouseover", handleMouseOverCursor);

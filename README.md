@@ -18,27 +18,27 @@
 
 ## ✨ Features
 
-| Feature | Description |
-|---|---|
-| 🧊 **3D Graphics** | Immersive 3D elements and web experiences powered by **Three.js**. |
-| 🎞️ **Advanced Animations** | Complex timeline animations and seamless page transitions utilizing **GSAP**. |
-| 🌊 **Smooth Scrolling** | Fluid, highly-optimized scroll behavior powered by **Lenis** studio-freight. |
-| 🖱️ **Custom Interactions** | Custom cursor and hover states across interactive elements (buttons, project links, etc.). |
-| 🔍 **Dynamic SEO** | Per-page metadata and SEO management using **React Helmet Async**. |
-| 📁 **Case Studies** | Dedicated, detailed breakdown pages for major projects (Apple Music, Kite, Instagram, CodeSense AI). |
-| ⚡ **Blazing Fast** | Built on **React 19** and bundled with **Vite** for instantaneous hot-module replacement and optimized builds. |
+| Feature                    | Description                                                                                                    |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| 🧊 **3D Graphics**         | Immersive 3D elements and web experiences powered by **Three.js**.                                             |
+| 🎞️ **Advanced Animations** | Complex timeline animations and seamless page transitions utilizing **GSAP**.                                  |
+| 🌊 **Smooth Scrolling**    | Fluid, highly-optimized scroll behavior powered by **Lenis** studio-freight.                                   |
+| 🖱️ **Custom Interactions** | Custom cursor and hover states across interactive elements (buttons, project links, etc.).                     |
+| 🔍 **Dynamic SEO**         | Per-page metadata and SEO management using **React Helmet Async**.                                             |
+| 📁 **Case Studies**        | Dedicated, detailed breakdown pages for major projects (Apple Music, Kite, Instagram, CodeSense AI).           |
+| ⚡ **Blazing Fast**        | Built on **React 19** and bundled with **Vite** for instantaneous hot-module replacement and optimized builds. |
 
 ## 🛠️ Tech Stack
 
-| Category | Technology |
-|---|---|
-| **Frontend Framework** | React 19 + Vite |
-| **Routing** | React Router DOM v7 |
-| **Animations** | GSAP (GreenSock Animation Platform) |
-| **3D Rendering** | Three.js |
-| **Scroll Engine** | Lenis |
-| **SEO Management** | React Helmet Async |
-| **Linting** | ESLint 9 + React Plugins |
+| Category               | Technology                          |
+| ---------------------- | ----------------------------------- |
+| **Frontend Framework** | React 19 + Vite                     |
+| **Routing**            | React Router DOM v7                 |
+| **Animations**         | GSAP (GreenSock Animation Platform) |
+| **3D Rendering**       | Three.js                            |
+| **Scroll Engine**      | Lenis                               |
+| **SEO Management**     | React Helmet Async                  |
+| **Linting**            | ESLint 9 + React Plugins            |
 
 ## 📁 Project Structure
 
@@ -65,28 +65,36 @@ SP.DEV/
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js (v18 or higher recommended)
 - npm or yarn
 
 ### Installation
 
 1. **Clone the repository:**
-  ```bash
-  git clone [https://github.com/SwayamPurwar/SP.DEV.git](https://github.com/SwayamPurwar/SP.DEV.git)
-  cd SP.DEV
-  ```
+
+```bash
+git clone [https://github.com/SwayamPurwar/SP.DEV.git](https://github.com/SwayamPurwar/SP.DEV.git)
+cd SP.DEV
+```
+
 2. **Install dependencies:**
-  ```bash
-  npm install
-  ```
+
+```bash
+npm install
+```
+
 3. **Run the Development Server:**
-  ```bash
-  npm run dev
-  ```
+
+```bash
+npm run dev
+```
+
 4. **Build for Production:**
-  ```bash
-  npm run build
-  ```
+
+```bash
+npm run build
+```
 
 ### 💡 Key Configurations
 
@@ -97,10 +105,10 @@ Custom cursor logic and interactive hover states are managed via global selector
 "a", "button", ".btn", ".t-btn", ".nav-item", ".toc-link", ".tech-pill", ".cv-btn", ".cs-tag", ".project-link", ".socials a", ".glass-btn", ".mouse-hover"
 ```
 
-
 ## 👨‍💻 Author
 
 **Swayam Purwar**
+
 - **LinkedIn**: [Swayam Purwar](https://www.linkedin.com/in/SwayamPurwar)
 - **GitHub**: [@SwayamPurwar](https://github.com/SwayamPurwar/)
 - **Email**: [swayampurwar111104@gmail.com](mailto:swayampurwar111104@gmail.com)

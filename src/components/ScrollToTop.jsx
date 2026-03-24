@@ -1,7 +1,7 @@
 // src/components/ScrollToTop.jsx
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function ScrollToTop() {
   const { pathname } = useLocation();
@@ -9,7 +9,7 @@ export default function ScrollToTop() {
   useEffect(() => {
     // 1. Force native scroll
     window.scrollTo(0, 0);
-    
+
     // 2. Force Lenis scroll (now that we attached it in animations.js!)
     if (window.lenis) {
       window.lenis.scrollTo(0, { immediate: true });

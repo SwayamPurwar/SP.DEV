@@ -14,10 +14,8 @@ export function initTerminal() {
   if (!terminal || !cmdInput || !cmdOutput) return;
 
   window.addEventListener("keydown", (e) => {
-
-
     const loader = document.querySelector(".preloader-container");
-  if (loader && loader.style.display !== "none") return; // DO NOTHING
+    if (loader && loader.style.display !== "none") return; // DO NOTHING
     if (e.key === "`" || e.key === "~") {
       e.preventDefault();
       toggleTerminal();
@@ -265,10 +263,10 @@ export function initTerminal() {
     ) {
       response =
         "I am the System Access Manager. I was compiled to act as the interface between human curiosity and the source code of this portfolio.";
+    } else if (text.includes("loading") || text.includes("lock")) {
+      response =
+        "During the initialization sequence, I restricted all hardware inputs to ensure a stable kernel boot. Full system access is now granted.";
     }
-    else if (text.includes("loading") || text.includes("lock")) {
-    response = "During the initialization sequence, I restricted all hardware inputs to ensure a stable kernel boot. Full system access is now granted.";
-}
 
     // --- PROJECT DEEP DIVES ---
     else if (text.includes("kite")) {
@@ -326,12 +324,15 @@ export function initTerminal() {
     }
 
     // --- FUN & PERSONALITY ---
-   else if (text.includes("status") || text.includes("how are you")) {
-        response = "Systems operational. Kernel uptime: 99.9%. My current mood is set to 'Efficient'.";
+    else if (text.includes("status") || text.includes("how are you")) {
+      response =
+        "Systems operational. Kernel uptime: 99.9%. My current mood is set to 'Efficient'.";
     } else if (text.includes("who are you") || text.includes("sam")) {
-        response = "I am an Artificial Intelligence entity designed to manage this portfolio. I am the bridge between the user and the source code.";
+      response =
+        "I am an Artificial Intelligence entity designed to manage this portfolio. I am the bridge between the user and the source code.";
     } else if (text.includes("who made you")) {
-        response = "I was brought to life by Swayam Purwar's late-night coding sessions and too much caffeine.";
+      response =
+        "I was brought to life by Swayam Purwar's late-night coding sessions and too much caffeine.";
     } else if (text.includes("love") || text.includes("like you")) {
       response =
         "That is a very human emotion. I am flattered, but my heart is made of silicon and logic gates.";
@@ -408,20 +409,20 @@ export function initTerminal() {
       }, 30);
     }, 800);
   }
-// --- REPLACED: Mobile God Mode trigger using Event Delegation ---
+  // --- REPLACED: Mobile God Mode trigger using Event Delegation ---
   let tapCount = 0,
     tapTimer;
-    
+
   // Attach listener to the whole document so it survives React renders
   document.addEventListener("click", (e) => {
     // Check if what was clicked is the logo (or inside the logo)
     const clickedLogo = e.target.closest(".logo");
-    
+
     if (clickedLogo) {
       tapCount++;
       clearTimeout(tapTimer);
       tapTimer = setTimeout(() => (tapCount = 0), 500);
-      
+
       if (tapCount === 3) {
         e.preventDefault(); // Stop it from navigating on the 3rd click
         toggleTerminal();

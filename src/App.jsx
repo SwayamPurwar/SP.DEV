@@ -23,44 +23,58 @@ const AppleMusic = lazy(() => import("./pages/work/AppleMusic"));
 const Instagram = lazy(() => import("./pages/work/Instagram"));
 const Kite = lazy(() => import("./pages/work/Kite"));
 const CodeSenseAiSaas = lazy(() => import("./pages/work/CodeSenseAiSaas.jsx"));
-const AppleMusicCaseStudy = lazy(() => import("./pages/work/AppleMusicCaseStudy"));
-const InstagramCaseStudy = lazy(() => import("./pages/work/InstagramCaseStudy"));
+const AppleMusicCaseStudy = lazy(
+  () => import("./pages/work/AppleMusicCaseStudy"),
+);
+const InstagramCaseStudy = lazy(
+  () => import("./pages/work/InstagramCaseStudy"),
+);
 const KiteCaseStudy = lazy(() => import("./pages/work/KiteCaseStudy"));
 
 const PageLoader = () => (
-  <div style={{ height: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', background: '#050505', color: '#fff', fontFamily: 'Fira Code' }}>
+  <div
+    style={{
+      height: "100vh",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: "#050505",
+      color: "#fff",
+      fontFamily: "Fira Code",
+    }}
+  >
     Loading module...
   </div>
 );
 
 function App() {
   const location = useLocation();
-  const isHomePage = location.pathname === '/';
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
-    initAudio(); 
+    initAudio();
     const cleanupAnimations = initAnimations();
     const cleanupUtils = initUtils();
-    const cleanupEasterEggs = initEasterEggs(); 
-    
+    const cleanupEasterEggs = initEasterEggs();
+
     // Timer ensures the DOM is fully painted before the terminal script searches for it
     const timer = setTimeout(() => {
-        initTerminal();
+      initTerminal();
     }, 100);
 
     return () => {
       clearTimeout(timer);
-      cleanupAnimations?.(); 
-      cleanupUtils?.();           
-      cleanupEasterEggs?.(); 
+      cleanupAnimations?.();
+      cleanupUtils?.();
+      cleanupEasterEggs?.();
     };
   }, []);
 
- return (
+  return (
     <>
       <ScrollToTop />
       <PageTransition />
-      
+
       <div id="ambient-glow" aria-hidden="true"></div>
       <div id="cursor" aria-hidden="true"></div>
 
@@ -68,15 +82,30 @@ function App() {
       <div id="cmd-terminal" aria-hidden="true">
         <div className="cmd-header">
           <span>SWAYAM.OS [VERSION 1.0.0]</span>
-            <span>ADMIN ACCESS: GRANTED</span>
-          <span id="cmd-close-mobile" onClick={() => document.getElementById("cmd-terminal").classList.remove("active")} style={{ cursor: "pointer" }}>X</span>
+          <span>ADMIN ACCESS: GRANTED</span>
+          <span
+            id="cmd-close-mobile"
+            onClick={() =>
+              document.getElementById("cmd-terminal").classList.remove("active")
+            }
+            style={{ cursor: "pointer" }}
+          >
+            X
+          </span>
         </div>
         <div id="cmd-output" className="cmd-output">
-          <div>Welcome to S.A.M. Terminal. Type 'help' to see available commands.</div>
+          <div>
+            Welcome to S.A.M. Terminal. Type 'help' to see available commands.
+          </div>
         </div>
         <div className="cmd-input-line">
           <span className="cmd-prompt">user@swayam:~$</span>
-          <input type="text" id="cmd-input" autoComplete="off" spellCheck="false" />
+          <input
+            type="text"
+            id="cmd-input"
+            autoComplete="off"
+            spellCheck="false"
+          />
         </div>
       </div>
       {/* ------------------------------ */}
@@ -94,8 +123,14 @@ function App() {
           <Route path="/work/instagram" element={<Instagram />} />
           <Route path="/work/kite" element={<Kite />} />
           <Route path="/work/CodeSenseAiSaas" element={<CodeSenseAiSaas />} />
-          <Route path="/work/apple-music-casestudy" element={<AppleMusicCaseStudy />} />
-          <Route path="/work/instagram-casestudy" element={<InstagramCaseStudy />} />
+          <Route
+            path="/work/apple-music-casestudy"
+            element={<AppleMusicCaseStudy />}
+          />
+          <Route
+            path="/work/instagram-casestudy"
+            element={<InstagramCaseStudy />}
+          />
           <Route path="/work/kite-casestudy" element={<KiteCaseStudy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
