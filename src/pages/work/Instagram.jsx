@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SEO from "../../components/SEO";
 gsap.registerPlugin(ScrollTrigger);
-import MoreProjectsFooter from "../../components/MoreProjectsFooter";
+import ProjectsFooter from "../../components/ProjectsFooter";
 
 export default function Instagram() {
   const containerRef = useRef(null); // FIX: Added ref for GSAP scope
@@ -165,7 +165,7 @@ export default function Instagram() {
           {/* FOOTER NAVIGATION */}
         </section>
       </main>
-      <MoreProjectsFooter currentProject="instagram" />
+      <ProjectsFooter currentProject="instagram" />
     </div>
   );
 }
