@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import SEO from "../components/SEO";
 import "../assets/css/resume.css";
-
+import ResumeNavbar from "../components/ResumeNavbar";
 export default function Resume() {
   const [clientCity, setClientCity] = useState("Scanning...");
   const [clientIp, setClientIp] = useState("***.***.*.*");
@@ -105,7 +105,7 @@ export default function Resume() {
 
       {/* Background Noise */}
       <div className="noise-bg"></div>
-
+      <ResumeNavbar />
       <main className="resume-main">
         <div className="resume-grid">
           
@@ -395,7 +395,7 @@ export default function Resume() {
         <div className="footer-nav animate-enter" style={{ animationDelay: "1.3s" }}>
           <Link to="/" className="outline-btn return-btn">
             <svg viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" stroke="currentColor" fill="none" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-            <span>Return</span>
+            <span>BACK TO HOME</span>
           </Link>
         </div>
       </main>
