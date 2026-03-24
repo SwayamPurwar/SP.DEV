@@ -22,7 +22,7 @@ const Success = lazy(() => import("./pages/Success"));
 const AppleMusic = lazy(() => import("./pages/work/AppleMusic"));
 const Instagram = lazy(() => import("./pages/work/Instagram"));
 const Kite = lazy(() => import("./pages/work/Kite"));
-const CodeSenseAiSaas = lazy(() => import("./pages/work/CodeSenseAiSaas.jsx"));
+const CodeSenseAiSaas = lazy(() => import("./pages/work/CodeSenseAiSaas"));
 const AppleMusicCaseStudy = lazy(
   () => import("./pages/work/AppleMusicCaseStudy"),
 );
