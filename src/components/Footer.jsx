@@ -18,16 +18,15 @@ export default function Footer() {
   if (
     path === "/resume" ||
     path === "/success" ||
-    path === "/404" ||
-    isWorkPage
+    path === "/404" 
   ) {
     return null;
   }
 
   // ==========================================
-  // CUSTOM FOOTER FOR 'CONTACT' PAGE
+  // CUSTOM FOOTER FOR 'CONTACT' & 'WORK' PAGES
   // ==========================================
-  if (path === "/contact") {
+  if (path === "/contact" || isWorkPage) {
     return (
       <footer
         id="footer"
