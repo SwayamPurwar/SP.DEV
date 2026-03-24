@@ -5075,3 +5075,44 @@ footer#footer .footer-content {
     /* Move the center of the image to the 0,0 point */
     transform: translate(-50%, -50%); 
 }
+
+
+/* styles.css */
+
+/* 1. Set initial state for scroll animations */
+.svg-text-fill {
+    fill: var(--accent);
+    clip-path: inset(0 100% 0 0); /* Start hidden */
+    transition: none; /* Disable CSS transitions so GSAP can take over */
+}
+
+.scratch-progress-bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 0%; /* Start empty */
+    background: var(--accent);
+    transition: none; /* Disable CSS transitions */
+}
+
+/* 2. Keep Hover as an enhancement for Desktop only */
+@media (hover: hover) {
+    .project-link:hover .svg-text-fill {
+        clip-path: inset(0 0% 0 0);
+    }
+    .project-link:hover .scratch-progress-bar {
+        width: 100%;
+    }
+}
+
+/* 3. Mobile specific: Ensure they are visible or controlled by the scroll logic */
+@media (max-width: 768px) {
+    .scratch-number-wrap {
+        opacity: 1 !important;
+        position: relative !important;
+        width: 80px;
+        margin-bottom: 1rem;
+    }
+    /* Let the ScrollTrigger handle the clip-path and width */
+}

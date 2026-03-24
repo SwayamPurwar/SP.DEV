@@ -153,7 +153,30 @@ export default function Home() {
 
       const initScrollAnimations = () => {
         ScrollTrigger.refresh();
+// Target each project card for scroll-based highlighting
+  gsap.utils.toArray(".project-scratch").forEach((project) => {
+    const fill = project.querySelector(".svg-text-fill");
+    const bar = project.querySelector(".scratch-progress-bar");
 
+    gsap.timeline({
+      scrollTrigger: {
+        trigger: project,
+        start: "top 80%", // Starts when the item is 80% down the screen
+        end: "top 30%",   // Ends when it reaches 30% from the top
+        toggleActions: "play reverse play reverse", // Animates in and out
+      }
+    })
+    .to(fill, { 
+      clipPath: "inset(0 0% 0 0)", 
+      duration: 0.8, 
+      ease: "power2.out" 
+    })
+    .to(bar, { 
+      width: "100%", 
+      duration: 0.8, 
+      ease: "power2.out" 
+    }, "-=0.8"); // Runs at the same time as the fill
+  });
         // Scroll Highlight & Line Draw for Projects
         gsap.utils.toArray(".project").forEach((project) => {
           ScrollTrigger.create({
