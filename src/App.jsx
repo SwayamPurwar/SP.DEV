@@ -79,7 +79,8 @@ function App() {
       <div id="cursor" aria-hidden="true"></div>
 
       {/* --- GOD MODE TERMINAL HTML --- */}
-     <div id="cmd-terminal" aria-hidden="true" inert="">
+    {/* --- GOD MODE TERMINAL HTML --- */}
+<div id="cmd-terminal" aria-hidden="true" inert={true}>
         <div className="cmd-header">
           <span>SWAYAM.OS [VERSION 1.0.0]</span>
           <span>ADMIN ACCESS: GRANTED</span>
