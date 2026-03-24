@@ -85,7 +85,7 @@ export default function About() {
                   </h4>
                   <p className="desc">
                     Building high-performance portfolios and brand experiences
-                    with 95+ Lighthouse scores.
+                    with 80+ Lighthouse scores.
                   </p>
                   <p className="date">2024 – Present</p>
                 </div>
@@ -102,6 +102,11 @@ export default function About() {
                   <h4>Satya Niketan H.S. School</h4>
                   <p className="desc">Senior Secondary (XII) - Science/Maths</p>
                   <p className="date">2022 - 2023</p>
+                </div>
+                <div className="info-item">
+                  <h4>Satya Niketan H.S. School</h4>
+                  <p className="desc">Secondary (X) - All Subjects</p>
+                  <p className="date">2020 - 2021</p>
                 </div>
               </div>
 

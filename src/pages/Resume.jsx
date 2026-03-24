@@ -360,11 +360,19 @@ export default function Resume() {
                     <h4 className="edu-degree">Senior Secondary (XII)</h4>
                     <p className="edu-school">Satya Niketan Higher Secondary (2023)</p>
                   </div>
+                   <div className="edu-item">
+                    <h4 className="edu-degree">Secondary (X)</h4>
+                    <p className="edu-school">Satya Niketan Higher Secondary (2021)</p>
+                  </div>
                 </div>
               </div>
               <div>
                 <h3 className="section-subtitle">Certifications</h3>
                 <div className="edu-list">
+                   <div className="edu-item">
+                    <h4 className="edu-degree">SDE Intern</h4>
+                    <p className="edu-school">Bluestock Fintech</p>
+                  </div>
                   <div className="edu-item">
                     <h4 className="edu-degree">MERN Full Stack</h4>
                     <p className="edu-school">Sheryians Coding School</p>

@@ -4823,8 +4823,8 @@ footer#footer .footer-content {
     color: #fff;
     letter-spacing: -0.04em;
     /* Move title on hover without stuttering */
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform;
+
+
 }
 .scratch-pill {
     display: inline-flex;
@@ -4856,6 +4856,8 @@ footer#footer .footer-content {
     display: flex;
     align-items: center;
     gap: 20px; 
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); /* Add this line */
+    will-change: transform; /* Add this line */
 }
 
 /* Remove the margin-top from the pill since it's no longer underneath */
@@ -4880,7 +4882,7 @@ footer#footer .footer-content {
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.project-link:hover .scratch-title {
+.project-link:hover .scratch-title-wrap {
     transform: translateX(60px);
 }
 
