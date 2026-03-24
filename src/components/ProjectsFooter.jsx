@@ -85,16 +85,6 @@ export default function MoreProjectsFooter({ currentProject }) {
           </div>
         ))}
       </div>
-
-      {/* Optional: Back to Home or Contact Button */}
-      <div
-        className="cs-back-btn"
-        style={{ marginTop: "5rem", marginBottom: 0 }}
-      >
-        <Link to="/" className="btn mouse-hover">
-          &larr; Back to Home
-        </Link>
-      </div>
     </div>
   );
 }

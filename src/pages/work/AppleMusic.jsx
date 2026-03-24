@@ -141,7 +141,38 @@ export default function AppleMusic() {
                 </ul>
               </aside>
             </div>
-
+{/* --- ADDED: BOTTOM BACK BUTTON FOR WORK PAGES --- */}
+            <div 
+              style={{ 
+                width: "100%",
+                marginTop: "6rem", 
+                paddingTop: "2rem",
+                display: "flex", 
+                justifyContent: "center",
+                borderTop: "1px solid rgba(255, 255, 255, 0.1)"
+              }}
+            >
+              <Link
+                to="/"
+                className="mouse-hover"
+                style={{
+                  color: "#fff",
+                  textDecoration: "none",
+                  fontFamily: "var(--font-code)",
+                  fontSize: "1rem",
+                  letterSpacing: "1px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "10px",
+                  transition: "color 0.3s ease",
+                  textTransform: "uppercase"
+                }}
+                onMouseOver={(e) => e.currentTarget.style.color = "#fc3c44"} // Apple Music Red
+                onMouseOut={(e) => e.currentTarget.style.color = "#fff"}
+              >
+                &larr; Back to Home
+              </Link>
+            </div>
             {/* The old hardcoded footer was removed from here to prevent duplication */}
           </section>
         </main>
