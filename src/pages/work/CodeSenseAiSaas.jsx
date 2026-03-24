@@ -265,81 +265,154 @@ export default function AiSaas() {
           </div>
 
           {/* PIPELINE SECTION: The 9 Steps from README */}
-          <div style={{ marginTop: "8rem" }}>
-            <span className="viz-lab">Data Flow Architecture</span>
-            <h2
-              style={{
-                fontFamily: "Syne",
-                fontSize: "2.5rem",
-                marginBottom: "3rem",
-              }}
-            >
-              The RAG Pipeline
-            </h2>
+          {/* PIPELINE SECTION: The RAG Architecture */}
+          <div style={{ marginTop: "10rem", position: "relative" }}>
+            <div style={{ textAlign: "center", marginBottom: "5rem" }}>
+              <span className="system-tag" style={{ marginBottom: "1rem" }}>Data Flow Architecture</span>
+              <h2
+                style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(2rem, 5vw, 3.5rem)",
+                  textTransform: "uppercase",
+                  letterSpacing: "-0.03em",
+                  margin: 0
+                }}
+              >
+                The RAG Pipeline
+              </h2>
+            </div>
+
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
                 gap: "2rem",
+                position: "relative",
               }}
             >
               {[
                 {
                   step: "01",
                   title: "Ingestion",
-                  desc: "URL submission & Octokit file fetching.",
+                  desc: "URL submission & Octokit file fetching directly from the source repository.",
                 },
                 {
                   step: "02",
                   title: "Chunking",
-                  desc: "Recursive splitting into 500-token blocks.",
+                  desc: "Recursive splitting of code into semantic 500-token blocks for precise context.",
                 },
                 {
                   step: "03",
                   title: "Embedding",
-                  desc: "768-dim vector generation via Nomic v1.5.",
+                  desc: "High-dimensional (768-dim) vector generation mapped via Nomic v1.5.",
                 },
                 {
                   step: "04",
                   title: "Indexing",
-                  desc: "HNSW storage in Neon serverless Postgres.",
+                  desc: "Lightning-fast HNSW vector storage inside Neon serverless Postgres.",
                 },
                 {
                   step: "05",
                   title: "Similarity",
-                  desc: "Top-8 relevant block retrieval via pgvector.",
+                  desc: "Cosine similarity search retrieves the Top-8 most relevant code blocks instantly.",
                 },
                 {
                   step: "06",
                   title: "Synthesis",
-                  desc: "Context grounding with Llama 3.3 70B.",
+                  desc: "Deep context grounding and logic generation powered by Llama 3.3 70B.",
                 },
-              ].map((item) => (
+              ].map((item, index) => (
                 <div
                   key={item.step}
-                  className="pipeline-step"
+                  className="pipeline-step mouse-hover"
                   style={{
-                    padding: "2rem",
-                    background: "rgba(255,255,255,0.02)",
+                    position: "relative",
+                    padding: "3rem 2.5rem",
+                    background: "rgba(255, 255, 255, 0.015)",
                     border: "1px solid rgba(168, 85, 247, 0.1)",
-                    borderRadius: "12px",
+                    borderRadius: "20px",
+                    overflow: "hidden",
+                    transition: "all 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
+                    backdropFilter: "blur(10px)",
+                  }}
+                  onMouseOver={(e) => {
+                    e.currentTarget.style.background = "rgba(168, 85, 247, 0.05)";
+                    e.currentTarget.style.borderColor = "rgba(168, 85, 247, 0.4)";
+                    e.currentTarget.style.transform = "translateY(-5px)";
+                    e.currentTarget.style.boxShadow = "0 20px 40px -10px rgba(168, 85, 247, 0.15)";
+                    e.currentTarget.querySelector('.bg-number').style.color = "rgba(168, 85, 247, 0.15)";
+                    e.currentTarget.querySelector('.bg-number').style.transform = "scale(1.1) translate(10px, -10px)";
+                  }}
+                  onMouseOut={(e) => {
+                    e.currentTarget.style.background = "rgba(255, 255, 255, 0.015)";
+                    e.currentTarget.style.borderColor = "rgba(168, 85, 247, 0.1)";
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.querySelector('.bg-number').style.color = "rgba(168, 85, 247, 0.04)";
+                    e.currentTarget.querySelector('.bg-number').style.transform = "scale(1) translate(0, 0)";
                   }}
                 >
-                  <h4
+                  {/* Massive Faded Background Number */}
+                  <span 
+                    className="bg-number"
                     style={{
-                      color: "#a855f7",
-                      fontFamily: "Fira Code",
-                      marginBottom: "1rem",
+                      position: "absolute",
+                      top: "-15px",
+                      right: "-10px",
+                      fontSize: "10rem",
+                      fontFamily: "var(--font-display)",
+                      fontWeight: "900",
+                      color: "rgba(168, 85, 247, 0.04)",
+                      lineHeight: "1",
+                      pointerEvents: "none",
+                      transition: "all 0.5s cubic-bezier(0.25, 1, 0.5, 1)",
+                      zIndex: 0
                     }}
                   >
                     {item.step}
-                  </h4>
-                  <h5 style={{ color: "white", marginBottom: "0.5rem" }}>
-                    {item.title}
-                  </h5>
-                  <p style={{ fontSize: "0.9rem", color: "#888" }}>
-                    {item.desc}
-                  </p>
+                  </span>
+
+                  {/* Content */}
+                  <div style={{ position: "relative", zIndex: 1 }}>
+                    <div
+                      style={{
+                        display: "inline-block",
+                        padding: "6px 14px",
+                        background: "rgba(168, 85, 247, 0.1)",
+                        color: "#a855f7",
+                        fontFamily: "var(--font-code)",
+                        fontSize: "0.75rem",
+                        borderRadius: "50px",
+                        marginBottom: "2rem",
+                        letterSpacing: "1px",
+                        textTransform: "uppercase"
+                      }}
+                    >
+                      Phase // {item.step}
+                    </div>
+                    <h3
+                      style={{
+                        color: "white",
+                        fontFamily: "var(--font-display)",
+                        fontSize: "1.6rem",
+                        marginBottom: "1rem",
+                        letterSpacing: "1px"
+                      }}
+                    >
+                      {item.title}
+                    </h3>
+                    <p
+                      style={{
+                        color: "#999",
+                        lineHeight: "1.8",
+                        fontSize: "1.05rem",
+                        margin: 0,
+                        fontWeight: "300"
+                      }}
+                    >
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
               ))}
             </div>

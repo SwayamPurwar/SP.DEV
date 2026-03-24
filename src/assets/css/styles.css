@@ -636,7 +636,12 @@ footer, .contact-lux-wrapper {
 
 .project:hover {
     padding: 3rem 2rem;
-    background-color: #111;
+    /* Replaces the harsh black with a very faint, elegant glass highlight */
+    background: rgba(255, 255, 255, 0.02); 
+    /* Slightly illuminates the border to make it pop */
+    border-color: rgba(255, 255, 255, 0.12); 
+    /* Optional: adds a very soft drop shadow for physical depth */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .project h2 {
@@ -4706,4 +4711,42 @@ footer#footer .footer-content {
 .footer-contact::after,
 .footer-contact::before {
     display: none !important;
+}
+
+/* Remove the static border and replace with an animated line */
+.project {
+    padding: 3rem 0;
+    position: relative; /* ensure ::after stays contained */
+    /* border-bottom: 1px solid #222; <-- REMOVE THIS */
+    /* ... keep your other existing styles */
+}
+
+/* Animated Scroll Line */
+.project::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background: #333;
+    transition: width 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.project.is-visible::after {
+    width: 100%;
+}
+
+/* Skew Text on Hover */
+.project h2 {
+    font-size: 4vw;
+    color: #888;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    transform-origin: left center;
+}
+
+.project:hover h2 {
+    color: #fff;
+    transform: translateX(15px) skewX(-5deg);
+    letter-spacing: 2px;
 }

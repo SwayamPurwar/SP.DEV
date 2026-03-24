@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import SEO from "../components/SEO";
+import ProjectCard from "../components/ProjectCard"; // Make sure this is imported
 import { lockScroll, unlockScroll } from "../utils/animations";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,8 +17,12 @@ export default function Home() {
   ).matches;
   const location = useLocation();
 
+  // High-performance GSAP trackers for the preview image
+  const xTo = useRef(null);
+  const yTo = useRef(null);
+  const lastX = useRef(0);
+
   // 🚀 ENHANCEMENT #2: PRELOAD PROJECT HOVER IMAGES
-  // This ensures the images are downloaded immediately, preventing a flicker when hovering
   useEffect(() => {
     const imagesToPreload = [
       "/assets/images/project/apple-music-preview.webp",
@@ -44,7 +49,7 @@ export default function Home() {
 
   // --- Handlers for Hover Effects ---
   const handleMouseEnter = (imgUrl) => {
-    if (window.matchMedia("(hover: none)").matches) return; // Skip on touch devices
+    if (window.matchMedia("(hover: none)").matches) return;
 
     if (imgUrl && previewRef.current) {
       previewRef.current.style.backgroundImage = `url('${imgUrl}')`;
@@ -58,15 +63,17 @@ export default function Home() {
   };
 
   const handleMouseLeave = (e) => {
-    if (window.matchMedia("(hover: none)").matches) return; // Skip on touch devices
+    if (window.matchMedia("(hover: none)").matches) return;
 
-    if (previewRef.current)
+    if (previewRef.current) {
       gsap.to(previewRef.current, {
         opacity: 0,
         scale: 0.7,
+        rotationZ: 0, // Reset rotation on leave
         duration: 0.4,
         ease: "power3.in",
       });
+    }
 
     const inner = e.currentTarget.querySelector(".project");
     if (inner && !prefersReducedMotion) {
@@ -79,18 +86,29 @@ export default function Home() {
   };
 
   const handleMouseMove = (e) => {
-    // 🚀 ENHANCEMENT #1: Prevent sticky 3D transforms on mobile touch
     if (window.matchMedia("(hover: none)").matches) return;
 
-    if (previewRef.current) {
+    // 1. Fluid Image Tracking using quickTo
+    if (xTo.current && yTo.current) {
+      xTo.current(e.clientX - window.innerWidth / 2);
+      yTo.current(e.clientY - window.innerHeight / 2);
+    }
+
+    // 2. Velocity-based rotation
+    if (previewRef.current && !prefersReducedMotion) {
+      const deltaX = e.clientX - lastX.current;
+      lastX.current = e.clientX;
+      const rotate = Math.max(-15, Math.min(15, deltaX * 0.4)); // Clamp rotation
+
       gsap.to(previewRef.current, {
-        x: e.clientX - window.innerWidth / 2,
-        y: e.clientY - window.innerHeight / 2,
-        duration: 0.8,
-        ease: "power3.out",
+        rotationZ: rotate,
+        duration: 0.5,
+        ease: "power2.out",
+        overwrite: "auto",
       });
     }
 
+    // 3. 3D Card Tilt Effect
     if (!prefersReducedMotion) {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -120,16 +138,29 @@ export default function Home() {
     let ctx = gsap.context(() => {
       gsap.set(".reveal-text", { y: 50, opacity: 0 });
 
+      // Initialize quickTo for buttery smooth image follow
+      if (previewRef.current) {
+        xTo.current = gsap.quickTo(previewRef.current, "x", {
+          duration: 0.5,
+          ease: "power3.out",
+        });
+        yTo.current = gsap.quickTo(previewRef.current, "y", {
+          duration: 0.5,
+          ease: "power3.out",
+        });
+      }
+
       const initScrollAnimations = () => {
         ScrollTrigger.refresh();
 
-        // --- Mobile Scroll Highlight for Projects ---
+        // Scroll Highlight & Line Draw for Projects
         gsap.utils.toArray(".project").forEach((project) => {
           ScrollTrigger.create({
             trigger: project,
-            start: "top 65%", // Triggers when the top of the project hits 65% down the screen
-            end: "bottom 35%", // Ends when the bottom of the project passes 35%
-            toggleClass: "is-active",
+            start: "top 85%", // Triggers slightly before it enters the viewport
+            end: "bottom 35%",
+            toggleClass: "is-active", // Mobile highlight
+            onEnter: () => project.classList.add("is-visible"), // Desktop line draw
           });
         });
 
@@ -385,99 +416,72 @@ export default function Home() {
             role="img"
             aria-label="Project Preview"
             id="preview-img"
-            style={{ willChange: "transform, opacity" }}
+            style={{ willChange: "transform, opacity, rotationZ" }}
           ></div>
+
           <div className="section-header">
             <span>SELECTED WORKS</span>
             <span>(2025-2026)</span>
           </div>
 
-          <Link
-            to="/work/apple-music"
-            className="project-link"
-            onMouseEnter={() =>
-              handleMouseEnter(
-                "/assets/images/project/apple-music-preview.webp",
-              )
-            }
+          <ProjectCard
+            title="APPLE MUSIC APP"
+            category="iOS / UI Redesign"
+            year="2025"
+            link="/work/apple-music"
+            imgSrc="/assets/images/project/apple-music-preview.webp"
+            onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
-          >
-            <article className="project mouse-hover">
-              <h2>APPLE MUSIC APP</h2>
-              <div className="project-meta">
-                <p>iOS / UI Redesign</p>
-                <p>2025</p>
-              </div>
-            </article>
-          </Link>
+          />
 
-          <Link
-            to="/work/instagram"
-            className="project-link"
-            onMouseEnter={() =>
-              handleMouseEnter("/assets/images/project/instagram-preview.webp")
-            }
+          <ProjectCard
+            title="INSTAGRAM APP"
+            category="Full Stack"
+            year="2025"
+            link="/work/instagram"
+            imgSrc="/assets/images/project/instagram-preview.webp"
+            onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
-          >
-            <article className="project mouse-hover">
-              <h2>INSTAGRAM APP</h2>
-              <div className="project-meta">
-                <p>Full Stack</p>
-                <p>2025</p>
-              </div>
-            </article>
-          </Link>
-           <Link
-            to="/work/kite"
-            className="project-link"
-            onMouseEnter={() =>
-              handleMouseEnter("/assets/images/project/kite-preview.webp")
-            }
-            onMouseLeave={handleMouseLeave}
-            onMouseMove={handleMouseMove}
-          >
-            <article className="project mouse-hover">
-              <h2>KITE ZERODHA APP</h2>
-              <div className="project-meta">
-                <p>Web Sockets / FinTech</p>
-                <p>2026</p>
-              </div>
-            </article>
-          </Link>
+          />
 
+          <ProjectCard
+            title="KITE ZERODHA APP"
+            category="Web Sockets / FinTech"
+            year="2026"
+            link="/work/kite"
+            imgSrc="/assets/images/project/kite-preview.webp"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onMouseMove={handleMouseMove}
+          />
           <div className="section-header upcoming">
             <span>CURRENTLY DEVELOPING</span>
             <span>(WIP)</span>
           </div>
-         
-            <Link
-            to="/work/CodeSenseAiSaas"
-            className="project-link"
-            onMouseEnter={() =>
-              handleMouseEnter(
-                "/assets/images/project/codesense-ai-saas-preview.webp",
-              )
-            }
+
+          <ProjectCard
+            title="CodeSense AI"
+            category="AI-Powered Code Assistant + SaaS"
+            year="2026"
+            link="/work/CodeSenseAiSaas"
+            imgSrc="/assets/images/project/codesense-ai-saas-preview.webp"
+            onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
-          >
-            <article className="project mouse-hover">
-              <h2>CodeSense AI</h2>
-              <div className="project-meta">
-                <p>AI-Powered Code Assistant + Saas</p>
-                <p>2026</p>
-              </div>
-            </article>
-          </Link>
-
+          />
           <div className="section-header upcoming">
             <span>UPCOMING PROJECTS</span>
             <span>(IN LABS)</span>
           </div>
-        
+          <ProjectCard
+            title="Project X"
+            category="Something Exciting in the Works"
+            year="Coming Soon"
+          />
         </section>
+
         <section className="marquee-section" aria-hidden="true">
           <div className="marquee-content">
             <span>
@@ -490,6 +494,7 @@ export default function Home() {
             </span>
           </div>
         </section>
+
         <section id="about">
           <div
             className="about-img reveal-container"
