@@ -10,6 +10,7 @@ const CASE_STUDIES = [
     link: "/work/apple-music-casestudy",
   },
   { id: "instagram", title: "INSTAGRAM", link: "/work/instagram-casestudy" },
+  { id: "codesense", title: "CODESENSE AI", link: "/work/CodeSenseAiSaas-casestudy" }, 
 ];
 
 export default function CaseStudyFooter({ currentProject }) {
