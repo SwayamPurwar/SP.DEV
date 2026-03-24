@@ -270,7 +270,9 @@ body {
 /* --- NAVIGATION --- */
 nav {
     position: fixed;
-    top: 0;
+    top: 0;padding-top: max(2rem, env(safe-area-inset-top)); 
+    padding-left: max(4rem, env(safe-area-inset-left));
+    padding-right: max(4rem, env(safe-area-inset-right));
     left: 0;
     width: 100%;
     padding: 2rem 4rem;
@@ -292,6 +294,8 @@ nav.scrolled {
     mix-blend-mode: normal;
     border-bottom: 1px solid rgba(255, 255, 255, 0.02);
     padding: 1.5rem 4rem;
+    padding-top: max(1.5rem, env(safe-area-inset-top));
+    padding-bottom: 1.5rem;
 }
 
 .logo {
@@ -331,6 +335,32 @@ nav.scrolled {
 .nav-item:hover::after {
     transform: translateX(0);
 }
+
+
+
+
+
+@media (max-width: 768px) {
+    /* Hero sections on mobile */
+    .a-hero, .p-hero, .cs-hero {
+        padding-top: calc(100px + env(safe-area-inset-top)) !important;
+    }
+
+    /* Fix the Menu Toggle Button position */
+    .menu-toggle {
+        margin-top: env(safe-area-inset-top);
+    }
+}
+
+footer, .contact-lux-wrapper {
+    padding-bottom: env(safe-area-inset-bottom) !important;
+}
+
+.lux-submit-btn {
+    /* Ensure the submit button isn't too close to the bottom edge */
+    margin-bottom: max(1rem, env(safe-area-inset-bottom));
+}
+
 
 /* --- MENU TOGGLE --- */
 .menu-toggle {
