@@ -3998,7 +3998,6 @@ footer {
     justify-content: center;
     align-items: center;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
     width: 100%;
 }
 
