@@ -429,12 +429,7 @@ export default function Home() {
               </div>
             </article>
           </Link>
-
-          <div className="section-header upcoming">
-            <span>CURRENTLY DEVELOPING</span>
-            <span>(WIP)</span>
-          </div>
-          <Link
+           <Link
             to="/work/kite"
             className="project-link"
             onMouseEnter={() =>
@@ -453,10 +448,11 @@ export default function Home() {
           </Link>
 
           <div className="section-header upcoming">
-            <span>UPCOMING PROJECTS</span>
-            <span>(IN LABS)</span>
+            <span>CURRENTLY DEVELOPING</span>
+            <span>(WIP)</span>
           </div>
-          <Link
+         
+            <Link
             to="/work/CodeSenseAiSaas"
             className="project-link"
             onMouseEnter={() =>
@@ -475,6 +471,12 @@ export default function Home() {
               </div>
             </article>
           </Link>
+
+          <div className="section-header upcoming">
+            <span>UPCOMING PROJECTS</span>
+            <span>(IN LABS)</span>
+          </div>
+        
         </section>
         <section className="marquee-section" aria-hidden="true">
           <div className="marquee-content">
