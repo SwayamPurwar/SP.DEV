@@ -3993,14 +3993,25 @@ footer {
 }
 
 .lux-return-zone {
-    padding: 4rem 0 3rem 0;
+    position: relative; /* Added to position the new line */
+    padding: 4rem 0 1rem 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+   border-top: none;
     width: 100%;
 }
-
+/* Draws a centered line that doesn't touch the edges */
+.lux-return-zone::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* Controls how wide the line is (adjust if needed) */
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1); /* Subtle white line */
+}
 /* =========================================
    AGGRESSIVE MOBILE MEDIA QUERIES
    ========================================= */
