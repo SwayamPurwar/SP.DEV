@@ -130,28 +130,45 @@ gsap.fromTo(".cs-meta", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1, 
                 <span className="cs-tag" style={{ background: "rgba(16, 185, 129, 0.1)", border: "1px solid rgba(16, 185, 129, 0.3)", color: "#34d399", padding: "6px 14px", borderRadius: "20px", fontSize: "0.8rem" }}>Microservices</span>
               </div>
             </div>
-            <div className="cs-image arch-box" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "16px", padding: "2rem", display: "flex", alignItems: "center", justifyContent: "center" }}>
-              <div className="arch-grid" style={{ display: "flex", flexDirection: "column", gap: "2rem", alignItems: "center" }}>
-                <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-                  <div className="node-card" style={{ padding: "1.2rem", border: "1px solid #3b82f6", borderRadius: "12px", textAlign: "center", background: "#0a0a0a", width: "150px", boxShadow: "0 10px 30px -10px rgba(59,130,246,0.2)" }}>
-                    <span style={{ display: "block", color: "#fff", fontWeight: "bold" }}>Next.js UI</span><span style={{ color: "#a0a0a0", fontSize: "0.75rem" }}>Tailwind + React</span>
-                  </div>
-                  <div style={{ color: "#666" }}>⟷</div>
-                  <div className="node-card" style={{ padding: "1.2rem", border: "1px solid #8b5cf6", borderRadius: "12px", textAlign: "center", background: "#0a0a0a", width: "150px", boxShadow: "0 10px 30px -10px rgba(139,92,246,0.2)" }}>
-                    <span style={{ display: "block", color: "#fff", fontWeight: "bold" }}>Edge API</span><span style={{ color: "#a0a0a0", fontSize: "0.75rem" }}>Serverless Funcs</span>
-                  </div>
-                </div>
-                <div style={{ display: "flex", gap: "4rem", color: "#666" }}><span>↓</span><span>↓</span></div>
-                <div style={{ display: "flex", gap: "2rem", alignItems: "center" }}>
-                  <div className="node-card" style={{ padding: "1.2rem", border: "1px solid #10b981", borderRadius: "12px", textAlign: "center", background: "#0a0a0a", width: "150px", boxShadow: "0 10px 30px -10px rgba(16,185,129,0.2)" }}>
-                    <span style={{ display: "block", color: "#fff", fontWeight: "bold" }}>OpenAI</span><span style={{ color: "#a0a0a0", fontSize: "0.75rem" }}>GPT-4 / Vectors</span>
-                  </div>
-                  <div className="node-card" style={{ padding: "1.2rem", border: "1px solid #f59e0b", borderRadius: "12px", textAlign: "center", background: "#0a0a0a", width: "150px", boxShadow: "0 10px 30px -10px rgba(245,158,11,0.2)" }}>
-                    <span style={{ display: "block", color: "#fff", fontWeight: "bold" }}>Database</span><span style={{ color: "#a0a0a0", fontSize: "0.75rem" }}>Neon + Prisma</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div className="cs-image arch-box" style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.05)", borderRadius: "16px", padding: "clamp(1rem, 4vw, 2rem)", display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden", width: "100%" }}>
+  <div className="arch-grid" style={{ display: "flex", flexDirection: "column", gap: "clamp(1.5rem, 4vw, 2rem)", alignItems: "center", width: "100%" }}>
+    
+    {/* --- Top Row --- */}
+    <div style={{ display: "flex", gap: "clamp(0.5rem, 3vw, 2rem)", alignItems: "center", justifyContent: "center", width: "100%" }}>
+      <div className="node-card" style={{ padding: "clamp(0.8rem, 2vw, 1.2rem)", border: "1px solid #3b82f6", borderRadius: "12px", textAlign: "center", background: "#0a0a0a", width: "clamp(115px, 35vw, 150px)", boxShadow: "0 10px 30px -10px rgba(59,130,246,0.2)" }}>
+        <span style={{ display: "block", color: "#fff", fontWeight: "bold", fontSize: "clamp(0.8rem, 2.5vw, 1rem)" }}>Next.js UI</span>
+        <span style={{ color: "#a0a0a0", fontSize: "clamp(0.65rem, 1.5vw, 0.75rem)" }}>Tailwind + React</span>
+      </div>
+      
+      <div style={{ color: "#666", fontSize: "clamp(0.8rem, 2vw, 1rem)" }}>⟷</div>
+      
+      <div className="node-card" style={{ padding: "clamp(0.8rem, 2vw, 1.2rem)", border: "1px solid #8b5cf6", borderRadius: "12px", textAlign: "center", background: "#0a0a0a", width: "clamp(115px, 35vw, 150px)", boxShadow: "0 10px 30px -10px rgba(139,92,246,0.2)" }}>
+        <span style={{ display: "block", color: "#fff", fontWeight: "bold", fontSize: "clamp(0.8rem, 2.5vw, 1rem)" }}>Edge API</span>
+        <span style={{ color: "#a0a0a0", fontSize: "clamp(0.65rem, 1.5vw, 0.75rem)" }}>Serverless Funcs</span>
+      </div>
+    </div>
+    
+    {/* --- Vertical Arrows --- */}
+    <div style={{ display: "flex", gap: "clamp(4.5rem, 20vw, 8rem)", color: "#666", fontSize: "clamp(0.8rem, 2vw, 1rem)" }}>
+      <span>↓</span>
+      <span>↓</span>
+    </div>
+    
+    {/* --- Bottom Row --- */}
+    <div style={{ display: "flex", gap: "clamp(1rem, 5vw, 2rem)", alignItems: "center", justifyContent: "center", width: "100%" }}>
+      <div className="node-card" style={{ padding: "clamp(0.8rem, 2vw, 1.2rem)", border: "1px solid #10b981", borderRadius: "12px", textAlign: "center", background: "#0a0a0a", width: "clamp(115px, 35vw, 150px)", boxShadow: "0 10px 30px -10px rgba(16,185,129,0.2)" }}>
+        <span style={{ display: "block", color: "#fff", fontWeight: "bold", fontSize: "clamp(0.8rem, 2.5vw, 1rem)" }}>OpenAI</span>
+        <span style={{ color: "#a0a0a0", fontSize: "clamp(0.65rem, 1.5vw, 0.75rem)" }}>GPT-4 / Vectors</span>
+      </div>
+      
+      <div className="node-card" style={{ padding: "clamp(0.8rem, 2vw, 1.2rem)", border: "1px solid #f59e0b", borderRadius: "12px", textAlign: "center", background: "#0a0a0a", width: "clamp(115px, 35vw, 150px)", boxShadow: "0 10px 30px -10px rgba(245,158,11,0.2)" }}>
+        <span style={{ display: "block", color: "#fff", fontWeight: "bold", fontSize: "clamp(0.8rem, 2.5vw, 1rem)" }}>Database</span>
+        <span style={{ color: "#a0a0a0", fontSize: "clamp(0.65rem, 1.5vw, 0.75rem)" }}>Neon + Prisma</span>
+      </div>
+    </div>
+    
+  </div>
+</div>
           </section>
 
           {/* SECTION 2: CONTEXT ENGINE */}
