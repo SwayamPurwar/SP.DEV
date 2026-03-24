@@ -256,7 +256,30 @@
 .connect-links a:hover { color: #fff; }
 
 /* --- FOOTER --- */
-.footer-nav { display: flex; justify-content: center; margin-top: 3rem; margin-bottom: 2rem; }
+/* --- FOOTER --- */
+.footer-nav { 
+  display: flex; 
+  justify-content: center; 
+  margin-top: 3rem; 
+  margin-bottom: 2rem;
+  padding-top: 4rem; /* Match the contact page spacing */
+  position: relative; /* Required for the absolute positioned line */
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+}
+
+
+/* Draws the centered line above the button */
+.footer-nav::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
 .return-btn { padding: 0.75rem 1.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; gap: 0.75rem; }
 .return-btn svg { width: 1rem; height: 1rem; transition: transform 0.3s; }
 .return-btn:hover svg { transform: translateX(-4px); }
