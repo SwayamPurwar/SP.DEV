@@ -30,6 +30,7 @@ const InstagramCaseStudy = lazy(
   () => import("./pages/work/InstagramCaseStudy"),
 );
 const KiteCaseStudy = lazy(() => import("./pages/work/KiteCaseStudy"));
+const CodeSenseAiSaasCaseStudy = lazy(() => import("./pages/work/CodeSenseAiSaasCaseStudy"));
 
 const PageLoader = () => (
   <div
@@ -133,6 +134,7 @@ function App() {
             element={<InstagramCaseStudy />}
           />
           <Route path="/work/kite-casestudy" element={<KiteCaseStudy />} />
+          <Route path="/work/CodeSenseAiSaas-casestudy" element={<CodeSenseAiSaasCaseStudy />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
