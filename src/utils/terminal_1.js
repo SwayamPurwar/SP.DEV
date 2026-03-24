@@ -1,21 +1,6 @@
 import { sfx } from "./audio-system.js";
 import { toggleMatrix, toggleBlackout, initGravity } from "./easter-eggs.js";
 import gsap from "gsap";
-
-// --- NEW: Firebase Imports ---
-import { db } from "./firebase.js";
-import {
-  ref,
-  push,
-  onChildAdded,
-  onValue,
-  onDisconnect,
-  set,
-  serverTimestamp,
-  query,
-  limitToLast,
-} from "firebase/database";
-
 export function initTerminal() {
   const terminal = document.getElementById("cmd-terminal");
   const cmdInput = document.getElementById("cmd-input");
@@ -23,19 +8,12 @@ export function initTerminal() {
   let isTerminalOpen = false;
   let isAiMode = false;
   let isVimMode = false; // <-- 1. ADD THIS LINE
-
-  // --- NEW: Multiplayer State Variables ---
-  const userId = "guest_" + Math.random().toString(36).substr(2, 4);
-  let onlineCount = 1;
-  let isNetworkInitialized = false;
-
   // --- NEW: History Variables ---
   let commandHistory = JSON.parse(
     localStorage.getItem("swayam_term_history") || "[]",
   );
   let historyIndex = -1;
   if (!terminal || !cmdInput || !cmdOutput) return;
-
   // --- NEW: Tab Completion Dictionary ---
   // We will add our new God Mode commands to this list as we build them!
   const availableCommands = [
@@ -55,7 +33,6 @@ export function initTerminal() {
     "cat",
     "decrypt",
   ];
-
   window.addEventListener("keydown", (e) => {
     const loader = document.querySelector(".preloader-container");
     if (loader && loader.style.display !== "none") return; // DO NOTHING
@@ -65,50 +42,6 @@ export function initTerminal() {
     }
   });
 
-  // --- NEW: Initialize Firebase Network ---
-  function initGlobalNetwork() {
-    if (isNetworkInitialized) return;
-    isNetworkInitialized = true;
-
-    const presenceRef = ref(db, "presence/" + userId);
-    const connectedRef = ref(db, ".info/connected");
-    const allPresenceRef = ref(db, "presence");
-    // Fetch last 15 messages max
-    const messagesRef = query(ref(db, "messages"), limitToLast(15));
-
-    // 1. Presence System: Track online users
-    onValue(connectedRef, (snap) => {
-      if (snap.val() === true) {
-        set(presenceRef, true);
-        onDisconnect(presenceRef).remove(); // Auto-removes when user leaves
-      }
-    });
-
-    // 2. Count Online Users
-    onValue(allPresenceRef, (snap) => {
-      onlineCount = snap.numChildren();
-    });
-
-    // 3. Listen for incoming Global Messages
-    let initialLoad = true;
-    onChildAdded(messagesRef, (snap) => {
-      if (initialLoad) return;
-      const msg = snap.val();
-      if (msg.sender !== userId && isTerminalOpen) {
-        printOutput(
-          `<span style="color: #00d2ff">[Global] ${msg.sender}:</span> ${msg.text}`,
-          true,
-        );
-        if (sfx && sfx.playHover) sfx.playHover(); // Soft ping for new messages
-      }
-    });
-
-    // Stop ignoring messages after 1 second (gives time to fetch history)
-    setTimeout(() => {
-      initialLoad = false;
-    }, 1000);
-  }
-
   function toggleTerminal() {
     isTerminalOpen = !isTerminalOpen;
     if (isTerminalOpen) {
@@ -116,21 +49,6 @@ export function initTerminal() {
       cmdInput.value = "";
       cmdInput.focus();
       sfx.playClick();
-
-      // Initialize network on first open
-      initGlobalNetwork();
-
-      // Print Welcome Message with Online Users
-      setTimeout(() => {
-        printOutput(
-          `<span style="color: #a855f7">🌐 GLOBAL NETWORK ONLINE: [${onlineCount} anonymous users connected]</span>`,
-          true,
-        );
-        printOutput(
-          `<span style="color: #666">Hint: Unrecognized commands are broadcast globally to everyone online.</span>`,
-          true,
-        );
-      }, 300);
     } else {
       terminal.classList.remove("active");
       cmdInput.blur();
@@ -143,7 +61,6 @@ export function initTerminal() {
     else line.textContent = text;
     cmdOutput.appendChild(line);
   }
-
   // --- J.A.R.V.I.S. VOICE SYNTHESIS ---
   function speak(text) {
     if ("speechSynthesis" in window) {
@@ -155,7 +72,6 @@ export function initTerminal() {
       window.speechSynthesis.speak(utterance);
     }
   }
-
   cmdInput.addEventListener("keydown", (e) => {
     // --- NEW: Handle Tab Completion ---
     if (e.key === "Tab") {
@@ -211,24 +127,8 @@ export function initTerminal() {
         printOutput(`<span style="color: #fff">You:</span> ${input}`, true);
         processAiQuery(input);
       } else {
-        // Only print standard prompt if it IS a recognized local command
-        const action = input.toLowerCase().split(" ")[0];
-        const isLocalCmd =
-          availableCommands.includes(action) ||
-          [
-            "whoami",
-            "echo",
-            "exit",
-            "sudo",
-            "npm",
-            "voice",
-            "analyze",
-          ].includes(action);
-
-        if (isLocalCmd) {
-          printOutput(`user@swayam:~$ ${input}`);
-        }
-        executeCommand(input); // Pass original case to execute to preserve chat casing
+        printOutput(`user@swayam:~$ ${input}`);
+        executeCommand(input.toLowerCase());
       }
 
       cmdInput.value = "";
@@ -239,8 +139,7 @@ export function initTerminal() {
     }
   });
 
-  function executeCommand(cmdText) {
-    const cmd = cmdText.toLowerCase();
+  function executeCommand(cmd) {
     const parts = cmd.split(" ");
     const action = parts[0];
     const arg = parts.slice(1).join(" "); // Handles multi-word args if needed
@@ -288,22 +187,27 @@ export function initTerminal() {
             "ACCESS DENIED: File encrypted. To unlock, type 'decrypt [TODAY'S DATE NUMBER]'. Example: If today is the 15th, type 'decrypt 15'",
           );
         } else if (arg === "about.html") {
+          // Shows a snippet of fake HTML code for the about page
           printOutput(
             "&lt;h1&gt;About Swayam&lt;/h1&gt;<br>&lt;p&gt;Creative Developer. MERN Stack. UI/UX Enthusiast.&lt;/p&gt;",
             true,
           );
         } else if (arg === "index.html") {
+          // Shows fake source code for the homepage
           printOutput(
             "&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&lt;head&gt;&lt;title&gt;Swayam.OS&lt;/title&gt;&lt;/head&gt;<br>&lt;body&gt;System Online&lt;/body&gt;<br>&lt;/html&gt;",
             true,
           );
         } else if (arg === "cv.pdf") {
+          // Real terminals can't read PDFs, so this is a realistic error
           printOutput(
             "ERR: Cannot render PDF in standard output. Please use GUI to view.",
           );
         } else if (arg === "contact.exe") {
+          // Real terminals can't read .exe files as text
           printOutput("ERR: cannot execute binary file: Exec format error");
         } else if (arg === "work" || arg === "work/") {
+          // Real error for trying to 'cat' a folder
           printOutput("cat: work/: Is a directory");
         } else if (arg) {
           printOutput(`cat: ${arg}: Permission denied or file not found.`);
@@ -313,22 +217,22 @@ export function initTerminal() {
         break;
 
       case "decrypt":
-        const today = new Date().getDate().toString();
+        const today = new Date().getDate().toString(); // Gets today's day number (1-31)
         if (arg === today) {
+          // Replace the phone number below with your actual number!
           printOutput(
             `<span style='color: #0f0'>DECRYPTION SUCCESSFUL.</span><br>Congratulations! You found the Easter Egg. You are highly observant.<br>Direct Line: +91 98765 43210<br>Email: swayampurwar111104@gmail.com`,
             true,
           );
-          sfx.playBoot();
+          sfx.playBoot(); // Plays your success sound
         } else {
           printOutput(
             "<span style='color: #ff3b30'>DECRYPTION FAILED. INCORRECT KEY.</span>",
             true,
           );
-          sfx.playClick();
+          sfx.playClick(); // Error sound
         }
         break;
-
       // --- THE DOM DESTROYER ---
       case "sudo":
         if (arg === "rm -rf /") {
@@ -344,16 +248,21 @@ export function initTerminal() {
           );
           if (sfx && sfx.playBoot) sfx.playBoot();
 
+          // Wait 1 second, then destroy the site
           setTimeout(() => {
+            // Hide terminal so they can watch it fall
             document.getElementById("cmd-terminal").classList.remove("active");
+
+            // GSAP animation to make everything fall off the screen
             gsap.to("body > *:not(#cmd-terminal)", {
               y: window.innerHeight + 500,
-              rotation: (i) => Math.random() * 90 - 45,
+              rotation: (i) => Math.random() * 90 - 45, // Random spin
               opacity: 0,
               stagger: 0.05,
               duration: 2.5,
               ease: "power4.in",
               onComplete: () => {
+                // Replace the whole site with a crash screen
                 document.body.style.background = "#000";
                 document.body.innerHTML =
                   "<div style='color:#0f0; font-family:monospace; padding:20px; font-size:1.2rem;'>System corrupted. Kernel panic. <br/><br/>Please refresh your browser to restore Swayam.OS.</div>";
@@ -367,7 +276,6 @@ export function initTerminal() {
           if (sfx && sfx.playClick) sfx.playClick();
         }
         break;
-
       // --- NPM INJECTOR (CONFETTI) ---
       case "npm":
         if (arg === "install confetti" || arg === "i confetti") {
@@ -381,22 +289,26 @@ export function initTerminal() {
               "<span style='color:#0f0'>+ canvas-confetti@1.6.0</span><br>added 1 package in 1.2s",
               true,
             );
+
+            // Dynamically load the real confetti script from a CDN!
             const script = document.createElement("script");
             script.src =
               "https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js";
 
             script.onload = () => {
+              // Once loaded, fire the confetti
               window.confetti({
                 particleCount: 150,
                 spread: 100,
                 origin: { y: 0.6 },
-                colors: ["#a855f7", "#00d2ff", "#ffffff"],
+                colors: ["#a855f7", "#00d2ff", "#ffffff"], // Matches your theme
               });
               if (sfx && sfx.playBoot) sfx.playBoot();
             };
             document.body.appendChild(script);
           }, 1500);
         } else if (arg) {
+          // Fake error for any other package
           printOutput(
             `npm <span style='color:#ff3b30'>ERR!</span> code E404<br>npm <span style='color:#ff3b30'>ERR!</span> 404 Not Found - GET https://registry.npmjs.org/${arg}`,
             true,
@@ -406,7 +318,6 @@ export function initTerminal() {
           printOutput("Usage: npm install [package]");
         }
         break;
-
       // --- VOICE UI (J.A.R.V.I.S PROTOCOL) ---
       case "voice":
         if (arg === "init") {
@@ -432,6 +343,7 @@ export function initTerminal() {
           );
           if (sfx && sfx.playBoot) sfx.playBoot();
 
+          // 1. What happens when you speak:
           recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript.toLowerCase();
             printOutput(`[Voice Recognized]: "${transcript}"`);
@@ -462,6 +374,7 @@ export function initTerminal() {
             }
           };
 
+          // 2. What happens if the browser blocks it:
           recognition.onerror = (event) => {
             if (event.error === "not-allowed") {
               printOutput(
@@ -482,6 +395,7 @@ export function initTerminal() {
             if (sfx && sfx.playClick) sfx.playClick();
           };
 
+          // 3. Stop listening after one command
           recognition.onspeechend = () => {
             recognition.stop();
           };
@@ -498,7 +412,6 @@ export function initTerminal() {
           printOutput("Usage: voice init");
         }
         break;
-
       case "cd":
         if (arg === ".." || arg === "home" || arg === "index" || arg === "~") {
           window.location.href = "index.jsx";
@@ -520,7 +433,7 @@ export function initTerminal() {
       case "vim":
         if (arg === "styles.css") {
           isVimMode = true;
-          cmdOutput.innerHTML = "";
+          cmdOutput.innerHTML = ""; // Clears the screen like real VIM
           printOutput(
             "<span style='color: var(--accent)'>--- VIM MODE ACTIVATED ---</span>",
             true,
@@ -534,20 +447,22 @@ export function initTerminal() {
           printOutput(`vim: Cannot open file. Try 'vim styles.css'`);
         }
         break;
-
       // --- TARGET ANALYZER ---
       case "analyze":
         printOutput("INITIATING TARGET SCAN...", true);
-        sfx.playHover();
+        sfx.playHover(); // Plays a subtle scanning sound
 
         setTimeout(() => {
           let os = "Unknown OS";
           let browser = "Unknown Agent";
 
+          // 1. Next-Gen Browser Detection (Bypasses old spoofing)
           if (navigator.userAgentData) {
+            // Works perfectly for Chrome, Edge, Brave, Opera
             os = navigator.userAgentData.platform || os;
             const brands = navigator.userAgentData.brands;
             if (brands && brands.length > 0) {
+              // Grabs the real brand name, ignoring the generic "Chromium" fallback
               const realBrand = brands.find(
                 (b) =>
                   !b.brand.includes("Not") && !b.brand.includes("Chromium"),
@@ -557,6 +472,7 @@ export function initTerminal() {
                 : brands[brands.length - 1].brand;
             }
           } else {
+            // Fallback for Safari, Firefox, and older devices
             const ua = navigator.userAgent;
             if (ua.includes("Firefox")) browser = "Mozilla Firefox";
             else if (ua.includes("Safari") && !ua.includes("Chrome"))
@@ -571,6 +487,7 @@ export function initTerminal() {
             else if (ua.includes("Android")) os = "Android";
           }
 
+          // 2. Hardware (Formatting around browser privacy locks)
           const cores = navigator.hardwareConcurrency
             ? `${navigator.hardwareConcurrency} Logical Cores`
             : "Masked by Browser Security";
@@ -580,6 +497,7 @@ export function initTerminal() {
 
           let output = `<br><span style="color:#0f0">[TARGET DOSSIER]</span><br>SYSTEM: ${os}<br>CPU: ${cores}<br>EST RAM: ${mem}<br>AGENT: ${browser}<br>`;
 
+          // 3. Battery API (Handles browsers that block it)
           if ("getBattery" in navigator) {
             navigator
               .getBattery()
@@ -602,6 +520,7 @@ export function initTerminal() {
                 sfx.playBoot();
               });
           } else {
+            // What Safari / Firefox users will see
             printOutput(
               output +
                 `POWER: Blocked by Browser Privacy<br><span style="color:#ff3b30">STATUS: COMPROMISED</span>`,
@@ -611,7 +530,6 @@ export function initTerminal() {
           }
         }, 1500);
         break;
-
       case "pwd":
         printOutput("/home/guest/swayam.dev");
         break;
@@ -640,15 +558,16 @@ export function initTerminal() {
 
       case "exit":
       case "gui":
-        toggleTerminal();
+        toggleTerminal(); // Closes the terminal
         break;
 
+      // --- EXISTING CUSTOM COMMANDS ---
       case "clear":
       case "cls":
         cmdOutput.innerHTML = "";
         break;
 
-      case "goto":
+      case "goto": // Keep old command as alias
         executeCommand(`cd ${arg}`);
         break;
 
@@ -715,43 +634,27 @@ export function initTerminal() {
         printOutput("S.A.M. v1.0 ONLINE. Talk to me.");
         break;
 
-      // --- NEW: THE MAGIC BULLET (GLOBAL CHAT FALLBACK) ---
       default:
-        if (cmdText.trim() === "") break;
-
-        // Push unrecognized commands to Firebase
-        push(ref(db, "messages"), {
-          text: cmdText, // Send the original raw text with casing
-          sender: userId,
-          timestamp: serverTimestamp(),
-        }).catch((err) => {
-          console.error("Firebase chat error:", err);
-          printOutput(
-            `<span style="color:#ff3b30">Network offline. Message failed.</span>`,
-            true,
-          );
-        });
-
-        // Print locally so the user sees their own message immediately
-        printOutput(
-          `<span style="color: #00d2ff">[Global] You:</span> ${cmdText}`,
-          true,
-        );
-        break;
+        printOutput(`Command not found: '${cmd}'. Type 'help' for options.`);
     }
   }
+  // ... end of executeCommand function ...
+  // } <-- this is the closing bracket for executeCommand
 
+  // PASTE THIS RIGHT HERE:
   function handleVimMode(input) {
     const cmd = input.toLowerCase();
 
     if (cmd === ":wq" || cmd === ":q") {
       isVimMode = false;
-      cmdOutput.innerHTML = "";
+      cmdOutput.innerHTML = ""; // Clear screen on exit
       printOutput("styles.css saved. VIM mode exited.");
     } else if (cmd.startsWith("color ")) {
       const color = input.split(" ")[1];
+      // Change the actual CSS variable on the page!
       document.documentElement.style.setProperty("--accent", color);
 
+      // Update the ambient mouse glow to match the new color
       const glow = document.getElementById("ambient-glow");
       if (glow) {
         glow.style.background = `radial-gradient(circle, ${color}40 0%, rgba(0, 0, 0, 0) 70%)`;
@@ -773,6 +676,7 @@ export function initTerminal() {
     let response = "";
     let action = null;
 
+    // --- ENHANCED IDENTITY & STORY ---
     if (text.includes("hello") || text.includes("hi") || text.includes("hey")) {
       response =
         "Greetings. I am S.A.M. (System Access Manager). My sensors detect a visitor. How can I help you navigate Swayam's world?";
@@ -788,7 +692,10 @@ export function initTerminal() {
     } else if (text.includes("loading") || text.includes("lock")) {
       response =
         "During the initialization sequence, I restricted all hardware inputs to ensure a stable kernel boot. Full system access is now granted.";
-    } else if (text.includes("kite")) {
+    }
+
+    // --- PROJECT DEEP DIVES ---
+    else if (text.includes("kite")) {
       response =
         "Kite is a premium project management tool. Swayam focused on the 'Glassmorphism' UI and smooth state transitions using GSAP.";
     } else if (text.includes("apple music")) {
@@ -797,7 +704,10 @@ export function initTerminal() {
     } else if (text.includes("instagram")) {
       response =
         "The Instagram redesign focused on a minimal, dark-themed aesthetic with custom gesture-based navigation.";
-    } else if (
+    }
+
+    // --- PROFESSIONAL DATA ---
+    else if (
       text.includes("hiring") ||
       text.includes("available") ||
       text.includes("work with you")
@@ -821,7 +731,10 @@ export function initTerminal() {
     ) {
       response =
         "Protocol initiated: You can reach Swayam at swayampurwar111104@gmail.com or connect via LinkedIn. Type 'socials' for direct links.";
-    } else if (text.includes("color") || text.includes("change theme")) {
+    }
+
+    // --- INTERACTIVE SYSTEM COMMANDS ---
+    else if (text.includes("color") || text.includes("change theme")) {
       response =
         "I can't pick for you, but I suggest trying: 'color #00ff00' for a classic hacker look.";
     } else if (text.includes("matrix") || text.includes("simulation")) {
@@ -834,7 +747,10 @@ export function initTerminal() {
     } else if (text.includes("ls") || text.includes("files")) {
       response =
         "I see index.html, about.html, and several encrypted project files. Use 'ls' in standard mode to see them clearly.";
-    } else if (text.includes("status") || text.includes("how are you")) {
+    }
+
+    // --- FUN & PERSONALITY ---
+    else if (text.includes("status") || text.includes("how are you")) {
       response =
         "Systems operational. Kernel uptime: 99.9%. My current mood is set to 'Efficient'.";
     } else if (text.includes("who are you") || text.includes("sam")) {
@@ -849,13 +765,19 @@ export function initTerminal() {
     } else if (text.includes("joke")) {
       response =
         "Why did the web developer walk out of the restaurant? Because of the table layout.";
+    } else if (text.includes("who made you")) {
+      response =
+        "I was brought to life by Swayam Purwar's late-night coding sessions and too much caffeine.";
     } else if (text.includes("location") || text.includes("live")) {
       response =
         "Operating from Bhopal, India. Coordinates: 23.2599° N, 77.4126° E.";
     } else if (text.includes("experience") || text.includes("cv")) {
       response =
         "Swayam has built immersive interfaces for various brands. Type 'cv' in the main terminal to see the full record.";
-    } else if (text.includes("go to about") || text.includes("navigation")) {
+    }
+
+    // --- NAVIGATION & EXIT ---
+    else if (text.includes("go to about") || text.includes("navigation")) {
       response = "Rerouting you to the 'About' section... [INITIATING NAV]";
       action = () => {
         window.location.href = "about.html";
@@ -863,7 +785,9 @@ export function initTerminal() {
     } else if (text === "exit" || text === "quit") {
       response = "AI session closed. Standard terminal protocol restored.";
       isAiMode = false;
-    } else if (text.includes("loader") || text.includes("stuck")) {
+    }
+    // --- ADD TO processAiQuery ---
+    else if (text.includes("loader") || text.includes("stuck")) {
       response =
         "The initialization sequence (loader) should have terminated. If I am visible, the system is operational. Try 'clear' if the view is obstructed.";
     } else if (text.includes("scroll") || text.includes("move")) {
@@ -875,13 +799,16 @@ export function initTerminal() {
     } else if (text.includes("bhopal") || text.includes("madhya pradesh")) {
       response =
         "Correct. Swayam operates from the Heart of India, Bhopal. A city of lakes and logic.";
-    } else {
+    }
+    // --- FALLBACK ---1
+    else {
       response =
         "Query '" +
         input +
         "' not found in my database. Try asking about 'Kite project', 'hiring status', or 'funny joke'.";
     }
 
+    // --- UI EXECUTION (TYPING EFFECT) ---
     const loadingId = "ai-loading-" + Date.now();
     printOutput(
       `<span id="${loadingId}" style="color: #0f0">S.A.M. ></span> Thinking...`,
@@ -908,19 +835,22 @@ export function initTerminal() {
       }, 30);
     }, 800);
   }
-
+  // --- REPLACED: Mobile God Mode trigger using Event Delegation ---
   let tapCount = 0,
     tapTimer;
 
+  // Attach listener to the whole document so it survives React renders
   document.addEventListener("click", (e) => {
+    // Check if what was clicked is the logo (or inside the logo)
     const clickedLogo = e.target.closest(".logo");
+
     if (clickedLogo) {
       tapCount++;
       clearTimeout(tapTimer);
       tapTimer = setTimeout(() => (tapCount = 0), 500);
 
       if (tapCount === 3) {
-        e.preventDefault();
+        e.preventDefault(); // Stop it from navigating on the 3rd click
         toggleTerminal();
         tapCount = 0;
         if (navigator.vibrate) navigator.vibrate([50, 50, 50]);
@@ -931,4 +861,4 @@ export function initTerminal() {
   document
     .getElementById("cmd-close-mobile")
     ?.addEventListener("click", toggleTerminal);
-}
+} // <-- End of initTerminal()

@@ -4628,3 +4628,53 @@ footer {
 }
 
 
+
+
+/* --- TERMINAL SCROLLBAR UI --- */
+.cmd-output::-webkit-scrollbar {
+    width: 6px;
+}
+
+.cmd-output::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.cmd-output::-webkit-scrollbar-thumb {
+    background: #333;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+.cmd-output::-webkit-scrollbar-thumb:hover {
+    /* Uses the purple accent we defined in :root */
+    background: var(--accent); 
+    box-shadow: 0 0 10px var(--accent);
+}
+
+/* For Firefox */
+.cmd-output {
+    scrollbar-width: thin;
+    scrollbar-color: #333 transparent;
+}
+
+/* --- TERMINAL TEXT SELECTION --- */
+#cmd-terminal ::selection {
+    background: var(--accent);
+    color: #000;
+    text-shadow: none;
+}
+
+/* Specific styling for the input caret color */
+#cmd-input {
+    caret-color: var(--accent);
+}
+
+.cmd-prompt {
+    display: inline-block;
+    animation: prompt-pulse 1.5s infinite ease-in-out;
+}
+
+@keyframes prompt-pulse {
+    0%, 100% { opacity: 1; text-shadow: 0 0 5px var(--accent); }
+    50% { opacity: 0.7; text-shadow: 0 0 0px var(--accent); }
+}
