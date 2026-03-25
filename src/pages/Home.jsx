@@ -17,7 +17,12 @@ export default function Home() {
   ).matches;
   const location = useLocation();
   // --- 🔥 NEW: Animated Role Cycler ---
- const roles = ["MERN ENGINEER", "FRONTEND DEV", "UI/UX DESIGNER", "WEB CREATOR"];
+const roles = [
+  "SOFTWARE ENGINEER", 
+  "FRONTEND ARCHITECT", 
+  "UI/UX INNOVATOR", 
+"FULL-STACK DEVELOPER",
+]; 
   const [currentRole, setCurrentRole] = useState(0);
   const roleRef = useRef(null);
   useEffect(() => {
