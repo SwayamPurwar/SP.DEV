@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Swayam Purwar - Resume</title>
+
+    <style>
+      :root {
+        --primary: #1f2d3d;
+        --secondary: #3c4858;
+        --accent: #1a73e8;
+        --text: #2e2e2e;
+      }
+
+      body {
+        font-family: "Segoe UI", sans-serif;
+        line-height: 1.5;
+        color: var(--text);
+        max-width: 850px;
+        margin: auto;
+        padding: 35px 28px;
+        background: #fff;
+      }
+
+      /* HEADER */
+      header {
+        text-align: center;
+        border-bottom: 2px solid var(--primary);
+        padding-bottom: 15px;
+        margin-bottom: 25px;
+      }
+
+      h1 {
+        font-size: 2.4rem;
+        margin: 0;
+        color: var(--primary);
+      }
+
+      h2 {
+        font-size: 1.05rem;
+        font-weight: 500;
+        color: var(--secondary);
+        margin: 6px 0 10px;
+      }
+
+      .contact {
+        font-size: 0.85rem;
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .contact a {
+        text-decoration: none;
+        color: var(--primary);
+      }
+
+      /* SECTIONS */
+      section {
+        margin-bottom: 22px;
+      }
+
+      .title {
+        font-size: 1.15rem;
+        text-transform: uppercase;
+        color: var(--primary);
+        border-bottom: 1px solid #ddd;
+        padding-bottom: 4px;
+        margin-bottom: 10px;
+        letter-spacing: 0.5px;
+      }
+
+      /* ITEMS */
+      .item {
+        margin-bottom: 14px;
+      }
+
+      .item-title {
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .item-sub {
+        font-size: 0.85rem;
+        color: var(--secondary);
+        margin-bottom: 4px;
+      }
+
+      ul {
+        padding-left: 16px;
+        margin: 4px 0;
+      }
+
+      li {
+        margin-bottom: 4px;
+        font-size: 0.92rem;
+      }
+
+      p {
+        font-size: 0.92rem;
+      }
+
+      /* SKILLS GRID */
+      .skills p {
+        margin: 3px 0;
+        font-size: 0.92rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <h1>Swayam Purwar</h1>
+      <h2>Full-Stack Developer | Real-Time Systems & Scalable Applications</h2>
+      <div class="contact">
+        <span>Bhopal, India</span> |
+
+        <span
+          >Email:
+          <a href="mailto:swayampurwar111104@gmail.com"
+            >swayampurwar111104@gmail.com</a
+          ></span
+        >
+        |
+
+        <span
+          >GitHub:
+          <a href="https://github.com/SwayamPurwar"
+            >https://github.com/SwayamPurwar</a
+          ></span
+        >
+        |
+        <span
+          >Portfolio:
+          <a href="https://swayampurwar.vercel.app"
+            >https://swayampurwar.vercel.app</a
+          ></span
+        >
+        |
+        <span
+          >LinkedIn:
+          <a href="https://linkedin.com/in/swayam-purwar"
+            >https://linkedin.com/in/swayam-purwar</a
+          ></span
+        >
+      </div>
+    </header>
+
+    <section>
+      <div class="title">Professional Summary</div>
+      <p>
+        Full-Stack Developer specializing in low-latency, event-driven systems
+        using the MERN stack. Proven track record of improving performance (up
+        to 60%), reducing costs, and building scalable real-time applications.
+        Focused on system design, optimization, and production-grade
+        engineering.
+      </p>
+    </section>
+
+    <section class="skills">
+      <div class="title">Skills</div>
+      <p><strong>Languages:</strong> JavaScript (ES6+), SQL</p>
+      <p><strong>Frontend:</strong> React.js, Next.js</p>
+      <p><strong>Backend:</strong> Node.js, Express.js</p>
+      <p><strong>Databases:</strong> MongoDB, Redis</p>
+      <p>
+        <strong>Systems:</strong> WebSockets, Event-Driven Architecture, Caching
+      </p>
+      <p><strong>Tools:</strong> Git, GitHub, Vercel</p>
+    </section>
+
+    <section>
+      <div class="title">Projects</div>
+
+      <div class="item">
+        <div class="item-title">
+          Code Sense AI SaaS – Intelligent Code Platform
+        </div>
+        <div class="item-sub">Next.js, LangChain, OpenAI, Pinecone</div>
+        <ul>
+          <li>
+            Built a RAG-based SaaS platform enabling multi-document querying.
+          </li>
+          <li>
+            Improved vector search accuracy with optimized chunking strategies.
+          </li>
+          <li>Reduced perceived latency by 60% via real-time streaming.</li>
+          <li>Lowered API costs by 30% using Redis caching.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-title">
+          Kite Trading Application – Real-Time System
+        </div>
+        <div class="item-sub">React, Node.js, WebSockets, MongoDB</div>
+        <ul>
+          <li>
+            Engineered event-driven dashboard handling 1,000+ concurrent
+            updates.
+          </li>
+          <li>Reduced React re-renders by 35% through state optimization.</li>
+          <li>Improved latency from 1.2s to ~400ms using batching.</li>
+          <li>Designed backend for scalable real-time data processing.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-title">Instagram Full-Stack Application</div>
+        <div class="item-sub">React, Node.js, Express, MongoDB</div>
+        <ul>
+          <li>Implemented JWT authentication and protected routes.</li>
+          <li>Designed indexed schema for scalable interactions.</li>
+          <li>Built pagination and lazy loading for performance.</li>
+          <li>Reduced payload size by 28% via query optimization.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-title">Apple Music UI Redesign</div>
+        <div class="item-sub">React, GSAP</div>
+        <ul>
+          <li>Developed high-performance animated UI.</li>
+          <li>Minimized frame drops under heavy load.</li>
+          <li>Improved Lighthouse score to 95+.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="title">Experience</div>
+
+      <div class="item">
+        <div class="item-title">
+          Software Development Intern – Bluestock Fintech
+        </div>
+        <ul>
+          <li>Developed backend APIs for analytics systems.</li>
+          <li>Improved response time by 22% via optimization.</li>
+          <li>Resolved production issues and enhanced error handling.</li>
+        </ul>
+      </div>
+
+      <div class="item">
+        <div class="item-title">Freelance Developer</div>
+        <ul>
+          <li>Delivered portfolio and brand websites end-to-end.</li>
+          <li>Achieved performance scores above 90.</li>
+          <li>Managed full development lifecycle.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <div class="title">Education</div>
+      <div class="item">
+        <div class="item-title">Bachelor of Computer Applications (BCA)</div>
+        <div class="item-sub">LNCT University, Bhopal | Expected 2026</div>
+      </div>
+    </section>
+  </body>
+</html>
