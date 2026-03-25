@@ -411,7 +411,7 @@ export default function Home() {
               className="hero-text outline-text"
               style={{ willChange: "transform, opacity" }}
             >
-              DEVELOPER
+             MERN ENGINEER
             </span>
           </div>
           <p className="hero-sub">
