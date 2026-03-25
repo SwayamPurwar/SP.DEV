@@ -48,14 +48,16 @@ export default function Home() {
   }, [location.hash]);
 
   // --- Handlers for Hover Effects ---
-  const handleMouseEnter = (imgUrl) => {
+  const handleMouseEnter = (imgUrl, isSecret = false) => {
     if (window.matchMedia("(hover: none)").matches) return;
 
     if (imgUrl && previewRef.current) {
       previewRef.current.style.backgroundImage = `url('${imgUrl}')`;
+      const filterStr = isSecret ? "blur(20px) contrast(150%) grayscale(80%)" : "blur(0px) contrast(100%) grayscale(0%)";
       gsap.to(previewRef.current, {
         opacity: 1,
         scale: 1,
+        filter: filterStr, // 👈 Applies the visual obfuscation
         duration: 0.5,
         ease: "power3.out",
       });
@@ -506,10 +508,30 @@ export default function Home() {
           </div>
           <ProjectCard
             index={4}
+            title="PROJECT: CHROMA"
+            category="Three.js / WebGL Experience"
+            year="In Labs"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onMouseMove={handleMouseMove}
+          />
+          <ProjectCard
+            index={5}
+            title="AURA STUDIOS"
+            category="Headless E-Commerce"
+            year="In Labs"
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+            onMouseMove={handleMouseMove}
+          />
+          <ProjectCard
+          
+            index={6}
             title="Project X"
-            category="Top Secret / Stay Tune"
+            category="Top Secret / Stay Tuned"
             year="Coming Soon"
             imgSrc="/assets/images/project/placeholder-preview.webp"
+            isSecret={true}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
