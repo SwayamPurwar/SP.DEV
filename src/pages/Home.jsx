@@ -20,7 +20,7 @@ export default function Home() {
 const roles = [
   "SOFTWARE ENGINEER", 
   "FRONTEND ARCHITECT", 
-  "UI/UX INNOVATOR", 
+  "UI / UX INNOVATOR", 
 "FULL-STACK DEVELOPER",
 ]; 
   const [currentRole, setCurrentRole] = useState(0);
