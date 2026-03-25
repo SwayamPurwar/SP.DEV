@@ -1,4 +1,4 @@
-import { useLayoutEffect, useRef, useEffect } from "react";
+import { useLayoutEffect, useRef, useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -16,7 +16,38 @@ export default function Home() {
     "(prefers-reduced-motion: reduce)",
   ).matches;
   const location = useLocation();
+  // --- 🔥 NEW: Animated Role Cycler ---
+ const roles = ["MERN ENGINEER", "FRONTEND DEV", "UI/UX DESIGNER", "WEB CREATOR"];
+  const [currentRole, setCurrentRole] = useState(0);
+  const roleRef = useRef(null);
+  useEffect(() => {
+    // Only run this after the initial preloader animation finishes
+    // so it doesn't mess with your opening sequence!
+    const interval = setInterval(() => {
+      if (roleRef.current) {
+        // 1. Animate text out (slide up & fade out)
+        gsap.to(roleRef.current, {
+          y: -30,
+          opacity: 0,
+          duration: 0.4,
+          ease: "power2.in",
+          onComplete: () => {
+            // 2. Change the word in React state
+            setCurrentRole((prev) => (prev + 1) % roles.length);
 
+            // 3. Animate text back in (slide from bottom & fade in)
+            gsap.fromTo(
+              roleRef.current,
+              { y: 30, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.4, ease: "power2.out" },
+            );
+          },
+        });
+      }
+    }, 2500); // Changes every 2.5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
   // High-performance GSAP trackers for the preview image
   const xTo = useRef(null);
   const yTo = useRef(null);
@@ -53,7 +84,9 @@ export default function Home() {
 
     if (imgUrl && previewRef.current) {
       previewRef.current.style.backgroundImage = `url('${imgUrl}')`;
-      const filterStr = isSecret ? "blur(20px) contrast(150%) grayscale(80%)" : "blur(0px) contrast(100%) grayscale(0%)";
+      const filterStr = isSecret
+        ? "blur(20px) contrast(150%) grayscale(80%)"
+        : "blur(0px) contrast(100%) grayscale(0%)";
       gsap.to(previewRef.current, {
         opacity: 1,
         scale: 1,
@@ -92,8 +125,8 @@ export default function Home() {
 
     // 1. Fluid Image Tracking using quickTo
     if (xTo.current && yTo.current) {
-     xTo.current(e.clientX);
-   yTo.current(e.clientY - 20);
+      xTo.current(e.clientX);
+      yTo.current(e.clientY - 20);
     }
 
     // 2. Velocity-based rotation
@@ -142,7 +175,7 @@ export default function Home() {
 
       // Initialize quickTo for buttery smooth image follow
       if (previewRef.current) {
-       gsap.set(previewRef.current, { xPercent: -50, yPercent: -125 });
+        gsap.set(previewRef.current, { xPercent: -50, yPercent: -125 });
         xTo.current = gsap.quickTo(previewRef.current, "x", {
           duration: 0.5,
           ease: "power3.out",
@@ -155,30 +188,35 @@ export default function Home() {
 
       const initScrollAnimations = () => {
         ScrollTrigger.refresh();
-// Target each project card for scroll-based highlighting
-  gsap.utils.toArray(".project-scratch").forEach((project) => {
-    const fill = project.querySelector(".svg-text-fill");
-    const bar = project.querySelector(".scratch-progress-bar");
+        // Target each project card for scroll-based highlighting
+        gsap.utils.toArray(".project-scratch").forEach((project) => {
+          const fill = project.querySelector(".svg-text-fill");
+          const bar = project.querySelector(".scratch-progress-bar");
 
-    gsap.timeline({
-      scrollTrigger: {
-        trigger: project,
-        start: "top 80%", // Starts when the item is 80% down the screen
-        end: "top 30%",   // Ends when it reaches 30% from the top
-        toggleActions: "play reverse play reverse", // Animates in and out
-      }
-    })
-    .to(fill, { 
-      clipPath: "inset(0 0% 0 0)", 
-      duration: 0.8, 
-      ease: "power2.out" 
-    })
-    .to(bar, { 
-      width: "100%", 
-      duration: 0.8, 
-      ease: "power2.out" 
-    }, "-=0.8"); // Runs at the same time as the fill
-  });
+          gsap
+            .timeline({
+              scrollTrigger: {
+                trigger: project,
+                start: "top 80%", // Starts when the item is 80% down the screen
+                end: "top 30%", // Ends when it reaches 30% from the top
+                toggleActions: "play reverse play reverse", // Animates in and out
+              },
+            })
+            .to(fill, {
+              clipPath: "inset(0 0% 0 0)",
+              duration: 0.8,
+              ease: "power2.out",
+            })
+            .to(
+              bar,
+              {
+                width: "100%",
+                duration: 0.8,
+                ease: "power2.out",
+              },
+              "-=0.8",
+            ); // Runs at the same time as the fill
+        });
         // Scroll Highlight & Line Draw for Projects
         gsap.utils.toArray(".project").forEach((project) => {
           ScrollTrigger.create({
@@ -388,14 +426,14 @@ export default function Home() {
         <div className="loader-meta bottom-left">LOADING ASSETS</div>
         <div className="loader-meta bottom-right">PLEASE WAIT</div>
       </div>
-  <div
-            ref={previewRef}
-            className="project-preview-img"
-            role="img"
-            aria-label="Project Preview"
-            id="preview-img"
-            style={{ willChange: "transform, opacity, rotationZ" }}
-          ></div>
+      <div
+        ref={previewRef}
+        className="project-preview-img"
+        role="img"
+        aria-label="Project Preview"
+        id="preview-img"
+        style={{ willChange: "transform, opacity, rotationZ" }}
+      ></div>
       <main style={{ perspective: "1000px" }}>
         <section id="hero">
           <div className="hero-line">
@@ -406,12 +444,16 @@ export default function Home() {
               SWAYAM PURWAR
             </h1>
           </div>
-          <div className="hero-line">
+          <div className="hero-line" style={{ overflow: "hidden" }}>
             <span
+              ref={roleRef}
               className="hero-text outline-text"
-              style={{ willChange: "transform, opacity" }}
+              style={{
+                willChange: "transform, opacity",
+                display: "inline-block", // Required for GSAP to translate 'y' properly
+              }}
             >
-             MERN ENGINEER
+              {roles[currentRole]}
             </span>
           </div>
           <p className="hero-sub">
@@ -443,15 +485,13 @@ export default function Home() {
         </section>
 
         <section id="work">
-        
-
           <div className="section-header">
             <span>SELECTED WORKS</span>
             <span>(2025-2026)</span>
           </div>
 
           <ProjectCard
-          index={0}
+            index={0}
             title="APPLE MUSIC APP"
             category="iOS / UI Redesign"
             year="Early '25"
@@ -464,7 +504,6 @@ export default function Home() {
 
           <ProjectCard
             index={1}
-
             title="INSTAGRAM APP"
             category="Full Stack"
             year="Mid '25"
@@ -525,7 +564,6 @@ export default function Home() {
             onMouseMove={handleMouseMove}
           />
           <ProjectCard
-          
             index={6}
             title="Project X"
             category="Top Secret / Stay Tuned"
