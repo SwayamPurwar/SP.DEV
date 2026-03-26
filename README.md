@@ -1,8 +1,9 @@
 # Swayam Purwar — Developer Portfolio (SP.DEV)
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react" alt="React 19" />
-  <img src="https://img.shields.io/badge/Vite-purple?style=for-the-badge&logo=vite" alt="Vite" />
+  <img src="https://img.shields.io/badge/Next.js-16.2.1-black?style=for-the-badge&logo=nextdotjs" alt="Next.js 16" />
+  <img src="https://img.shields.io/badge/React-19.2.4-blue?style=for-the-badge&logo=react" alt="React 19" />
+  <img src="https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwindcss" alt="Tailwind CSS 4" />
   <img src="https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock" alt="GSAP" />
   <img src="https://img.shields.io/badge/Three.js-black?style=for-the-badge&logo=threedotjs" alt="Three.js" />
   <img src="https://img.shields.io/badge/Lenis-black?style=for-the-badge" alt="Lenis Smooth Scroll" />
@@ -20,25 +21,25 @@
 
 | Feature                    | Description                                                                                                    |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------- |
-| 🧊 **3D Graphics**         | Immersive 3D elements and web experiences powered by **Three.js**.                                             |
-| 🎞️ **Advanced Animations** | Complex timeline animations and seamless page transitions utilizing **GSAP**.                                  |
-| 🌊 **Smooth Scrolling**    | Fluid, highly-optimized scroll behavior powered by **Lenis** studio-freight.                                   |
+| 🧊 **3D Graphics** | Immersive 3D elements and web experiences powered by **Three.js**.                                             |
+| 🎞️ **Advanced Animations** | Complex timeline animations and seamless page transitions utilizing **GSAP** and **ScrollTrigger**.                                  |
+| 🌊 **浪 Smooth Scrolling** | Fluid, highly-optimized scroll behavior powered by **Lenis**.                                   |
 | 🖱️ **Custom Interactions** | Custom cursor and hover states across interactive elements (buttons, project links, etc.).                     |
-| 🔍 **Dynamic SEO**         | Per-page metadata and SEO management using **React Helmet Async**.                                             |
-| 📁 **Case Studies**        | Dedicated, detailed breakdown pages for major projects (Apple Music, Kite, Instagram, CodeSense AI).           |
-| ⚡ **Blazing Fast**        | Built on **React 19** and bundled with **Vite** for instantaneous hot-module replacement and optimized builds. |
+| 🔍 **Dynamic SEO** | Per-page metadata and SEO management using the **Next.js Metadata API**.                                             |
+| 📁 **Case Studies** | Dedicated breakdown pages for major projects (Apple Music, Kite, Instagram, CodeSense AI).           |
+| ⚡ **Next-Gen Tech** | Built on **Next.js 16** and **React 19** with **Turbopack** for lightning-fast performance. |
 
 ## 🛠️ Tech Stack
 
 | Category               | Technology                          |
 | ---------------------- | ----------------------------------- |
-| **Frontend Framework** | React 19 + Vite                     |
-| **Routing**            | React Router DOM v7                 |
-| **Animations**         | GSAP (GreenSock Animation Platform) |
-| **3D Rendering**       | Three.js                            |
-| **Scroll Engine**      | Lenis                               |
-| **SEO Management**     | React Helmet Async                  |
-| **Linting**            | ESLint 9 + React Plugins            |
+| **Frontend Framework** | Next.js 16 (App Router) + React 19 |
+| **Styling** | Tailwind CSS v4                     |
+| **Animations** | GSAP (GreenSock Animation Platform) |
+| **3D Rendering** | Three.js                            |
+| **Scroll Engine** | Lenis                               |
+| **Backend/Auth** | Firebase                            |
+| **Type Safety** | TypeScript                          |
 
 ## 📁 Project Structure
 
@@ -46,19 +47,20 @@
 SP.DEV/
 ├── public/
 │   └── assets/
-│       ├── docs/           # Resume PDF
+│       ├── fonts/          # Fira Code, Outfit, Space Grotesk, Syne, etc.
+│       ├── docs/           # Resume PDF & HTML
 │       └── images/         # UI assets, project previews, and profile pictures
 ├── src/
-│   ├── assets/
-│   │   └── css/            # Global stylesheets (styles.css, resume.css)
-│   ├── components/         # Reusable UI components (Navbar, Footer, ProjectCard, SEO, PageTransition)
-│   ├── pages/              # Main site pages (Home, About, Resume, Success, NotFound)
-│   │   └── work/           # Detailed project case studies (Kite, Instagram, AppleMusic, CodeSenseAiSaas)
-│   ├── utils/              # Helper functions, animation logic, telemetry, and constants
-│   ├── App.jsx             # Main application layout and router setup
-│   └── main.jsx            # Application entry point
-├── eslint.config.js        # ESLint rules and configuration
-├── vite.config.js          # Vite bundler configuration
+│   ├── app/                # Next.js App Router (Layouts, Pages, Routes)
+│   │   ├── api/            # API routes (e.g., Contact form handler)
+│   │   ├── work/           # Detailed project case studies
+│   │   ├── globals.css     # Global Tailwind styles
+│   │   └── layout.tsx      # Root layout and font configurations
+│   ├── components/         # Reusable UI components (Navbar, Footer, ProjectCard, etc.)
+│   ├── utils/              # Helper functions, GSAP logic, Firebase config, and constants
+│   └── types/              # TypeScript definitions
+├── postcss.config.mjs      # PostCSS configuration
+├── next.config.ts          # Next.js configuration
 └── package.json            # Project dependencies and scripts
 ```
 
@@ -67,7 +69,7 @@ SP.DEV/
 ### Prerequisites
 
 - Node.js (v18 or higher recommended)
-- npm or yarn
+- npm, yarn, or pnpm
 
 ### Installation
 

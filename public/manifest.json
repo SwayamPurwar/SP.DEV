@@ -1,0 +1,30 @@
+{
+  "name": "Swayam Purwar - Creative Developer",
+  "short_name": "SP.DEV",
+  "description": "Swayam Purwar is a MERN stack developer and BCA student specialized in React and high-performance UI.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/assets/images/ui/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/images/ui/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/assets/images/ui/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["education", "developer", "portfolio"]
+}
