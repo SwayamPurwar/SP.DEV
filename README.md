@@ -1,122 +1,124 @@
-# SP.DEV — Creative Developer Portfolio
+# Swayam Purwar — Developer Portfolio (SP.DEV)
 
 <p align="center">
-  <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5" />
-  <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3" />
-  <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" alt="JavaScript" />
-  <img src="https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock&logoColor=white" alt="GSAP" />
-  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+  <img src="https://img.shields.io/badge/React-19-blue?style=for-the-badge&logo=react" alt="React 19" />
+  <img src="https://img.shields.io/badge/Vite-purple?style=for-the-badge&logo=vite" alt="Vite" />
+  <img src="https://img.shields.io/badge/GSAP-88CE02?style=for-the-badge&logo=greensock" alt="GSAP" />
+  <img src="https://img.shields.io/badge/Three.js-black?style=for-the-badge&logo=threedotjs" alt="Three.js" />
+  <img src="https://img.shields.io/badge/Lenis-black?style=for-the-badge" alt="Lenis Smooth Scroll" />
 </p>
 
 <p align="center">
-  <strong>A high-end, interactive personal portfolio website for a Creative Developer.</strong><br/>
-  Features a retro CRT aesthetic, custom terminal interface, seamless GSAP animations, <br/>
-  and optimized performance for an immersive digital experience.
-</p>
-
-<p align="center">
-  <a href="https://swayampurwar.vercel.app/">
-    <img src="https://img.shields.io/badge/Live_Demo-Website-blue?style=for-the-button" alt="Live Demo" />
-  </a>
+  <strong>A highly interactive, 3D-enabled personal developer portfolio website.</strong><br/>
+  Showcasing projects, case studies, and interactive web experiences <br/>
+  with smooth animations and dynamic routing.
 </p>
 
 ---
 
 ## ✨ Features
 
-| Feature | Description |
-|---|---|
-| 🖥️ **Interactive Terminal** | Fully functional command-line interface (SWAYAM.OS) simulating a retro admin environment |
-| 🎬 **Advanced Animations** | Smooth, scroll-triggered animations powered by GSAP and ScrollTrigger |
-| 🌊 **Smooth Scrolling** | Fluid scrolling experience implemented via Lenis |
-| 📺 **Retro Aesthetic** | Custom CRT overlay, Matrix-style canvas effects, and ambient glow effects |
-| ✉️ **Working Contact Form** | Integrated form submissions handled dynamically via submit-form.com |
-| 📱 **Responsive Design** | Pixel-perfect layouts optimized for mobile, tablet, and desktop environments |
-| ⚡ **SEO & Performance** | Includes JSON-LD schema, PWA manifest, semantic HTML, and Vercel Speed Insights |
+| Feature                    | Description                                                                                                    |
+| -------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| 🧊 **3D Graphics**         | Immersive 3D elements and web experiences powered by **Three.js**.                                             |
+| 🎞️ **Advanced Animations** | Complex timeline animations and seamless page transitions utilizing **GSAP**.                                  |
+| 🌊 **Smooth Scrolling**    | Fluid, highly-optimized scroll behavior powered by **Lenis** studio-freight.                                   |
+| 🖱️ **Custom Interactions** | Custom cursor and hover states across interactive elements (buttons, project links, etc.).                     |
+| 🔍 **Dynamic SEO**         | Per-page metadata and SEO management using **React Helmet Async**.                                             |
+| 📁 **Case Studies**        | Dedicated, detailed breakdown pages for major projects (Apple Music, Kite, Instagram, CodeSense AI).           |
+| ⚡ **Blazing Fast**        | Built on **React 19** and bundled with **Vite** for instantaneous hot-module replacement and optimized builds. |
 
 ## 🛠️ Tech Stack
 
-| Category | Technology |
-|---|---|
-| **Core Structure** | Semantic HTML5 |
-| **Styling** | Custom CSS3 (Variables, Flexbox, Grid) |
-| **Logic & Interactivity**| Vanilla JavaScript (ES6 Modules) |
-| **Animations** | GSAP 3.12 (ScrollTrigger) |
-| **Scroll Physics** | Lenis by Studio Freight |
-| **Deployment & Analytics** | Vercel, Google Analytics |
+| Category               | Technology                          |
+| ---------------------- | ----------------------------------- |
+| **Frontend Framework** | React 19 + Vite                     |
+| **Routing**            | React Router DOM v7                 |
+| **Animations**         | GSAP (GreenSock Animation Platform) |
+| **3D Rendering**       | Three.js                            |
+| **Scroll Engine**      | Lenis                               |
+| **SEO Management**     | React Helmet Async                  |
+| **Linting**            | ESLint 9 + React Plugins            |
 
 ## 📁 Project Structure
 
 ```text
-SP.DEV (Vanilla HTML)/
-├── assets/
-│   ├── css/               # Core stylesheets (style.css)
-│   ├── docs/              # Resumes and downloadable documents
-│   ├── images/            # Optimized WebP/PNG assets (profile, projects, UI)
-│   └── js/
-│       ├── modules/       # Modular JS (animations.js, terminal.js, utils.js, etc.)
-│       └── main.js        # Main JavaScript entry point
-├── work/                  # Individual project case study pages
-│   ├── ai-saas.html
-│   ├── apple-music.html
-│   ├── instagram.html
-│   └── kite.html
-├── index.html             # Main portfolio landing page
-├── about.html             # About me page
-├── resume.html            # Web-based resume viewer
-├── 404.html               # Custom error page
-├── success.html           # Form submission success page
-├── manifest.json          # PWA Manifest configuration
-└── sitemap.xml            # Search Engine sitemap
+SP.DEV/
+├── public/
+│   └── assets/
+│       ├── docs/           # Resume PDF
+│       └── images/         # UI assets, project previews, and profile pictures
+├── src/
+│   ├── assets/
+│   │   └── css/            # Global stylesheets (styles.css, resume.css)
+│   ├── components/         # Reusable UI components (Navbar, Footer, ProjectCard, SEO, PageTransition)
+│   ├── pages/              # Main site pages (Home, About, Resume, Success, NotFound)
+│   │   └── work/           # Detailed project case studies (Kite, Instagram, AppleMusic, CodeSenseAiSaas)
+│   ├── utils/              # Helper functions, animation logic, telemetry, and constants
+│   ├── App.jsx             # Main application layout and router setup
+│   └── main.jsx            # Application entry point
+├── eslint.config.js        # ESLint rules and configuration
+├── vite.config.js          # Vite bundler configuration
+└── package.json            # Project dependencies and scripts
 ```
 
 ## 🚀 Getting Started
 
 ### Prerequisites
-- A modern web browser
-- (Optional) Live Server extension for VS Code
+
+- Node.js (v18 or higher recommended)
+- npm or yarn
 
 ### Installation
 
 1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/SwayamPurwar/SP.DEV.git](https://github.com/SwayamPurwar/SP.DEV.git) 
-   cd SP.DEV
-   ```
-2. **Run Locally:**
-- Simply open index.html in your web browser.
-- OR, if you are using VS Code, right-click index.html and select "Open with Live Server" to enable hot-reloading.
+
+```bash
+git clone [https://github.com/SwayamPurwar/SP.DEV.git](https://github.com/SwayamPurwar/SP.DEV.git)
+cd SP.DEV
+```
+
+2. **Install dependencies:**
+
+```bash
+npm install
+```
+
+3. **Run the Development Server:**
+
+```bash
+npm run dev
+```
+
+4. **Build for Production:**
+
+```bash
+npm run build
+```
+
+### 💡 Key Configurations
+
+**Interactive Elements**
+Custom cursor logic and interactive hover states are managed via global selectors defined in `src/utils/constants.js`. The following elements trigger interactive states:
+
+```bash
+"a", "button", ".btn", ".t-btn", ".nav-item", ".toc-link", ".tech-pill", ".cv-btn", ".cs-tag", ".project-link", ".socials a", ".glass-btn", ".mouse-hover"
+```
 
 ## 👨‍💻 Author
 
 **Swayam Purwar**
-- **Portfolio**: [Swayam Purwar](https://github.com/SwayamPurwar/)
+
 - **LinkedIn**: [Swayam Purwar](https://www.linkedin.com/in/SwayamPurwar)
 - **GitHub**: [@SwayamPurwar](https://github.com/SwayamPurwar/)
-- **Instagram**: [@swayam_purwar](https://instagram/swayam_purwar/)
 - **Email**: [swayampurwar111104@gmail.com](mailto:swayampurwar111104@gmail.com)
 
-## ⚖️ License & Terms of Use
+## 📄 License
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
-
-This repository is a mix of open-source code and personal content.
-
-### Software (The Code)
-The underlying source code of this portfolio is licensed under the **MIT License**. 
-- You are free to use, copy, and modify the code.
-- Please provide attribution if you use significant portions of the logic.
-
-### Content (The "Me" Stuff)
-All **personal branding, images, bio text, and project descriptions** are © [2026] [Swayam Purwar]. 
-- **Not included in the MIT License.**
-- You may not use my headshot, logo, or personal identity for your own projects.
-- Please do not "clone" this portfolio exactly; use it as a reference to build your own unique space!
 ---
 
 <p align="center">
   Built with ❤️ by Swayam Purwar
-  <br/>
-
 </p>
