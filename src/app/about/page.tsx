@@ -45,7 +45,7 @@ export default function About() {
   width={600} 
   height={800}
   priority={true} // 'priority' tells Next.js to preload this image immediately since it's "above the fold"
-   className="bio-img"
+
 />
              
             </div>
