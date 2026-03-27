@@ -1,0 +1,13 @@
+
+
+
+The Modern Web (Next.js & TypeScript)
+
+
+The current and most advanced iteration of my portfolio, upgraded to the Next.js framework. This version brings enterprise-level performance and SEO optimization through Server-Side Rendering (SSR) and Static Site Generation (SSG). It features a highly polished user experience, optimized image loading, and a highly scalable folder structure, representing my ability to build production-ready modern web applications.
+
+Key Highlights: Advanced file-based routing and Server Components.
+
+- Built-in Next.js optimizations (like the <Image /> component for faster load times).
+
+- Improved SEO and initial page load speeds compared to standard React.
