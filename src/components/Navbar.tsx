@@ -1,37 +1,37 @@
 "use client"; 
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { sfx } from "../utils/audio-system"; 
 import BrandLogo from "@/components/BrandLogo";
 
 const VALID_WORK_ROUTES = new Set([
+  "/work",
   "/work/apple-music",
   "/work/instagram",
   "/work/kite",
   "/work/ai-saas",
-  "/work/velora-maison-aisaas",
-  "/work/velora-maison-aisaas-casestudy",
+  "/work/reposage-prime-aisaas",
+  "/work/reposage-prime-aisaas-casestudy",
   "/work/apple-music-casestudy",
   "/work/instagram-casestudy",
   "/work/kite-casestudy",
 ]);
 
 const HIDDEN_ROUTES = new Set(["/resume", "/success",]);
-const KNOWN_BASE_ROUTES = new Set(["/", "/about", "/contact"]);
+const KNOWN_BASE_ROUTES = new Set(["/", "/about", "/contact", "/work"]);
 
 export default function Navbar() {
   const [isMuted, setIsMuted] = useState(sfx.isMuted);
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   
-  // NEW: State and Ref for scroll-to-hide logic
+  // State and Ref for scroll-to-hide logic
   const [isHidden, setIsHidden] = useState(false);
   const lastScrollY = useRef(0);
 
   const pathname = usePathname() || "/"; // Fallback to avoid null
-  const router = useRouter();
   const isAdminPage = pathname.startsWith("/admin/");
 
   useEffect(() => {
@@ -40,7 +40,8 @@ export default function Navbar() {
       
       // 1. Toggle frosted glass background
       setScrolled(currentScrollY > 50);
-// Prevent iOS bounce effect at the top of the page from triggering hide
+      
+      // Prevent iOS bounce effect at the top of the page from triggering hide
       if (currentScrollY <= 0) {
         setIsHidden(false);
         lastScrollY.current = currentScrollY;
@@ -79,6 +80,12 @@ export default function Navbar() {
     return () => window.removeEventListener("audioMuteToggled", handleMuteChange);
   }, []);
 
+  const handleToggleSound = () => {
+    const newMutedState = sfx.toggleMute();
+    setIsMuted(newMutedState);
+    if (!newMutedState) sfx.playHover(); 
+  };
+
   const isKnownRoute = KNOWN_BASE_ROUTES.has(pathname) || VALID_WORK_ROUTES.has(pathname);
   if (HIDDEN_ROUTES.has(pathname) || (!isKnownRoute && !isAdminPage)) return null;
 
@@ -95,26 +102,16 @@ export default function Navbar() {
           <BrandLogo />
           <span className="brand-wordmark">SP.DEV</span>
         </Link>
+        <div className="nav-right" style={{ display: "flex", alignItems: "center", gap: "2.5rem" }}>
+          <div className="nav-links" role="navigation">
+            <Link href="/" className="nav-item mouse-hover" onClick={() => setIsMenuOpen(false)}>
+              Home
+            </Link>
+          </div>
+        </div>
       </nav>
     );
   }
-
-  const handleToggleSound = () => {
-    const newMutedState = sfx.toggleMute();
-    setIsMuted(newMutedState);
-    if (!newMutedState) sfx.playHover(); 
-  };
-
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
-    setIsMenuOpen(false);
-    if (pathname !== "/") {
-      router.push(`/${targetId}`);
-    } else {
-      e.preventDefault();
-      const target = document.querySelector(targetId);
-      if (target) target.scrollIntoView({ behavior: "smooth" });
-    }
-  };
 
   const renderLinks = (isMobile = false) => {
     const linkClass = isMobile ? "mobile-link" : "nav-item mouse-hover";
@@ -129,15 +126,31 @@ export default function Navbar() {
     }
     if (pathname === "/contact") {
       return (
-        <a href="mailto:your@email.com" className={linkClass} onClick={closeAction}>
+        <a href="mailto:swayampurwar111104@gmail.com" className={linkClass} onClick={closeAction}>
           Email Directly
         </a>
       );
     }
-    if (pathname.startsWith("/work/")) {
-      const label = pathname.includes("casestudy") ? "Exit Case Study" : "All Projects";
+    if (pathname.startsWith("/work")) {
+      if (pathname === "/work") {
+        // Updated: Show About and Contact on the main Work page
+        return (
+          <>
+            <Link href="/about" className={linkClass} onClick={closeAction}>
+              About
+            </Link>
+            <Link href="/contact" className={linkClass} onClick={closeAction}>
+              Contact
+            </Link>
+          </>
+        );
+      }
+
+      let label = "All Projects";
+      if (pathname.includes("casestudy")) label = "Exit Case Study";
+
       return (
-        <Link href="/#work" className={linkClass} onClick={closeAction}>
+        <Link href="/work" className={linkClass} onClick={closeAction}>
           {label}
         </Link>
       );
@@ -145,13 +158,13 @@ export default function Navbar() {
 
     return (
       <>
-        <a
-          href="#work"
-          onClick={(e) => handleNavClick(e, "#work")}
+        <Link
+          href="/work"
+          onClick={closeAction}
           className={linkClass}
         >
           Work
-        </a>
+        </Link>
         <Link href="/about" className={linkClass} onClick={closeAction}>
           About
         </Link>
@@ -166,9 +179,7 @@ export default function Navbar() {
     <>
       <nav
         id="main-nav"
-        className={`${scrolled ? "scrolled" : ""} nav-${pathname.replace(/\//g, "") || "home"} ${isHidden ? "nav-hidden" : ""} `}
-        // NEW: Inline style to transform the nav out of view. 
-        // We override this if the mobile menu is open so it doesn't accidentally hide the close button!
+        className={`${scrolled ? "scrolled" : ""} nav-${pathname.replaceAll("/", "") || "home"} ${isHidden ? "nav-hidden" : ""} `}
         style={{
           transform: isHidden && !isMenuOpen ? "translateY(-100%)" : "translateY(0)",
         }}

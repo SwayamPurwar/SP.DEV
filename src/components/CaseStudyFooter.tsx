@@ -8,7 +8,7 @@ const CASE_STUDIES = [
   { id: "kite", title: "KITE ZERODHA", link: "/work/kite-casestudy" },
   { id: "apple-music", title: "APPLE MUSIC", link: "/work/apple-music-casestudy" },
   { id: "instagram", title: "INSTAGRAM", link: "/work/instagram-casestudy" },
-  { id: "velora-maison-aisaas", title: "VELORA MAISON", link: "/work/velora-maison-aisaas-casestudy" }, 
+  { id: "reposage-prime-aisaas", title: "RepoSage Prime", link: "/work/reposage-prime-aisaas-casestudy" }, 
 ];
 
 interface CaseStudyFooterProps {

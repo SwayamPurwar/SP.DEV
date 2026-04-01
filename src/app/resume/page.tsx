@@ -293,11 +293,11 @@ export default function Resume() {
             </article>
           </Link>
 
-          <Link href="/work/velora-maison-aisaas-casestudy" className="minimal-card project-card animate-enter" style={{ animationDelay: "0.8s" }}>
+          <Link href="/work/reposage-prime-aisaas" className="minimal-card project-card animate-enter" style={{ animationDelay: "0.8s" }}>
             <article className="project-content">
               <div>
                 <span className="project-number">04</span>
-                <h3 className="project-title">Velora Maison AI SaaS</h3>
+                <h3 className="project-title">RepoSage Prime AI SaaS</h3>
                 <p className="project-desc">Intelligent code analysis platform with secure authentication, AI integration, and a modern dashboard.</p>
               </div>
               <div className="resume-project-link">

@@ -76,10 +76,11 @@ export const metadata: Metadata = {
   },
   manifest: "/manifest.json",
 };
-
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
+  maximumScale: 1,     // <-- ADD THIS: Prevents zooming in/out
+  userScalable: false, // <-- ADD THIS: Disables pinch-to-zoom entirely
   viewportFit: "cover",
 };
 

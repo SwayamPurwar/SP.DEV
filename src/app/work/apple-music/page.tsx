@@ -79,12 +79,18 @@ export default function AppleMusic() {
 
             <div className="p-img-container" style={{ transform: "scaleY(0)" }}>
               <Image
-                src="https://www.apple.com/v/apple-music/af/images/shared/og__ckjrh2mu8b2a_image.png"
+                src="/assets/images/project/applemusic-preview.webp"
                 className="p-img"
                 alt="Apple Music iOS interface redesign"
-                width={1200}
+                width={200}
                 height={630}
-                style={{ width: "100%", height: "auto" }}
+                style={{ 
+      width: "100%", 
+      height: "110%", // Taller than the container
+      objectFit: "cover",
+      position: "absolute",
+      top: "-10%" // Offset it so it has room to move up and down
+    }}
                 priority={true}
               />
             </div>
@@ -131,9 +137,9 @@ export default function AppleMusic() {
                 </ul>
                 <h4>Tools Used</h4>
                 <ul>
-                  <li>Figma</li>
-                  <li>Spline 3D</li>
-                  <li>Protopie</li>
+                  <li className="tech-pill">Figma</li>
+                  <li className="tech-pill">Spline 3D</li>
+                  <li className="tech-pill">Protopie</li>
                 </ul>
                 <h4>Year</h4>
                 <ul>

@@ -8,7 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Make sure these paths match your Next.js directory structure (e.g., "@/components/SEO")
 
-import ProjectCard from "../components/ProjectCard"; 
+import ProjectCard from "../components/ProjectCard";
 import { lockScroll, unlockScroll } from "../utils/animations";
 import { trackEvent } from "@/utils/analytics";
 
@@ -18,22 +18,24 @@ export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLSpanElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
-  
+
   // Safe window check for Next.js SSR
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   useEffect(() => {
-    setPrefersReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+    setPrefersReducedMotion(
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+    );
   }, []);
 
   const pathname = usePathname();
 
   // --- Animated Role Cycler ---
   const roles = [
-    "SOFTWARE ENGINEER", 
-    "FRONTEND ARCHITECT", 
-    "UI / UX INNOVATOR", 
+    "SOFTWARE ENGINEER",
+    "FRONTEND ARCHITECT",
+    "UI / UX INNOVATOR",
     "FULL-STACK DEVELOPER",
-  ]; 
+  ];
   const [currentRole, setCurrentRole] = useState(0);
   const roleRef = useRef<HTMLSpanElement>(null);
 
@@ -55,7 +57,7 @@ export default function Home() {
           },
         });
       }
-    }, 2500); 
+    }, 2500);
 
     return () => clearInterval(interval);
   }, [roles.length]);
@@ -71,7 +73,7 @@ export default function Home() {
       "/assets/images/project/apple-music-preview.webp",
       "/assets/images/project/instagram-preview.webp",
       "/assets/images/project/kite-preview.webp",
-      "/assets/images/project/velora-maison-preview.webp",
+      "/assets/images/project/reposage-prime-preview.webp",
     ];
 
     imagesToPreload.forEach((src) => {
@@ -82,7 +84,7 @@ export default function Home() {
 
   // Smooth scroll to hash anchor on load
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.location.hash) {
+    if (typeof window !== "undefined" && window.location.hash) {
       const element = document.querySelector(window.location.hash);
       if (element) {
         setTimeout(() => element.scrollIntoView({ behavior: "smooth" }), 100);
@@ -92,7 +94,11 @@ export default function Home() {
 
   // --- Handlers for Hover Effects ---
   const handleMouseEnter = (imgUrl: string | undefined, isSecret = false) => {
-    if (typeof window !== 'undefined' && window.matchMedia("(hover: none)").matches) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(hover: none)").matches
+    )
+      return;
 
     if (imgUrl && previewRef.current) {
       previewRef.current.style.backgroundImage = `url('${imgUrl}')`;
@@ -110,7 +116,11 @@ export default function Home() {
   };
 
   const handleMouseLeave = (e: React.MouseEvent) => {
-    if (typeof window !== 'undefined' && window.matchMedia("(hover: none)").matches) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(hover: none)").matches
+    )
+      return;
 
     if (previewRef.current) {
       gsap.to(previewRef.current, {
@@ -132,7 +142,11 @@ export default function Home() {
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (typeof window !== 'undefined' && window.matchMedia("(hover: none)").matches) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(hover: none)").matches
+    )
+      return;
 
     if (xTo.current && yTo.current) {
       xTo.current(e.clientX);
@@ -154,7 +168,11 @@ export default function Home() {
     }
   };
 
-  const trackProjectClick = (title: string, link?: string, isSecret = false) => {
+  const trackProjectClick = (
+    title: string,
+    link?: string,
+    isSecret = false,
+  ) => {
     void trackEvent("project_click", {
       title,
       link: link || "none",
@@ -163,8 +181,8 @@ export default function Home() {
   };
 
   useLayoutEffect(() => {
-    if (typeof window === 'undefined') return; // SSR Guard
-    
+    if (typeof window === "undefined") return; // SSR Guard
+
     window.scrollTo(0, 0);
     const isFirstVisit = sessionStorage.getItem("visited") !== "true";
 
@@ -185,37 +203,44 @@ export default function Home() {
 
       const initScrollAnimations = () => {
         ScrollTrigger.refresh();
-        gsap.utils.toArray<HTMLElement>(".project-scratch").forEach((project) => {
-          const fill = project.querySelector(".svg-text-fill");
-          const bar = project.querySelector(".scratch-progress-bar");
+        gsap.utils
+          .toArray<HTMLElement>(".project-scratch")
+          .forEach((project) => {
+            const fill = project.querySelector(".svg-text-fill");
+            const bar = project.querySelector(".scratch-progress-bar");
 
-          gsap.timeline({
-              scrollTrigger: {
-                trigger: project,
-                start: "top 80%", 
-                end: "top 30%", 
-                toggleActions: "play reverse play reverse", 
-              },
-            })
-            .to(fill, {
-              clipPath: "inset(0 0% 0 0)",
-              duration: 0.8,
-              ease: "power2.out",
-            })
-            .to(bar, {
-                width: "100%",
+            gsap
+              .timeline({
+                scrollTrigger: {
+                  trigger: project,
+                  start: "top 80%",
+                  end: "top 30%",
+                  toggleActions: "play reverse play reverse",
+                },
+              })
+              .to(fill, {
+                clipPath: "inset(0 0% 0 0)",
                 duration: 0.8,
                 ease: "power2.out",
-              }, "-=0.8"); 
-        });
+              })
+              .to(
+                bar,
+                {
+                  width: "100%",
+                  duration: 0.8,
+                  ease: "power2.out",
+                },
+                "-=0.8",
+              );
+          });
 
         gsap.utils.toArray<HTMLElement>(".project").forEach((project) => {
           ScrollTrigger.create({
             trigger: project,
-            start: "top 85%", 
+            start: "top 85%",
             end: "bottom 35%",
-            toggleClass: "is-active", 
-            onEnter: () => project.classList.add("is-visible"), 
+            toggleClass: "is-active",
+            onEnter: () => project.classList.add("is-visible"),
           });
         });
 
@@ -242,7 +267,9 @@ export default function Home() {
             });
           });
 
-          document.querySelectorAll(".reveal-container").forEach((container) => {
+          document
+            .querySelectorAll(".reveal-container")
+            .forEach((container) => {
               const curtain = container.querySelector(".reveal-curtain");
               const img = container.querySelector("img");
 
@@ -250,13 +277,21 @@ export default function Home() {
                 scrollTrigger: { trigger: container, start: "top 75%" },
               });
 
-              tl.fromTo(curtain, { scaleY: 1 }, { scaleY: 0, duration: 1.2, ease: "expo.inOut" })
-                .fromTo(img, { scale: 1.2, filter: "blur(10px) grayscale(100%)" }, {
+              tl.fromTo(
+                curtain,
+                { scaleY: 1 },
+                { scaleY: 0, duration: 1.2, ease: "expo.inOut" },
+              ).fromTo(
+                img,
+                { scale: 1.2, filter: "blur(10px) grayscale(100%)" },
+                {
                   scale: 1,
                   filter: "blur(0px) grayscale(0%)",
                   duration: 1.5,
                   ease: "power3.out",
-                }, "-=1.2");
+                },
+                "-=1.2",
+              );
             });
         } else {
           gsap.set(".reveal-text", { y: 0, opacity: 1 });
@@ -278,37 +313,96 @@ export default function Home() {
           },
         });
 
-        tl.to(".loader-text", { opacity: 1, duration: 0.5, ease: "power2.out" });
+        tl.to(".loader-text", {
+          opacity: 1,
+          duration: 0.5,
+          ease: "power2.out",
+        });
 
-        tl.to({ value: 0 }, {
+        tl.to(
+          { value: 0 },
+          {
             value: 100,
             duration: 1.5,
             ease: "power3.inOut",
             onUpdate: function () {
-              if (counterRef.current) counterRef.current.textContent = Math.floor(this.targets()[0].value).toString();
+              if (counterRef.current)
+                counterRef.current.textContent = Math.floor(
+                  this.targets()[0].value,
+                ).toString();
             },
-          }
+          },
         );
 
         tl.to(".loader-text, .loader-meta", { opacity: 0, duration: 0.3 });
-        tl.to(".preloader-container", { yPercent: -100, duration: 1.2, ease: "expo.inOut" });
+        tl.to(".preloader-container", {
+          yPercent: -100,
+          duration: 1.2,
+          ease: "expo.inOut",
+        });
 
         if (!prefersReducedMotion) {
-          tl.to(".hero-text", { y: 0, rotateX: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "expo.out" }, "-=0.6")
-            .to(".hero-sub", { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.9")
-            .to(".cv-wrapper", { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=0.8")
-            .to(document.querySelector("#main-nav"), { y: 0, opacity: 1, duration: 1, ease: "power3.out" }, "-=1.0");
+          tl.to(
+            ".hero-text",
+            {
+              y: 0,
+              rotateX: 0,
+              opacity: 1,
+              duration: 1.2,
+              stagger: 0.1,
+              ease: "expo.out",
+            },
+            "-=0.6",
+          )
+            .to(
+              ".hero-sub",
+              { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+              "-=0.9",
+            )
+            .to(
+              ".cv-wrapper",
+              { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+              "-=0.8",
+            )
+            .to(
+              document.querySelector("#main-nav"),
+              { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
+              "-=1.0",
+            );
         } else {
-          tl.set(".hero-text, .hero-sub, .cv-wrapper", { y: 0, opacity: 1, rotateX: 0 });
+          tl.set(".hero-text, .hero-sub, .cv-wrapper", {
+            y: 0,
+            opacity: 1,
+            rotateX: 0,
+          });
           gsap.set(document.querySelector("#main-nav"), { y: 0, opacity: 1 });
         }
       } else {
         unlockScroll();
         gsap.set(".preloader-container", { display: "none" });
 
-        gsap.fromTo(".hero-text", { y: 100, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, stagger: 0.1, ease: "expo.out", delay: 0.2 });
-        gsap.fromTo(".hero-sub, .cv-wrapper", { y: 30, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.4 });
-        gsap.fromTo(document.querySelector("#main-nav"), { y: -50, opacity: 0 }, { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.1 });
+        gsap.fromTo(
+          ".hero-text",
+          { y: 100, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1.2,
+            stagger: 0.1,
+            ease: "expo.out",
+            delay: 0.2,
+          },
+        );
+        gsap.fromTo(
+          ".hero-sub, .cv-wrapper",
+          { y: 30, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.4 },
+        );
+        gsap.fromTo(
+          document.querySelector("#main-nav"),
+          { y: -50, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.1 },
+        );
 
         setTimeout(initScrollAnimations, 100);
       }
@@ -323,9 +417,11 @@ export default function Home() {
 
   return (
     <div ref={containerRef}>
-      
-
-      <div className="preloader-container" role="status" aria-label="Loading assets">
+      <div
+        className="preloader-container"
+        role="status"
+        aria-label="Loading assets"
+      >
         <div className="loader-content">
           <div className="counter-wrap">
             <span className="counter" ref={counterRef}></span>
@@ -334,11 +430,13 @@ export default function Home() {
           <div className="loader-text">INITIALIZING SYSTEM</div>
         </div>
         <div className="loader-meta top-left">SP.DEV</div>
-        <div className="loader-meta top-right">PORTFOLIO ©{new Date().getFullYear()}</div>
+        <div className="loader-meta top-right">
+          PORTFOLIO ©{new Date().getFullYear()}
+        </div>
         <div className="loader-meta bottom-left">LOADING ASSETS</div>
         <div className="loader-meta bottom-right">PLEASE WAIT</div>
       </div>
-      
+
       <div
         ref={previewRef}
         className="project-preview-img"
@@ -347,11 +445,14 @@ export default function Home() {
         id="preview-img"
         style={{ willChange: "transform, opacity" }}
       ></div>
-      
+
       <main style={{ perspective: "1000px" }}>
         <section id="hero">
           <div className="hero-line">
-            <h1 className="hero-text hero-name" style={{ willChange: "transform, opacity" }}>
+            <h1
+              className="hero-text hero-name"
+              style={{ willChange: "transform, opacity" }}
+            >
               SWAYAM PURWAR
             </h1>
           </div>
@@ -359,23 +460,38 @@ export default function Home() {
             <span
               ref={roleRef}
               className="hero-text outline-text"
-              style={{ willChange: "transform, opacity", display: "inline-block" }}
+              style={{
+                willChange: "transform, opacity",
+                display: "inline-block",
+              }}
             >
               {roles[currentRole]}
             </span>
           </div>
           <p className="hero-sub">
-            Based in Bhopal, India &bull; <span id="live-clock">--:--:-- IST</span> &bull; Available for Freelance
+            Based in Bhopal, India &bull;{" "}
+            <span id="live-clock">--:--:-- IST</span> &bull; Available for
+            Freelance
           </p>
           <div className="cv-wrapper">
             <Link
               href="/resume"
               className="cv-btn mouse-hover"
               data-strength="25"
-              onClick={() => void trackEvent("resume_cta_click", { location: "hero" })}
+              onClick={() =>
+                void trackEvent("resume_cta_click", { location: "hero" })
+              }
             >
               <span>VIEW Resume</span>
-              <svg className="cv-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <svg
+                className="cv-icon"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
                 <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
                 <circle cx="12" cy="12" r="3" />
               </svg>
@@ -385,8 +501,8 @@ export default function Home() {
 
         <section id="work">
           <div className="section-header">
-            <span>SELECTED WORKS</span>
-            <span>(2025-2026)</span>
+            <span>FEATURED WORKS</span>
+            <span>(VIEW ALL ON /WORK)</span>
           </div>
 
           <ProjectCard
@@ -396,7 +512,9 @@ export default function Home() {
             year="Early '25"
             link="/work/apple-music"
             imgSrc="/assets/images/project/apple-music-preview.webp"
-            onClick={() => trackProjectClick("APPLE MUSIC APP", "/work/apple-music")}
+            onClick={() =>
+              trackProjectClick("APPLE MUSIC APP", "/work/apple-music")
+            }
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
@@ -408,7 +526,9 @@ export default function Home() {
             year="Mid '25"
             link="/work/instagram"
             imgSrc="/assets/images/project/instagram-preview.webp"
-            onClick={() => trackProjectClick("INSTAGRAM APP", "/work/instagram")}
+            onClick={() =>
+              trackProjectClick("INSTAGRAM APP", "/work/instagram")
+            }
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}
@@ -426,93 +546,75 @@ export default function Home() {
             onMouseMove={handleMouseMove}
           />
 
-          <div className="section-header upcoming">
-            <span>CURRENTLY DEVELOPING</span>
-            <span>(WIP)</span>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              marginTop: "3rem",
+            }}
+          >
+            <Link
+              href="/work"
+              className="btn mouse-hover"
+              onClick={() =>
+                void trackEvent("work_hub_cta_click", {
+                  location: "home_featured",
+                })
+              }
+            >
+              Browse All Work
+            </Link>
           </div>
-          <ProjectCard
-            index={3}
-            title="Velora-Maison"
-            category="AI-Powered Code Assistant + SaaS"
-            year="Mid '26"
-            link="/work/velora-maison-aisaas"
-            imgSrc="/assets/images/project/velora-maison-preview.webp"
-            onClick={() => trackProjectClick("Velora-Maison", "/work/velora-maison-aisaas")}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onMouseMove={handleMouseMove}
-          />
-
-          <div className="section-header upcoming">
-            <span>UPCOMING PROJECTS</span>
-            <span>(IN LABS)</span>
-          </div>
-          <ProjectCard
-            index={4}
-            title="PROJECT: CHROMA"
-            category="Three.js / WebGL Experience"
-            year="In Labs"
-            onClick={() => trackProjectClick("PROJECT: CHROMA")}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onMouseMove={handleMouseMove}
-          />
-          <ProjectCard
-            index={5}
-            title="AURA STUDIOS"
-            category="Headless E-Commerce"
-            year="In Labs"
-            onClick={() => trackProjectClick("AURA STUDIOS")}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onMouseMove={handleMouseMove}
-          />
-          <ProjectCard
-            index={6}
-            title="Project X"
-            category="Top Secret / Stay Tuned"
-            year="Coming Soon"
-            imgSrc="/assets/images/project/placeholder-preview.webp"
-            isSecret={true}
-            onClick={() => trackProjectClick("Project X", undefined, true)}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-            onMouseMove={handleMouseMove}
-          />
         </section>
 
         <section className="marquee-section" aria-hidden="true">
           <div className="marquee-content">
-            <span>REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull; NODE.JS &bull; MONGODB &bull; </span>
-            <span>REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull; NODE.JS &bull; MONGODB &bull; </span>
+            <span>
+              REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull;
+              NODE.JS &bull; MONGODB &bull;{" "}
+            </span>
+            <span>
+              REACT &bull; GSAP &bull; UI/UX &bull; FIGMA &bull; THREE.JS &bull;
+              NODE.JS &bull; MONGODB &bull;{" "}
+            </span>
           </div>
         </section>
 
         <section id="about">
-          <div className="about-img reveal-container" style={{ transformStyle: "preserve-3d" }}>
+          <div
+            className="about-img reveal-container"
+            style={{ transformStyle: "preserve-3d" }}
+          >
             <div className="reveal-curtain"></div>
-            
-                         <Image
-                          src="/assets/images/profile/swayam-purwar.webp"
-                          alt="Swayam Purwar profile"
-                           style={{ willChange: "transform, filter" }}
-                           width={600} 
-  height={800}
-                           priority={true} // 'priority' tells Next.js to preload this image immediately since it's "above the fold"
-                         />
+
+            <Image
+              src="/assets/images/profile/swayam-purwar.webp"
+              alt="Swayam Purwar profile"
+              style={{ willChange: "transform, filter" }}
+              width={600}
+              height={800}
+              priority={true} // 'priority' tells Next.js to preload this image immediately since it's "above the fold"
+            />
           </div>
           <div className="about-text">
             <h2 className="reveal-text">
-              Code meets<br />Creativity.
+              Code meets
+              <br />
+              Creativity.
             </h2>
             <p className="reveal-text">
-              I am Swayam, a developer building high-end digital experiences using React, Node.js, and GSAP.
+              I am Swayam, a developer building high-end digital experiences
+              using React, Node.js, and GSAP.
             </p>
             <Link
               href="/about"
               className="btn mouse-hover reveal-text"
               data-strength="30"
-              onClick={() => void trackEvent("about_cta_click", { location: "home_about_section" })}
+              onClick={() =>
+                void trackEvent("about_cta_click", {
+                  location: "home_about_section",
+                })
+              }
             >
               Read More
             </Link>

@@ -177,6 +177,16 @@ Custom cursor logic and interactive hover states are managed via global selector
 "a", "button", ".btn", ".t-btn", ".nav-item", ".toc-link", ".tech-pill", ".cv-btn", ".cs-tag", ".project-link", ".socials a", ".glass-btn", ".mouse-hover"
 ```
 
+
+## 🚀 The Evolution of This Portfolio
+
+I believe in continuous learning. Instead of just replacing my old code, I have versioned the evolution of my portfolio to showcase my journey as a developer. You can view the different eras of my code using the branch dropdown above:
+
+* **[v3 (Current): Next.js](https://github.com/SwayamPurwar/SP.DEV/tree/The-Modern-Web-(Next.j--%26-TypeScript)-v.3.0.0)** - Server-side rendering, advanced optimizations, and modern React features.
+* **[v2: React.js](https://github.com/SwayamPurwar/SP.DEV/tree/The-Component-Era-(React.js)-v.2.0.0)** - Component-based architecture and single-page application (SPA) state management.
+* **[v1: HTML/CSS/JS](https://github.com/SwayamPurwar/SP.DEV/tree/The-Foundation-(Plain-HTML%2C-CSS%2C-JavaScript)-v.1.0.0)** - The foundational build using pure, vanilla web technologies.
+
+
 ## 👨‍💻 Author
 
 **Swayam Purwar**
@@ -189,7 +199,6 @@ Custom cursor logic and interactive hover states are managed via global selector
 
 This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
 
----
 
 <p align="center">
   Built with ❤️ by Swayam Purwar

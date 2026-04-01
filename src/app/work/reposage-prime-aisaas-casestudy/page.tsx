@@ -7,7 +7,7 @@ import CaseStudyFooter from "@/components/CaseStudyFooter";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function VeloraMaisonAiSaasCaseStudy() {
+export default function RepoSagePrimeAiSaasCaseStudy() {
   const containerRef = useRef<HTMLDivElement>(null);
   const terminalScrollRef = useRef<HTMLDivElement>(null);
   const [streamText, setStreamText] = useState("");
@@ -103,7 +103,7 @@ export default function VeloraMaisonAiSaasCaseStudy() {
 
         <header className="cs-hero" style={{ paddingBottom: "10vh" }}>
           <h1 className="cs-title" style={{ background: "linear-gradient(90deg, #3b82f6 0%, #60a5fa 50%, #8b5cf6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", fontSize: "clamp(3rem, 5vw, 4.5rem)" }}>
-            VELORA MAISON<br />
+            REPOSAGE PRIME<br />
             <span className="outline-sub" style={{ WebkitTextStroke: "1px rgba(255,255,255,0.8)", color: "transparent" }}>SAAS PLATFORM</span>
           </h1>
           <div className="cs-meta" style={{ marginTop: "3rem", borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "2rem" }}>
@@ -284,7 +284,7 @@ export default function VeloraMaisonAiSaasCaseStudy() {
             }}
           >
             <Link
-              href="/work/velora-maison-aisaas" 
+              href="/work/reposage-prime-aisaas" 
               className="mouse-hover"
               style={{
                 color: "#fff",
@@ -324,7 +324,7 @@ export default function VeloraMaisonAiSaasCaseStudy() {
 
         </div>
 
-        <CaseStudyFooter currentProject="velora-maison-aisaas" />
+        <CaseStudyFooter currentProject="reposage-prime-aisaas" />
       </div>
     </>
   );

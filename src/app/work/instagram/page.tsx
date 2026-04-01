@@ -117,7 +117,7 @@ export default function Instagram() {
                 <a
                   href="https://swayaminstagram.vercel.app"
                   target="_blank"
-                  rel="noreferrer"
+                  rel="noopener"
                   className="btn mouse-hover"
                 >
                   View Live Demo

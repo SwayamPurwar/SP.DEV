@@ -8,7 +8,7 @@ const ALL_PROJECTS = [
   { id: "apple-music", title: "APPLE MUSIC", link: "/work/apple-music" },
   { id: "instagram", title: "INSTAGRAM", link: "/work/instagram" },
   { id: "kite", title: "KITE ZERODHA", link: "/work/kite" },
-  { id: "velora-maison", title: "VELORA MAISON", link: "/work/velora-maison-aisaas" },
+  { id: "reposage-prime", title: "RepoSage Prime", link: "/work/reposage-prime-aisaas" },
 ];
 
 interface ProjectsFooterProps {

@@ -140,7 +140,7 @@ export default function AiSaas() {
             className="p-title"
             style={{ color: "#a855f7", marginBottom: "2rem" }}
           >
-            VELORA MAISON
+            REPOSAGE PRIME
           </h1>
           <div
             className="cs-meta"
@@ -164,9 +164,17 @@ export default function AiSaas() {
             </div>
           </div>
 
-          {/* ADDED BUTTONS HERE   */}
+          {/* ADDED BUTTONS HERE  */} 
           <div className="cs-hero-btns btn-group" style={{ marginTop: '3rem', display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-            <Link href="/work/velora-maison-aisaas-casestudy" className="btn mouse-hover">View Case Study</Link>
+            <Link href="/work/reposage-prime-aisaas-casestudy" className="btn mouse-hover">View Case Study</Link>
+           <a
+                  href="https://swayampurwar-repo-sage-prime.vercel.app"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn mouse-hover"
+                >
+                  View Live Demo
+                </a>
 
           </div>
         
@@ -236,16 +244,26 @@ export default function AiSaas() {
                   alignItems: "flex-end",
                 }}
               >
-                {[1, 2, 3, 4, 5, 6, 7, 8].map((bar) => (
+               {/* Hardcode "random" looking values so Server and Client perfectly match */}
+    {[
+      { h: 45, d: 1.2 },
+      { h: 82, d: 1.8 },
+      { h: 35, d: 1.4 },
+      { h: 90, d: 1.9 },
+      { h: 60, d: 1.3 },
+      { h: 25, d: 1.7 },
+      { h: 75, d: 1.5 },
+      { h: 50, d: 1.6 }
+    ].map((bar, index) => (
                   <div
-                    key={bar}
+                    key={index}
                     className="viz-block"
                     style={{
                       flex: 1,
-                      height: `${Math.random() * 80 + 20}%`,
+                      height: `${bar.h}%`,
                       background:
                         "linear-gradient(to top, rgba(168, 85, 247, 0.1), #a855f7)",
-                      animation: `wave-height ${1 + Math.random()}s infinite ease-in-out alternate`,
+                     animation: `wave-height ${bar.d}s infinite ease-in-out alternate`,
                     }}
                   ></div>
                 ))}
@@ -481,7 +499,7 @@ export default function AiSaas() {
         
       </div>
       
-      <ProjectsFooter currentProject="velora-maison" />
+      <ProjectsFooter currentProject="reposage-prime" />
     </>
   );
 }

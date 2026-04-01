@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { push, ref, set } from "firebase/database";
 import { getServerDatabase } from "@/utils/firebase-server";
 
 type EventProps = Record<string, string | number | boolean>;
@@ -129,13 +128,16 @@ export async function POST(request: NextRequest) {
       userAgent: request.headers.get("user-agent") || "unknown",
     };
 
+    let persisted = true;
+
     try {
       const db = getServerDatabase();
-      const eventsRef = ref(db, "analytics/events");
-      const eventRef = push(eventsRef);
-      await set(eventRef, eventPayload);
+      const eventsRef = db.ref("analytics/events");
+      const eventRef = eventsRef.push();
+      await eventRef.set(eventPayload);
     } catch (error) {
       // Event persistence should never break user flows.
+      persisted = false;
       console.warn("Failed to write analytics event to Firebase", error);
     }
 
@@ -147,7 +149,10 @@ export async function POST(request: NextRequest) {
       userAgent: eventPayload.userAgent,
     });
 
-    return NextResponse.json({ ok: true }, { status: 200 });
+    return NextResponse.json(
+      { ok: true, persisted },
+      { status: persisted ? 200 : 202 },
+    );
   } catch (error) {
     console.error("Events API error", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

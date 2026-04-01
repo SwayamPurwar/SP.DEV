@@ -28,6 +28,7 @@ export default function ClientLayoutWrapper({
     const timer = setTimeout(() => {
       initTerminal();
     }, 100);
+    
 
     return () => {
       clearTimeout(timer);
@@ -37,7 +38,43 @@ export default function ClientLayoutWrapper({
     };
   }, []);
 
+// --- ADD THIS BLOCK TO PREVENT ZOOM ---
+  useEffect(() => {
+    // 1. Prevent multi-touch zoom (pinch-to-zoom)
+    const handleTouchStart = (e: TouchEvent) => {
+      if (e.touches.length > 1) {
+        e.preventDefault();
+      }
+    };
 
+    // 2. Prevent double-tap to zoom on specific elements (optional but recommended)
+    let lastTouchTime = 0;
+    const handleDoubleTap = (e: TouchEvent) => {
+      const now = Date.now();
+      if (now - lastTouchTime < 300) {
+        e.preventDefault();
+      }
+      lastTouchTime = now;
+    };
+
+    // 3. Prevent iOS "gesture" zooming
+    const handleGestureStart = (e: Event) => {
+      e.preventDefault();
+    };
+
+    // Passive: false is required to allow e.preventDefault() to work
+    document.addEventListener("touchstart", handleTouchStart, { passive: false });
+    document.addEventListener("touchstart", handleDoubleTap, { passive: false });
+    document.addEventListener("gesturestart", handleGestureStart, { passive: false });
+
+    return () => {
+      document.removeEventListener("touchstart", handleTouchStart);
+      document.removeEventListener("touchstart", handleDoubleTap);
+      document.removeEventListener("gesturestart", handleGestureStart);
+    };
+  }, []);
+  // --------------------------------------
+  
   
 // SCROLL TO TOP AUTOMATICALLY WHEN ROUTE CHANGES (Bulletproof Version)
   useEffect(() => {

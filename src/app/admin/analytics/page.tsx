@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 
 type SummaryResponse = {
   ok: boolean;
@@ -32,7 +33,7 @@ const cardStyle: React.CSSProperties = {
 };
 
 const statValueStyle: React.CSSProperties = {
-  fontSize: "2rem",
+  fontSize: "clamp(1.5rem, 4vw, 2rem)", // Scales down on smaller screens
   margin: "0.45rem 0 0",
   letterSpacing: "0.5px",
   fontFamily: "var(--font-display)",
@@ -55,6 +56,7 @@ function formatRelativeTime(timestamp: number): string {
 }
 
 export default function AnalyticsAdminPage() {
+  const router = useRouter();
   const [dashboardKey, setDashboardKey] = useState("");
   const [summary, setSummary] = useState<SummaryResponse | null>(null);
   const [loading, setLoading] = useState(false);
@@ -115,10 +117,11 @@ export default function AnalyticsAdminPage() {
   return (
     <main
       style={{
-        minHeight: "100vh",
-        padding: "7rem 1.25rem 3rem",
-        width: "min(1100px, 94vw)",
+        minHeight: "70vh",
+        padding: "clamp(5rem, 10vh, 7rem) 1.25rem 3rem", // Responsive padding
+        width: "min(1100px, 100vw)",
         margin: "0 auto",
+        overflowX: "hidden", // Prevents horizontal scroll on mobile
       }}
     >
       <section
@@ -129,7 +132,7 @@ export default function AnalyticsAdminPage() {
             "radial-gradient(circle at 0% 0%, rgba(191,165,216,0.24), transparent 40%), linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02))",
         }}
       >
-        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", justifyContent: "space-between", alignItems: "flex-start" }}>
           <div>
             <p
               style={{
@@ -143,21 +146,21 @@ export default function AnalyticsAdminPage() {
             >
               SP.DEV Metrics Console
             </p>
-            <h1 style={{ fontFamily: "var(--font-display)", fontSize: "2.2rem", margin: "0.4rem 0" }}>
+            <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 5vw, 2.2rem)", margin: "0.4rem 0" }}>
               Analytics Dashboard
             </h1>
-            <p style={{ color: "#9ca3af", margin: 0 }}>
+            <p style={{ color: "#9ca3af", margin: 0, fontSize: "0.95rem" }}>
               Track project interest, CTA performance, and contact funnel health.
             </p>
           </div>
-          <div style={{ color: "#9ca3af", fontFamily: "var(--font-code)", fontSize: "0.85rem" }}>
+          <div style={{ color: "#9ca3af", fontFamily: "var(--font-code)", fontSize: "0.85rem", width: "100%", textAlign: "left", opacity: 0.8 }}>
             {lastLoadedAt ? `Last refresh: ${new Date(lastLoadedAt).toLocaleTimeString()}` : "No data loaded"}
           </div>
         </div>
       </section>
 
-      <form onSubmit={handleLoad} style={{ ...cardStyle, display: "flex", gap: "0.75rem", flexWrap: "wrap" }}>
-        <div style={{ flex: "1 1 280px", display: "flex", gap: "0.55rem" }}>
+      <form onSubmit={handleLoad} style={{ ...cardStyle, display: "flex", gap: "0.75rem", flexWrap: "wrap", alignItems: "stretch" }}>
+        <div style={{ flex: "1 1 100%", display: "flex", gap: "0.55rem" }}>
           <input
             type={showKey ? "text" : "password"}
             value={dashboardKey}
@@ -172,6 +175,7 @@ export default function AnalyticsAdminPage() {
               color: "white",
               padding: "0.75rem 0.9rem",
               fontFamily: "var(--font-code)",
+              minWidth: 0, // Prevents flex blowout on small screens
             }}
           />
           <button
@@ -194,6 +198,7 @@ export default function AnalyticsAdminPage() {
           type="submit"
           disabled={loading || !dashboardKey}
           style={{
+            flex: "1 1 auto",
             borderRadius: "12px",
             border: "1px solid rgba(191,165,216,0.55)",
             background: "linear-gradient(90deg, rgba(191,165,216,0.35), rgba(191,165,216,0.2))",
@@ -201,6 +206,7 @@ export default function AnalyticsAdminPage() {
             padding: "0.75rem 1.1rem",
             fontFamily: "var(--font-code)",
             cursor: loading ? "not-allowed" : "pointer",
+            minHeight: "44px", // Better mobile touch target
           }}
         >
           {loading ? "Loading..." : "Load Analytics"}
@@ -211,6 +217,7 @@ export default function AnalyticsAdminPage() {
             onClick={() => void handleLoad()}
             disabled={loading}
             style={{
+              flex: "1 1 auto",
               borderRadius: "12px",
               border: "1px solid rgba(255,255,255,0.22)",
               background: "rgba(255,255,255,0.08)",
@@ -218,6 +225,7 @@ export default function AnalyticsAdminPage() {
               padding: "0.75rem 1.1rem",
               fontFamily: "var(--font-code)",
               cursor: loading ? "not-allowed" : "pointer",
+              minHeight: "44px", // Better mobile touch target
             }}
           >
             Refresh
@@ -226,14 +234,14 @@ export default function AnalyticsAdminPage() {
       </form>
 
       {error ? (
-        <p style={{ color: "#f87171", marginTop: "0.9rem", fontFamily: "var(--font-code)" }}>{error}</p>
+        <p style={{ color: "#f87171", marginTop: "0.9rem", fontFamily: "var(--font-code)", padding: "0 1rem" }}>{error}</p>
       ) : null}
 
       {loading && !summary ? (
         <section
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 200px), 1fr))", // Responsive loading grid
             gap: "0.9rem",
             marginTop: "1.1rem",
           }}
@@ -252,7 +260,7 @@ export default function AnalyticsAdminPage() {
           <section
             style={{
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 210px), 1fr))", // Responsive stat cards
               gap: "0.9rem",
               marginTop: "1.1rem",
             }}
@@ -283,9 +291,10 @@ export default function AnalyticsAdminPage() {
             </div>
           </section>
 
-          <section style={{ display: "grid", gridTemplateColumns: "1.2fr 1fr", gap: "0.9rem", marginTop: "0.9rem" }}>
+          {/* This grid previously used rigid fr units, now wraps nicely on mobile */}
+          <section style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 350px), 1fr))", gap: "0.9rem", marginTop: "0.9rem" }}>
             <div style={cardStyle}>
-              <h3 style={{ marginTop: 0 }}>Event Breakdown</h3>
+              <h3 style={{ marginTop: 0, fontSize: "1.25rem" }}>Event Breakdown</h3>
               {sortedEventCounts.length === 0 ? (
                 <p style={{ color: "#9ca3af", marginBottom: 0 }}>No events available.</p>
               ) : (
@@ -301,14 +310,16 @@ export default function AnalyticsAdminPage() {
                             ? "rgba(191,165,216,0.2)"
                             : "rgba(255,255,255,0.03)",
                         borderRadius: "12px",
-                        padding: "0.5rem",
+                        padding: "0.75rem", // Increased touch target padding
                         cursor: "pointer",
                         textAlign: "left",
                         color: "white",
+                        marginTop: 20,
+                        minHeight: "44px", // Minimum mobile tap size
                       }}
                     >
-                      <div style={{ display: "flex", justifyContent: "space-between", gap: "0.5rem", marginBottom: "0.35rem" }}>
-                        <span style={{ fontFamily: "var(--font-code)", fontSize: "0.82rem" }}>{eventName}</span>
+                      <div style={{ display: "flex", justifyContent: "space-between", gap: "0.5rem", marginBottom: "0.5rem" }}>
+                        <span style={{ fontFamily: "var(--font-code)", fontSize: "0.82rem", wordBreak: "break-all" }}>{eventName}</span>
                         <span style={{ color: "#d1d5db", fontSize: "0.82rem" }}>{count}</span>
                       </div>
                       <div
@@ -334,16 +345,16 @@ export default function AnalyticsAdminPage() {
             </div>
 
             <div style={cardStyle}>
-              <h3 style={{ marginTop: 0 }}>Top Projects</h3>
+              <h3 style={{ marginTop: 0, fontSize: "1.25rem" }}>Top Projects</h3>
               {summary.topProjects.length === 0 ? (
                 <p style={{ color: "#9ca3af", marginBottom: 0 }}>No project clicks yet.</p>
               ) : (
-                <div style={{ display: "grid", gap: "0.45rem" }}>
+                <div style={{ display: "grid", gap: "0.55rem" }}>
                   {summary.topProjects.map((project, index) => (
                     <div
                       key={project.title}
                       style={{
-                        padding: "0.55rem 0.65rem",
+                        padding: "0.75rem 0.85rem", // Better padding for touch
                         borderRadius: "12px",
                         background: "rgba(255,255,255,0.03)",
                         border: "1px solid rgba(255,255,255,0.08)",
@@ -351,12 +362,13 @@ export default function AnalyticsAdminPage() {
                         justifyContent: "space-between",
                         alignItems: "center",
                         gap: "0.5rem",
+                        marginTop: 20,
                       }}
                     >
                       <span style={{ color: "#bfa5d8", fontFamily: "var(--font-code)", minWidth: "2ch" }}>
                         #{index + 1}
                       </span>
-                      <span style={{ flex: 1, fontSize: "0.92rem" }}>{project.title}</span>
+                      <span style={{ flex: 1, fontSize: "0.92rem", lineHeight: "1.3" }}>{project.title}</span>
                       <span style={{ color: "#d1d5db", fontFamily: "var(--font-code)" }}>{project.clicks}</span>
                     </div>
                   ))}
@@ -365,68 +377,70 @@ export default function AnalyticsAdminPage() {
             </div>
           </section>
 
-          <section style={{ ...cardStyle, marginTop: "0.9rem" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.75rem", flexWrap: "wrap" }}>
-              <h3 style={{ marginTop: 0, marginBottom: 0 }}>Recent Events</h3>
+          <section style={{ ...cardStyle, marginTop: "0.9rem", padding: "1.25rem 0" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "1rem", flexWrap: "wrap", padding: "0 1.25rem 1rem" }}>
+              <h3 style={{ marginTop: 0, marginBottom: 0, fontSize: "1.25rem" }}>Recent Events</h3>
               <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
                 <button
                   onClick={() => setActiveEventFilter("all")}
                   style={{
                     borderRadius: "999px",
-                    padding: "0.35rem 0.7rem",
+                    padding: "0.45rem 0.8rem", // Increased touch target
                     border: "1px solid rgba(255,255,255,0.2)",
                     background: activeEventFilter === "all" ? "rgba(191,165,216,0.2)" : "transparent",
                     color: "white",
                     fontFamily: "var(--font-code)",
+                    fontSize: "0.85rem",
                     cursor: "pointer",
                   }}
                 >
                   All
                 </button>
-                {sortedEventCounts.slice(0, 4).map(([eventName]) => (
+                {sortedEventCounts.slice(0, 3).map(([eventName]) => (
                   <button
                     key={eventName}
                     onClick={() => setActiveEventFilter(eventName)}
                     style={{
                       borderRadius: "999px",
-                      padding: "0.35rem 0.7rem",
+                      padding: "0.45rem 0.8rem", // Increased touch target
                       border: "1px solid rgba(255,255,255,0.2)",
                       background: activeEventFilter === eventName ? "rgba(191,165,216,0.2)" : "transparent",
                       color: "white",
                       fontFamily: "var(--font-code)",
+                      fontSize: "0.85rem",
                       cursor: "pointer",
                     }}
                   >
-                    {eventName}
+                    {eventName.length > 15 ? eventName.substring(0, 15) + "..." : eventName}
                   </button>
                 ))}
               </div>
             </div>
 
             {filteredRecentEvents.length === 0 ? (
-              <p style={{ color: "#9ca3af", marginTop: "0.9rem" }}>
+              <p style={{ color: "#9ca3af", padding: "0 1.25rem" }}>
                 No events found for this filter yet.
               </p>
             ) : null}
 
-            <div style={{ overflowX: "auto" }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 760 }}>
+            <div style={{ overflowX: "auto", padding: "0 1.25rem", WebkitOverflowScrolling: "touch" }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", minWidth: 600 }}>
                 <thead>
                   <tr>
-                    <th style={{ textAlign: "left", padding: "0.45rem" }}>Time</th>
-                    <th style={{ textAlign: "left", padding: "0.45rem" }}>Event</th>
-                    <th style={{ textAlign: "left", padding: "0.45rem" }}>Path</th>
-                    <th style={{ textAlign: "left", padding: "0.45rem" }}>Props</th>
+                    <th style={{ textAlign: "left", padding: "0.65rem 0.45rem", color: "#9ca3af", fontSize: "0.85rem" }}>Time</th>
+                    <th style={{ textAlign: "left", padding: "0.65rem 0.45rem", color: "#9ca3af", fontSize: "0.85rem" }}>Event</th>
+                    <th style={{ textAlign: "left", padding: "0.65rem 0.45rem", color: "#9ca3af", fontSize: "0.85rem" }}>Path</th>
+                    <th style={{ textAlign: "left", padding: "0.65rem 0.45rem", color: "#9ca3af", fontSize: "0.85rem" }}>Props</th>
                   </tr>
                 </thead>
                 <tbody>
                   {filteredRecentEvents.map((eventItem) => (
                     <tr key={eventItem.id} style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-                      <td style={{ padding: "0.45rem", color: "#d1d5db" }}>
+                      <td style={{ padding: "0.65rem 0.45rem", color: "#d1d5db", verticalAlign: "top" }}>
                         {eventItem.timestamp ? (
                           <>
-                            <div>{new Date(eventItem.timestamp).toLocaleString()}</div>
-                            <div style={{ color: "#9ca3af", fontSize: "0.78rem" }}>
+                            <div style={{ fontSize: "0.9rem" }}>{new Date(eventItem.timestamp).toLocaleDateString()}</div>
+                            <div style={{ color: "#9ca3af", fontSize: "0.78rem", marginTop: "0.2rem" }}>
                               {formatRelativeTime(eventItem.timestamp)}
                             </div>
                           </>
@@ -434,21 +448,23 @@ export default function AnalyticsAdminPage() {
                           "-"
                         )}
                       </td>
-                      <td style={{ padding: "0.45rem", fontFamily: "var(--font-code)" }}>
+                      <td style={{ padding: "0.65rem 0.45rem", fontFamily: "var(--font-code)", verticalAlign: "top" }}>
                         <span
                           style={{
                             background: "rgba(191,165,216,0.14)",
                             border: "1px solid rgba(191,165,216,0.45)",
                             borderRadius: "999px",
-                            padding: "0.2rem 0.55rem",
+                            padding: "0.25rem 0.65rem",
                             display: "inline-block",
+                            fontSize: "0.85rem",
+                            wordBreak: "break-word"
                           }}
                         >
                           {eventItem.event}
                         </span>
                       </td>
-                      <td style={{ padding: "0.45rem", color: "#d1d5db" }}>{eventItem.path}</td>
-                      <td style={{ padding: "0.45rem", color: "#9ca3af", fontSize: "0.88rem" }}>
+                      <td style={{ padding: "0.65rem 0.45rem", color: "#d1d5db", fontSize: "0.9rem", verticalAlign: "top", wordBreak: "break-word" }}>{eventItem.path}</td>
+                      <td style={{ padding: "0.65rem 0.45rem", color: "#9ca3af", fontSize: "0.85rem", verticalAlign: "top", fontFamily: "var(--font-code)", wordBreak: "break-all" }}>
                         {Object.keys(eventItem.props).length ? JSON.stringify(eventItem.props) : "{}"}
                       </td>
                     </tr>
@@ -459,6 +475,46 @@ export default function AnalyticsAdminPage() {
           </section>
         </>
       ) : null}
+
+      {/* --- BOTTOM RETURN ZONE --- */}
+      <div style={{ 
+        textAlign: "center", 
+        marginTop: "clamp(2.5rem, 6vw, 4rem)", 
+        paddingTop: "clamp(2rem, 5vw, 3rem)", 
+        borderTop: "1px solid rgba(255,255,255,0.1)" 
+      }}>
+        <button
+          onClick={() => router.push("/")}
+          className="mouse-hover"
+          style={{
+            background: "transparent",
+            border: "1px solid rgba(255, 255, 255, 0.2)",
+            borderRadius: "100px",
+            color: "#888",
+            fontFamily: "var(--font-code)",
+            fontSize: "clamp(0.8rem, 2vw, 0.85rem)",
+            textTransform: "uppercase",
+            letterSpacing: "2px",
+            padding: "14px 32px", // Slightly larger padding for easier tapping
+            transition: "all 0.3s ease",
+            cursor: "pointer",
+            width: "max-content",
+            maxWidth: "100%"
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.color = "black";
+            e.currentTarget.style.background = "white";
+            e.currentTarget.style.borderColor = "white";
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.color = "#888";
+            e.currentTarget.style.background = "transparent";
+            e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.2)";
+          }}
+        >
+          ← Back To Home
+        </button>
+      </div>
     </main>
   );
 }
