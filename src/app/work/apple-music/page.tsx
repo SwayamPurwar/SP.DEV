@@ -119,12 +119,12 @@ export default function AppleMusic() {
                     View Case Study
                   </Link>
                   <a
-                    href="https://github.com/SwayamPurwar/Apple-Music.git"
+                    href="https://swayam-apple-music.vercel.app"
                     target="_blank"
                     rel="noreferrer"
                     className="btn mouse-hover"
                   >
-                    GitHub Code
+                    View Live Demo
                   </a>
                 </div>
               </article>
