@@ -1,264 +1,397 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Swayam Purwar - Resume</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
+      /* FORCE EXACT A4 PAPER SIZE & COLORS FOR PDF */
       :root {
-        --primary: #1f2d3d;
-        --secondary: #3c4858;
-        --accent: #1a73e8;
-        --text: #2e2e2e;
+        --primary: #0f172a;
+        --secondary: #334155;
+        --accent: #2563eb;
+        --accent-bg: #eff6ff;
+        --border: #cbd5e1;
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
       body {
-        font-family: "Segoe UI", sans-serif;
-        line-height: 1.5;
-        color: var(--text);
-        max-width: 850px;
-        margin: auto;
-        padding: 35px 28px;
-        background: #fff;
+        font-family: "Inter", sans-serif;
+        background-color: #e2e8f0;
+        display: flex;
+        justify-content: center;
+        padding: 20px 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
 
-      /* HEADER */
+      /* STRICT A4 DIMENSIONS WITH OVERFLOW CLIPPER */
+      .a4-page {
+        width: 210mm;
+        height: 297mm;
+        max-height: 296mm; /* Failsafe to prevent 2nd page trigger */
+        background: white;
+        padding: 12mm 15mm; /* Tightened margins */
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        overflow: hidden; /* ABSOLUTELY prevents content from creating a new page */
+      }
+
+      /* TYPOGRAPHY IN POINTS (PT) */
       header {
         text-align: center;
-        border-bottom: 2px solid var(--primary);
-        padding-bottom: 15px;
-        margin-bottom: 25px;
+        margin-bottom: 10px;
       }
 
       h1 {
-        font-size: 2.4rem;
-        margin: 0;
+        font-size: 22pt;
+        font-weight: 700;
         color: var(--primary);
+        letter-spacing: -0.5px;
+        margin-bottom: 1px;
       }
 
       h2 {
-        font-size: 1.05rem;
+        font-size: 10pt;
         font-weight: 500;
-        color: var(--secondary);
-        margin: 6px 0 10px;
+        color: var(--accent);
+        margin-bottom: 4px;
       }
 
       .contact {
-        font-size: 0.85rem;
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 10px;
+        font-size: 8.5pt;
+        color: var(--secondary);
       }
 
       .contact a {
+        color: var(--secondary);
         text-decoration: none;
-        color: var(--primary);
       }
 
       /* SECTIONS */
       section {
-        margin-bottom: 22px;
+        margin-bottom: 10px;
       }
 
-      .title {
-        font-size: 1.15rem;
+      .section-title {
+        font-size: 10.5pt;
+        font-weight: 700;
         text-transform: uppercase;
         color: var(--primary);
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 4px;
-        margin-bottom: 10px;
-        letter-spacing: 0.5px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 2px;
+        margin-bottom: 6px;
       }
 
-      /* ITEMS */
-      .item {
-        margin-bottom: 14px;
+      p.summary {
+        font-size: 9pt;
+        line-height: 1.4;
+        color: var(--secondary);
+        text-align: justify;
       }
 
-      .item-title {
+      /* SKILLS GRID */
+      .skills-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      .skill-row {
+        display: flex;
+        align-items: center;
+      }
+
+      .skill-cat {
+        width: 75px;
+        font-size: 9pt;
         font-weight: 600;
         color: var(--primary);
       }
 
+      .skill-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+      }
+
+      .tag {
+        background-color: var(--accent-bg);
+        color: var(--accent);
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 8pt;
+        font-weight: 500;
+      }
+
+      /* ITEMS (Projects, Experience) */
+      .item {
+        margin-bottom: 8px;
+      }
+      .item:last-child {
+        margin-bottom: 0;
+      }
+
+      .item-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        margin-bottom: 1px;
+      }
+
+      .item-title-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .item-title {
+        font-size: 9.5pt;
+        font-weight: 600;
+        color: var(--primary);
+      }
+
+      .link-btn {
+        font-size: 7pt;
+        background: var(--accent-bg);
+        color: var(--accent);
+        text-decoration: none;
+        padding: 1px 5px;
+        border-radius: 10px;
+        font-weight: 600;
+      }
+
       .item-sub {
-        font-size: 0.85rem;
+        font-size: 8.5pt;
+        font-weight: 500;
+        color: var(--accent);
+      }
+
+      .item-date {
+        font-size: 8.5pt;
         color: var(--secondary);
-        margin-bottom: 4px;
       }
 
       ul {
         padding-left: 16px;
-        margin: 4px 0;
+        margin-top: 1px;
       }
 
       li {
-        margin-bottom: 4px;
-        font-size: 0.92rem;
+        font-size: 9pt;
+        line-height: 1.35;
+        color: var(--secondary);
+        margin-bottom: 1px;
       }
 
-      p {
-        font-size: 0.92rem;
+      /* PDF PRINT RULES */
+      @page {
+        size: A4 portrait;
+        margin: 0 !important; /* Strips browser margins completely */
       }
 
-      /* SKILLS GRID */
-      .skills p {
-        margin: 3px 0;
-        font-size: 0.92rem;
+      @media print {
+        body {
+          margin: 0;
+          padding: 0;
+          background-color: white;
+          width: 210mm;
+          height: 297mm;
+        }
+        .a4-page {
+          box-shadow: none;
+          margin: 0;
+          border: none;
+        }
+        .tag, .link-btn {
+          border: 1px solid var(--border);
+          background-color: transparent !important;
+        }
       }
     </style>
   </head>
 
   <body>
-    <header>
-      <h1>Swayam Purwar</h1>
-      <h2>Full-Stack Developer | Real-Time Systems & Scalable Applications</h2>
-      <div class="contact">
-        <span>Bhopal, India</span> |
-
-        <span
-          >Email:
-          <a href="mailto:swayampurwar111104@gmail.com"
-            >swayampurwar111104@gmail.com</a
-          ></span
-        >
-        |
-
-        <span
-          >GitHub:
-          <a href="https://github.com/SwayamPurwar"
-            >https://github.com/SwayamPurwar</a
-          ></span
-        >
-        |
-        <span
-          >Portfolio:
-          <a href="https://swayampurwar.vercel.app"
-            >https://swayampurwar.vercel.app</a
-          ></span
-        >
-        |
-        <span
-          >LinkedIn:
-          <a href="https://linkedin.com/in/swayam-purwar"
-            >https://linkedin.com/in/swayam-purwar</a
-          ></span
-        >
-      </div>
-    </header>
-
-    <section>
-      <div class="title">Professional Summary</div>
-      <p>
-        Full-Stack Developer specializing in low-latency, event-driven systems
-        using the MERN stack. Proven track record of improving performance (up
-        to 60%), reducing costs, and building scalable real-time applications.
-        Focused on system design, optimization, and production-grade
-        engineering.
-      </p>
-    </section>
-
-    <section class="skills">
-      <div class="title">Skills</div>
-      <p><strong>Languages:</strong> JavaScript (ES6+), SQL</p>
-      <p><strong>Frontend:</strong> React.js, Next.js</p>
-      <p><strong>Backend:</strong> Node.js, Express.js</p>
-      <p><strong>Databases:</strong> MongoDB, Redis</p>
-      <p>
-        <strong>Systems:</strong> WebSockets, Event-Driven Architecture, Caching
-      </p>
-      <p><strong>Tools:</strong> Git, GitHub, Vercel</p>
-    </section>
-
-    <section>
-      <div class="title">Projects</div>
-
-      <div class="item">
-        <div class="item-title">
-          RepoSage Prime – Intelligent Code Platform
+    <div class="a4-page">
+      <header>
+        <h1>Swayam Purwar</h1>
+        <h2>Full-Stack Developer | Real-Time Systems & Scalable Apps</h2>
+        <div class="contact">
+          <span>Bhopal, India</span> &bull;
+          <a href="mailto:swayampurwar111104@gmail.com">swayampurwar111104@gmail.com</a> &bull;
+          <a href="https://github.com/SwayamPurwar" target="_blank">GitHub</a> &bull;
+          <a href="https://swayampurwar.vercel.app" target="_blank">Portfolio</a> &bull;
+          <a href="https://linkedin.com/in/swayam-purwar" target="_blank">LinkedIn</a>
         </div>
-        <div class="item-sub">Next.js, LangChain, OpenAI, Pinecone</div>
-        <ul>
-          <li>
-            Built a RAG-based SaaS platform enabling multi-document querying.
-          </li>
-          <li>
-            Improved vector search accuracy with optimized chunking strategies.
-          </li>
-          <li>Reduced perceived latency by 60% via real-time streaming.</li>
-          <li>Lowered API costs by 30% using Redis caching.</li>
-        </ul>
-      </div>
+      </header>
 
-      <div class="item">
-        <div class="item-title">
-          Kite Trading Application – Real-Time System
+      <section>
+        <div class="section-title">Professional Summary</div>
+        <p class="summary">
+          Full-Stack Developer specializing in low-latency, event-driven systems using the MERN stack. Proven track record of improving performance (up to 60%), reducing costs, and building scalable real-time applications. Focused on system design, optimization, and production-grade engineering.
+        </p>
+      </section>
+
+      <section>
+        <div class="section-title">Technical Skills</div>
+        <div class="skills-grid">
+          <div class="skill-row">
+            <div class="skill-cat">Languages</div>
+            <div class="skill-tags">
+              <span class="tag">JavaScript (ES6+)</span>
+              <span class="tag">SQL</span>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-cat">Frontend</div>
+            <div class="skill-tags">
+              <span class="tag">React.js</span>
+              <span class="tag">Next.js</span>
+              <span class="tag">HTML/CSS</span>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-cat">Backend</div>
+            <div class="skill-tags">
+              <span class="tag">Node.js</span>
+              <span class="tag">Express.js</span>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-cat">Databases</div>
+            <div class="skill-tags">
+              <span class="tag">MongoDB</span>
+              <span class="tag">Redis</span>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-cat">Systems</div>
+            <div class="skill-tags">
+              <span class="tag">WebSockets</span>
+              <span class="tag">Event-Driven Arch</span>
+              <span class="tag">Caching</span>
+            </div>
+          </div>
+          <div class="skill-row">
+            <div class="skill-cat">Tools</div>
+            <div class="skill-tags">
+              <span class="tag">Git</span>
+              <span class="tag">GitHub</span>
+              <span class="tag">Vercel</span>
+            </div>
+          </div>
         </div>
-        <div class="item-sub">React, Node.js, WebSockets, MongoDB</div>
-        <ul>
-          <li>
-            Engineered event-driven dashboard handling 1,000+ concurrent
-            updates.
-          </li>
-          <li>Reduced React re-renders by 35% through state optimization.</li>
-          <li>Improved latency from 1.2s to ~400ms using batching.</li>
-          <li>Designed backend for scalable real-time data processing.</li>
-        </ul>
-      </div>
+      </section>
 
-      <div class="item">
-        <div class="item-title">Instagram Full-Stack Application</div>
-        <div class="item-sub">React, Node.js, Express, MongoDB</div>
-        <ul>
-          <li>Implemented JWT authentication and protected routes.</li>
-          <li>Designed indexed schema for scalable interactions.</li>
-          <li>Built pagination and lazy loading for performance.</li>
-          <li>Reduced payload size by 28% via query optimization.</li>
-        </ul>
-      </div>
+      <section>
+        <div class="section-title">Projects</div>
 
-      <div class="item">
-        <div class="item-title">Apple Music UI Redesign</div>
-        <div class="item-sub">React, GSAP</div>
-        <ul>
-          <li>Developed high-performance animated UI.</li>
-          <li>Minimized frame drops under heavy load.</li>
-          <li>Improved Lighthouse score to 95+.</li>
-        </ul>
-      </div>
-    </section>
-
-    <section>
-      <div class="title">Experience</div>
-
-      <div class="item">
-        <div class="item-title">
-          Software Development Intern – Bluestock Fintech
+        <div class="item">
+          <div class="item-header">
+            <div class="item-title-wrap">
+              <div class="item-title">RepoSage Prime</div>
+              <a href="https://swayampurwar-repo-sage-prime.vercel.app" class="link-btn" target="_blank">Live ↗</a>
+            </div>
+            <div class="item-sub">Next.js, LangChain, OpenAI, Pinecone</div>
+          </div>
+          <ul>
+            <li>Built a RAG-based SaaS platform enabling multi-document querying.</li>
+            <li>Improved vector search accuracy with optimized chunking strategies.</li>
+            <li>Reduced perceived latency by 60% via real-time streaming.</li>
+            <li>Lowered API costs by 30% using Redis caching.</li>
+          </ul>
         </div>
-        <ul>
-          <li>Developed backend APIs for analytics systems.</li>
-          <li>Improved response time by 22% via optimization.</li>
-          <li>Resolved production issues and enhanced error handling.</li>
-        </ul>
-      </div>
 
-      <div class="item">
-        <div class="item-title">Freelance Developer</div>
-        <ul>
-          <li>Delivered portfolio and brand websites end-to-end.</li>
-          <li>Achieved performance scores above 90.</li>
-          <li>Managed full development lifecycle.</li>
-        </ul>
-      </div>
-    </section>
+        <div class="item">
+          <div class="item-header">
+            <div class="item-title-wrap">
+              <div class="item-title">Kite Trading Application</div>
+              <a href="https://swayamzerodha.vercel.app" class="link-btn" target="_blank">Live ↗</a>
+            </div>
+            <div class="item-sub">React, Node.js, WebSockets, MongoDB</div>
+          </div>
+          <ul>
+            <li>Engineered event-driven dashboard handling 1,000+ concurrent updates.</li>
+            <li>Reduced React re-renders by 35% through state optimization.</li>
+            <li>Improved latency from 1.2s to ~400ms using batching.</li>
+            <li>Designed backend for scalable real-time data processing.</li>
+          </ul>
+        </div>
 
-    <section>
-      <div class="title">Education</div>
-      <div class="item">
-        <div class="item-title">Bachelor of Computer Applications (BCA)</div>
-        <div class="item-sub">LNCT University, Bhopal | Expected 2026</div>
-      </div>
-    </section>
+        <div class="item">
+          <div class="item-header">
+            <div class="item-title-wrap">
+              <div class="item-title">Instagram Clone</div>
+              <a href="https://swayaminstagram.vercel.app" class="link-btn" target="_blank">Live ↗</a>
+            </div>
+            <div class="item-sub">React, Node.js, Express, MongoDB</div>
+          </div>
+          <ul>
+            <li>Implemented JWT authentication and protected routes.</li>
+            <li>Designed indexed schema for scalable interactions.</li>
+            <li>Built pagination and lazy loading for performance.</li>
+            <li>Reduced payload size by 28% via query optimization.</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="item-header">
+            <div class="item-title-wrap">
+              <div class="item-title">Apple Music UI Redesign</div>
+              <a href="https://swayaminstagram.vercel.app" class="link-btn" target="_blank">Live ↗</a>
+            </div>
+            <div class="item-sub">React, GSAP</div>
+          </div>
+          <ul>
+            <li>Developed high-performance animated UI.</li>
+            <li>Minimized frame drops under heavy load.</li>
+            <li>Improved Lighthouse score to 95+.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Experience</div>
+
+        <div class="item">
+          <div class="item-header">
+            <div class="item-title">Software Development Intern <span style="font-weight:400; color:var(--secondary);">| Bluestock Fintech</span></div>
+          </div>
+          <ul>
+            <li>Developed backend APIs for analytics systems.</li>
+            <li>Improved response time by 22% via optimization.</li>
+            <li>Resolved production issues and enhanced error handling.</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="item-header">
+            <div class="item-title">Freelance Developer</div>
+          </div>
+          <ul>
+            <li>Delivered portfolio and brand websites end-to-end.</li>
+            <li>Achieved performance scores above 90.</li>
+            <li>Managed full development lifecycle.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-title">Education</div>
+        <div class="item">
+          <div class="item-header">
+            <div class="item-title">Bachelor of Computer Applications (BCA)</div>
+            <div class="item-date">Expected 2026 | LNCT University, Bhopal</div>
+          </div>
+        </div>
+      </section>
+    </div>
   </body>
 </html>
