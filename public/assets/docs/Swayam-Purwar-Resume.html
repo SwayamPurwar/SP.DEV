@@ -5,18 +5,29 @@
     <title>Swayam Purwar - Resume</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
-      /* FORCE EXACT A4 PAPER SIZE & COLORS FOR PDF */
+      /* --- DESIGN TOKENS --- */
       :root {
-        --primary: #0f172a;
-        --secondary: #334155;
-        --accent: #2563eb;
-        --accent-bg: #eff6ff;
-        --border: #cbd5e1;
+        /* High-end slate/indigo palette */
+        --color-text-primary: #0f172a;
+        --color-text-secondary: #475569;
+        --color-text-tertiary: #64748b;
+        --color-accent: #2563eb;
+        --color-accent-bg: #eff6ff;
+        --color-border: #e2e8f0;
+        --color-bg-page: #f8fafc;
+        --color-bg-paper: #ffffff;
+        
+        --radius-sm: 4px;
+        --radius-pill: 12px;
       }
 
+      /* --- RESET & BASE --- */
       * {
         box-sizing: border-box;
         margin: 0;
@@ -24,117 +35,140 @@
       }
 
       body {
-        font-family: "Inter", sans-serif;
-        background-color: #e2e8f0;
+        font-family: "Inter", system-ui, -apple-system, sans-serif;
+        background-color: var(--color-bg-page);
+        color: var(--color-text-primary);
         display: flex;
         justify-content: center;
-        padding: 20px 0;
+        padding: 24px 0;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
       }
 
-      /* STRICT A4 DIMENSIONS WITH OVERFLOW CLIPPER */
+      /* --- A4 PAPER LAYOUT --- */
       .a4-page {
         width: 210mm;
         height: 297mm;
-        max-height: 296mm; /* Failsafe to prevent 2nd page trigger */
-        background: white;
-        padding: 12mm 15mm; /* Tightened margins */
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-        overflow: hidden; /* ABSOLUTELY prevents content from creating a new page */
+        background: var(--color-bg-paper);
+        padding: 5mm 15mm; 
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1), 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        gap: 8px; 
       }
 
-      /* TYPOGRAPHY IN POINTS (PT) */
+      /* --- HEADER --- */
       header {
         text-align: center;
-        margin-bottom: 10px;
+        padding-bottom: 2px;
       }
 
       h1 {
-        font-size: 22pt;
+        font-size: 24pt;
         font-weight: 700;
-        color: var(--primary);
-        letter-spacing: -0.5px;
-        margin-bottom: 1px;
+        color: var(--color-text-primary);
+        letter-spacing: -0.03em;
+        line-height: 1;
+        margin-bottom: 2px;
       }
 
       h2 {
-        font-size: 10pt;
+        font-size: 10.5pt;
         font-weight: 500;
-        color: var(--accent);
+        color: var(--color-accent);
+        letter-spacing: -0.01em;
         margin-bottom: 4px;
       }
 
       .contact {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
         font-size: 8.5pt;
-        color: var(--secondary);
+        color: var(--color-text-secondary);
+        font-weight: 500;
       }
 
       .contact a {
-        color: var(--secondary);
+        color: var(--color-text-secondary);
         text-decoration: none;
+        transition: color 0.2s ease;
       }
 
-      /* SECTIONS */
-      section {
-        margin-bottom: 10px;
+      .contact a:hover {
+        color: var(--color-accent);
       }
 
+      .separator {
+        color: var(--color-border);
+      }
+
+      /* --- SECTIONS --- */
       .section-title {
-        font-size: 10.5pt;
+        font-size: 10pt;
         font-weight: 700;
         text-transform: uppercase;
-        color: var(--primary);
-        border-bottom: 1px solid var(--border);
+        letter-spacing: 0.05em;
+        color: var(--color-text-primary);
+        border-bottom: 2px solid var(--color-border);
         padding-bottom: 2px;
-        margin-bottom: 6px;
+        margin-bottom: 6px; 
       }
 
       p.summary {
         font-size: 9pt;
-        line-height: 1.4;
-        color: var(--secondary);
+        line-height: 1.5;
+        color: var(--color-text-secondary);
         text-align: justify;
       }
 
-      /* SKILLS GRID */
+      /* --- SKILLS GRID --- */
       .skills-grid {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 24px;
+        row-gap: 0;
       }
 
       .skill-row {
-        display: flex;
-        align-items: center;
+        display: grid;
+        grid-template-columns: 75px 1fr;
+        align-items: baseline;
+        margin-bottom: 4px; 
       }
 
       .skill-cat {
-        width: 75px;
         font-size: 9pt;
         font-weight: 600;
-        color: var(--primary);
+        color: var(--color-text-primary);
       }
 
       .skill-tags {
         display: flex;
         flex-wrap: wrap;
-        gap: 4px;
+        gap: 6px;
       }
 
       .tag {
-        background-color: var(--accent-bg);
-        color: var(--accent);
-        padding: 2px 6px;
-        border-radius: 4px;
+        background-color: var(--color-accent-bg);
+        color: var(--color-accent);
+        padding: 3px 8px;
+        border-radius: var(--radius-sm);
         font-size: 8pt;
-        font-weight: 500;
+        font-weight: 600;
+        letter-spacing: -0.01em;
       }
 
-      /* ITEMS (Projects, Experience) */
+      /* --- LIST ITEMS (Projects, Experience) --- */
       .item {
-        margin-bottom: 8px;
+        margin-bottom: 8px; 
       }
+      
       .item:last-child {
         margin-bottom: 0;
       }
@@ -142,77 +176,117 @@
       .item-header {
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
-        margin-bottom: 1px;
+        align-items: center;
+        margin-bottom: 2px; 
       }
 
       .item-title-wrap {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 8px;
       }
 
       .item-title {
-        font-size: 9.5pt;
+        font-size: 10pt;
         font-weight: 600;
-        color: var(--primary);
+        color: var(--color-text-primary);
       }
 
+      .item-title span {
+        font-weight: 400;
+        color: var(--color-text-secondary);
+      }
+
+      /* Primary Button (Live Link) */
       .link-btn {
-        font-size: 7pt;
-        background: var(--accent-bg);
-        color: var(--accent);
+        font-size: 7.5pt;
+        background: var(--color-accent-bg);
+        color: var(--color-accent);
         text-decoration: none;
-        padding: 1px 5px;
-        border-radius: 10px;
+        padding: 2px 8px;
+        border-radius: var(--radius-pill);
         font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .link-btn:hover {
+        background: var(--color-accent);
+        color: white;
+      }
+
+      /* Secondary Button (Repo Link) */
+      .link-btn.secondary {
+        background: transparent;
+        color: var(--color-text-secondary);
+        border: 1px solid var(--color-border);
+      }
+
+      .link-btn.secondary:hover {
+        background: var(--color-text-secondary);
+        color: white;
+        border-color: var(--color-text-secondary);
       }
 
       .item-sub {
         font-size: 8.5pt;
         font-weight: 500;
-        color: var(--accent);
+        color: var(--color-accent);
       }
 
       .item-date {
         font-size: 8.5pt;
-        color: var(--secondary);
+        font-weight: 500;
+        color: var(--color-text-tertiary);
       }
 
       ul {
-        padding-left: 16px;
-        margin-top: 1px;
+        padding-left: 18px;
+        margin-top: 0;
       }
 
       li {
         font-size: 9pt;
-        line-height: 1.35;
-        color: var(--secondary);
-        margin-bottom: 1px;
+        line-height: 1.4; 
+        color: var(--color-text-secondary);
+        margin-bottom: 0; 
       }
 
-      /* PDF PRINT RULES */
+      li::marker {
+        color: var(--color-text-tertiary);
+      }
+
+      /* --- PDF PRINT RULES (BULLETPROOF 1-PAGE FIX) --- */
       @page {
         size: A4 portrait;
-        margin: 0 !important; /* Strips browser margins completely */
+        margin: 0 !important;
       }
 
       @media print {
-        body {
-          margin: 0;
-          padding: 0;
-          background-color: white;
+        html, body {
           width: 210mm;
           height: 297mm;
+          margin: 0 !important;
+          padding: 0 !important;
+          overflow: hidden !important; /* STRICTLY disables 2nd page generation */
+          background-color: var(--color-bg-paper);
         }
+        
         .a4-page {
           box-shadow: none;
           margin: 0;
           border: none;
+          height: 296mm; /* Shaved 1mm off to prevent overflow trigger */
+          max-height: 296mm;
+          overflow: hidden;
+          page-break-after: avoid;
+          page-break-inside: avoid;
         }
-        .tag, .link-btn {
-          border: 1px solid var(--border);
+
+        /* Make skill tags look clean on PDF, keep buttons visible */
+        .tag {
+          border: 1px solid var(--color-border);
           background-color: transparent !important;
+          color: var(--color-text-primary);
         }
       }
     </style>
@@ -224,10 +298,14 @@
         <h1>Swayam Purwar</h1>
         <h2>Full-Stack Developer | Real-Time Systems & Scalable Apps</h2>
         <div class="contact">
-          <span>Bhopal, India</span> &bull;
-          <a href="mailto:swayampurwar111104@gmail.com">swayampurwar111104@gmail.com</a> &bull;
-          <a href="https://github.com/SwayamPurwar" target="_blank">GitHub</a> &bull;
-          <a href="https://swayampurwar.vercel.app" target="_blank">Portfolio</a> &bull;
+          <span>Bhopal, India</span>
+          <span class="separator">&bull;</span>
+          <a href="mailto:swayampurwar111104@gmail.com">swayampurwar111104@gmail.com</a>
+          <span class="separator">&bull;</span>
+          <a href="https://github.com/SwayamPurwar" target="_blank">GitHub</a>
+          <span class="separator">&bull;</span>
+          <a href="https://swayampurwar.vercel.app" target="_blank">Portfolio</a>
+          <span class="separator">&bull;</span>
           <a href="https://linkedin.com/in/swayam-purwar" target="_blank">LinkedIn</a>
         </div>
       </header>
@@ -235,62 +313,69 @@
       <section>
         <div class="section-title">Professional Summary</div>
         <p class="summary">
-          Full-Stack Developer specializing in low-latency, event-driven systems using the MERN stack. Proven track record of improving performance (up to 60%), reducing costs, and building scalable real-time applications. Focused on system design, optimization, and production-grade engineering.
+          Full-Stack Developer specializing in low-latency, event-driven systems
+          using the MERN stack. Proven track record of improving performance (up
+          to 60%), reducing costs, and building scalable real-time applications.
+          Focused on system design, optimization, and production-grade
+          engineering.
         </p>
       </section>
 
       <section>
         <div class="section-title">Technical Skills</div>
         <div class="skills-grid">
-          <div class="skill-row">
-            <div class="skill-cat">Languages</div>
-            <div class="skill-tags">
-              <span class="tag">JavaScript (ES6+)</span>
-              <span class="tag">SQL</span>
+          <div>
+            <div class="skill-row">
+              <div class="skill-cat">Languages</div>
+              <div class="skill-tags">
+                <span class="tag">JavaScript (ES6+)</span>
+                <span class="tag">SQL</span>
+              </div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-cat">Frontend</div>
+              <div class="skill-tags">
+                <span class="tag">React.js</span>
+                <span class="tag">Next.js</span>
+                <span class="tag">HTML/CSS</span>
+              </div>
+            </div>
+            <div class="skill-row">
+              <div class="skill-cat">Backend</div>
+              <div class="skill-tags">
+                <span class="tag">Node.js</span>
+                <span class="tag">Express.js</span>
+              </div>
             </div>
           </div>
-          <div class="skill-row">
-            <div class="skill-cat">Frontend</div>
-            <div class="skill-tags">
-              <span class="tag">React.js</span>
-              <span class="tag">Next.js</span>
-              <span class="tag">HTML/CSS</span>
+          <div>
+            <div class="skill-row">
+              <div class="skill-cat">Databases</div>
+              <div class="skill-tags">
+                <span class="tag">MongoDB</span>
+                <span class="tag">Redis</span>
+              </div>
             </div>
-          </div>
-          <div class="skill-row">
-            <div class="skill-cat">Backend</div>
-            <div class="skill-tags">
-              <span class="tag">Node.js</span>
-              <span class="tag">Express.js</span>
+            <div class="skill-row">
+              <div class="skill-cat">Systems</div>
+              <div class="skill-tags">
+                <span class="tag">WebSockets</span>
+                <span class="tag">Caching</span>
+              </div>
             </div>
-          </div>
-          <div class="skill-row">
-            <div class="skill-cat">Databases</div>
-            <div class="skill-tags">
-              <span class="tag">MongoDB</span>
-              <span class="tag">Redis</span>
-            </div>
-          </div>
-          <div class="skill-row">
-            <div class="skill-cat">Systems</div>
-            <div class="skill-tags">
-              <span class="tag">WebSockets</span>
-              <span class="tag">Event-Driven Arch</span>
-              <span class="tag">Caching</span>
-            </div>
-          </div>
-          <div class="skill-row">
-            <div class="skill-cat">Tools</div>
-            <div class="skill-tags">
-              <span class="tag">Git</span>
-              <span class="tag">GitHub</span>
-              <span class="tag">Vercel</span>
+            <div class="skill-row">
+              <div class="skill-cat">Tools</div>
+              <div class="skill-tags">
+                <span class="tag">Git</span>
+                <span class="tag">GitHub</span>
+                <span class="tag">Vercel</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section>
+     <section>
         <div class="section-title">Projects</div>
 
         <div class="item">
@@ -298,14 +383,15 @@
             <div class="item-title-wrap">
               <div class="item-title">RepoSage Prime</div>
               <a href="https://swayampurwar-repo-sage-prime.vercel.app" class="link-btn" target="_blank">Live ↗</a>
+              <a href="https://github.com/SwayamPurwar/RepoSage-Prime.git" class="link-btn secondary" target="_blank">GitHub ↗</a>
             </div>
             <div class="item-sub">Next.js, LangChain, OpenAI, Pinecone</div>
           </div>
           <ul>
-            <li>Built a RAG-based SaaS platform enabling multi-document querying.</li>
-            <li>Improved vector search accuracy with optimized chunking strategies.</li>
-            <li>Reduced perceived latency by 60% via real-time streaming.</li>
-            <li>Lowered API costs by 30% using Redis caching.</li>
+            <li>Architected a RAG-based SaaS platform enabling semantic querying across multi-document datasets with high precision.</li>
+            <li>Optimized vector search accuracy by implementing recursive character splitting and metadata-aware chunking strategies.</li>
+            <li>Reduced perceived user latency by 60% through the implementation of Vercel AI SDK for real-time token streaming.</li>
+            <li>Lowered LLM API consumption costs by 30% by implementing a Redis-based semantic caching layer for frequent queries.</li>
           </ul>
         </div>
 
@@ -314,14 +400,15 @@
             <div class="item-title-wrap">
               <div class="item-title">Kite Trading Application</div>
               <a href="https://swayamzerodha.vercel.app" class="link-btn" target="_blank">Live ↗</a>
+              <a href="https://github.com/SwayamPurwar/Kite-Zerodha.git" class="link-btn secondary" target="_blank">GitHub ↗</a>
             </div>
             <div class="item-sub">React, Node.js, WebSockets, MongoDB</div>
           </div>
           <ul>
-            <li>Engineered event-driven dashboard handling 1,000+ concurrent updates.</li>
-            <li>Reduced React re-renders by 35% through state optimization.</li>
-            <li>Improved latency from 1.2s to ~400ms using batching.</li>
-            <li>Designed backend for scalable real-time data processing.</li>
+            <li>Engineered a high-throughput event-driven dashboard capable of handling 1,000+ concurrent market data updates per second.</li>
+            <li>Reduced React re-renders by 35% using Memoization and specific state-slicing techniques to ensure 60FPS UI performance.</li>
+            <li>Improved end-to-end data latency from 1.2s to ~400ms by implementing message batching and binary WebSocket protocols.</li>
+            <li>Designed a scalable backend micro-service architecture to process and broadcast real-time price feeds via Socket.io.</li>
           </ul>
         </div>
 
@@ -330,29 +417,15 @@
             <div class="item-title-wrap">
               <div class="item-title">Instagram Clone</div>
               <a href="https://swayaminstagram.vercel.app" class="link-btn" target="_blank">Live ↗</a>
+              <a href="https://github.com/SwayamPurwar/Instagram.git" class="link-btn secondary" target="_blank">GitHub ↗</a>
             </div>
-            <div class="item-sub">React, Node.js, Express, MongoDB</div>
+            <div class="item-sub">React, Node.js, Express, Socket.IO, MongoDB</div>
           </div>
           <ul>
-            <li>Implemented JWT authentication and protected routes.</li>
-            <li>Designed indexed schema for scalable interactions.</li>
-            <li>Built pagination and lazy loading for performance.</li>
-            <li>Reduced payload size by 28% via query optimization.</li>
-          </ul>
-        </div>
-
-        <div class="item">
-          <div class="item-header">
-            <div class="item-title-wrap">
-              <div class="item-title">Apple Music UI Redesign</div>
-              <a href="https://swayaminstagram.vercel.app" class="link-btn" target="_blank">Live ↗</a>
-            </div>
-            <div class="item-sub">React, GSAP</div>
-          </div>
-          <ul>
-            <li>Developed high-performance animated UI.</li>
-            <li>Minimized frame drops under heavy load.</li>
-            <li>Improved Lighthouse score to 95+.</li>
+            <li>Implemented a robust security layer using JWT authentication and custom middleware for protected route management.</li>
+            <li>Engineered a highly optimized MongoDB schema with compound indexing to support rapid social graph interactions.</li>
+            <li>Developed a seamless infinite-scroll feed utilizing Intersection Observer API and backend pagination for fluid UX.</li>
+            <li>Minimized network overhead and reduced payload size by 28% through targeted MongoDB projection and query tuning.</li>
           </ul>
         </div>
       </section>
@@ -362,23 +435,27 @@
 
         <div class="item">
           <div class="item-header">
-            <div class="item-title">Software Development Intern <span style="font-weight:400; color:var(--secondary);">| Bluestock Fintech</span></div>
+            <div class="item-title">Software Development Intern <span>| Bluestock Fintech</span></div>
+            <div class="item-date">Oct 2025 – Nov 2025</div>
           </div>
           <ul>
-            <li>Developed backend APIs for analytics systems.</li>
-            <li>Improved response time by 22% via optimization.</li>
-            <li>Resolved production issues and enhanced error handling.</li>
+            <li>Architected and deployed robust RESTful backend APIs for financial analytics systems, ensuring 99.9% uptime for data reporting.</li>
+            <li>Optimized database performance by 22% through the refactoring of complex Mongoose aggregation pipelines.</li>
+            <li>Collaborated with the core engineering team to identify and resolve critical production bottlenecks while enhancing global error handling.</li>
+            <li>Implemented standardized API documentation and integrated automated testing scripts to streamline the internal development workflow.</li>
           </ul>
         </div>
 
         <div class="item">
           <div class="item-header">
-            <div class="item-title">Freelance Developer</div>
+            <div class="item-title">Freelance Full-Stack Developer <span>| Self-Employed</span></div>
+            <div class="item-date">Sep 2024 – Present</div>
           </div>
           <ul>
-            <li>Delivered portfolio and brand websites end-to-end.</li>
-            <li>Achieved performance scores above 90.</li>
-            <li>Managed full development lifecycle.</li>
+            <li>Engineered end-to-end web solutions for diverse clients, delivering high-performance brand websites and e-commerce MVPs.</li>
+            <li>Consistently achieved Google Lighthouse scores of 95+ by implementing advanced image optimization and code-splitting techniques.</li>
+            <li>Managed the complete SDLC, from initial UI/UX wireframing in Figma to final production deployment on Vercel and AWS environments.</li>
+            <li>Developed reusable component libraries that reduced project turnaround time by 30% for subsequent client engagements.</li>
           </ul>
         </div>
       </section>
