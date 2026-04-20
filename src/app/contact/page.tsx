@@ -85,7 +85,7 @@ export default function Contact() {
         body: JSON.stringify(payload),
       });
 
-      if (response.ok) {
+     if (response.ok) {
         await trackEvent("contact_submit_success");
         sessionStorage.setItem("contactSubmitted", "true");
         router.push("/success");
@@ -93,7 +93,10 @@ export default function Contact() {
         const result = (await response.json()) as { error?: string };
         await trackEvent("contact_submit_failure", { status: response.status });
         console.error("Server Error", result.error);
-        alert("Transmission failed on the server. Please try again.");
+        
+        // Show the specific error from the backend, or fallback to the generic one
+        alert(result.error || "Transmission failed on the server. Please try again.");
+        
         setIsSending(false);
       }
     } catch (error) {
@@ -224,7 +227,16 @@ export default function Contact() {
                 </div>
 
                 <div className="lux-input-group">
-                  <textarea id="message" name="message" rows={5} required placeholder=" " className="lux-input mouse-hover"></textarea>
+                 <textarea 
+  id="message" 
+  name="message" 
+  rows={5} 
+  required 
+  minLength={10} 
+  maxLength={3000} 
+  placeholder=" " 
+  className="lux-input mouse-hover"
+></textarea>
                   <label htmlFor="message" className="lux-label">Message Payload</label>
                 </div>
 
