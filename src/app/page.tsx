@@ -82,7 +82,7 @@ export default function Home() {
     });
   }, []);
 
-  // Smooth scroll to hash anchor on load
+// Smooth scroll to hash anchor on load
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.hash) {
       const element = document.querySelector(window.location.hash);
@@ -91,6 +91,74 @@ export default function Home() {
       }
     }
   }, [pathname]);
+
+  // 🚨 ADD THIS: SMART SCROLL LISTENER 🚨
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+    
+    // Track global mouse position
+    const mousePos = { x: 0, y: 0 };
+    const updateMousePos = (e: MouseEvent) => {
+      mousePos.x = e.clientX;
+      mousePos.y = e.clientY;
+    };
+
+    const handleScroll = () => {
+      // 1. Instantly hide the image when scrolling starts
+      if (previewRef.current) {
+        gsap.to(previewRef.current, { 
+          opacity: 0, 
+          scale: 0.7, 
+          duration: 0.2, 
+          overwrite: "auto" 
+        });
+      }
+
+      // 2. Clear the timeout so it only fires when scrolling STOPS
+      clearTimeout(scrollTimeout);
+
+      scrollTimeout = setTimeout(() => {
+        // Ignore mobile devices (they don't have hover images anyway)
+        if (window.matchMedia("(hover: none)").matches) return;
+
+        // 3. Scroll has stopped. Check what element is under the mouse!
+        const el = document.elementFromPoint(mousePos.x, mousePos.y);
+        const projectLink = el?.closest('.project-link') as HTMLElement;
+
+        if (projectLink && previewRef.current) {
+          // Extract the data we added in Step 1
+          const imgSrc = projectLink.getAttribute('data-image');
+          const isSecret = projectLink.getAttribute('data-secret') === 'true';
+
+          if (imgSrc) {
+            previewRef.current.style.backgroundImage = `url('${imgSrc}')`;
+            
+            // Re-apply the GSAP animation to show it
+            gsap.to(previewRef.current, {
+              opacity: 1,
+              scale: 1,
+              filter: isSecret ? "blur(20px) contrast(150%) grayscale(80%)" : "blur(0px) contrast(100%) grayscale(0%)",
+              duration: 0.4,
+              ease: "power3.out",
+              overwrite: "auto"
+            });
+          }
+        }
+      }, 150); // Waits 150ms after the last scroll event to check the mouse
+    };
+
+    window.addEventListener("mousemove", updateMousePos, { passive: true });
+    window.addEventListener("wheel", handleScroll, { passive: true });
+    window.addEventListener("touchmove", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("mousemove", updateMousePos);
+      window.removeEventListener("wheel", handleScroll);
+      window.removeEventListener("touchmove", handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
+  // 🚨 END SMART SCROLL LISTENER 🚨
 
   // --- Handlers for Hover Effects ---
   const handleMouseEnter = (imgUrl: string | undefined, isSecret = false) => {

@@ -13,7 +13,7 @@ interface ProjectCardProps {
   year: string;
   index: number;
   link?: string;
-isExternal?: boolean;
+  isExternal?: boolean;
   imgSrc?: string;
   isSecret?: boolean;
   onClick?: () => void;
@@ -95,7 +95,7 @@ export default function ProjectCard({
         const tl = gsap.timeline({
           scrollTrigger: {
             trigger: cardRef.current,
-           start: isMobile ? "top 90%" : "top 80%", 
+            start: isMobile ? "top 90%" : "top 80%", 
             end: isMobile ? "bottom 10%" : "top 30%",
             toggleActions: "play reverse play reverse",
           },
@@ -188,10 +188,12 @@ export default function ProjectCard({
   if (link) {
     return (
       <Link
-       href={link || "#"} 
-      target={isExternal ? "_blank" : undefined} 
-      rel={isExternal ? "noopener noreferrer" : undefined}
+        href={link || "#"} 
+        target={isExternal ? "_blank" : undefined} 
+        rel={isExternal ? "noopener noreferrer" : undefined}
         className="project-link"
+        data-image={imgSrc}         // <-- CRITICAL FOR SMART SCROLL
+        data-secret={isSecret}      // <-- CRITICAL FOR SMART SCROLL
         onMouseEnter={handleLocalMouseEnter}
         onClick={onClick}
         onMouseLeave={onMouseLeave}
@@ -205,6 +207,8 @@ export default function ProjectCard({
   return (
     <div
       className="project-link no-cursor-link"
+      data-image={imgSrc}           // <-- CRITICAL FOR SMART SCROLL
+      data-secret={isSecret}        // <-- CRITICAL FOR SMART SCROLL
       onMouseEnter={handleLocalMouseEnter}
       onClick={onClick}
       onMouseLeave={onMouseLeave}
