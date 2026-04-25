@@ -34,25 +34,22 @@ export function initUtils() {
         cursor.style.opacity = "1";
     }
 
-    const magnetTarget = target.closest(interactiveSelector) as HTMLElement;
-    const isBigCard = magnetTarget ? magnetTarget.matches(".project-link, .project, .hero-text") : false;
-
-    if (magnetTarget && !isBigCard) {
-      const rect = magnetTarget.getBoundingClientRect();
-      if (xTo) xTo(rect.left + rect.width / 2);
-      if (yTo) yTo(rect.top + rect.height / 2);
-    } else {
-      if (xTo) xTo(e.clientX);
-      if (yTo) yTo(e.clientY);
-    }
+    // Always follow the actual mouse coordinates smoothly
+    if (xTo) xTo(e.clientX);
+    if (yTo) yTo(e.clientY);
   };
-
   const handleMouseOverCursor = (e: MouseEvent) => {
     const target = e.target as HTMLElement;
     if (target.closest(interactiveSelector) && !target.closest("#cmd-terminal")) {
       cursor?.classList.add("hovered");
     }
   };
+  // Add this inside initUtils() where your other event listeners are
+    const handleMouseClickReset = () => {
+      if (cursor) cursor.classList.remove("hovered");
+    };
+    
+    document.body.addEventListener("click", handleMouseClickReset);
 
   const handleMouseOutCursor = (e: MouseEvent) => {
     if ((e.target as HTMLElement).closest(interactiveSelector)) cursor?.classList.remove("hovered");
