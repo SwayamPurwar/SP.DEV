@@ -5,7 +5,7 @@ import Link from "next/link";
 import gsap from "gsap";
 
 const CASE_STUDIES = [
-  { id: "kite", title: "KITE ZERODHA", link: "/work/kite-casestudy" },
+  { id: "swayam-capital", title: "SWAYAM CAPITAL", link: "/work/swayam-capital-casestudy" },
   { id: "apple-music", title: "APPLE MUSIC", link: "/work/apple-music-casestudy" },
   { id: "instagram", title: "INSTAGRAM", link: "/work/instagram-casestudy" },
   { id: "reposage-prime-aisaas", title: "RepoSage Prime", link: "/work/reposage-prime-aisaas-casestudy" }, 

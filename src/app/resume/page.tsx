@@ -279,11 +279,11 @@ export default function Resume() {
             </article>
           </Link>
 
-          <Link href="/work/kite" className="minimal-card project-card animate-enter" style={{ animationDelay: "0.7s" }}>
+          <Link href="/work/swayam-capital" className="minimal-card project-card animate-enter" style={{ animationDelay: "0.7s" }}>
             <article className="project-content">
               <div>
                 <span className="project-number">03</span>
-                <h3 className="project-title">Kite Zerodha Replica</h3>
+                <h3 className="project-title">Swayam Capital</h3>
                 <p className="project-desc">A high-performance trading dashboard interface with complex state management.</p>
               </div>
               <div className="resume-project-link">

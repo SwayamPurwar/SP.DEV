@@ -308,7 +308,7 @@ export function initTerminal() {
 
   function processAiQuery(input: string) {
     const text = input.toLowerCase();
-    let response = "Query not found. Try asking about 'Kite project' or 'contact'.";
+    let response = "Query not found. Try asking about 'Swayam Capital project' or 'contact'.";
     let action: (() => void) | null = null;
 
     if (text.includes("hello")) response = "Greetings. I am S.A.M. How can I help?";

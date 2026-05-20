@@ -5,7 +5,7 @@ import gsap from "gsap";
 
 import ProjectsFooter from "@/components/ProjectsFooter";
 
-export default function Kite() {
+export default function SwayamCapital() {
   const [price, setPrice] = useState(22450.0);
   const [toast, setToast] = useState(false);
   const [toastColor, setToastColor] = useState("#00e396");
@@ -188,13 +188,13 @@ export default function Kite() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              KITE
+              SWAYAM
               <br />
               <span
                 className="outline-sub"
                 style={{ WebkitTextStroke: "1px rgba(0, 227, 150, 0.8)" }}
               >
-                TRADING
+                CAPITAL
               </span>
             </h1>
           </div>
@@ -208,7 +208,7 @@ export default function Kite() {
                     <div className="w-dot wd-yellow"></div>
                     <div className="w-dot wd-green"></div>
                   </div>
-                  <span>kite-pro-v3.0.exe</span>
+                  <span>swayam-capital-pro-v3.0.exe</span>
                 </div>
 
                 <div className="terminal-body">
@@ -326,11 +326,11 @@ export default function Kite() {
                 </div>
               </div>
               <div className="btn-group">
-                <Link href="/work/kite-casestudy" className="btn mouse-hover">
+                <Link href="/work/swayam-capital-casestudy" className="btn mouse-hover">
                   View Case Study
                 </Link>
                 <a
-                  href="https://swayamzerodha.vercel.app/"
+                  href="https://swayamcapital.vercel.app/"
                   target="_blank"
                   rel="noreferrer"
                   className="btn mouse-hover"
@@ -399,7 +399,7 @@ export default function Kite() {
             </div>
         </section>
       </main>
-      <ProjectsFooter currentProject="kite" />
+      <ProjectsFooter currentProject="swayam-capital" />
     </>
   );
 }

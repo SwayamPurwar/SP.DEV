@@ -7,7 +7,7 @@ import gsap from "gsap";
 const ALL_PROJECTS = [
   { id: "apple-music", title: "APPLE MUSIC", link: "/work/apple-music" },
   { id: "instagram", title: "INSTAGRAM", link: "/work/instagram" },
-  { id: "kite", title: "KITE ZERODHA", link: "/work/kite" },
+  { id: "swayam-capital", title: "SWAYAM CAPITAL", link: "/work/swayam-capital" },
   { id: "reposage-prime", title: "RepoSage Prime", link: "/work/reposage-prime-aisaas" },
 ];
 

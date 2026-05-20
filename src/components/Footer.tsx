@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 const WORK_PROJECT_JUMPS = [
   { label: "Apple Music", href: "/work/apple-music" },
   { label: "Instagram", href: "/work/instagram" },
-  { label: "Kite Zerodha", href: "/work/kite" },
+  { label: "Swayam Capital", href: "/work/swayam-capital" },
   { label: "RepoSage Prime", href: "/work/reposage-prime-aisaas" },
 ];
 

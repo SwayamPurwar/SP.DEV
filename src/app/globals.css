@@ -1052,7 +1052,7 @@ nav, .cs-content, .footer-content {
 .work-v3-landing-visual.thumb-3 {
     background-image:
         linear-gradient(130deg, rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.3)),
-        url('/assets/images/project/kite-preview.webp');
+        url('/assets/images/project/swayam-capital-preview.webp');
 }
 
 .work-v3-landing-visual::after {
@@ -3970,7 +3970,6 @@ body.theme-paper .glass-card {
     -webkit-text-fill-color: transparent;
 }
 
-/* --- KITE STYLES --- */
 #market-chart {
     position: fixed;
     bottom: 0;
@@ -4630,7 +4629,6 @@ body.theme-paper .glass-card {
     }
 }
 
-/* --- KITE TECHNICAL LAYOUT --- */
 .case-layout {
     display: grid;
     grid-template-columns: 250px 1fr;

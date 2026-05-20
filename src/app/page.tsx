@@ -72,7 +72,7 @@ export default function Home() {
     const imagesToPreload = [
       "/assets/images/project/apple-music-preview.webp",
       "/assets/images/project/instagram-preview.webp",
-      "/assets/images/project/kite-preview.webp",
+      "/assets/images/project/swayam-capital-preview.webp",
       "/assets/images/project/reposage-prime-preview.webp",
     ];
 
@@ -603,12 +603,12 @@ export default function Home() {
           />
           <ProjectCard
             index={2}
-            title="KITE ZERODHA APP"
+            title="SWAYAM CAPITAL APP"
             category="Web Sockets / FinTech"
             year="Early '26"
-            link="/work/kite"
-            imgSrc="/assets/images/project/kite-preview.webp"
-            onClick={() => trackProjectClick("KITE ZERODHA APP", "/work/kite")}
+            link="/work/swayam-capital"
+            imgSrc="/assets/images/project/swayam-capital-preview.webp"
+            onClick={() => trackProjectClick("SWAYAM CAPITAL APP", "/work/swayam-capital")}
             onMouseEnter={handleMouseEnter}
             onMouseLeave={handleMouseLeave}
             onMouseMove={handleMouseMove}

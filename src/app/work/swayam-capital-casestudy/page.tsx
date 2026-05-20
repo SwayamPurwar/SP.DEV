@@ -7,7 +7,7 @@ import CaseStudyFooter from "@/components/CaseStudyFooter";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function KiteCaseStudy() {
+export default function SwayamCapitalCaseStudy() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState("architecture");
   const [orders, setOrders] = useState<{ id: string; symbol: string; type: string; price: string; qty: number; time: string; }[]>([]);
@@ -144,7 +144,7 @@ export default function KiteCaseStudy() {
               WebkitTextFillColor: "transparent",
             }}
           >
-            KITE ENGINE
+            SWAYAM CAPITAL
             <br />
             <span
               className="outline-sub"
@@ -382,7 +382,7 @@ export default function KiteCaseStudy() {
             }}
           >
             <Link
-              href="/work/kite"
+              href="/work/swayam-capital"
               className="mouse-hover"
               style={{
                 color: "#fff",
@@ -399,14 +399,14 @@ export default function KiteCaseStudy() {
       transition: "all 0.3s ease", /* Changed to 'all' so the border animates too */
                 textTransform: "uppercase"
               }}
-              onMouseOver={(e) => e.currentTarget.style.color = "#00E396"} // Kite Green
+              onMouseOver={(e) => e.currentTarget.style.color = "#00E396"} 
               onMouseOut={(e) => e.currentTarget.style.color = "#fff"}
             >
               &larr; Back to Overview
             </Link>
           </div>
         </div>
-        <CaseStudyFooter currentProject="kite" />
+        <CaseStudyFooter currentProject="swayam-capital" />
       </div>
     </>
   );

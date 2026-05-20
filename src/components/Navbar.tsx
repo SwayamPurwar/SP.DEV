@@ -10,13 +10,13 @@ const VALID_WORK_ROUTES = new Set([
   "/work",
   "/work/apple-music",
   "/work/instagram",
-  "/work/kite",
+  "/work/swayam-capital",
   "/work/ai-saas",
   "/work/reposage-prime-aisaas",
   "/work/reposage-prime-aisaas-casestudy",
   "/work/apple-music-casestudy",
   "/work/instagram-casestudy",
-  "/work/kite-casestudy",
+  "/work/swayam-capital-casestudy",
 ]);
 
 const HIDDEN_ROUTES = new Set(["/resume", "/success",]);

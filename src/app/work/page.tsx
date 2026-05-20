@@ -40,11 +40,11 @@ const PROJECTS: WorkProject[] = [
     phase: "live",
   },
   {
-    title: "KITE ZERODHA APP",
+    title: "SWAYAM CAPITAL APP",
     category: "Web Sockets / FinTech",
     year: "Early '26",
-    link: "/work/kite",
-    imgSrc: "/assets/images/project/kite-preview.webp",
+    link: "/work/swayam-capital",
+    imgSrc: "/assets/images/project/swayam-capital-preview.webp",
     phase: "live",
   },
   {

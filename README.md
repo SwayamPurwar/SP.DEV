@@ -28,7 +28,7 @@
 | 🌊 **Fluid Scrolling** | Highly-optimized, momentum-based scroll behavior powered by **Lenis**.                                   |
 | 🎵 **Custom Audio Engine** | Integrated UI soundscapes and interactive audio feedback (`audio-system.ts`). |
 | 🕹️ **Terminal & Easter Eggs** | Hidden interactive command-line interface and secret interactions waiting to be discovered. |
-| 📁 **Deep-Dive Case Studies** | Dedicated architectural breakdown pages for major projects (Apple Music, Kite, Instagram, CodeSense AI).           |
+| 📁 **Deep-Dive Case Studies** | Dedicated architectural breakdown pages for major projects (Apple Music, Swayam Capital, Instagram, CodeSense AI).           |
 | ⚡ **Next-Gen Tech** | Built on the bleeding edge: **Next.js 16**, **React 19**, and **Tailwind v4** utilizing **Turbopack** for lightning-fast performance. |
 
 ## 🛠️ Tech Stack
@@ -202,4 +202,6 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 <p align="center">
   Built with ❤️ by Swayam Purwar
+  <br/>
+  <a href="https://swayampurwar.vercel.app/">Live Demo</a>
 </p>
