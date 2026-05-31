@@ -14,8 +14,6 @@ export const metadata: Metadata = {
 };
 
 export default function About() {
-
-
   return (
     <>
       <div className="grid-bg"></div>
@@ -27,7 +25,9 @@ export default function About() {
           <h1 className="a-title" aria-label="The Mind Behind Swayam Purwar">
             THE MIND
             <br />
-            <span style={{ color: "transparent", WebkitTextStroke: "1px white" }}>
+            <span
+              style={{ color: "transparent", WebkitTextStroke: "1px white" }}
+            >
               BEHIND
             </span>
           </h1>
@@ -42,33 +42,48 @@ export default function About() {
             <div className="bio-card">
               {/* Note: You can upgrade this to next/image later for even better performance! */}
               <Image
-  src="/assets/images/profile/swayam-purwar.webp"
- alt="Swayam Purwar - Creative Developer based in Bhopal"
-  width={600} 
-  height={800}
-  priority={true} // 'priority' tells Next.js to preload this image immediately since it's "above the fold"
-   className="bio-img"
-/>
-             
+                src="/assets/images/profile/swayam-purwar.webp"
+                alt="Swayam Purwar - Creative Developer based in Bhopal"
+                width={600}
+                height={800}
+                priority={true} // 'priority' tells Next.js to preload this image immediately since it's "above the fold"
+                className="bio-img"
+              />
             </div>
           </div>
 
           <article className="bio-text">
             <div className="bio-content-wrapper">
               <p>
-                Hello, I'm <strong>Swayam Purwar</strong>. A creative developer
-                based in Bhopal, India.
+                Hello, I'm <strong>Swayam Purwar</strong>, a Software Engineer
+                and Full-Stack Developer based in Bhopal, India. I specialize in
+                building scalable web applications, real-time systems, and
+                AI-powered products using modern web technologies.
               </p>
+
               <p>
-                My journey started with a curiosity for how things work, leading
-                me to pursue a <strong>BCA at LNCT University</strong>. I wanted
-                to build interfaces that people could <em>feel</em>, not just
-                use.
+                I hold a{" "}
+                <strong>Bachelor of Computer Applications (BCA)</strong> from
+                LNCT University Bhopal, where I developed a strong foundation in
+                software engineering, data structures, databases, and modern web
+                technologies.
               </p>
+
               <p>
-                I specialize in <strong>React and MongoDB</strong>, bridging the
-                gap between powerful backend logic and fluid frontend
-                interactivity.
+                My expertise lies in
+                <strong>
+                  {" "}
+                  React.js, Next.js, Node.js, MongoDB, and JavaScript{" "}
+                </strong>
+                , with hands-on experience building full-stack applications,
+                real-time systems, and AI-driven platforms using modern
+                development practices.
+              </p>
+
+              <p>
+                I enjoy solving complex problems, learning emerging
+                technologies, and creating products that are performant,
+                scalable, and user-focused.
               </p>
             </div>
 
@@ -81,29 +96,31 @@ export default function About() {
                     <span className="role-tag">SDE Intern</span>
                   </h4>
                   <p className="desc">
-                    Contributed to core software development cycles and
-                    financial API integrations.
+                    Developed RESTful APIs, optimized database operations, and
+                    contributed to fintech solutions using Node.js, Express.js,
+                    and MongoDB.
                   </p>
-                  <p className="date">Oct 2025 – Nov 2025</p>
+                  <p className="date">1 Oct 2025 – 30 Nov 2025</p>
                 </div>
                 <div className="info-item">
                   <h4>
                     Freelance <span className="role-tag">Creative Dev</span>
                   </h4>
                   <p className="desc">
-                    Building high-performance portfolios and brand experiences
-                    with 80+ Lighthouse scores.
+                    Designed and developed responsive web applications,
+                    interactive portfolios, and business websites with a focus
+                    on performance, accessibility, and user experience.
                   </p>
-                  <p className="date">2024 – Present</p>
+                  <p className="date">18 Sep 2024 – Present</p>
                 </div>
 
                 <h3 style={{ marginTop: "4rem" }}>Education</h3>
                 <div className="info-item">
-                  <h4>LNCT University</h4>
+                  <h4>LNCT University, Bhopal</h4>
                   <p className="desc">
                     Bachelor of Computer Applications (BCA)
                   </p>
-                  <p className="date">2023 - Present (Pursuing)</p>
+                  <p className="date">CGPA: 8.21/10 | Graduated 2026</p>
                 </div>
                 <div className="info-item">
                   <h4>Satya Niketan H.S. School</h4>
@@ -122,13 +139,23 @@ export default function About() {
                 <div className="info-item">
                   <h4>Development</h4>
                   <div className="tech-container">
-                    <span className="tech-pill mouse-hover">React</span>
-                    <span className="tech-pill mouse-hover">JavaScript (ES6+)</span>
-                    <span className="tech-pill mouse-hover">GSAP</span>
-                    <span className="tech-pill mouse-hover">Three.js</span>
+                    <span className="tech-pill mouse-hover">Java</span>
+                    <span className="tech-pill mouse-hover">React.js</span>
+                    <span className="tech-pill mouse-hover">
+                      JavaScript (ES6+)
+                    </span>
+                    <span className="tech-pill mouse-hover">TypeScript</span>
                     <span className="tech-pill mouse-hover">Node.js</span>
+                    <span className="tech-pill mouse-hover">Next.js</span>
                     <span className="tech-pill mouse-hover">Express.js</span>
                     <span className="tech-pill mouse-hover">MongoDB</span>
+                    <span className="tech-pill mouse-hover">Socket.IO</span>
+                    <span className="tech-pill mouse-hover">WebSockets</span>
+                    <span className="tech-pill mouse-hover">GSAP</span>
+                    <span className="tech-pill mouse-hover">Three.js</span>
+                    <span className="tech-pill mouse-hover">
+                      Deployment (Vercel, Render, Netlify)
+                    </span>
                     <span className="tech-pill mouse-hover">Git & GitHub</span>
                   </div>
                 </div>
@@ -136,9 +163,12 @@ export default function About() {
                   <h4>Design</h4>
                   <div className="tech-container">
                     <span className="tech-pill mouse-hover">Figma</span>
-                    <span className="tech-pill mouse-hover">Adobe XD</span>
-                    <span className="tech-pill mouse-hover">UI/UX Principles</span>
-                    <span className="tech-pill mouse-hover">Motion Design</span>
+                    <span className="tech-pill mouse-hover">
+                      Responsive Design
+                    </span>
+                    <span className="tech-pill mouse-hover">
+                      UI/UX Principles
+                    </span>
                   </div>
                 </div>
               </div>
