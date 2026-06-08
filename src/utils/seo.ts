@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 const SITE_NAME = "Swayam Purwar";
-const SITE_URL = "https://swayampurwar.com";
+const SITE_URL = "https://swayampurwar.vercel.app";
 const DEFAULT_OG_IMAGE = "/assets/images/profile/swayam-purwar.webp";
 
 type SeoInput = {
