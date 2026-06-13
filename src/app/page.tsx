@@ -5,7 +5,7 @@ import Link from "next/link"; // Next.js specific Link
 import { usePathname } from "next/navigation"; // Next.js specific router hook
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-
+import ThreeHero from "../components/ThreeHero";
 // Make sure these paths match your Next.js directory structure (e.g., "@/components/SEO")
 
 import ProjectCard from "../components/ProjectCard";
@@ -516,6 +516,7 @@ export default function Home() {
 
       <main style={{ perspective: "1000px" }}>
         <section id="hero">
+          <ThreeHero />
           <div className="hero-line">
             <h1
               className="hero-text hero-name"
