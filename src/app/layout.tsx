@@ -69,7 +69,7 @@ export const metadata: Metadata = {
       "Swayam Purwar is a creative full-stack developer specialized in React, performance-first UI, and interactive web experiences.",
     path: "/",
   }),
-  metadataBase: new URL("https://swayampurwar.com"),
+  metadataBase: new URL("https://swayampurwar.vercel.app"),
   title: {
     default: "Swayam Purwar - Creative Developer",
     template: "%s | Swayam Purwar",
