@@ -84,12 +84,13 @@ export default function Footer() {
               <span>SYSTEM TIME</span>
               <strong>
                 {mounted
-                  ? time.toLocaleTimeString("en-US", {
-                      timeZone: "Asia/Kolkata",
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      second: "2-digit",
-                    })
+                  ? time.toLocaleTimeString("en-IN", {
+  timeZone: "Asia/Kolkata",
+  hour: "2-digit",
+  minute: "2-digit",
+  second: "2-digit",
+  hour12: false,
+})
                   : "--:--:--"}{" "}
                 IST
               </strong>
@@ -216,11 +217,12 @@ export default function Footer() {
                 }}
               >
                 {mounted
-                  ? time.toLocaleTimeString("en-US", {
+                  ? time.toLocaleTimeString("en-IN", {
                       timeZone: "Asia/Kolkata",
                       hour: "2-digit",
                       minute: "2-digit",
                       second: "2-digit",
+                      hour12: false,
                     })
                   : "--:--:--"}{" "}
                 IST
@@ -339,11 +341,12 @@ export default function Footer() {
               }}
             >
               {mounted
-                ? time.toLocaleTimeString("en-US", {
+                ? time.toLocaleTimeString("en-IN", {
                     timeZone: "Asia/Kolkata",
                     hour: "2-digit",
                     minute: "2-digit",
                     second: "2-digit",
+                    hour12: false,
                   })
                 : "--:--:--"}{" "}
               IST
