@@ -1,54 +1,91 @@
-import React from "react";
+"use client";
 
-async function getLatestCommit() {
-  const username = "swayampurwar"; 
+import React, { useEffect, useState } from "react";
+
+export default function GitHubActivity() {
+  const [commit, setCommit] = useState<{
+    repo: string;
+    message: string;
+    url: string;
+    date: string;
+    branch: string;
+    shortSha: string;
+    commitCount: number;
+  } | null>(null);
   
-  try {
-    const res = await fetch(
-      `https://api.github.com/users/${username}/events/public`,
-      {
-        next: { revalidate: 3600 }, 
-        headers: {
-          Accept: "application/vnd.github.v3+json",
-          ...(process.env.GITHUB_TOKEN && {
-            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
-          }),
-        },
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let isMounted = true;
+
+    async function getLatestCommit() {
+      try {
+        // Fetched directly from the browser to bypass Next.js server caching
+        const res = await fetch(
+          "https://api.github.com/users/swayampurwar/events/public",
+          {
+            cache: "no-store", 
+            headers: {
+              Accept: "application/vnd.github.v3+json",
+              // We remove the GITHUB_TOKEN here because exposing it to the client is unsafe.
+              // Public events allow 60 requests/hour per IP, which is plenty for site visitors!
+            },
+          }
+        );
+
+        if (!res.ok) return;
+
+        const events = await res.json();
+        if (!Array.isArray(events)) return;
+
+        const pushEvent = events.find((event: any) => event.type === "PushEvent");
+        if (!pushEvent) return;
+
+        const repoName = pushEvent.repo.name;
+        const commitMessage = pushEvent.payload?.commits?.[0]?.message || "Pushed updates to repository";
+        const commitSha = pushEvent.payload?.commits?.[0]?.sha || pushEvent.payload?.head || "";
+        const shortSha = commitSha ? commitSha.substring(0, 7) : "";
+        
+        const branch = pushEvent.payload?.ref?.replace("refs/heads/", "") || "main";
+        const commitCount = pushEvent.payload?.size || 1;
+
+        if (isMounted) {
+          setCommit({
+            repo: repoName,
+            message: commitMessage,
+            url: commitSha ? `https://github.com/${repoName}/commit/${commitSha}` : `https://github.com/${repoName}`,
+            date: pushEvent.created_at,
+            branch: branch,
+            shortSha: shortSha,
+            commitCount: commitCount
+          });
+        }
+      } catch (error) {
+        console.error("Failed to fetch GitHub activity:", error);
+      } finally {
+        if (isMounted) setLoading(false);
       }
-    );
+    }
 
-    if (!res.ok) return null;
+    getLatestCommit();
 
-    const events = await res.json();
-    if (!Array.isArray(events)) return null;
+    // LIVE POLLING: Checks for new commits every 60 seconds while the user is looking at your page
+    const intervalId = setInterval(getLatestCommit, 60000);
 
-    const pushEvent = events.find((event: any) => event.type === "PushEvent");
-    if (!pushEvent) return null;
-
-    const repoName = pushEvent.repo.name;
-    const commitMessage = pushEvent.payload?.commits?.[0]?.message || "Pushed updates to repository";
-    const commitSha = pushEvent.payload?.commits?.[0]?.sha || pushEvent.payload?.head || "";
-    const shortSha = commitSha ? commitSha.substring(0, 7) : "";
-    
-    const branch = pushEvent.payload?.ref?.replace("refs/heads/", "") || "main";
-    const commitCount = pushEvent.payload?.size || 1;
-
-    return {
-      repo: repoName,
-      message: commitMessage,
-      url: commitSha ? `https://github.com/${repoName}/commit/${commitSha}` : `https://github.com/${repoName}`,
-      date: pushEvent.created_at,
-      branch: branch,
-      shortSha: shortSha,
-      commitCount: commitCount
+    return () => {
+      isMounted = false;
+      clearInterval(intervalId);
     };
-  } catch (error) {
-    return null;
-  }
-}
+  }, []);
 
-export default async function GitHubActivity() {
-  const commit = await getLatestCommit();
+  if (loading) {
+    return (
+      <div className="info-item" style={{ marginTop: "2.5rem", padding: "1.5rem", background: "rgba(255, 255, 255, 0.03)", border: "1px solid rgba(255, 255, 255, 0.1)", borderRadius: "12px", display: "flex", alignItems: "center", gap: "10px" }}>
+        <div style={{ width: "8px", height: "8px", borderRadius: "50%", backgroundColor: "rgba(255,255,255,0.2)", animation: "pulse 1.5s infinite" }} />
+        <p className="desc" style={{ margin: 0 }}>Syncing live repository data...</p>
+      </div>
+    );
+  }
 
   return (
     <div 
@@ -67,7 +104,7 @@ export default async function GitHubActivity() {
         position: "absolute",
         top: "-20%", right: "-10%",
         width: "150px", height: "150px",
-        background: "radial-gradient(circle, rgba(46,160,67,0.15) 0%, transparent 70%)",
+        background: commit ? "radial-gradient(circle, rgba(46,160,67,0.15) 0%, transparent 70%)" : "radial-gradient(circle, rgba(248,81,73,0.15) 0%, transparent 70%)",
         filter: "blur(20px)",
         zIndex: 0,
         pointerEvents: "none"
@@ -112,7 +149,6 @@ export default async function GitHubActivity() {
             rel="noopener noreferrer" 
             style={{ textDecoration: "none" }}
           >
-            {/* Swapped inline JS hover for a CSS class */}
             <div 
               className="github-commit-box"
               style={{ 
