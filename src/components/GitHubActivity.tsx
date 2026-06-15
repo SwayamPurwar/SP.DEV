@@ -47,7 +47,7 @@ async function getLatestCommit() {
   }
 }
 
-export default async function LiveActivity() {
+export default async function GitHubActivity() {
   const commit = await getLatestCommit();
 
   return (

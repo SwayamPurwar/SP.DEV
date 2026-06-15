@@ -4,7 +4,8 @@ import Image from "next/image";
 import AboutAnimations from "@/components/AboutAnimations";
 import { createPageMetadata } from "@/utils/seo";
 import Guestbook from "@/components/Guestbook"; // <-- 1. Import added here
-import LiveActivity from "@/components/LiveActivity";
+import GitHubActivity from "@/components/GitHubActivity";
+
 
 export const metadata: Metadata = {
   ...createPageMetadata({
@@ -97,7 +98,7 @@ export default function About() {
                 <h3>Experience</h3>
               
               <div className="info-item" style={{ marginTop: "2rem" }}>
-                 <LiveActivity />
+                 <GitHubActivity />
                   <h4>
                     Bluestock Fintech{" "}
                     <span className="role-tag">SDE Intern</span>
