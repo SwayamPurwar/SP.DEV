@@ -39,8 +39,8 @@ export default function Resume() {
 
   // Telemetry Logic
   useEffect(() => {
-    const HOST_LAT = 23.2599;
-    const HOST_LON = 77.4126;
+    const HOST_LAT = 13.0827;
+    const HOST_LON = 80.2707;
 
     fetch("https://ipapi.co/json/")
       .then((r) => r.json())
@@ -210,7 +210,7 @@ export default function Resume() {
               <div className="node-info">
                 <span className="node-label">Host</span>
                 <div className="node-details">
-                  <span className="node-city">Bhopal, IND</span>
+                  <span className="node-city">Chennai, IND</span>
                   <span className="node-time">{hostTime}</span>
                 </div>
               </div>
@@ -556,25 +556,33 @@ export default function Resume() {
             <div className="edu-grid">
               <div>
                 <h3 className="section-subtitle">Education</h3>
-                <div className="edu-list">
-                  <div className="edu-item">
-                    <h4 className="edu-degree">
-                      Bachelor of Computer Applications (BCA)
-                    </h4>
-                    <p className="edu-school">
-                      LNCT University, Bhopal (2023 - 2026) | CGPA: 8.21/10{" "}
-                    </p>
-                  </div>
+<div className="edu-list">
+  <div className="edu-item">
+    <h4 className="edu-degree">
+      Master of Computer Applications (MCA)
+    </h4>
+    <p className="edu-school">
+      SRM Institute of Science and Technology,(KTR) Campus, Chennai (2026 - 2028) 
+    </p>
+  </div>
+  <div className="edu-item">
+    <h4 className="edu-degree">
+      Bachelor of Computer Applications (BCA)
+    </h4>
+    <p className="edu-school">
+      LNCT University, Bhopal (2023 - 2026) | CGPA: 8.21/10{" "}
+    </p>
+  </div>
                   <div className="edu-item">
                     <h4 className="edu-degree">Senior Secondary (XII)</h4>
                     <p className="edu-school">
-                      Satya Niketan Higher Secondary (2023)
+                      Satya Niketan Higher Secondary (2022 - 2023)
                     </p>
                   </div>
                   <div className="edu-item">
                     <h4 className="edu-degree">Secondary (X)</h4>
                     <p className="edu-school">
-                      Satya Niketan Higher Secondary (2021)
+                      Satya Niketan Higher Secondary (2020 - 2021)
                     </p>
                   </div>
                 </div>
@@ -666,7 +674,7 @@ export default function Resume() {
             © {new Date().getFullYear()} Swayam Purwar. All rights reserved.
           </span>
           <span style={{ fontFamily: "var(--font-code)", color: "#666" }}>
-            [ LOC: BHOPAL, IN ]
+            [ LOC: CHENNAI, IN ]
           </span>
         </div>
       </footer>

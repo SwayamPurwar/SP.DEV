@@ -312,7 +312,7 @@ export function initTerminal() {
     let action: (() => void) | null = null;
 
     if (text.includes("hello")) response = "Greetings. I am S.A.M. How can I help?";
-    else if (text.includes("swayam")) response = "Swayam is a Creative Developer based in Bhopal.";
+    else if (text.includes("swayam")) response = "Swayam is a Creative Developer based in Chennai, India.";
     else if (text.includes("exit")) { response = "Session closed."; isAiMode = false; }
     else if (text.includes("matrix")) { response = "Entering the real world."; action = () => toggleMatrix(true); }
 

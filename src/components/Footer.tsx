@@ -101,7 +101,7 @@ export default function Footer() {
             <span>
               © {new Date().getFullYear()} Swayam Purwar. All rights reserved.
             </span>
-            <span>[ LOC: BHOPAL, IN ]</span>
+            <span>[ LOC: CHENNAI, IN ]</span>
           </div>
         </div>
       </footer>
@@ -131,7 +131,7 @@ export default function Footer() {
           </span>
 
           <span style={{ fontFamily: "var(--font-code)", color: "#666" }}>
-            [ LOC: BHOPAL, IN ]
+            [ LOC: CHENNAI, IN ]
           </span>
         </div>
       </footer>
@@ -234,7 +234,7 @@ export default function Footer() {
                   color: "#666",
                 }}
               >
-                [ LOC: BHOPAL, IN ]
+                [ LOC: CHENNAI, IN ]
               </span>
             </div>
           </div>
@@ -358,7 +358,7 @@ export default function Footer() {
                 color: "#666",
               }}
             >
-              [ LOC: BHOPAL, IN ]
+              [ LOC: CHENNAI, IN ]
             </span>
           </div>
         </div>

@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   ...createPageMetadata({
     title: "About",
     description:
-      "Learn more about Swayam Purwar, a creative developer from Bhopal focused on React, motion-rich UI, and frontend architecture.",
+      "Learn more about Swayam Purwar, MCA student at SRM (KTR) Campus, Chennai, full-stack developer, and software engineer specializing in React, Next.js, Node.js, and modern web technologies.",
     path: "/about",
   }),
 };
@@ -43,7 +43,7 @@ export default function About() {
               {/* Note: You can upgrade this to next/image later for even better performance! */}
               <Image
                 src="/assets/images/profile/swayam-purwar.webp"
-                alt="Swayam Purwar - Creative Developer based in Bhopal"
+                alt="Swayam Purwar - Creative Developer based in Chennai"
                 width={600}
                 height={800}
                 priority={true} // 'priority' tells Next.js to preload this image immediately since it's "above the fold"
@@ -56,19 +56,23 @@ export default function About() {
             <div className="bio-content-wrapper">
               <p>
                 Hello, I'm <strong>Swayam Purwar</strong>, a Software Engineer
-                and Full-Stack Developer based in Bhopal, India. I specialize in
-                building scalable web applications, real-time systems, and
+                and Full-Stack Developer based in Chennai, India. I specialize
+                in building scalable web applications, real-time systems, and
                 AI-powered products using modern web technologies.
               </p>
 
               <p>
-                I hold a{" "}
+                I am currently pursuing a{" "}
+                <strong>Master of Computer Applications (MCA)</strong> at{" "}
+                <strong>
+                  SRM Institute of Science and Technology (KTR) Campus, Chennai
+                </strong>
+                . I build upon a strong foundation established during my{" "}
                 <strong>Bachelor of Computer Applications (BCA)</strong> from
-                LNCT University Bhopal, where I developed a strong foundation in
-                software engineering, data structures, databases, and modern web
+                LNCT University Bhopal, where I mastered core software
+                engineering principles, data structures, and modern web
                 technologies.
               </p>
-
               <p>
                 My expertise lies in
                 <strong>
@@ -116,11 +120,19 @@ export default function About() {
 
                 <h3 style={{ marginTop: "4rem" }}>Education</h3>
                 <div className="info-item">
+                  <h4>
+                    SRM Institute of Science and Technology (KTR) Campus,
+                    Chennai
+                  </h4>
+                  <p className="desc">Master of Computer Applications (MCA)</p>
+                  <p className="date">2026 - 2028</p>
+                </div>
+                <div className="info-item">
                   <h4>LNCT University, Bhopal</h4>
                   <p className="desc">
                     Bachelor of Computer Applications (BCA)
                   </p>
-                  <p className="date">CGPA: 8.21/10 | Graduated 2026</p>
+                  <p className="date">CGPA: 8.21/10 | 2023 - 2026</p>
                 </div>
                 <div className="info-item">
                   <h4>Satya Niketan H.S. School</h4>

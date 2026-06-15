@@ -35,8 +35,8 @@ export function useTelemetry() {
     if (typeof window === "undefined") return;
 
     let isMounted = true;
-    const HOST_LAT = 23.2599;
-    const HOST_LON = 77.4126;
+     const HOST_LAT = 13.0827;
+    const HOST_LON = 80.2707;
 
     const processTelemetryData = (data: any) => {
       const R = 6371;
