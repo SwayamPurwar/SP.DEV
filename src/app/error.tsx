@@ -10,50 +10,51 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    console.error("Application Runtime Error:", error);
+    // Log the error for your own diagnostics
+    console.error("System Runtime Fault:", error);
   }, [error]);
 
   return (
-    <main className="terminal-window" style={{ 
-      display: "flex", 
-      flexDirection: "column", 
-      alignItems: "center", 
-      justifyContent: "center", 
-      minHeight: "100vh", 
-      padding: "2rem", 
-      textAlign: "center",
-      background: "var(--bg)"
-    }}>
-      <div className="glass-card" style={{ maxWidth: "600px", width: "100%", padding: "4rem 2rem" }}>
-        <span className="system-tag" style={{ color: "#ff4560", borderColor: "#ff4560", display: "inline-block", marginBottom: "1rem" }}>
-          500 // SYSTEM_FAULT_DETECTED
+    
+    <main className="not-found-shell">
+      {/* Unified System Background */}
+      <div className="grid-bg"></div>
+      <div className="vignette"></div>
+
+      <div className="content-wrapper" style={{ 
+        background: "rgba(10, 10, 10, 0.6)", 
+        border: "1px solid rgba(255, 255, 255, 0.05)",
+        borderRadius: "24px",
+        padding: "4rem",
+        textAlign: "center"
+      }}>
+        <span className="system-tag" style={{ color: "var(--accent)", borderColor: "var(--accent)" }}>
+          FAULT_CODE: 500 // RUNTIME_EXCEPTION
         </span>
         
-        <h1 style={{ 
-          fontFamily: "var(--font-display)", 
-          fontSize: "clamp(2.5rem, 5vw, 4rem)", 
-          color: "white", 
-          marginTop: "1.5rem",
-          lineHeight: 1.1,
-          letterSpacing: "-0.02em"
-        }}>
-          Runtime Exception
+        <h1 className="glitch" style={{ fontSize: "clamp(2.5rem, 6vw, 5rem)", margin: "1rem 0" }}>
+          SYSTEM FAULT
         </h1>
         
         <p style={{ 
-          color: "#aaa", 
           fontFamily: "var(--font-main)", 
-          fontSize: "1.1rem", 
-          margin: "1.5rem 0 2.5rem", 
-          lineHeight: 1.6,
-          fontWeight: 300
+          color: "#888", 
+          marginBottom: "3rem",
+          maxWidth: "50ch"
         }}>
-          An unexpected application state exception was encountered on the server runtime.
+          A critical exception occurred within the local runtime environment. The system requires an integrity check.
+          <code style={{ fontSize: "0.7rem", color: "#444", display: "block", marginTop: "1rem" }}>
+  TRACE: {error.digest || "UNKNOWN_SOURCE"}
+</code>
         </p>
-        
-        <div style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
-          <button onClick={() => reset()} className="lux-submit-btn mouse-hover">
-            Retry Node
+
+        <div className="btn-group" style={{ display: "flex", gap: "1rem", justifyContent: "center" }}>
+          <button 
+            onClick={() => reset()} 
+            className="manual-btn" 
+            style={{ fontFamily: "var(--font-code)", padding: "1rem 2rem" }}
+          >
+            [ REINITIALIZE_NODE ]
           </button>
         </div>
       </div>

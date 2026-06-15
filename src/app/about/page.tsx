@@ -4,6 +4,7 @@ import Image from "next/image";
 import AboutAnimations from "@/components/AboutAnimations";
 import { createPageMetadata } from "@/utils/seo";
 import Guestbook from "@/components/Guestbook"; // <-- 1. Import added here
+import GitHubActivity from "@/components/GitHubActivity";
 
 export const metadata: Metadata = {
   ...createPageMetadata({
@@ -94,7 +95,8 @@ export default function About() {
             <div className="info-grid">
               <div className="info-col">
                 <h3>Experience</h3>
-                <div className="info-item">
+              
+              <div className="info-item" style={{ marginTop: "2rem" }}>
                   <h4>
                     Bluestock Fintech{" "}
                     <span className="role-tag">SDE Intern</span>
@@ -116,6 +118,7 @@ export default function About() {
                     on performance, accessibility, and user experience.
                   </p>
                   <p className="date">18 Sep 2024 – Present</p>
+                    <GitHubActivity />
                 </div>
 
                 <h3 style={{ marginTop: "4rem" }}>Education</h3>

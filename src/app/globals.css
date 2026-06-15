@@ -7027,10 +7027,7 @@ footer#footer .footer-content {
 
 
 
-
-
-
-/* 404 Page Shell: Full screen override */
+/* 404 Page Lockdown */
 .not-found-shell {
     position: fixed;
     top: 0;
@@ -7038,40 +7035,47 @@ footer#footer .footer-content {
     width: 100vw;
     height: 100vh;
     background: #050505;
-    z-index: 999999;
+    z-index: 99999999; /* Absolute top priority */
+    overflow: hidden;   /* Kills the scrollbars */
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* Force hiding of nav/footer when 404 shell is detected */
-:has(.not-found-shell) nav, 
-:has(.not-found-shell) footer {
-    display: none !important;
+/* Force body and html to be non-scrollable when 404 is present */
+:has(.not-found-shell), 
+:has(.not-found-shell) body {
+    overflow: hidden !important;
+    height: 100vh !important;
 }
 
-/* Ensure the background grid and vignette cover the 404 page */
-.not-found-shell .grid-bg {
-    z-index: 0;
-}
-
-.not-found-shell .content-wrapper {
-    z-index: 2;
-    background: transparent !important;
-    border: none !important;
-    margin-top: 0 !important;
-}
-
-
-/* Force cursor visibility on the 404 page */
+/* Force Cursor Visibility */
 :has(.not-found-shell) #cursor {
     display: block !important;
     opacity: 1 !important;
-    z-index: 9999999 !important;
+    z-index: 999999999 !important; /* Higher than shell */
     pointer-events: none !important;
+    border: 1px solid white !important;
+    visibility: visible !important;
 }
 
-/* Ensure the Not Found page content allows the cursor to move over it */
-.not-found-shell {
-    cursor: none !important;
+
+
+
+
+
+
+
+
+
+
+
+@keyframes pulse {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 160, 67, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(46, 160, 67, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(46, 160, 67, 0); }
+}
+
+.live-indicator {
+  animation: pulse 2s infinite;
 }
