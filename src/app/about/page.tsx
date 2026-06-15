@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   ...createPageMetadata({
     title: "About",
     description:
-      "Learn more about Swayam Purwar, MCA student at SRM (KTR) Campus, Chennai, full-stack developer, and software engineer specializing in React, Next.js, Node.js, and modern web technologies.",
+      "Learn more about Swayam Purwar, (MCA) - Generative Artificial Intelligence student at SRM (KTR) Campus, Chennai, full-stack developer, and software engineer specializing in React, Next.js, Node.js, and modern web technologies.",
     path: "/about",
   }),
 };
@@ -65,12 +65,12 @@ export default function About() {
 
               <p>
                 I am currently pursuing a{" "}
-                <strong>Master of Computer Applications (MCA)</strong> at{" "}
+                <strong>Master of Computer Applications (MCA) - Generative Artificial Intelligence</strong> at{" "}
                 <strong>
                   SRM Institute of Science and Technology (KTR) Campus, Chennai
                 </strong>
                 . I build upon a strong foundation established during my{" "}
-                <strong>Bachelor of Computer Applications (BCA)</strong> from
+                <strong>Bachelor of Computer Applications (BCA) - Core</strong> from
                 LNCT University Bhopal, where I mastered core software
                 engineering principles, data structures, and modern web
                 technologies.
@@ -129,13 +129,13 @@ export default function About() {
                     SRM Institute of Science and Technology (KTR) Campus,
                     Chennai
                   </h4>
-                  <p className="desc">Master of Computer Applications (MCA)</p>
+                  <p className="desc">Master of Computer Applications (MCA) - Generative Artificial Intelligence</p>
                   <p className="date">2026 - 2028</p>
                 </div>
                 <div className="info-item">
                   <h4>LNCT University, Bhopal</h4>
                   <p className="desc">
-                    Bachelor of Computer Applications (BCA)
+                    Bachelor of Computer Applications (BCA) - Core  
                   </p>
                   <p className="date">CGPA: 8.21/10 | 2023 - 2026</p>
                 </div>

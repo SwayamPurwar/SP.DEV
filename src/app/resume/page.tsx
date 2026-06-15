@@ -559,7 +559,7 @@ export default function Resume() {
 <div className="edu-list">
   <div className="edu-item">
     <h4 className="edu-degree">
-      Master of Computer Applications (MCA)
+      Master of Computer Applications (MCA) - Generative Artificial Intelligence
     </h4>
     <p className="edu-school">
       SRM Institute of Science and Technology,(KTR) Campus, Chennai (2026 - 2028) 
@@ -567,7 +567,7 @@ export default function Resume() {
   </div>
   <div className="edu-item">
     <h4 className="edu-degree">
-      Bachelor of Computer Applications (BCA)
+      Bachelor of Computer Applications (BCA) - Core
     </h4>
     <p className="edu-school">
       LNCT University, Bhopal (2023 - 2026) | CGPA: 8.21/10{" "}
