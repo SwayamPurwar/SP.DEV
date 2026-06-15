@@ -1,15 +1,20 @@
-// src/app/template.tsx
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 
 export default function Template({ children }: { children: React.ReactNode }) {
   const curtainRef = useRef<HTMLDivElement>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
+    // Prevent animation from triggering if we are just scrolling to a hash link (like #work)
+    if (typeof window !== "undefined" && window.location.hash) return;
+
     let ctx = gsap.context(() => {
       if (curtainRef.current) {
+        // Ensure curtain starts fully covering the screen, then animates away to reveal the new page
         gsap.fromTo(
           curtainRef.current,
           { scaleY: 1 },
@@ -24,7 +29,7 @@ export default function Template({ children }: { children: React.ReactNode }) {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [pathname]); // <-- This tells it to run the animation every time the page changes!
 
   return (
     <>

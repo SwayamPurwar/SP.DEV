@@ -3,6 +3,7 @@ import { Metadata } from "next";
 import Image from "next/image";
 import AboutAnimations from "@/components/AboutAnimations";
 import { createPageMetadata } from "@/utils/seo";
+import Guestbook from "@/components/Guestbook"; // <-- 1. Import added here
 
 export const metadata: Metadata = {
   ...createPageMetadata({
@@ -40,13 +41,12 @@ export default function About() {
         <section className="bio-section">
           <div className="bio-img-wrapper">
             <div className="bio-card">
-              {/* Note: You can upgrade this to next/image later for even better performance! */}
               <Image
                 src="/assets/images/profile/swayam-purwar.webp"
                 alt="Swayam Purwar - Creative Developer based in Chennai"
                 width={600}
                 height={800}
-                priority={true} // 'priority' tells Next.js to preload this image immediately since it's "above the fold"
+                priority={true} 
                 className="bio-img"
               />
             </div>
@@ -186,6 +186,11 @@ export default function About() {
               </div>
             </div>
           </article>
+        </section>
+
+        {/* --- 2. NEW GUESTBOOK SECTION --- */}
+        <section style={{ marginTop: "8rem", display: "flex", justifyContent: "center", width: "90vw", position: "relative", left: "50%", transform: "translateX(-50%)" }}>
+          <Guestbook />
         </section>
 
         <div
