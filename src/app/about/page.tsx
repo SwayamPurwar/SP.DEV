@@ -98,7 +98,7 @@ export default function About() {
                 <h3>Experience</h3>
               
               <div className="info-item" style={{ marginTop: "2rem" }}>
-                 <GitHubActivity />
+                
                   <h4>
                     Bluestock Fintech{" "}
                     <span className="role-tag">SDE Intern</span>
@@ -120,7 +120,7 @@ export default function About() {
                     on performance, accessibility, and user experience.
                   </p>
                   <p className="date">18 Sep 2024 – Present</p>
-                   
+                    <GitHubActivity />
                 </div>
 
                 <h3 style={{ marginTop: "4rem" }}>Education</h3>
