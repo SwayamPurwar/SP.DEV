@@ -7079,3 +7079,16 @@ footer#footer .footer-content {
 .live-indicator {
   animation: pulse 2s infinite;
 }
+
+
+
+
+/* GitHub Activity Component Hover Effects */
+.github-commit-box:hover {
+  background: rgba(0, 0, 0, 0.6) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.github-profile-link:hover {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
