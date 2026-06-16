@@ -190,7 +190,8 @@ export default function GitHubActivity() {
             <p className="date" style={{ margin: 0, fontSize: "0.8rem", opacity: 0.7 }}>
               {new Date(commit.date).toLocaleString(undefined, { 
                 dateStyle: "medium", 
-                timeStyle: "short" 
+                timeStyle: "short",
+                hour12: false,
               })}
             </p>
             <a 

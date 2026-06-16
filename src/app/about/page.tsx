@@ -70,8 +70,8 @@ export default function About() {
                   SRM Institute of Science and Technology (KTR) Campus, Chennai
                 </strong>
                 . I build upon a strong foundation established during my{" "}
-                <strong>Bachelor of Computer Applications (BCA) - Core</strong> from
-                LNCT University Bhopal, where I mastered core software
+                <strong>Bachelor of Computer Applications (BCA) - Core</strong> from{" "}
+                <strong>LNCT University Bhopal</strong>, where I mastered core software
                 engineering principles, data structures, and modern web
                 technologies.
               </p>
