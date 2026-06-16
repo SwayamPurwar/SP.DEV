@@ -672,9 +672,8 @@ export default function Home() {
               Creativity.
             </h2>
             <p className="reveal-text">
-              I am Swayam, a developer building high-end digital experiences
-              using React, Node.js, and GSAP.
-            </p>
+  I'm Swayam, a full-stack developer crafting immersive digital experiences through modern web technologies, seamless interactions, and pixel-perfect design.
+</p>
             <Link
               href="/about"
               className="btn mouse-hover reveal-text"

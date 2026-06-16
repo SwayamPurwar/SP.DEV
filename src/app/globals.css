@@ -3382,7 +3382,6 @@ body.theme-paper .glass-card {
     position: sticky;
     top: 10vh;
     perspective: 1000px;
-
 }
 
 @keyframes float-card {
@@ -3406,6 +3405,9 @@ body.theme-paper .glass-card {
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
     transform: rotateY(5deg);
+    border-radius: 20px;
+    
+
 }
 
 /* 3. What happens when the user hovers over the card */
@@ -3423,7 +3425,7 @@ body.theme-paper .glass-card {
     height: 100%;
     object-fit: cover;
     filter: contrast(1.1);
-    border-radius: 20px;
+   
     /* Full color, slightly boosted contrast */
     transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1);
     /* Smooth springy transition */
