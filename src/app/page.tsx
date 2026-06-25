@@ -538,7 +538,7 @@ export default function Home() {
             </span>
           </div>
           <p className="hero-sub">
-            Based in Chennai, India &bull;{" "}
+            Based in Pune, India &bull;{" "}
             <span id="live-clock">--:--:-- IST</span> &bull; Available for
             Freelance
           </p>

@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   ...createPageMetadata({
     title: "About",
     description:
-      "Learn more about Swayam Purwar, (MCA) - Generative Artificial Intelligence student at SRM (KTR) Campus, Chennai, full-stack developer, and software engineer specializing in React, Next.js, Node.js, and modern web technologies.",
+      "Learn more about Swayam Purwar, (MCA) student at MIT World Peace University, Pune, full-stack developer, and software engineer specializing in React, Next.js, Node.js, and modern web technologies.",
     path: "/about",
   }),
 };
@@ -45,7 +45,7 @@ export default function About() {
             <div className="bio-card">
               <Image
                 src="/assets/images/profile/swayam-purwar.webp"
-                alt="Swayam Purwar - Creative Developer based in Chennai"
+                alt="Swayam Purwar - Creative Developer based in Pune"
                 width={600}
                 height={800}
                 priority={true} 
@@ -58,20 +58,20 @@ export default function About() {
             <div className="bio-content-wrapper">
               <p>
                 Hello, I'm <strong>Swayam Purwar</strong>, a Software Engineer
-                and Full-Stack Developer based in Chennai, India. I specialize
+                and Full-Stack Developer based in Pune, India. I specialize
                 in building scalable web applications, real-time systems, and
                 AI-powered products using modern web technologies.
               </p>
 
               <p>
                 I am currently pursuing a{" "}
-                <strong>Master of Computer Applications (MCA) - Generative Artificial Intelligence</strong> at{" "}
+                <strong>Master of Computer Applications (MCA)</strong> at{" "}
                 <strong>
-                  SRM Institute of Science and Technology (KTR) Campus, Chennai
+               MIT World Peace University, Pune
                 </strong>
                 . I build upon a strong foundation established during my{" "}
-                <strong>Bachelor of Computer Applications (BCA) - Core</strong> from{" "}
-                <strong>LNCT University Bhopal</strong>, where I mastered core software
+                <strong>Bachelor of Computer Applications (BCA)</strong> from{" "}
+                <strong>LNCT University, Bhopal</strong>, where I mastered core software
                 engineering principles, data structures, and modern web
                 technologies.
               </p>
@@ -126,16 +126,16 @@ export default function About() {
                 <h3 style={{ marginTop: "4rem" }}>Education</h3>
                 <div className="info-item">
                   <h4>
-                    SRM Institute of Science and Technology (KTR) Campus,
-                    Chennai
+                     MIT World Peace University,
+                    Pune
                   </h4>
-                  <p className="desc">Master of Computer Applications (MCA) - Generative Artificial Intelligence</p>
+                  <p className="desc">Master of Computer Applications (MCA)</p>
                   <p className="date">2026 - 2028</p>
                 </div>
                 <div className="info-item">
                   <h4>LNCT University, Bhopal</h4>
                   <p className="desc">
-                    Bachelor of Computer Applications (BCA) - Core  
+                    Bachelor of Computer Applications (BCA)
                   </p>
                   <p className="date">CGPA: 8.21/10 | 2023 - 2026</p>
                 </div>

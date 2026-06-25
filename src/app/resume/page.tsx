@@ -210,7 +210,7 @@ export default function Resume() {
               <div className="node-info">
                 <span className="node-label">Host</span>
                 <div className="node-details">
-                  <span className="node-city">Chennai, IND</span>
+                  <span className="node-city">Pune, IND</span>
                   <span className="node-time">{hostTime}</span>
                 </div>
               </div>
@@ -559,15 +559,15 @@ export default function Resume() {
 <div className="edu-list">
   <div className="edu-item">
     <h4 className="edu-degree">
-      Master of Computer Applications (MCA) - Generative Artificial Intelligence
+      Master of Computer Applications (MCA) 
     </h4>
     <p className="edu-school">
-      SRM Institute of Science and Technology,(KTR) Campus, Chennai (2026 - 2028) 
+      MIT World Peace University, Pune (2026 - 2028) 
     </p>
   </div>
   <div className="edu-item">
     <h4 className="edu-degree">
-      Bachelor of Computer Applications (BCA) - Core
+      Bachelor of Computer Applications (BCA)
     </h4>
     <p className="edu-school">
       LNCT University, Bhopal (2023 - 2026) | CGPA: 8.21/10{" "}
@@ -674,7 +674,7 @@ export default function Resume() {
             © {new Date().getFullYear()} Swayam Purwar. All rights reserved.
           </span>
           <span style={{ fontFamily: "var(--font-code)", color: "#666" }}>
-            [ LOC: CHENNAI, IN ]
+            [ LOC: PUNE, IN ]
           </span>
         </div>
       </footer>
