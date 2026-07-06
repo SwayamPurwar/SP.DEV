@@ -467,10 +467,23 @@ export default function Resume() {
           >
             <h3 className="section-subtitle">Experience</h3>
             <div className="experience-list">
-              <div className="experience-item">
+              
+
+               <div className="experience-item ">
+                <div className="exp-date">25 Mar 2025 — 25 Jun 2025</div>
+                <div className="exp-details">
+                  <h4 className="exp-role">Web Developer</h4>
+                  <p className="exp-company">Zaalima Development Pvt. Ltd.</p>
+                  <p className="exp-desc">
+                  Completed a 3-month Web Development Training at Zaalima Development Pvt. Ltd., where I gained hands-on experience in designing, developing, and deploying responsive web applications. Strengthened my skills in front-end and back-end development, debugging, problem-solving, and collaborative software development while working on practical, real-world projects and following industry best practices.  
+  </p>
+                </div>
+              </div>
+              
+              <div className="experience-item no-border">
                 <div className="exp-date">1 Oct 2025 — 30 Nov 2025</div>
                 <div className="exp-details">
-                  <h4 className="exp-role">Software Development Intern</h4>
+                  <h4 className="exp-role">Software Development Engineer</h4>
                   <p className="exp-company">Bluestock Fintech</p>
                   <p className="exp-desc">
                     Engineered frontend modules for a high-traffic fintech
@@ -480,10 +493,10 @@ export default function Resume() {
                   </p>
                 </div>
               </div>
-              <div className="experience-item no-border">
+              <div className="experience-item">
                 <div className="exp-date">18 Sep 2024 — Present</div>
                 <div className="exp-details">
-                  <h4 className="exp-role">Creative Developer</h4>
+                  <h4 className="exp-role">Full Stack Engineer</h4>
                   <p className="exp-company">Freelance</p>
                   <p className="exp-desc">
                     Architected highly interactive 3D portfolios and
@@ -492,6 +505,7 @@ export default function Resume() {
                   </p>
                 </div>
               </div>
+              
             </div>
           </section>
           {/* ACHIEVEMENTS SECTION */}
@@ -591,7 +605,11 @@ export default function Resume() {
                 <h3 className="section-subtitle">Certifications</h3>
                 <div className="edu-list">
                   <div className="edu-item">
-                    <h4 className="edu-degree">Software Development Intern</h4>
+                    <h4 className="edu-degree">Web Developer</h4>
+                    <p className="edu-school">Zaalima Development Pvt. Ltd.</p>
+                  </div>
+                  <div className="edu-item">
+                    <h4 className="edu-degree">Software Development </h4>
                     <p className="edu-school">Bluestock Fintech</p>
                   </div>
                   <div className="edu-item">

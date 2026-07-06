@@ -96,12 +96,21 @@ export default function About() {
             <div className="info-grid">
               <div className="info-col">
                 <h3>Experience</h3>
-              
-              <div className="info-item" style={{ marginTop: "2rem" }}>
                 
+              <div className="info-item" style={{ marginTop: "2rem" }}>
+                  <h4>
+                    Zaalima Development Pvt. Ltd.{" "}
+                    <span className="role-tag">Web Developer</span>
+                  </h4>
+                  <p className="desc">
+                    Successfully completed an intensive internship and training program focused on Web Development, applying theoretical knowledge to practical solutions.
+                  </p>
+                  <p className="date">25 Mar 2026 – 25 Jun 2026</p>
+                </div>
+              <div className="info-item" style={{ marginTop: "2rem" }}>
                   <h4>
                     Bluestock Fintech{" "}
-                    <span className="role-tag">SDE Intern</span>
+                    <span className="role-tag">Software Development Engineer</span>
                   </h4>
                   <p className="desc">
                     Developed RESTful APIs, optimized database operations, and
@@ -112,7 +121,7 @@ export default function About() {
                 </div>
                 <div className="info-item">
                   <h4>
-                    Freelance <span className="role-tag">Creative Dev</span>
+                    Full Stack Engineer <span className="role-tag">Freelance</span>
                   </h4>
                   <p className="desc">
                     Designed and developed responsive web applications,
@@ -120,8 +129,9 @@ export default function About() {
                     on performance, accessibility, and user experience.
                   </p>
                   <p className="date">18 Sep 2024 – Present</p>
-                    <GitHubActivity />
+                   
                 </div>
+                 <GitHubActivity />
 
                 <h3 style={{ marginTop: "4rem" }}>Education</h3>
                 <div className="info-item">
