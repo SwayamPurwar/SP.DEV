@@ -157,7 +157,7 @@ export default function About() {
                 <div className="info-item">
                   <h4>Satya Niketan H.S. School</h4>
                   <p className="desc">Secondary (X) - All Subjects</p>
-                  <p className="date">2020 - 2021</p>
+                  <p className="date">2021 - 2022</p>
                 </div>
               </div>
 

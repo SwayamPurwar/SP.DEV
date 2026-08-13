@@ -596,7 +596,7 @@ export default function Resume() {
                   <div className="edu-item">
                     <h4 className="edu-degree">Secondary (X)</h4>
                     <p className="edu-school">
-                      Satya Niketan Higher Secondary (2020 - 2021)
+                      Satya Niketan Higher Secondary (2021 - 2022)
                     </p>
                   </div>
                 </div>
