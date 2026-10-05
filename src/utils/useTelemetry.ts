@@ -16,91 +16,173 @@ export interface TimeData {
   client: string;
 }
 
+// Host Coordinates (Pune, Maharashtra, India)
+const HOST_LAT = 18.5204;
+const HOST_LON = 73.8567;
+
+function getCleanOS(): string {
+  if (typeof window === "undefined") return "macOS";
+
+  const ua = window.navigator.userAgent || "";
+  
+  if (/Macintosh|Mac OS X/i.test(ua)) {
+    return window.navigator.maxTouchPoints > 1 ? "iPadOS" : "macOS";
+  }
+  if (/iPhone|iPod/i.test(ua)) return "iOS";
+  if (/iPad/i.test(ua)) return "iPadOS";
+  if (/Windows NT/i.test(ua)) return "Windows";
+  if (/Android/i.test(ua)) return "Android";
+  if (/Linux/i.test(ua)) return "Linux";
+
+  return "macOS"; // Safe fallback
+}
+
+function calculateDistanceKm(lat: number, lon: number): number {
+  const toRad = (deg: number) => (deg * Math.PI) / 180;
+  const R = 6371; // Earth radius in km
+
+  const dLat = toRad(lat - HOST_LAT);
+  const dLon = toRad(lon - HOST_LON);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(HOST_LAT)) *
+      Math.cos(toRad(lat)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return Math.round(R * c);
+}
+
+function maskIp(ip?: string): string {
+  if (!ip) return "Hidden";
+  if (ip.includes(":")) {
+    return ip
+      .split(":")
+      .map((part, i) => (i > 2 ? "****" : part))
+      .join(":");
+  }
+  return ip
+    .split(".")
+    .map((part, i) => (i > 1 ? "***" : part))
+    .join(".");
+}
+
 export function useTelemetry() {
   const [telemetry, setTelemetry] = useState<TelemetryData>({
     city: "Scanning...",
     ip: "***.***.*.*",
-    distance: "0 km",
+    distance: "Calculating...",
     ping: "0 ms",
-    os: "Analyzing...",
+    os: "macOS",
     org: "Identifying...",
   });
-  
-  const [time, setTime] = useState<TimeData>({ 
-    host: "--:--", 
-    client: "--:--" 
+
+  const [time, setTime] = useState<TimeData>({
+    host: "--:--",
+    client: "--:--",
   });
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
     let isMounted = true;
-     const HOST_LAT = 18.5204;
-    const HOST_LON = 73.8567;
+    const controller = new AbortController();
+    const os = getCleanOS();
 
-    const processTelemetryData = (data: any) => {
-      const R = 6371;
-      const dLat = ((data.latitude - HOST_LAT) * Math.PI) / 180;
-      const dLon = ((data.longitude - HOST_LON) * Math.PI) / 180;
-      const a =
-        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-        Math.cos((HOST_LAT * Math.PI) / 180) *
-          Math.cos((data.latitude * Math.PI) / 180) *
-          Math.sin(dLon / 2) *
-          Math.sin(dLon / 2);
-      const dist = Math.round(R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+    // Set OS immediately so it never shows outdated states
+    setTelemetry((prev) => ({ ...prev, os }));
+
+    const updateDistance = (lat: number, lon: number) => {
+      const dist = calculateDistanceKm(lat, lon);
+      const distLabel = dist < 10 ? "Local (< 10 km)" : `${dist.toLocaleString()} km`;
+      const estimatedPing = `${Math.max(5, Math.round(dist / 500 + 12))} ms`;
 
       if (isMounted) {
-        setTelemetry({
-          city: data.city || "Unknown",
-          ip: data.ip
-            ? data.ip.includes(":")
-              ? data.ip.split(":").map((p: string, i: number) => (i > 2 ? "****" : p)).join(":")
-              : data.ip.split(".").map((p: string, i: number) => (i > 1 ? "***" : p)).join(".")
-            : "Hidden",
-          distance: `${dist.toLocaleString()} km`,
-          ping: `${Math.round(dist / 500 + 20)} ms`,
-          os: navigator.platform,
-          org: data.org || "Unknown ISP",
-        });
+        setTelemetry((prev) => ({
+          ...prev,
+          distance: distLabel,
+          ping: estimatedPing,
+        }));
       }
     };
 
-    const cachedData = sessionStorage.getItem("telemetry_cache");
-
-    if (cachedData) {
+    const fetchIPData = async () => {
       try {
-        processTelemetryData(JSON.parse(cachedData));
-      } catch (e) {
-        console.error("Cache parse error", e);
-      }
-    } else {
-      fetch("https://ipapi.co/json/")
-        .then((r) => r.json())
-        .then((data) => {
-          if (!isMounted) return;
-          if (data.error || !data.latitude || !data.longitude) {
-            throw new Error("Rate limited or tracking blocked");
-          }
-          sessionStorage.setItem("telemetry_cache", JSON.stringify(data));
-          processTelemetryData(data);
-        })
-        .catch(() => {
+        // Clear any old session storage format
+        sessionStorage.removeItem("telemetry_cache");
+        sessionStorage.removeItem("telemetry_cache_v2");
+
+        const cached = sessionStorage.getItem("telemetry_v3");
+        if (cached) {
+          const parsed = JSON.parse(cached);
           if (isMounted) {
             setTelemetry((prev) => ({
               ...prev,
-              city: "Stealth Mode",
-              os: navigator.platform,
-              ip: "Hidden",
-              distance: "Unknown",
-              ping: "N/A",
-              org: "Encrypted",
+              city: parsed.city || "Pune",
+              ip: maskIp(parsed.ip),
+              org: parsed.connection?.isp || parsed.org || "Broadband",
+              os,
             }));
+            if (parsed.latitude && parsed.longitude) {
+              updateDistance(parseFloat(parsed.latitude), parseFloat(parsed.longitude));
+            }
           }
-        });
+          return;
+        }
+
+        // ipwho.is is more reliable and doesn't aggressively rate-limit like ipapi
+        const res = await fetch("https://ipwho.is/", { signal: controller.signal });
+        const data = await res.json();
+
+        if (data && data.success !== false) {
+          sessionStorage.setItem("telemetry_v3", JSON.stringify(data));
+          if (isMounted) {
+            setTelemetry((prev) => ({
+              ...prev,
+              city: data.city || "Pune",
+              ip: maskIp(data.ip),
+              org: data.connection?.isp || data.org || "Internet Provider",
+              os,
+            }));
+
+            if (data.latitude && data.longitude) {
+              updateDistance(parseFloat(data.latitude), parseFloat(data.longitude));
+            }
+          }
+        }
+      } catch {
+        if (isMounted) {
+          setTelemetry((prev) => ({
+            ...prev,
+            city: "Pune",
+            ip: "127.0.0.1",
+            distance: "Local (< 10 km)",
+            ping: "12 ms",
+            os,
+            org: "Local Network",
+          }));
+        }
+      }
+    };
+
+    // 1. Try high-accuracy GPS coordinates first
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          updateDistance(position.coords.latitude, position.coords.longitude);
+        },
+        () => {
+          // Denied or timed out - silently relies on IP lookup
+        },
+        { timeout: 4000, maximumAge: 60000 }
+      );
     }
 
-    const timer = setInterval(() => {
+    // 2. Fetch IP and metadata
+    fetchIPData();
+
+    // 3. Live Clock
+    const tick = () => {
       if (!isMounted) return;
       const now = new Date();
       setTime({
@@ -108,13 +190,19 @@ export function useTelemetry() {
           timeZone: "Asia/Kolkata",
           hour12: false,
         }),
-        client: now.toLocaleTimeString("en-US", { hour12: false }),
+        client: now.toLocaleTimeString("en-US", {
+          hour12: false,
+        }),
       });
-    }, 1000);
+    };
+
+    tick();
+    const interval = setInterval(tick, 1000);
 
     return () => {
       isMounted = false;
-      clearInterval(timer);
+      controller.abort();
+      clearInterval(interval);
     };
   }, []);
 

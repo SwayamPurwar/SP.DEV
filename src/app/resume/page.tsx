@@ -3,19 +3,72 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import "@/app/assets/css/resume.css"; // Next.js global CSS import pattern
+import "@/app/assets/css/resume.css";
 import ResumeNavbar from "@/components/ResumeNavbar";
+
+// Host coordinates for Pune, Maharashtra, India
+const HOST_LAT = 18.5204;
+const HOST_LON = 73.8567;
+
+function getAccurateOS(): string {
+  if (typeof window === "undefined") return "macOS";
+
+  const ua = window.navigator.userAgent || "";
+  const nav = window.navigator as Navigator & {
+    userAgentData?: { platform?: string };
+  };
+
+  // 1. Client hints if available
+  if (nav.userAgentData?.platform) {
+    const p = nav.userAgentData.platform.toLowerCase();
+    if (p === "macos") return "macOS";
+    if (p === "windows") return "Windows";
+    if (p === "linux") return "Linux";
+    if (p === "android") return "Android";
+    if (p === "ios") return "iOS";
+  }
+
+  // 2. UA string parsing
+  if (/Macintosh|Mac OS X/i.test(ua)) {
+    return window.navigator.maxTouchPoints > 1 ? "iPadOS" : "macOS";
+  }
+  if (/iPhone|iPod/i.test(ua)) return "iOS";
+  if (/iPad/i.test(ua)) return "iPadOS";
+  if (/Windows NT/i.test(ua)) return "Windows";
+  if (/Android/i.test(ua)) return "Android";
+  if (/Linux/i.test(ua)) return "Linux";
+
+  return "macOS";
+}
+
+function calculateDistanceKm(userLat: number, userLon: number): number {
+  const toRad = (value: number) => (value * Math.PI) / 180;
+  const R = 6371; // Earth radius in km
+
+  const dLat = toRad(userLat - HOST_LAT);
+  const dLon = toRad(userLon - HOST_LON);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRad(HOST_LAT)) *
+      Math.cos(toRad(userLat)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return Math.round(R * c);
+}
 
 export default function Resume() {
   const [clientCity, setClientCity] = useState("Scanning...");
   const [clientIp, setClientIp] = useState("***.***.*.*");
   const [clientTime, setClientTime] = useState("--:--");
   const [hostTime, setHostTime] = useState("--:--");
-  const [distance, setDistance] = useState("0 km");
+  const [distance, setDistance] = useState("Calculating...");
   const [ping, setPing] = useState("0 ms");
-  const [os, setOs] = useState("Analyzing...");
+  const [os, setOs] = useState("macOS");
 
-  // Smooth, high-performance mouse tracking for minimal glow
+  // Mouse tracking for card glow
   useEffect(() => {
     let ticking = false;
     const handleMouseMove = (e: MouseEvent) => {
@@ -37,52 +90,73 @@ export default function Resume() {
     return () => window.removeEventListener("mousemove", handleMouseMove);
   }, []);
 
-  // Telemetry Logic
+  // Telemetry & Clock Logic
   useEffect(() => {
-    const HOST_LAT = 13.0827;
-    const HOST_LON = 80.2707;
+    let isMounted = true;
+    const detectedOS = getAccurateOS();
+    setOs(detectedOS);
 
-    fetch("https://ipapi.co/json/")
-      .then((r) => r.json())
-      .then((data) => {
-        if (data.error) throw new Error("API Limit");
-        setClientCity(data.city || "Unknown");
+    const isLocal =
+      window.location.hostname === "localhost" ||
+      window.location.hostname === "127.0.0.1" ||
+      window.location.hostname.startsWith("192.168.");
+
+    const fetchGeoData = async () => {
+      try {
+        // Fallback-friendly IP geolocation
+        let res = await fetch("https://ipapi.co/json/");
+        let data: any = res.ok ? await res.json() : null;
+
+        if (!data || data.error || !data.latitude) {
+          const fallback = await fetch("https://ipwho.is/");
+          data = await fallback.json();
+        }
+
+        if (!isMounted) return;
+
+        setClientCity(data.city || (isLocal ? "Pune" : "Unknown"));
         setClientIp(
           data.ip
             ? data.ip
                 .split(".")
                 .map((p: string, i: number) => (i > 1 ? "***" : p))
                 .join(".")
-            : "Hidden",
+            : "Hidden"
         );
 
-        if (data.latitude && data.longitude) {
-          const R = 6371;
-          const dLat = (data.latitude - HOST_LAT) * (Math.PI / 180);
-          const dLon = (data.longitude - HOST_LON) * (Math.PI / 180);
-          const a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(HOST_LAT * (Math.PI / 180)) *
-              Math.cos(data.latitude * (Math.PI / 180)) *
-              Math.sin(dLon / 2) *
-              Math.sin(dLon / 2);
-          const dist = Math.round(
-            R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)),
-          );
-          setDistance(`${dist.toLocaleString()} km`);
-          setPing(`${Math.round(dist / 500 + 8)} ms`);
+        const lat = parseFloat(data.latitude);
+        const lon = parseFloat(data.longitude);
+
+        if (!isNaN(lat) && !isNaN(lon)) {
+          const dist = calculateDistanceKm(lat, lon);
+          if (dist <= 15 || isLocal) {
+            setDistance("Local (< 15 km)");
+            setPing("8 ms");
+          } else {
+            setDistance(`${dist.toLocaleString()} km`);
+            setPing(`${Math.round(dist / 500 + 12)} ms`);
+          }
+        } else if (isLocal) {
+          setDistance("Local (< 15 km)");
+          setPing("5 ms");
         } else {
           setDistance("Unknown");
-          setPing("Unknown ms");
+          setPing("N/A");
         }
-      })
-      .catch(() => {
-        setClientCity("Stealth Mode");
-        setClientIp("127.0.0.1");
-      });
+      } catch {
+        if (!isMounted) return;
+        setClientCity(isLocal ? "Pune" : "Stealth Mode");
+        setClientIp(isLocal ? "127.0.0.1" : "Hidden");
+        setDistance(isLocal ? "Local (< 15 km)" : "Unknown");
+        setPing(isLocal ? "5 ms" : "N/A");
+      }
+    };
 
-    setOs(navigator.platform || "Unknown OS");
-    const timer = setInterval(() => {
+    fetchGeoData();
+
+    // Clock update function with immediate tick
+    const updateTime = () => {
+      if (!isMounted) return;
       const now = new Date();
       setHostTime(
         now.toLocaleTimeString("en-US", {
@@ -91,7 +165,7 @@ export default function Resume() {
           hour: "2-digit",
           minute: "2-digit",
           second: "2-digit",
-        }),
+        })
       );
       setClientTime(
         now.toLocaleTimeString("en-US", {
@@ -99,11 +173,17 @@ export default function Resume() {
           hour: "2-digit",
           minute: "2-digit",
           second: "2-digit",
-        }),
+        })
       );
-    }, 1000);
+    };
 
-    return () => clearInterval(timer);
+    updateTime();
+    const timer = setInterval(updateTime, 1000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(timer);
+    };
   }, []);
 
   return (
@@ -124,7 +204,7 @@ export default function Resume() {
                 className="profile-img"
                 width={400}
                 height={400}
-                priority={true} // 'priority' tells Next.js to preload this image immediately since it's "above the fold"
+                priority={true}
               />
               <div className="status-badge">
                 <span className="status-dot-container">
@@ -467,19 +547,24 @@ export default function Resume() {
           >
             <h3 className="section-subtitle">Experience</h3>
             <div className="experience-list">
-              
-
-               <div className="experience-item ">
+              <div className="experience-item">
                 <div className="exp-date">25 Mar 2025 — 25 Jun 2025</div>
                 <div className="exp-details">
                   <h4 className="exp-role">Web Developer</h4>
                   <p className="exp-company">Zaalima Development Pvt. Ltd.</p>
                   <p className="exp-desc">
-                  Completed a 3-month Web Development Training at Zaalima Development Pvt. Ltd., where I gained hands-on experience in designing, developing, and deploying responsive web applications. Strengthened my skills in front-end and back-end development, debugging, problem-solving, and collaborative software development while working on practical, real-world projects and following industry best practices.  
-  </p>
+                    Completed a 3-month Web Development Training at Zaalima
+                    Development Pvt. Ltd., where I gained hands-on experience in
+                    designing, developing, and deploying responsive web
+                    applications. Strengthened my skills in front-end and
+                    back-end development, debugging, problem-solving, and
+                    collaborative software development while working on
+                    practical, real-world projects and following industry best
+                    practices.
+                  </p>
                 </div>
               </div>
-              
+
               <div className="experience-item no-border">
                 <div className="exp-date">1 Oct 2025 — 30 Nov 2025</div>
                 <div className="exp-details">
@@ -493,6 +578,7 @@ export default function Resume() {
                   </p>
                 </div>
               </div>
+
               <div className="experience-item">
                 <div className="exp-date">18 Sep 2024 — Present</div>
                 <div className="exp-details">
@@ -505,9 +591,9 @@ export default function Resume() {
                   </p>
                 </div>
               </div>
-              
             </div>
           </section>
+
           {/* ACHIEVEMENTS SECTION */}
           <section
             className="minimal-card full-width-card experience-card animate-enter"
@@ -570,23 +656,23 @@ export default function Resume() {
             <div className="edu-grid">
               <div>
                 <h3 className="section-subtitle">Education</h3>
-<div className="edu-list">
-  <div className="edu-item">
-    <h4 className="edu-degree">
-      Master of Computer Applications (MCA) 
-    </h4>
-    <p className="edu-school">
-      MIT World Peace University, Pune (2026 - 2028) 
-    </p>
-  </div>
-  <div className="edu-item">
-    <h4 className="edu-degree">
-      Bachelor of Computer Applications (BCA)
-    </h4>
-    <p className="edu-school">
-      LNCT University, Bhopal (2023 - 2026) | CGPA: 8.21/10{" "}
-    </p>
-  </div>
+                <div className="edu-list">
+                  <div className="edu-item">
+                    <h4 className="edu-degree">
+                      Master of Computer Applications (MCA)
+                    </h4>
+                    <p className="edu-school">
+                      MIT World Peace University, Pune (2026 - 2028)
+                    </p>
+                  </div>
+                  <div className="edu-item">
+                    <h4 className="edu-degree">
+                      Bachelor of Computer Applications (BCA)
+                    </h4>
+                    <p className="edu-school">
+                      LNCT University, Bhopal (2023 - 2026) | CGPA: 8.21/10
+                    </p>
+                  </div>
                   <div className="edu-item">
                     <h4 className="edu-degree">Senior Secondary (XII)</h4>
                     <p className="edu-school">
@@ -609,7 +695,7 @@ export default function Resume() {
                     <p className="edu-school">Zaalima Development Pvt. Ltd.</p>
                   </div>
                   <div className="edu-item">
-                    <h4 className="edu-degree">Software Development </h4>
+                    <h4 className="edu-degree">Software Development</h4>
                     <p className="edu-school">Bluestock Fintech</p>
                   </div>
                   <div className="edu-item">
