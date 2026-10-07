@@ -115,7 +115,7 @@ export default function Instagram() {
                   View Case Study
                 </Link>
                 <a
-                  href="https://swayaminstagram.vercel.app"
+                  href="https://swayaminstagramnew.vercel.app"
                   target="_blank"
                   rel="noopener"
                   className="btn mouse-hover"
