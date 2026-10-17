@@ -1,10 +1,12 @@
-"use client"; 
+"use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
-import { sfx } from "../utils/audio-system"; 
-import BrandLogo from "@/components/BrandLogo";
+import { sfx } from "../utils/audio-system";
+import dynamic from "next/dynamic";
+
+const BrandLogo = dynamic(() => import("@/components/BrandLogo"), { ssr: false });
 
 const VALID_WORK_ROUTES = new Set([
   "/work",
@@ -19,49 +21,57 @@ const VALID_WORK_ROUTES = new Set([
   "/work/swayam-capital-casestudy",
 ]);
 
-const HIDDEN_ROUTES = new Set(["/resume", "/success",]);
+const HIDDEN_ROUTES = new Set(["/resume", "/success"]);
 const KNOWN_BASE_ROUTES = new Set(["/", "/about", "/contact", "/work"]);
 
 export default function Navbar() {
   const [isMuted, setIsMuted] = useState(sfx.isMuted);
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
+
   // State and Ref for scroll-to-hide logic
   const [isHidden, setIsHidden] = useState(false);
   const lastScrollY = useRef(0);
-
   const pathname = usePathname() || "/"; // Fallback to avoid null
   const isAdminPage = pathname.startsWith("/admin/");
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      
-      // 1. Toggle frosted glass background
-      setScrolled(currentScrollY > 50);
-      
-      // Prevent iOS bounce effect at the top of the page from triggering hide
-      if (currentScrollY <= 0) {
-        setIsHidden(false);
-        lastScrollY.current = currentScrollY;
-        return;
-      }
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          
+          // 1. Toggle frosted glass background
+          setScrolled(currentScrollY > 50);
+          
+          // Prevent iOS bounce effect at the top of the page from triggering hide
+          if (currentScrollY <= 0) {
+            setIsHidden(false);
+            lastScrollY.current = currentScrollY;
+            ticking = false;
+            return;
+          }
 
-      // Hide on scroll down, show on scroll up
-      if (currentScrollY > lastScrollY.current && currentScrollY > 80 && !isMenuOpen) {
-        setIsHidden(true); // Scrolling down
-      } else if (currentScrollY < lastScrollY.current) {
-        setIsHidden(false); // Scrolling up
-      }
+          // Hide on scroll down, show on scroll up
+          if (currentScrollY > lastScrollY.current && currentScrollY > 80 && !isMenuOpen) {
+            setIsHidden(true); // Scrolling down
+          } else if (currentScrollY < lastScrollY.current) {
+            setIsHidden(false); // Scrolling up
+          }
 
-      lastScrollY.current = currentScrollY;
+          lastScrollY.current = currentScrollY;
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, [isMenuOpen]);
-  
+
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "unset";
     return () => {
@@ -75,7 +85,6 @@ export default function Navbar() {
       const customEvent = e as CustomEvent;
       setIsMuted(customEvent.detail);
     };
-
     window.addEventListener("audioMuteToggled", handleMuteChange);
     return () => window.removeEventListener("audioMuteToggled", handleMuteChange);
   }, []);
@@ -83,7 +92,7 @@ export default function Navbar() {
   const handleToggleSound = () => {
     const newMutedState = sfx.toggleMute();
     setIsMuted(newMutedState);
-    if (!newMutedState) sfx.playHover(); 
+    if (!newMutedState) sfx.playHover();
   };
 
   const isKnownRoute = KNOWN_BASE_ROUTES.has(pathname) || VALID_WORK_ROUTES.has(pathname);
@@ -133,7 +142,6 @@ export default function Navbar() {
     }
     if (pathname.startsWith("/work")) {
       if (pathname === "/work") {
-        // Updated: Show About and Contact on the main Work page
         return (
           <>
             <Link href="/about" className={linkClass} onClick={closeAction}>
@@ -145,7 +153,6 @@ export default function Navbar() {
           </>
         );
       }
-
       let label = "All Projects";
       if (pathname.includes("casestudy")) label = "Exit Case Study";
 
@@ -155,14 +162,9 @@ export default function Navbar() {
         </Link>
       );
     }
-
     return (
       <>
-        <Link
-          href="/work"
-          onClick={closeAction}
-          className={linkClass}
-        >
+        <Link href="/work" onClick={closeAction} className={linkClass}>
           Work
         </Link>
         <Link href="/about" className={linkClass} onClick={closeAction}>

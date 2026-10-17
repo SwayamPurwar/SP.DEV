@@ -6677,8 +6677,9 @@ footer#footer .footer-content {
 
 
 /* Only apply hover animations on screens wider than 768px (Desktop/Tablet) */
-@media (min-width: 769px) {
-    .project-link:hover .scratch-number-wrap {
+/* 🚨 ENTERPRISE STANDARD: Only apply hovers on devices with an actual mouse pointer */
+@media (hover: hover) and (pointer: fine) {
+.project-link:hover .scratch-number-wrap {
         transform: translateY(-50%) translateX(40px);
         opacity: 0.8;
     }
@@ -6686,7 +6687,6 @@ footer#footer .footer-content {
     .project-link:hover .svg-text-fill {
         clip-path: inset(0 0% 0 0);
     }
-
     .project-link:hover .scratch-title-wrap {
         transform: translateX(60px);
     }
@@ -6701,30 +6701,8 @@ footer#footer .footer-content {
     }
 }
 
-/* Force elements to stay static on mobile to prevent "sticky" hover on tap */
-@media (max-width: 768px) {
 
-    .project-link:hover .scratch-title-wrap,
-    .project-link:active .scratch-title-wrap,
-    .project-link:focus .scratch-title-wrap {
-        transform: none !important;
-    }
 
-    .project-link:hover .scratch-progress-bar,
-    .project-link:active .scratch-progress-bar,
-    .project-link:focus .scratch-progress-bar {
-        width: 0% !important;
-    }
-}
-
-.project-link:hover .scratch-number-wrap {
-    transform: translateY(-50%) translateX(40px);
-    opacity: 0.8;
-}
-
-.project-link:hover .svg-text-fill {
-    clip-path: inset(0 0% 0 0);
-}
 
 /* Content Architecture */
 .scratch-content {
@@ -6744,10 +6722,12 @@ footer#footer .footer-content {
     font-weight: 800;
     color: #fff;
     letter-spacing: -0.04em;
-    /* Move title on hover without stuttering */
     white-space: normal;
     line-height: 1.1;
-
+    /* FIX: Prevents layout thrashing during GSAP scramble */
+    font-variant-numeric: tabular-nums; 
+    min-height: 1.2em; /* Absorbs vertical wrapping shifts */
+    will-change: content; 
 }
 
 .scratch-pill {
@@ -7093,4 +7073,14 @@ footer#footer .footer-content {
 
 .github-profile-link:hover {
   color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* Add this to your globals.css */
+.mouse-hover,
+.project-scratch,
+.brand-logo {
+  will-change: transform, opacity;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  transform: translateZ(0); /* Forces GPU composition */
 }

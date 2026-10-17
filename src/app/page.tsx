@@ -1,22 +1,26 @@
-"use client"; // Required in Next.js for components using hooks, window, or GSAP
+"use client";
+
 import Image from "next/image";
 import { useLayoutEffect, useRef, useEffect, useState } from "react";
-import Link from "next/link"; // Next.js specific Link
-import { usePathname } from "next/navigation"; // Next.js specific router hook
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import ThreeHero from "../components/ThreeHero";
-// Make sure these paths match your Next.js directory structure (e.g., "@/components/SEO")
+import dynamic from "next/dynamic";
 
 import ProjectCard from "../components/ProjectCard";
-import { lockScroll, unlockScroll } from "../utils/animations";
+import AssetLoader from "../components/AssetLoader";
 import { trackEvent } from "@/utils/analytics";
+
+// Lazy load the heavy WebGL canvas to clear the main thread
+const ThreeHero = dynamic(() => import("../components/ThreeHero"), {
+  ssr: false,
+});
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const counterRef = useRef<HTMLSpanElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
 
   // Safe window check for Next.js SSR
@@ -82,7 +86,7 @@ export default function Home() {
     });
   }, []);
 
-// Smooth scroll to hash anchor on load
+  // Smooth scroll to hash anchor on load
   useEffect(() => {
     if (typeof window !== "undefined" && window.location.hash) {
       const element = document.querySelector(window.location.hash);
@@ -92,11 +96,10 @@ export default function Home() {
     }
   }, [pathname]);
 
-  // 🚨 ADD THIS: SMART SCROLL LISTENER 🚨
+  // 🚨 SMART SCROLL LISTENER 🚨
   useEffect(() => {
     let scrollTimeout: NodeJS.Timeout;
     
-    // Track global mouse position
     const mousePos = { x: 0, y: 0 };
     const updateMousePos = (e: MouseEvent) => {
       mousePos.x = e.clientX;
@@ -104,7 +107,6 @@ export default function Home() {
     };
 
     const handleScroll = () => {
-      // 1. Instantly hide the image when scrolling starts
       if (previewRef.current) {
         gsap.to(previewRef.current, { 
           opacity: 0, 
@@ -114,26 +116,21 @@ export default function Home() {
         });
       }
 
-      // 2. Clear the timeout so it only fires when scrolling STOPS
       clearTimeout(scrollTimeout);
 
       scrollTimeout = setTimeout(() => {
-        // Ignore mobile devices (they don't have hover images anyway)
         if (window.matchMedia("(hover: none)").matches) return;
 
-        // 3. Scroll has stopped. Check what element is under the mouse!
         const el = document.elementFromPoint(mousePos.x, mousePos.y);
         const projectLink = el?.closest('.project-link') as HTMLElement;
 
         if (projectLink && previewRef.current) {
-          // Extract the data we added in Step 1
           const imgSrc = projectLink.getAttribute('data-image');
           const isSecret = projectLink.getAttribute('data-secret') === 'true';
 
           if (imgSrc) {
             previewRef.current.style.backgroundImage = `url('${imgSrc}')`;
             
-            // Re-apply the GSAP animation to show it
             gsap.to(previewRef.current, {
               opacity: 1,
               scale: 1,
@@ -144,7 +141,7 @@ export default function Home() {
             });
           }
         }
-      }, 150); // Waits 150ms after the last scroll event to check the mouse
+      }, 150); 
     };
 
     window.addEventListener("mousemove", updateMousePos, { passive: true });
@@ -158,15 +155,10 @@ export default function Home() {
       clearTimeout(scrollTimeout);
     };
   }, []);
-  // 🚨 END SMART SCROLL LISTENER 🚨
 
   // --- Handlers for Hover Effects ---
   const handleMouseEnter = (imgUrl: string | undefined, isSecret = false) => {
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(hover: none)").matches
-    )
-      return;
+    if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches) return;
 
     if (imgUrl && previewRef.current) {
       previewRef.current.style.backgroundImage = `url('${imgUrl}')`;
@@ -184,11 +176,7 @@ export default function Home() {
   };
 
   const handleMouseLeave = (e: React.MouseEvent) => {
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(hover: none)").matches
-    )
-      return;
+    if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches) return;
 
     if (previewRef.current) {
       gsap.to(previewRef.current, {
@@ -210,11 +198,7 @@ export default function Home() {
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (
-      typeof window !== "undefined" &&
-      window.matchMedia("(hover: none)").matches
-    )
-      return;
+    if (typeof window !== "undefined" && window.matchMedia("(hover: none)").matches) return;
 
     if (xTo.current && yTo.current) {
       xTo.current(e.clientX);
@@ -236,11 +220,7 @@ export default function Home() {
     }
   };
 
-  const trackProjectClick = (
-    title: string,
-    link?: string,
-    isSecret = false,
-  ) => {
+  const trackProjectClick = (title: string, link?: string, isSecret = false) => {
     void trackEvent("project_click", {
       title,
       link: link || "none",
@@ -249,12 +229,11 @@ export default function Home() {
   };
 
   useLayoutEffect(() => {
-    if (typeof window === "undefined") return; // SSR Guard
-
-    window.scrollTo(0, 0);
-    const isFirstVisit = sessionStorage.getItem("visited") !== "true";
+    if (typeof window === "undefined") return;
 
     let ctx = gsap.context(() => {
+      ScrollTrigger.normalizeScroll(true);
+      ScrollTrigger.config({ ignoreMobileResize: true });
       gsap.set(".reveal-text", { y: 50, opacity: 0 });
 
       if (previewRef.current) {
@@ -271,14 +250,11 @@ export default function Home() {
 
       const initScrollAnimations = () => {
         ScrollTrigger.refresh();
-        gsap.utils
-          .toArray<HTMLElement>(".project-scratch")
-          .forEach((project) => {
+        gsap.utils.toArray<HTMLElement>(".project-scratch").forEach((project) => {
             const fill = project.querySelector(".svg-text-fill");
             const bar = project.querySelector(".scratch-progress-bar");
 
-            gsap
-              .timeline({
+            gsap.timeline({
                 scrollTrigger: {
                   trigger: project,
                   start: "top 80%",
@@ -286,20 +262,8 @@ export default function Home() {
                   toggleActions: "play reverse play reverse",
                 },
               })
-              .to(fill, {
-                clipPath: "inset(0 0% 0 0)",
-                duration: 0.8,
-                ease: "power2.out",
-              })
-              .to(
-                bar,
-                {
-                  width: "100%",
-                  duration: 0.8,
-                  ease: "power2.out",
-                },
-                "-=0.8",
-              );
+              .to(fill, { clipPath: "inset(0 0% 0 0)", duration: 0.8, ease: "power2.out" })
+              .to(bar, { width: "100%", duration: 0.8, ease: "power2.out" }, "-=0.8");
           });
 
         gsap.utils.toArray<HTMLElement>(".project").forEach((project) => {
@@ -335,9 +299,7 @@ export default function Home() {
             });
           });
 
-          document
-            .querySelectorAll(".reveal-container")
-            .forEach((container) => {
+          document.querySelectorAll(".reveal-container").forEach((container) => {
               const curtain = container.querySelector(".reveal-curtain");
               const img = container.querySelector("img");
 
@@ -345,165 +307,43 @@ export default function Home() {
                 scrollTrigger: { trigger: container, start: "top 75%" },
               });
 
-              tl.fromTo(
-                curtain,
-                { scaleY: 1 },
-                { scaleY: 0, duration: 1.2, ease: "expo.inOut" },
-              ).fromTo(
-                img,
-                { scale: 1.2, filter: "blur(10px) grayscale(100%)" },
-                {
-                  scale: 1,
-                  filter: "blur(0px) grayscale(0%)",
-                  duration: 1.5,
-                  ease: "power3.out",
-                },
-                "-=1.2",
-              );
+              tl.fromTo(curtain, { scaleY: 1 }, { scaleY: 0, duration: 1.2, ease: "expo.inOut" })
+                .fromTo(img, { scale: 1.2, filter: "blur(10px) grayscale(100%)" }, { scale: 1, filter: "blur(0px) grayscale(0%)", duration: 1.5, ease: "power3.out" }, "-=1.2");
             });
         } else {
           gsap.set(".reveal-text", { y: 0, opacity: 1 });
         }
       };
 
-      if (isFirstVisit) {
-        lockScroll();
-        gsap.set(document.querySelector("#main-nav"), { y: -50, opacity: 0 });
-        gsap.set(".hero-text", { y: 100, rotateX: -20, opacity: 0 });
-        gsap.set(".hero-sub, .cv-wrapper", { y: 30, opacity: 0 });
-
-        const tl = gsap.timeline({
-          onComplete: () => {
-            unlockScroll();
-            sessionStorage.setItem("visited", "true");
-            gsap.set(".preloader-container", { display: "none" });
-            initScrollAnimations();
-          },
-        });
-
-        tl.to(".loader-text", {
-          opacity: 1,
-          duration: 0.5,
-          ease: "power2.out",
-        });
-
-        tl.to(
-          { value: 0 },
-          {
-            value: 100,
-            duration: 1.5,
-            ease: "power3.inOut",
-            onUpdate: function () {
-              if (counterRef.current)
-                counterRef.current.textContent = Math.floor(
-                  this.targets()[0].value,
-                ).toString();
-            },
-          },
-        );
-
-        tl.to(".loader-text, .loader-meta", { opacity: 0, duration: 0.3 });
-        tl.to(".preloader-container", {
-          yPercent: -100,
-          duration: 1.2,
-          ease: "expo.inOut",
-        });
-
-        if (!prefersReducedMotion) {
-          tl.to(
-            ".hero-text",
-            {
-              y: 0,
-              rotateX: 0,
-              opacity: 1,
-              duration: 1.2,
-              stagger: 0.1,
-              ease: "expo.out",
-            },
-            "-=0.6",
-          )
-            .to(
-              ".hero-sub",
-              { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
-              "-=0.9",
-            )
-            .to(
-              ".cv-wrapper",
-              { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
-              "-=0.8",
-            )
-            .to(
-              document.querySelector("#main-nav"),
-              { y: 0, opacity: 1, duration: 1, ease: "power3.out" },
-              "-=1.0",
-            );
-        } else {
-          tl.set(".hero-text, .hero-sub, .cv-wrapper", {
-            y: 0,
-            opacity: 1,
-            rotateX: 0,
-          });
-          gsap.set(document.querySelector("#main-nav"), { y: 0, opacity: 1 });
-        }
-      } else {
-        unlockScroll();
-        gsap.set(".preloader-container", { display: "none" });
-
+      // Optimistic Rendering Entry Animation (Does not block LCP)
+      if (!prefersReducedMotion) {
         gsap.fromTo(
           ".hero-text",
-          { y: 100, opacity: 0 },
-          {
-            y: 0,
-            opacity: 1,
-            duration: 1.2,
-            stagger: 0.1,
-            ease: "expo.out",
-            delay: 0.2,
-          },
+          { y: 50, opacity: 0, rotateX: -10 },
+          { y: 0, opacity: 1, rotateX: 0, duration: 1.2, stagger: 0.1, ease: "expo.out" }
         );
         gsap.fromTo(
-          ".hero-sub, .cv-wrapper",
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.4 },
+          ".hero-sub, .cv-wrapper, #main-nav",
+          { y: 20, opacity: 0 },
+          { y: 0, opacity: 1, duration: 1, stagger: 0.1, ease: "power3.out", delay: 0.2 }
         );
-        gsap.fromTo(
-          document.querySelector("#main-nav"),
-          { y: -50, opacity: 0 },
-          { y: 0, opacity: 1, duration: 1, ease: "power3.out", delay: 0.1 },
-        );
-
-        setTimeout(initScrollAnimations, 100);
+      } else {
+        gsap.set(".hero-text, .hero-sub, .cv-wrapper, #main-nav", { y: 0, opacity: 1, rotateX: 0 });
       }
+
+      setTimeout(initScrollAnimations, 100);
     }, containerRef);
 
     return () => {
       gsap.killTweensOf("#preview-img, .project");
       ctx.revert();
-      unlockScroll();
     };
-  }, [prefersReducedMotion]); // Re-run if motion preference changes
+  }, [prefersReducedMotion]); 
 
   return (
     <div ref={containerRef}>
-      <div
-        className="preloader-container"
-        role="status"
-        aria-label="Loading assets"
-      >
-        <div className="loader-content">
-          <div className="counter-wrap">
-            <span className="counter" ref={counterRef}></span>
-            <span className="percent">%</span>
-          </div>
-          <div className="loader-text">INITIALIZING SYSTEM</div>
-        </div>
-        <div className="loader-meta top-left">SP.DEV</div>
-        <div className="loader-meta top-right">
-          PORTFOLIO ©{new Date().getFullYear()}
-        </div>
-        <div className="loader-meta bottom-left">LOADING ASSETS</div>
-        <div className="loader-meta bottom-right">PLEASE WAIT</div>
-      </div>
+      {/* 1. Independent Overlay Loader */}
+      <AssetLoader />
 
       <div
         ref={previewRef}
@@ -515,8 +355,11 @@ export default function Home() {
       ></div>
 
       <main style={{ perspective: "1000px" }}>
-        <section id="hero">
-          <ThreeHero />
+        <section id="hero" className="relative z-10">
+          <div className="absolute inset-0 z-[-1] pointer-events-auto">
+            <ThreeHero />
+          </div>
+          
           <div className="hero-line">
             <h1
               className="hero-text hero-name"
@@ -538,11 +381,9 @@ export default function Home() {
             </span>
           </div>
           <p className="hero-sub">
-            Based in Pune, India &bull;{" "}
-            <span id="live-clock">--:--:-- IST</span> &bull; Available for
-            Freelance
+            Based in Pune, India &bull; Available for Freelance
           </p>
-          <div className="cv-wrapper">
+           <div className="cv-wrapper">
             <Link
               href="/resume"
               className="cv-btn mouse-hover"
@@ -662,7 +503,7 @@ export default function Home() {
               style={{ willChange: "transform, filter" }}
               width={600}
               height={800}
-              priority={true} // 'priority' tells Next.js to preload this image immediately since it's "above the fold"
+              priority={true}
             />
           </div>
           <div className="about-text">
@@ -672,8 +513,8 @@ export default function Home() {
               Creativity.
             </h2>
             <p className="reveal-text">
-  I'm Swayam, a full-stack developer crafting immersive digital experiences through modern web technologies, seamless interactions, and pixel-perfect design.
-</p>
+              I am a full-stack developer engineering high-performance web applications. During my tenure at Zorvyn FinTech Pvt. Ltd., I drove frontend analysis on platforms including MutaCryptor, and I recently executed a rigorous three-month development sprint at Zaalima Development Pvt. Ltd. I architect solutions that scale and solve complex operational bottlenecks.
+            </p>
             <Link
               href="/about"
               className="btn mouse-hover reveal-text"

@@ -1,6 +1,5 @@
 // src/components/ThreeHero.tsx
 "use client";
-
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
@@ -10,37 +9,35 @@ export default function ThreeHero() {
   useEffect(() => {
     if (!mountRef.current) return;
 
-    // 1. Scene Setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true }); 
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
     
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     mountRef.current.appendChild(renderer.domElement);
 
-    // 2. Create Particle System
     const geometry = new THREE.BufferGeometry();
-    const particlesCount = 1500; 
+    const particlesCount = 1500;
     const posArray = new Float32Array(particlesCount * 3);
     
     for(let i = 0; i < particlesCount * 3; i++) {
-        posArray[i] = (Math.random() - 0.5) * 10; 
+        posArray[i] = (Math.random() - 0.5) * 10;
     }
     
     geometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
     const material = new THREE.PointsMaterial({
         size: 0.02,
         color: 0xffffff,
         transparent: true,
-        opacity: 0.4, 
+        opacity: 0.4,
     });
     
     const particlesMesh = new THREE.Points(geometry, material);
     scene.add(particlesMesh);
     camera.position.z = 3;
 
-    // 3. Mouse Interaction
     let mouseX = 0;
     let mouseY = 0;
     const handleMouseMove = (event: MouseEvent) => {
@@ -49,24 +46,38 @@ export default function ThreeHero() {
     };
     window.addEventListener('mousemove', handleMouseMove);
 
-    // 4. Animation Loop
-    const clock = new THREE.Clock();
+    let isVisible = true;
+    const observer = new IntersectionObserver(([entry]) => {
+      isVisible = entry.isIntersecting;
+    });
+    observer.observe(mountRef.current);
+
+    const startTime = performance.now();
     let animationFrameId: number;
 
+    // INNOVATION: Declare target vectors OUTSIDE the loop to prevent memory leaks
+    const targetRotation = new THREE.Vector2();
+
     const animate = () => {
-        const elapsedTime = clock.getElapsedTime();
-        
+        animationFrameId = requestAnimationFrame(animate);
+        if (!isVisible) return; 
+
+        const elapsedTime = (performance.now() - startTime) * 0.001;
         particlesMesh.rotation.y = elapsedTime * 0.05;
         
-        particlesMesh.rotation.x += (mouseY * 0.5 - particlesMesh.rotation.x) * 0.05;
-        particlesMesh.rotation.y += (mouseX * 0.5 - particlesMesh.rotation.y) * 0.05;
+        targetRotation.set(
+          particlesMesh.rotation.x + (mouseY * 0.5 - particlesMesh.rotation.x) * 0.05,
+          particlesMesh.rotation.y + (mouseX * 0.5 - particlesMesh.rotation.y) * 0.05
+        );
+
+        particlesMesh.rotation.x = targetRotation.x;
+        particlesMesh.rotation.y = targetRotation.y;
 
         renderer.render(scene, camera);
-        animationFrameId = requestAnimationFrame(animate);
     };
+
     animate();
 
-    // 5. Handle Resize
     const handleResize = () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
@@ -74,8 +85,8 @@ export default function ThreeHero() {
     };
     window.addEventListener('resize', handleResize);
 
-    // Cleanup
     return () => {
+        observer.disconnect();
         window.removeEventListener('mousemove', handleMouseMove);
         window.removeEventListener('resize', handleResize);
         cancelAnimationFrame(animationFrameId);

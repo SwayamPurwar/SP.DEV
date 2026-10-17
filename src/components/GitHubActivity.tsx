@@ -33,7 +33,9 @@ export default function GitHubActivity() {
           }
         );
 
-        if (!res.ok) return;
+        if (!res.ok) {
+    throw new Error(`GitHub API responded with status: ${res.status}`);
+  }
 
         const events = await res.json();
         if (!Array.isArray(events)) return;

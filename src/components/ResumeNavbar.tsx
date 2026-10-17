@@ -1,9 +1,10 @@
 "use client";
-
 import Link from "next/link";
 import { useState, useEffect } from "react";
-import { sfx } from "@/utils/audio-system"; // Ensure path matches
-import BrandLogo from "@/components/BrandLogo";
+import { sfx } from "@/utils/audio-system";
+import dynamic from "next/dynamic";
+
+const BrandLogo = dynamic(() => import("@/components/BrandLogo"), { ssr: false });
 
 export default function ResumeNavbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -20,7 +21,6 @@ export default function ResumeNavbar() {
       const customEvent = e as CustomEvent;
       setIsMuted(customEvent.detail);
     };
-
     window.addEventListener("audioMuteToggled", handleMuteChange);
     return () => window.removeEventListener("audioMuteToggled", handleMuteChange);
   }, []);
@@ -37,7 +37,7 @@ export default function ResumeNavbar() {
       className={`${scrolled ? "scrolled" : ""} no-print`}
       style={{
         zIndex: 200000,
-        mixBlendMode: "normal", 
+        mixBlendMode: "normal",
       }}
     >
       <Link href="/" className="logo mouse-hover" onClick={() => window.scrollTo(0, 0)}>
@@ -53,13 +53,13 @@ export default function ResumeNavbar() {
           style={{
             background: "none",
             border: "none",
-            color: "#fff", 
+            color: "#fff",
             display: "flex",
             alignItems: "center",
             opacity: 0.6,
             transition: "opacity 0.3s",
             cursor: "pointer",
-            padding: "0" 
+            padding: "0"
           }}
           onMouseEnter={(e) => (e.currentTarget.style.opacity = "1")}
           onMouseLeave={(e) => (e.currentTarget.style.opacity = "0.6")}
