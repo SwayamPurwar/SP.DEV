@@ -1,69 +1,123 @@
-// src/components/AssetLoader.tsx
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
 export default function AssetLoader() {
   const containerRef = useRef<HTMLDivElement>(null);
   const counterRef = useRef<HTMLSpanElement>(null);
+  const timelineRef = useRef<gsap.core.Timeline | null>(null);
 
-  useGSAP(() => {
-    const isFirstVisit = sessionStorage.getItem("visited") !== "true";
-    
-    if (!isFirstVisit) {
-      gsap.set(containerRef.current, { display: "none" });
-      return;
-    }
+  useGSAP(
+    () => {
+      const container = containerRef.current;
 
-    const tl = gsap.timeline({
-      onComplete: () => {
-        sessionStorage.setItem("visited", "true");
-        gsap.set(containerRef.current, { display: "none" });
-      },
-    });
+      if (!container) return;
 
-    tl.to(".loader-text", {
-      opacity: 1,
-      duration: 0.5,
-      ease: "power2.out",
-    });
+      const prefersReducedMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
 
-    tl.to(
-      { value: 0 },
-      {
-        value: 100,
-        duration: 1.5,
-        ease: "power3.inOut",
-        onUpdate: function () {
-          if (counterRef.current) {
-            counterRef.current.textContent = Math.floor(
-              this.targets()[0].value
-            ).toString();
-          }
-        },
+      let hasVisited = false;
+
+      try {
+        hasVisited =
+          sessionStorage.getItem("visited") === "true";
+      } catch {
+        // Continue without session storage if unavailable.
       }
-    );
 
-    tl.to(".loader-text, .loader-meta", { opacity: 0, duration: 0.3 });
-    
-    tl.to(containerRef.current, {
-      yPercent: -100,
-      duration: 1.2,
-      ease: "expo.inOut",
-    });
-  }, { scope: containerRef });
+      if (hasVisited || prefersReducedMotion) {
+        gsap.set(container, { display: "none" });
+        return;
+      }
 
-  // Add the manual override function
+      const counter = { value: 0 };
+
+      const timeline = gsap.timeline({
+        onComplete: () => {
+          try {
+            sessionStorage.setItem("visited", "true");
+          } catch {
+            // The loader can still finish without storage.
+          }
+
+          gsap.set(container, { display: "none" });
+        },
+      });
+
+      timelineRef.current = timeline;
+
+      timeline.to(".loader-text", {
+        opacity: 1,
+        duration: 0.2,
+        ease: "power2.out",
+      });
+
+      timeline.to(
+        counter,
+        {
+          value: 100,
+          duration: 0.6,
+          ease: "power2.out",
+          onUpdate: () => {
+            if (counterRef.current) {
+              counterRef.current.textContent = String(
+                Math.floor(counter.value)
+              );
+            }
+          },
+        },
+        0
+      );
+
+      timeline.to(
+        ".loader-text, .loader-meta",
+        {
+          opacity: 0,
+          duration: 0.15,
+        },
+        "-=0.1"
+      );
+
+      timeline.to(container, {
+        yPercent: -100,
+        duration: 0.35,
+        ease: "power3.inOut",
+      });
+
+      timeline.call(() => {
+        try {
+          sessionStorage.setItem("visited", "true");
+        } catch {
+          // Ignore storage errors.
+        }
+      });
+    },
+    { scope: containerRef }
+  );
+
   const handleSkip = () => {
-    gsap.to(containerRef.current, {
+    const container = containerRef.current;
+
+    if (!container) return;
+
+    timelineRef.current?.kill();
+
+    gsap.to(container, {
       yPercent: -100,
-      duration: 0.6,
-      ease: "expo.inOut",
+      duration: 0.2,
+      ease: "power2.out",
+      overwrite: true,
       onComplete: () => {
-        sessionStorage.setItem("visited", "true");
-        gsap.set(containerRef.current, { display: "none" });
+        try {
+          sessionStorage.setItem("visited", "true");
+        } catch {
+          // Ignore storage errors.
+        }
+
+        gsap.set(container, { display: "none" });
       },
     });
   };
@@ -73,36 +127,43 @@ export default function AssetLoader() {
       ref={containerRef}
       className="preloader-container"
       role="status"
-      aria-label="Loading assets"
+      aria-label="Portfolio introduction"
       style={{ zIndex: 9999 }}
     >
       <div className="loader-content">
         <div className="counter-wrap">
-          <span className="counter" ref={counterRef}>0</span>
+          <span className="counter" ref={counterRef}>
+            0
+          </span>
           <span className="percent">%</span>
         </div>
+
         <div className="loader-text" style={{ opacity: 0 }}>
           INITIALIZING SYSTEM
         </div>
       </div>
-      
+
       <div className="loader-meta top-left">SP.DEV</div>
+
       <div className="loader-meta top-right">
         PORTFOLIO ©{new Date().getFullYear()}
       </div>
-      <div className="loader-meta bottom-left">LOADING ASSETS</div>
-      
-      {/* High-visibility skip button replacing the static text */}
-      <button 
-        onClick={handleSkip} 
+
+      <div className="loader-meta bottom-left">
+        LOADING EXPERIENCE
+      </div>
+
+      <button
+        type="button"
+        onClick={handleSkip}
         className="loader-meta bottom-right mouse-hover"
-        style={{ 
-          background: "transparent", 
-          border: "none", 
-          color: "#fff", 
-          cursor: "pointer", 
+        style={{
+          background: "transparent",
+          border: "none",
+          color: "#fff",
+          cursor: "pointer",
           textDecoration: "underline",
-          fontWeight: "bold"
+          fontWeight: "bold",
         }}
       >
         [ SKIP SEQUENCE ]
